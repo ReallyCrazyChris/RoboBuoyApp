@@ -39,16 +39,10 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Robobuoys",
-    caption: "connect to buoys via bluetooth",
-    icon: "smart_toy",
-    link: "#/devices",
-  },
-  {
-    title: "Course",
-    caption: "location of the robobouy's",
+    title: "RoboBuoy's",
+    caption: "position the buoy's",
     icon: "map",
-    link: "#/locationmap",
+    link: "#/robobuoypositions",
   },
 ];
 

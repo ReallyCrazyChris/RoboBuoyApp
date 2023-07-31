@@ -8,18 +8,14 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       {
-        path: "devices",
-        component: () => import("pages/DevicesPage.vue"),
+        path: "robobuoypositions",
+        component: () => import("pages/RoboBuoyPositions.vue"),
       },
       {
-        path: "locationmap",
-        component: () => import("pages/LocationmapPage.vue"),
-      },
-      {
-        path: "config/:deviceid",
-        name: "configureRoboBuoy",
+        path: "robobuoysettings/:deviceid",
+        name: "robobuoysettings",
         props: true,
-        component: () => import("pages/ConfigureRoboBuoyPage.vue"),
+        component: () => import("pages/RoboBuoySettingsPage.vue"),
       },
     ],
   },

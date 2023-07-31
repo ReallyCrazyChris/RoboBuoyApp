@@ -86,11 +86,11 @@
     >
       <q-scroll-area class="fit">
         <div class="q-pa-sm">
-          <RoboBuoyInfo
+          <RoboBuoyStatus
             v-for="device in devicesStore.devices"
             :key="device.id"
             :deviceid="device.id"
-          ></RoboBuoyInfo>
+          ></RoboBuoyStatus>
         </div>
       </q-scroll-area>
       <q-page-sticky position="bottom-right" :offset="[22, 22]">
@@ -103,7 +103,7 @@
 <script>
 import { defineComponent, nextTick } from "vue";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+//import L from "leaflet";
 import {
   LMap,
   LTileLayer,
@@ -114,7 +114,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 
 import { useDevicesStore } from "stores/devicesStore";
-import RoboBuoyInfo from "components/RoboBuoyInfo.vue";
+import RoboBuoyStatus from "components/RoboBuoyStatus.vue";
 
 export default defineComponent({
   name: "LocationmapPage",
@@ -125,7 +125,7 @@ export default defineComponent({
     LCircleMarker,
     LIcon,
     LPolyline,
-    RoboBuoyInfo,
+    RoboBuoyStatus,
   },
   setup() {
     const devicesStore = useDevicesStore();
@@ -135,13 +135,13 @@ export default defineComponent({
   },
   data() {
     return {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      active: false,
+      waypoints: [[49.12934, 10.93431]],
       zoom: 15,
       height: 900,
       width: 800,
-      active: false,
-      waypoints: [[49.12934, 10.93431]],
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     };
   },
   mounted() {
