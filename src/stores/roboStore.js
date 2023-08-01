@@ -8,13 +8,16 @@ const deviceStore = useDevicesStore();
 export const useRoboStore = (deviceid) => {
   const store = defineStore("robobuoyStore/${deviceid}", {
     state: () => ({
-      name: "RoboBuoy X",
       device: null,
       deviceid: deviceid,
 
+      // Robot Information
+      name: "Buoy 1",
+
+      //Thruster Control
       active: false,
-      steer: 0,
       surge: 0,
+      steer: 0,
       vmin: 0,
       vmax: 50,
       steergain: 100,
@@ -22,8 +25,24 @@ export const useRoboStore = (deviceid) => {
       mpr: 55,
       maxpwm: 110,
 
-      desiredcourse: 0,
-      currentcourse: 0,
+      // Position/Motion
+      positionvalid: false,
+      latitude: 0, // degree decimal north
+      longitude: 0, // degree decimal east
+      latitude_string: "", // degree decimal north 24 bit precision,
+      longitude_string: "", // degree decimal east 24 bit precision
+      speed: 0.0, //meters per second
+
+      underway: false, // should the robot persue its path
+      currentcourse: 0, // deg° of the current heading
+      desiredcourse: 0, // deg° of the desired heading
+      currentposition: [49.12934, 10.93431], // degree decimal north, degree decimal east
+      desiredposition: [49.12934, 10.93431], // degree decimal north, degree decimal east
+      distancetodesiredposiiton: 0, // float meters
+      waypoints: [], // array of positions
+
+      // Steering
+      //PID tuning gains to control the steering based on desiredcourse vs currentcourse
       Kp: 0,
       Ki: 0,
       Kd: 0,
@@ -91,6 +110,22 @@ export const useRoboStore = (deviceid) => {
       setdesiredcourse(val) {
         this.desiredcourse = val;
         $bluetooth.send(this.device, ["dc", this.desiredcourse]);
+      },
+
+      addwaypoint(latlng) {
+        const waypoint = [
+          parseFloat(latlng.lat.toFixed(6)),
+          parseFloat(latlng.lng.toFixed(6)),
+        ];
+        this.waypoints.push(waypoint);
+      },
+
+      removewaypoint(index) {
+        this.waypoints.splice(index - 1, 1);
+      },
+
+      removewaypoints(index) {
+        this.waypoints.splice(index);
       },
 
       setKp(val) {

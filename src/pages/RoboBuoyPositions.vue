@@ -1,5 +1,5 @@
 <template>
-  <q-page ref="locationmappage">
+  <q-page ref="RoboBuoyPositions">
     <div
       :style="{
         height: height + 'px',
@@ -19,61 +19,11 @@
           :attribution="attribution"
         ></l-tile-layer>
 
-        <div v-for="(latlng, index) in waypoints" :key="index">
-          <l-polyline
-            v-if="index == waypoints.length - 1"
-            :lat-lngs="waypoints"
-            color="red"
-            zIndexOffset="0"
-          />
-
-          <l-marker
-            v-if="index == 0"
-            :ref="'sourceMarker'"
-            :name="'RoboBuoy'"
-            :lat-lng="latlng"
-            :zIndexOffset="100"
-            v-on:click="activateRobot()"
-          >
-            <l-icon
-              v-if="active"
-              class-name="blinking"
-              :icon-size="[35, 35]"
-              :icon-url="'./icons/favicon-32x32.png'"
-            >
-            </l-icon>
-
-            <l-icon
-              v-if="!active"
-              :icon-size="[35, 35]"
-              :icon-url="'./icons/favicon-32x32.png'"
-            >
-            </l-icon>
-          </l-marker>
-
-          <l-circleMarker
-            v-if="index > 0 && index < waypoints.length - 1"
-            v-on:click="removeWaypoint(index)"
-            :lat-lng="latlng"
-            :radius="5"
-            :zIndexOffset="200"
-            color="#dd16cb"
-          >
-          </l-circleMarker>
-
-          <l-marker
-            :ref="'targetMarker'"
-            v-if="index == waypoints.length - 1"
-            :lat-lng="latlng"
-            :draggable="true"
-            :bubblingMouseEvents="true"
-            :zIndexOffset="300"
-            @moveend="dragEndHandler($event.target._latlng)"
-          >
-          </l-marker>
-
-          />
-        </div>
+        <RoboBuoyPosition
+          v-for="device in devicesStore.connecteddevices"
+          :key="device.id"
+          :deviceid="device.id"
+        />
       </l-map>
     </div>
     <q-drawer
@@ -87,7 +37,7 @@
       <q-scroll-area class="fit">
         <div class="q-pa-sm">
           <RoboBuoyStatus
-            v-for="device in devicesStore.devices"
+            v-for="device in devicesStore.connecteddevices"
             :key="device.id"
             :deviceid="device.id"
           ></RoboBuoyStatus>
@@ -104,28 +54,19 @@
 import { defineComponent, nextTick } from "vue";
 import "leaflet/dist/leaflet.css";
 //import L from "leaflet";
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-  LCircleMarker,
-  LIcon,
-  LPolyline,
-} from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 import { useDevicesStore } from "stores/devicesStore";
 import RoboBuoyStatus from "components/RoboBuoyStatus.vue";
+import RoboBuoyPosition from "components/RoboBuoyPosition.vue";
 
 export default defineComponent({
-  name: "LocationmapPage",
+  name: "RoboBuoyPositions",
   components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LCircleMarker,
-    LIcon,
-    LPolyline,
     RoboBuoyStatus,
+    RoboBuoyPosition,
   },
   setup() {
     const devicesStore = useDevicesStore();
@@ -135,8 +76,6 @@ export default defineComponent({
   },
   data() {
     return {
-      active: false,
-      waypoints: [[49.12934, 10.93431]],
       zoom: 15,
       height: 900,
       width: 800,
@@ -147,24 +86,6 @@ export default defineComponent({
   mounted() {
     this.height = this.$parent.$el.offsetHeight;
     this.width = this.$parent.$el.offsetWidth;
-  },
-  methods: {
-    activateRobot: async function (e) {
-      await nextTick();
-      this.active = !this.active;
-    },
-    dragEndHandler: async function (latlng) {
-      await nextTick();
-      this.waypoints.push([
-        parseFloat(latlng.lat.toFixed(6)),
-        parseFloat(latlng.lng.toFixed(6)),
-      ]);
-    },
-    removeWaypoint: async function (index) {
-      await nextTick();
-      this.waypoints.splice(index, 1);
-      console.log(this.waypoints.length);
-    },
   },
 });
 </script>

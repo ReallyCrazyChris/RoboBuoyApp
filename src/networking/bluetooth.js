@@ -45,6 +45,11 @@ function reconnect() {
         { once: true }
       );
 
+      // when you see the device's advertisement update the activedevices
+      device.addEventListener("advertisementreceived", async (event) => {
+        devicesStore.addactivedevice(device);
+      });
+
       try {
         await device.watchAdvertisements();
       } catch (error) {
