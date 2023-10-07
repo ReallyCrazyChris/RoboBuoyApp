@@ -11,6 +11,8 @@ const MTU = 20;
 let utf8decoder = new TextDecoder();
 let devicesStore = useDevicesStore();
 
+let sendqueue = [];
+
 function pair() {
   if (!navigator.bluetooth) {
     console.log(
@@ -44,11 +46,6 @@ function reconnect() {
         },
         { once: true }
       );
-
-      // when you see the device's advertisement update the activedevices
-      device.addEventListener("advertisementreceived", async (event) => {
-        devicesStore.addactivedevice(device);
-      });
 
       try {
         await device.watchAdvertisements();
@@ -105,6 +102,13 @@ function connect(device) {
         );
 
         devicesStore.adddevice(device);
+
+        // listen for advertisement and update the local rssi
+        device.addEventListener("advertisementreceived", async (event) => {
+          const robobuoyStore = useRoboStore(device.id);
+          robobuoyStore.setlocalrssi(event.rssi);
+        });
+
         console.log("\r\n" + device.name + " Connected.");
       });
     })
@@ -121,14 +125,14 @@ function disconnect(device) {
   }
 }
 
-function send(device, data) {
+async function send(device, data) {
   if (device && device.gatt.connected) {
     var buffer = encode(data);
     for (var i = 0; i <= buffer.byteLength; i = i + MTU) {
-      device.rxCharacteristic
+      await device.rxCharacteristic
         .writeValue(buffer.slice(i, i + MTU))
         .then((resolve) => {
-          setTimeout(resolve, 100);
+          setTimeout(resolve, 0);
         });
     }
   } else {

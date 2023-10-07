@@ -13,6 +13,11 @@ export const useRoboStore = (deviceid) => {
 
       // Robot Information
       name: "Buoy 1",
+      battery: 90, // % battery capacity remaining
+
+      // Signal Strength
+      localrssi: 0,
+      remoterssi: 0,
 
       //Thruster Control
       active: false,
@@ -31,14 +36,14 @@ export const useRoboStore = (deviceid) => {
       longitude: 0, // degree decimal east
       latitude_string: "", // degree decimal north 24 bit precision,
       longitude_string: "", // degree decimal east 24 bit precision
-      speed: 0.0, //meters per second
+      gpsspeed: 0.0, //meters per second
 
       underway: false, // should the robot persue its path
       currentcourse: 0, // deg° of the current heading
       desiredcourse: 0, // deg° of the desired heading
-      currentposition: [49.12934, 10.93431], // degree decimal north, degree decimal east
-      desiredposition: [49.12934, 10.93431], // degree decimal north, degree decimal east
-      distancetodesiredposiiton: 0, // float meters
+      currentposition: [], // degree decimal north, degree decimal east
+      desiredposition: [], // degree decimal north, degree decimal east
+      distance: 0, // float meters
       waypoints: [], // array of positions
 
       // Steering
@@ -48,12 +53,30 @@ export const useRoboStore = (deviceid) => {
       Kd: 0,
       compassalpha: 0,
       gpsalpha: 0,
+
+      //calibration
+      calibratingcompass: false,
+      calibrationsamples: 600,
+      calibrationsampletime: 100,
     }),
+
+    getters: {
+      isStopped: (state) => !state.active,
+      isUnderway: (state) => state.waypoints.length > 0 && state.active,
+      isHoldPosition: (state) => state.waypoints.length == 0 && state.active,
+    },
 
     actions: {
       messageHandler(data) {
         console.log("messageHandler", data);
         this.$patch(data[1]);
+      },
+
+      setlocalrssi(val) {
+        if (undefined == val) {
+          return;
+        }
+        this.localrssi = val;
       },
 
       setactive(val) {
@@ -62,49 +85,19 @@ export const useRoboStore = (deviceid) => {
         $bluetooth.send(this.device, ["active", this.active]);
       },
 
+      toggleactive() {
+        this.active = !!!this.active;
+        $bluetooth.send(this.device, ["active", this.active]);
+      },
+
       setsurge(val) {
         this.surge = val;
         $bluetooth.send(this.device, ["surge", this.surge]);
       },
 
-      setsteer(val) {
-        this.steer = val;
-        $bluetooth.send(this.device, ["steer", this.steer]);
-      },
-
-      setvmin(val) {
-        this.vmin = val;
-        $bluetooth.send(this.device, ["vmin", this.vmin]);
-      },
-
-      setvmax(val) {
-        this.vmax = val;
-        $bluetooth.send(this.device, ["vmax", this.vmax]);
-      },
-
-      setsteergain(val) {
-        this.steergain = val;
-        $bluetooth.send(this.device, ["sgain", this.steergain]);
-      },
-
-      setmpl(val) {
-        this.mpl = val;
-        $bluetooth.send(this.device, ["mpl", this.mpl]);
-      },
-
-      setmpr(val) {
-        this.mpr = val;
-        $bluetooth.send(this.device, ["mpr", this.mpr]);
-      },
-
-      setmaxpwm(val) {
-        this.mpr = val;
-        $bluetooth.send(this.device, ["maxpwm", this.maxpwm]);
-      },
-
-      setcurrentcourse(val) {
-        this.currentcourse = val;
-        $bluetooth.send(this.device, ["cc", this.currentcourse]);
+      async setwaypoints() {
+        // applies waypoints to the robobuoy
+        await $bluetooth.send(this.device, ["wp", this.waypoints]);
       },
 
       setdesiredcourse(val) {
@@ -128,47 +121,57 @@ export const useRoboStore = (deviceid) => {
         this.waypoints.splice(index);
       },
 
-      setKp(val) {
-        this.Kp = val;
-        $bluetooth.send(this.device, ["Kp", this.Kp]);
+      calibrateMag() {
+        // Starts the Compass / Magentometer calibraiton routine
+        this.calibratingcompass = true;
+
+        $bluetooth.send(this.device, [
+          "calibrateMag",
+          this.calibrationsamples,
+          this.calibrationsampletime,
+        ]);
+        // simulate the calibration time
+        setTimeout(() => {
+          this.calibratingcompass = false;
+        }, this.calibrationsamples * this.calibrationsampletime);
       },
 
-      setKi(val) {
-        this.Ki = val;
-        $bluetooth.send(this.device, ["Ki", this.Ki]);
+      // Start and Stop the Robots Asyncronous Tasks
+
+      startFuseGpsTask() {
+        $bluetooth.send(this.device, ["GT"]);
       },
 
-      setKd(val) {
-        this.Kd = val;
-        $bluetooth.send(this.device, ["Kd", this.Kd]);
+      stopFuseGpsTask() {
+        $bluetooth.send(this.device, ["sGT"]);
       },
 
-      setcompassalpha(val) {
-        this.compassalpha = val;
-        $bluetooth.send(this.device, ["ca", this.compassalpha]);
+      startFuseCompassTask() {
+        $bluetooth.send(this.device, ["FCT"]);
       },
 
-      setgpsalpha(val) {
-        this.gpsalpha = val;
-        $bluetooth.send(this.device, ["ga", this.gpsalpha]);
+      stopFuseCompassTask() {
+        $bluetooth.send(this.device, ["sFCT"]);
       },
 
-      resetcourse() {
-        this.desiredcourse = 0;
-        this.currentcourse = 0;
-        this.surge = 0;
-        $bluetooth.send(this.device, ["reset", ""]);
+      startFuseGyroTask() {
+        $bluetooth.send(this.device, ["FGT"]);
       },
 
-      requeststate() {
-        $bluetooth.send(this.device, ["state", ""]);
+      stopFuseGyroTask() {
+        $bluetooth.send(this.device, ["sFGT"]);
       },
 
-      loadstate() {
-        $bluetooth.send(this.device, ["load", ""]);
+      startSendMotionStateTask() {
+        $bluetooth.send(this.device, ["SMT"]);
       },
-      savestate() {
-        $bluetooth.send(this.device, ["save", ""]);
+
+      stopSendMotionStateTask() {
+        $bluetooth.send(this.device, ["sSMT"]);
+      },
+
+      getstate() {
+        $bluetooth.send(this.device, ["getstate"]);
       },
     },
   })();

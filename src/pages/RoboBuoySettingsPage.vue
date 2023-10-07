@@ -10,11 +10,156 @@
         <div class="row items-center no-wrap">
           <div class="col">
             <div class="text-h6">{{ roboStore.name }}</div>
-            <div class="text-caption">steering control and configure</div>
+            <div class="text-caption">settings</div>
           </div>
         </div>
       </q-card-section>
+
       <q-separator />
+
+      <q-card-section>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">Motion State Task</div>
+            <div class="text-caption">
+              start or stop sending of the motions state
+            </div>
+          </div>
+        </div>
+
+        <div class="q-pa-md">
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.startSendMotionStateTask()"
+            push
+            glossy
+            label="Start"
+            color="primary"
+          />
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.stopSendMotionStateTask()"
+            push
+            glossy
+            label="Stop"
+            color="primary"
+          />
+        </div>
+
+        <RoboBuoyMotion :deviceid="deviceid"></RoboBuoyMotion>
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-section>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">Fuse Gyro Task</div>
+            <div class="text-caption">
+              use the gyro to stabelise directional control
+            </div>
+          </div>
+        </div>
+
+        <div class="q-pa-md">
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.startFuseGyroTask()"
+            push
+            glossy
+            label="Start"
+            color="primary"
+          />
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.stopFuseGyroTask()"
+            push
+            glossy
+            label="Stop"
+            color="primary"
+          />
+        </div>
+      </q-card-section>
+      <q-separator />
+      <q-card-section>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">Fuse Compass Task</div>
+            <div class="text-caption">
+              use the compass to correct the current heading
+            </div>
+          </div>
+        </div>
+
+        <div class="q-pa-md">
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.startFuseCompassTask()"
+            push
+            glossy
+            label="Start "
+            color="primary"
+          />
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.stopFuseCompassTask()"
+            push
+            glossy
+            label="Stop  "
+            color="primary"
+          />
+
+          <q-btn
+            class="q-mx-md"
+            :loading="roboStore.calibratingcompass"
+            push
+            glossy
+            label="Calibrate"
+            color="primary"
+            icon="explore"
+            @click="roboStore.calibrateMag()"
+          >
+            <template v-slot:loading>
+              <q-spinner-gears class="q-mx-xs" />
+              <div class="q-mx-xs">Calibrating</div>
+            </template>
+          </q-btn>
+        </div>
+      </q-card-section>
+      <q-separator />
+
+      <q-card-section>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="col">
+            <div class="text-h6">Fuse Gps Task</div>
+            <div class="text-caption">
+              Use the GPS to correct the gyro and the compass magnetic
+              declinaiton
+            </div>
+          </div>
+        </div>
+
+        <div class="q-pa-md">
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.startFuseGpsTask()"
+            push
+            glossy
+            label="Start"
+            color="primary"
+          />
+          <q-btn
+            class="q-mx-md"
+            @click="roboStore.stopFuseGpsTask()"
+            push
+            glossy
+            label="Stop"
+            color="primary"
+          />
+        </div>
+      </q-card-section>
+      <q-separator />
+
       <q-card-section>
         <div class="q-pa-md row items-center no-wrap">
           <div class="col">
@@ -225,9 +370,13 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
-
+import RoboBuoyMotion from "components/RoboBuoyMotion.vue";
 export default {
   props: ["deviceid"],
+  components: {
+    RoboBuoyMotion,
+  },
+
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
 

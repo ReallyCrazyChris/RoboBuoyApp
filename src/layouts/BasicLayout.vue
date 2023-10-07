@@ -39,9 +39,9 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "RoboBuoy's",
-    caption: "position the buoy's",
-    icon: "map",
+    title: "Routing",
+    caption: "route the bouy's into position",
+    icon: "route",
     link: "#/robobuoypositions",
   },
 ];

@@ -9,7 +9,7 @@
       <l-map
         ref="map"
         v-model:zoom="zoom"
-        :center="[49.129338, 10.934313]"
+        :center="[49.69455, 10.82745]"
         :use-global-leaflet="false"
       >
         <l-tile-layer
@@ -35,16 +35,34 @@
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
     >
       <q-scroll-area class="fit">
-        <div class="q-pa-sm">
-          <RoboBuoyStatus
-            v-for="device in devicesStore.connecteddevices"
-            :key="device.id"
-            :deviceid="device.id"
-          ></RoboBuoyStatus>
+        <div class="q-pa-md">
+          <div class="text-h6">Robobuoy's</div>
+          <div class="text-subtitle2">
+            {{ devicesStore.devicecount() }} buoy's in range
+          </div>
         </div>
+
+        <RoboBuoyStatus
+          v-for="device in devicesStore.connecteddevices"
+          :key="device.id"
+          :deviceid="device.id"
+          class="q-pa-md"
+        />
       </q-scroll-area>
-      <q-page-sticky position="bottom-right" :offset="[22, 22]">
-        <q-btn fab icon="add" color="accent" @click="$bluetooth.pair()" />
+      <q-page-sticky position="bottom-right" :offset="[-180, 22]">
+        <q-btn
+          v-if="devicesStore.devicecount() == 0"
+          class="blinking"
+          fab
+          icon="add"
+          color="primary"
+          @click="$bluetooth.pair()"
+        >
+          <q-tooltip class="bg-brimary">Pair Robobuoy</q-tooltip>
+        </q-btn>
+        <q-btn v-else fab icon="add" color="primary" @click="$bluetooth.pair()">
+          <q-tooltip class="bg-brimary">Pair Robobuoy</q-tooltip>
+        </q-btn>
       </q-page-sticky>
     </q-drawer>
   </q-page>
@@ -53,7 +71,6 @@
 <script>
 import { defineComponent, nextTick } from "vue";
 import "leaflet/dist/leaflet.css";
-//import L from "leaflet";
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 import { useDevicesStore } from "stores/devicesStore";
@@ -76,7 +93,7 @@ export default defineComponent({
   },
   data() {
     return {
-      zoom: 15,
+      zoom: 18, //TODO auto zoom
       height: 900,
       width: 800,
       attribution:
