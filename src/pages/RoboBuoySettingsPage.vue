@@ -20,213 +20,6 @@
       <q-card-section>
         <div class="q-pa-md row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">Motion State Task</div>
-            <div class="text-caption">
-              start or stop sending of the motions state
-            </div>
-          </div>
-        </div>
-
-        <div class="q-pa-md">
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.startSendMotionStateTask()"
-            push
-            glossy
-            label="Start"
-            color="primary"
-          />
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.stopSendMotionStateTask()"
-            push
-            glossy
-            label="Stop"
-            color="primary"
-          />
-        </div>
-
-        <RoboBuoyMotion :deviceid="deviceid"></RoboBuoyMotion>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-section>
-        <div class="q-pa-md row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">Fuse Gyro Task</div>
-            <div class="text-caption">
-              use the gyro to stabelise directional control
-            </div>
-          </div>
-        </div>
-
-        <div class="q-pa-md">
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.startFuseGyroTask()"
-            push
-            glossy
-            label="Start"
-            color="primary"
-          />
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.stopFuseGyroTask()"
-            push
-            glossy
-            label="Stop"
-            color="primary"
-          />
-        </div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section>
-        <div class="q-pa-md row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">Fuse Compass Task</div>
-            <div class="text-caption">
-              use the compass to correct the current heading
-            </div>
-          </div>
-        </div>
-
-        <div class="q-pa-md">
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.startFuseCompassTask()"
-            push
-            glossy
-            label="Start "
-            color="primary"
-          />
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.stopFuseCompassTask()"
-            push
-            glossy
-            label="Stop  "
-            color="primary"
-          />
-
-          <q-btn
-            class="q-mx-md"
-            :loading="roboStore.calibratingcompass"
-            push
-            glossy
-            label="Calibrate"
-            color="primary"
-            icon="explore"
-            @click="roboStore.calibrateMag()"
-          >
-            <template v-slot:loading>
-              <q-spinner-gears class="q-mx-xs" />
-              <div class="q-mx-xs">Calibrating</div>
-            </template>
-          </q-btn>
-        </div>
-      </q-card-section>
-      <q-separator />
-
-      <q-card-section>
-        <div class="q-pa-md row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">Fuse Gps Task</div>
-            <div class="text-caption">
-              Use the GPS to correct the gyro and the compass magnetic
-              declinaiton
-            </div>
-          </div>
-        </div>
-
-        <div class="q-pa-md">
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.startFuseGpsTask()"
-            push
-            glossy
-            label="Start"
-            color="primary"
-          />
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.stopFuseGpsTask()"
-            push
-            glossy
-            label="Stop"
-            color="primary"
-          />
-        </div>
-      </q-card-section>
-      <q-separator />
-
-      <q-card-section>
-        <div class="q-pa-md row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">Course Control</div>
-            <div class="text-caption">Set a Course and Thrust</div>
-          </div>
-        </div>
-
-        <div class="q-pa-md">
-          <q-btn-toggle
-            :model-value="roboStore.active"
-            @update:model-value="roboStore.setactive"
-            push
-            glossy
-            toggle-color="primary"
-            :options="[
-              { label: 'Active', value: true },
-              { label: 'Stop', value: false },
-            ]"
-          />
-
-          <q-btn
-            class="q-mx-md"
-            @click="roboStore.resetcourse()"
-            push
-            glossy
-            label="Reset Course"
-            color="primary"
-          />
-        </div>
-      </q-card-section>
-
-      <q-card-section>
-        <div class="fit row q-pa-md">
-          <div class="col-5 q-mr-md">Course °</div>
-          <div class="col-6 q-mr-md">Thrust</div>
-
-          <q-slider
-            class="col-5 q-mr-md"
-            :model-value="roboStore.desiredcourse"
-            @update:model-value="roboStore.setdesiredcourse"
-            :min="-180"
-            :max="180"
-            label
-            :marker-labels="courseSliderMarkerLabel"
-            color="green"
-            thumb-size="35px"
-          />
-
-          <q-slider
-            class="col-grow"
-            :model-value="roboStore.surge"
-            @update:model-value="roboStore.setsurge"
-            :min="0"
-            :max="50"
-            label
-            color="red"
-            thumb-size="35px"
-          />
-        </div>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-section>
-        <div class="q-pa-md row items-center no-wrap">
-          <div class="col">
             <div class="text-h6">Steering PID Settings</div>
             <div class="text-caption">
               Tune the PID controller for maximum capability
@@ -281,12 +74,18 @@
             color="indigo"
           ></q-slider>
         </div>
+        <q-card-actions>
+          <q-btn flat @click="roboStore.getSteerPIDState()">read</q-btn>
+          <q-btn flat @click="roboStore.savestate()">Save</q-btn>
+        </q-card-actions>
       </q-card-section>
+
+      <q-separator />
 
       <q-card-section>
         <div class="q-pa-md row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">Thruster Settings</div>
+            <div class="text-h6">Motor Settings</div>
             <div class="text-caption">
               set the maximum thrust, steering sensitivity and the pwm where the
               motors being to rotate
@@ -357,12 +156,38 @@
             color="purple"
           />
         </div>
-
         <q-card-actions>
-          <q-btn flat @click="roboStore.requeststate()">state</q-btn>
-          <q-btn flat @click="roboStore.loadstate()">Load</q-btn>
+          <q-btn flat @click="roboStore.getMotorState()">read</q-btn>
           <q-btn flat @click="roboStore.savestate()">Save</q-btn>
         </q-card-actions>
+      </q-card-section>
+      <q-separator />
+      <q-card-section>
+        <div class="q-pa-md col items-center no-wrap">
+          <div class="">
+            <div class="text-h6">Compass Calibration</div>
+            <div class="text-caption">start the calibration</div>
+            <div class="text-caption">
+              rotate the RoboBouy about is axis a few times
+            </div>
+            <div class="text-caption">during the calibration process</div>
+          </div>
+          <q-btn
+            :loading="roboStore.calibratingcompass"
+            class="q-mt-md"
+            push
+            glossy
+            label="Calibrate Compass"
+            color="primary"
+            icon="explore"
+            @click="roboStore.calibrateMag()"
+          >
+            <template v-slot:loading>
+              <q-spinner-gears class="q-mx-xs" />
+              <div class="q-mx-xs">Calibrating Compass</div>
+            </template>
+          </q-btn>
+        </div>
       </q-card-section>
     </q-card>
   </q-page>
@@ -370,12 +195,10 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
-import RoboBuoyMotion from "components/RoboBuoyMotion.vue";
+
 export default {
   props: ["deviceid"],
-  components: {
-    RoboBuoyMotion,
-  },
+  components: {},
 
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);

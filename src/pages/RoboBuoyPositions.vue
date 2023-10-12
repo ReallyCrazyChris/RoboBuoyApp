@@ -35,18 +35,11 @@
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
     >
       <q-scroll-area class="fit">
-        <div class="q-pa-md">
-          <div class="text-h6">Robobuoy's</div>
-          <div class="text-subtitle2">
-            {{ devicesStore.devicecount() }} buoy's in range
-          </div>
-        </div>
-
         <RoboBuoyStatus
           v-for="device in devicesStore.connecteddevices"
           :key="device.id"
           :deviceid="device.id"
-          class="q-pa-md"
+          class="q-pa-xs"
         />
       </q-scroll-area>
       <q-page-sticky position="bottom-right" :offset="[-180, 22]">
@@ -75,7 +68,7 @@ import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 import { useDevicesStore } from "stores/devicesStore";
 import RoboBuoyStatus from "components/RoboBuoyStatus.vue";
-import RoboBuoyPosition from "components/RoboBuoyPosition.vue";
+import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
 
 export default defineComponent({
   name: "RoboBuoyPositions",

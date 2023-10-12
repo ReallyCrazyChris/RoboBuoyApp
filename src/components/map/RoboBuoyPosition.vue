@@ -1,38 +1,43 @@
 <template>
   <l-marker
-    v-if="roboStore.currentposition.length"
+    v-if="roboStore.position.length"
     :ref="'sourceMarker'"
     :name="'RoboBuoy'"
-    :lat-lng="roboStore.currentposition"
+    :lat-lng="roboStore.position"
     :zIndexOffset="100"
-    @click="roboStore.toggleactive()"
+    @click="roboStore.togglemode()"
   >
     <l-icon :icon-size="[5, 5]">
-      <div v-if="roboStore.isStopped" class="absolute-center">
-        <q-btn dense round class="shadow-24" color="primary" label="1"> </q-btn>
-        <q-badge floating transparent color="red">
+      <div class="absolute-center">
+        <RoboBuoyMarker :deviceid="deviceid" />
+        <q-badge v-if="roboStore.isStopped" floating transparent color="red">
           <q-icon name="stop" color="white" />
         </q-badge>
-      </div>
-      <div v-if="roboStore.isUnderway" class="absolute-center">
-        <q-btn dense round color="primary" label="1"> </q-btn>
-        <q-badge floating transparent color="light-green">
+
+        <q-badge v-if="roboStore.isUnderway" floating transparent>
           <q-icon class="spin" name="autorenew" color="white" />
         </q-badge>
-      </div>
-      <div v-if="roboStore.isHoldPosition" class="absolute-center">
-        <q-btn dense round color="primary" label="1"> </q-btn>
-        <q-badge floating transparent>
+
+        <q-badge v-if="roboStore.isHoldStation" floating transparent>
           <q-icon name="anchor" color="white" />
+        </q-badge>
+
+        <q-badge
+          v-if="roboStore.isManual"
+          floating
+          transparent
+          color="light-green"
+        >
+          <q-icon name="swipe" color="white" />
         </q-badge>
       </div>
     </l-icon>
   </l-marker>
 
-  <div v-if="roboStore.currentposition.length">
+  <div v-if="roboStore.position.length">
     <div v-for="(latlng, index) in waypoints" :key="index">
       <l-circleMarker
-        v-if="index > 0 && index < waypoints.length - 1 && roboStore.isUnderway"
+        v-if="index > 0 && index < waypoints.length - 1 && roboStore.isAuto"
         @click="removewaypoint(index)"
         :lat-lng="latlng"
         :radius="2"
@@ -64,7 +69,7 @@
       />
 
       <l-polyline
-        v-if="index == waypoints.length - 1 && roboStore.isUnderway"
+        v-if="index == waypoints.length - 1 && roboStore.isAuto"
         @click="removewaypoints"
         :lat-lngs="waypoints"
         color="lightgreen"
@@ -73,7 +78,7 @@
 
       <l-marker
         :ref="'targetMarker'"
-        v-if="index == waypoints.length - 1"
+        v-if="index == waypoints.length - 1 && !roboStore.isManual"
         :lat-lng="latlng"
         :draggable="true"
         :zIndexOffset="300"
@@ -85,7 +90,7 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
-
+import RoboBuoyMarker from "components/map/RoboBuoyMarker.vue";
 import {
   LMarker,
   LCircleMarker,
@@ -101,6 +106,7 @@ export default {
     LIcon,
     LPolyline,
     LCircleMarker,
+    RoboBuoyMarker,
   },
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
@@ -108,18 +114,18 @@ export default {
   },
   computed: {
     waypoints() {
-      return [this.roboStore.currentposition].concat(this.roboStore.waypoints);
+      return [this.roboStore.position].concat(this.roboStore.waypoints);
     },
   },
 
   methods: {
     addwaypoint: async function (latlng) {
       this.roboStore.addwaypoint(latlng);
-      await this.roboStore.applywaypoints();
+      await this.roboStore.setwaypoints();
     },
     removewaypoint: async function (index) {
       this.roboStore.removewaypoint(index);
-      await this.roboStore.applywaypoints();
+      await this.roboStore.setwaypoints();
     },
     removewaypoints: async function (e) {
       const TOLERANCE = 3;
@@ -145,7 +151,7 @@ export default {
       });
 
       this.roboStore.removewaypoints(index);
-      await this.roboStore.applywaypoints();
+      await this.roboStore.setwaypoints();
     },
   },
 };

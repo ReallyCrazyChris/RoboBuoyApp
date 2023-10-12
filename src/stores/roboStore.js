@@ -8,62 +8,116 @@ const deviceStore = useDevicesStore();
 export const useRoboStore = (deviceid) => {
   const store = defineStore("robobuoyStore/${deviceid}", {
     state: () => ({
+      // Specific to RoboBuoy APP
       device: null,
       deviceid: deviceid,
 
-      // Robot Information
-      name: "Buoy 1",
-      battery: 90, // % battery capacity remaining
+      // RoboBuoy Information
+      number: 1, //Mark Number
+      color: "primary", //Primary Color of the Mark
+      name: "Buoy 1", //Name of the RoboBouy in the APP
+      mode: "stop", // Current operational mode of the RoboBouy  ['stop','manual','auto']
+
+      // Battery
+      battery: 90, // % Capacity of battery remaining
 
       // Signal Strength
-      localrssi: 0,
-      remoterssi: 0,
+      localrssi: 0, // Specific to the APP
 
-      //Thruster Control
-      active: false,
-      surge: 0,
-      steer: 0,
-      vmin: 0,
-      vmax: 50,
-      steergain: 100,
-      mpl: 53,
-      mpr: 55,
-      maxpwm: 110,
-
-      // Position/Motion
-      positionvalid: false,
+      //Position
+      positionvalid: false, // valid gps position
+      position: [], // degree decimal north, degree decimal east
       latitude: 0, // degree decimal north
       longitude: 0, // degree decimal east
       latitude_string: "", // degree decimal north 24 bit precision,
       longitude_string: "", // degree decimal east 24 bit precision
-      gpsspeed: 0.0, //meters per second
 
-      underway: false, // should the robot persue its path
+      //Course
+      gpscourse: 0, // deg° of the current heading
       currentcourse: 0, // deg° of the current heading
+
+      //Speed
+      gpsspeed: 0.0, //knots
+
+      //Autonomous Pathfinding
+      destination: [], // degree decimal north, degree decimal east
+      distance: 0, // (float) meters
       desiredcourse: 0, // deg° of the desired heading
-      currentposition: [], // degree decimal north, degree decimal east
-      desiredposition: [], // degree decimal north, degree decimal east
-      distance: 0, // float meters
       waypoints: [], // array of positions
+      waypointarrivedradius: 5, // waypoint arrived radius (meters)
 
       // Steering
-      //PID tuning gains to control the steering based on desiredcourse vs currentcourse
+      // PID tuning gains to control the steering based on desiredcourse vs currentcourse
       Kp: 0,
       Ki: 0,
       Kd: 0,
-      compassalpha: 0,
-      gpsalpha: 0,
 
-      //calibration
+      // PID variables to matintain course by steering
+      // error : 0,
+      //errSum : 0,
+      //dErr : 0,
+      //lastErr : 0,
+
+      // Complimentary Filter tunings
+      compassalpha: 0.97, // compasComplemt filter weighted towards the gyro
+      gpsalpha: 0.03, // gpsComplement  filter weighted towards the gps
+
+      // Motor Control
+      surge: 0, //  desired robot speed cm/s
+      steer: 0, //  desired robot angualr rotation deg/s
+      vmin: 0, //  minimum robot velocity cm/s
+      vmax: 50, //  maximum robot velocity cm/s
+      steergain: 100, // steering gain
+      mpl: 53, //  left pwm value where the motor starts to turn
+      mpr: 55, // right pwm value where the motor starts to turn
+      //maxpwm: 110, // maximum pwm signal sent to the motors
+
+      // Compass Calibration
       calibratingcompass: false,
       calibrationsamples: 600,
       calibrationsampletime: 100,
     }),
 
     getters: {
-      isStopped: (state) => !state.active,
-      isUnderway: (state) => state.waypoints.length > 0 && state.active,
-      isHoldPosition: (state) => state.waypoints.length == 0 && state.active,
+      isStopped: (state) => state.mode == "stop",
+      isManual: (state) => state.mode == "manual",
+      isAuto: (state) => state.mode == "auto",
+      isUnderway: (state) => state.waypoints.length > 0 && state.mode == "auto",
+      isHoldStation: (state) =>
+        state.waypoints.length == 0 && state.mode == "auto",
+      autoIcon: (state) => {
+        if (state.waypoints.length > 0) {
+          return "autorenew";
+        } else if (state.waypoints.length == 0) {
+          return "anchor";
+        }
+      },
+      modeIcon: (state) => {
+        if (state.waypoints.length > 0 && state.mode == "auto") {
+          return "autorenew";
+        } else if (state.waypoints.length == 0 && state.mode == "auto") {
+          return "anchor";
+        } else if (state.mode == "manual") {
+          return "swipe";
+        } else if (state.mode == "stop") {
+          return "stop";
+        } else {
+          return "";
+        }
+      },
+      modeColor: (state) => {
+        if (state.waypoints.length > 0 && state.mode == "auto") {
+          return "primary";
+        } else if (state.waypoints.length == 0 && state.mode == "auto") {
+          return "primary";
+        } else if (state.mode == "manual") {
+          return "green";
+        } else if (state.mode == "stop") {
+          return "red";
+        } else {
+          return "black";
+        }
+      },
     },
 
     actions: {
@@ -79,30 +133,36 @@ export const useRoboStore = (deviceid) => {
         this.localrssi = val;
       },
 
-      setactive(val) {
-        // enables / disbles the thrusters
-        this.active = val;
-        $bluetooth.send(this.device, ["active", this.active]);
+      async setmode(val) {
+        this.mode = val;
+        await $bluetooth.send(this.device, ["setmode", this.mode]);
       },
 
-      toggleactive() {
-        this.active = !!!this.active;
-        $bluetooth.send(this.device, ["active", this.active]);
+      async togglemode(val) {
+        if (this.mode == "stop") {
+          this.mode = "auto";
+          await $bluetooth.send(this.device, ["setmode", "auto"]);
+        }
+
+        if (this.mode == "auto") {
+          this.mode = "stop";
+          await $bluetooth.send(this.device, ["setmode", "stop"]);
+        }
       },
 
-      setsurge(val) {
+      async setsurge(val) {
         this.surge = val;
-        $bluetooth.send(this.device, ["surge", this.surge]);
+        await $bluetooth.send(this.device, ["surge", this.surge]);
+      },
+
+      async setdesiredcourse(val) {
+        this.desiredcourse = val;
+        await $bluetooth.send(this.device, ["dc", this.desiredcourse]);
       },
 
       async setwaypoints() {
         // applies waypoints to the robobuoy
         await $bluetooth.send(this.device, ["wp", this.waypoints]);
-      },
-
-      setdesiredcourse(val) {
-        this.desiredcourse = val;
-        $bluetooth.send(this.device, ["dc", this.desiredcourse]);
       },
 
       addwaypoint(latlng) {
@@ -121,6 +181,15 @@ export const useRoboStore = (deviceid) => {
         this.waypoints.splice(index);
       },
 
+      // Request
+      getSteerPIDState() {
+        $bluetooth.send(this.device, ["getSteerPIDState"]);
+      },
+
+      getMotorState() {
+        $bluetooth.send(this.device, ["getMotorState"]);
+      },
+
       calibrateMag() {
         // Starts the Compass / Magentometer calibraiton routine
         this.calibratingcompass = true;
@@ -134,44 +203,6 @@ export const useRoboStore = (deviceid) => {
         setTimeout(() => {
           this.calibratingcompass = false;
         }, this.calibrationsamples * this.calibrationsampletime);
-      },
-
-      // Start and Stop the Robots Asyncronous Tasks
-
-      startFuseGpsTask() {
-        $bluetooth.send(this.device, ["GT"]);
-      },
-
-      stopFuseGpsTask() {
-        $bluetooth.send(this.device, ["sGT"]);
-      },
-
-      startFuseCompassTask() {
-        $bluetooth.send(this.device, ["FCT"]);
-      },
-
-      stopFuseCompassTask() {
-        $bluetooth.send(this.device, ["sFCT"]);
-      },
-
-      startFuseGyroTask() {
-        $bluetooth.send(this.device, ["FGT"]);
-      },
-
-      stopFuseGyroTask() {
-        $bluetooth.send(this.device, ["sFGT"]);
-      },
-
-      startSendMotionStateTask() {
-        $bluetooth.send(this.device, ["SMT"]);
-      },
-
-      stopSendMotionStateTask() {
-        $bluetooth.send(this.device, ["sSMT"]);
-      },
-
-      getstate() {
-        $bluetooth.send(this.device, ["getstate"]);
       },
     },
   })();
