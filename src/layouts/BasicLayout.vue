@@ -55,10 +55,8 @@ export default defineComponent({
 
   setup() {
     const devicesStore = useDevicesStore();
-    $bluetooth.reconnect();
-
     const leftDrawerOpen = ref(false);
-
+    $bluetooth.reconnect();
     return {
       essentialLinks: linksList,
       leftDrawerOpen,

@@ -9,7 +9,7 @@
       <l-map
         ref="map"
         v-model:zoom="zoom"
-        :center="[49.69455, 10.82745]"
+        :center="[49.70878, 10.83226]"
         :use-global-leaflet="false"
       >
         <l-tile-layer
@@ -17,6 +17,7 @@
           layer-type="base"
           name="OpenStreetMap"
           :attribution="attribution"
+          :maxZoom="21"
         ></l-tile-layer>
 
         <RoboBuoyPosition

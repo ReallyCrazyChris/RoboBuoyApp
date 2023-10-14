@@ -13,12 +13,13 @@
     :max="roboStore.vmax + 1"
     :model-value="nodusedmodel"
     :value="roboStore.surge"
-    @update:model-value="updatedesiredsurge"
-    :step="5"
+    @update:model-value="setsurge"
+    :step="2"
   >
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.surge }}</div>
       <div class="text-subtitle2">Thrust</div>
+      <div class="text-subtitle2">{{ roboStore.gpsspeed }}kt</div>
     </div>
     <q-tooltip class="bg-dark text-white">Direction</q-tooltip>
   </q-knob>
@@ -49,9 +50,9 @@ export default {
   },
 
   methods: {
-    updatedesiredsurge(surge) {
+    setsurge(surge) {
       // Rounding is steps of 5
-      surge = Math.ceil(surge / 5) * 5;
+      surge = Math.ceil(surge / 2) * 2;
       this.roboStore.setsurge(surge);
     },
   },

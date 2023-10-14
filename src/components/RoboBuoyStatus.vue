@@ -7,6 +7,7 @@
   >
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-6">
+        <MarkerNumber :number="roboStore.number"></MarkerNumber>
         <q-toolbar-title>{{ roboStore.name }}</q-toolbar-title>
       </q-toolbar>
       <q-toolbar class="col-6">
@@ -62,6 +63,7 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
+import MarkerNumber from "components/robobuoy/MarkerNumber.vue";
 import BatteryStatus from "components/robobuoy/BatteryStatus.vue";
 import GPSStatus from "components/robobuoy/GPSStatus.vue";
 import SignalStrength from "components/robobuoy/SignalStrength.vue";
@@ -73,6 +75,7 @@ export default {
   name: "RoboBuoyStatus",
   props: ["deviceid"],
   components: {
+    MarkerNumber,
     BatteryStatus,
     GPSStatus,
     SignalStrength,

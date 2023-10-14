@@ -20,6 +20,7 @@
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.desiredcourse }}</div>
       <div class="text-subtitle2">Course °</div>
+      <div class="text-subtitle2">gps {{ roboStore.gpscourse }} °</div>
     </div>
     <!--q-tooltip class="bg-dark text-white">Direction</q-tooltip-->
   </q-knob>
@@ -46,6 +47,7 @@
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.currentcourse }}</div>
       <div class="text-subtitle2">Course °</div>
+      <div class="text-subtitle2">gps {{ roboStore.gpscourse }} °</div>
     </div>
     <!--q-tooltip class="bg-dark text-white">Direction</q-tooltip-->
   </q-knob>

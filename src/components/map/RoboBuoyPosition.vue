@@ -5,7 +5,6 @@
     :name="'RoboBuoy'"
     :lat-lng="roboStore.position"
     :zIndexOffset="100"
-    @click="roboStore.togglemode()"
   >
     <l-icon :icon-size="[5, 5]">
       <div class="absolute-center">

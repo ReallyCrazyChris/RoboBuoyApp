@@ -10,7 +10,6 @@ const MTU = 20;
 
 let utf8decoder = new TextDecoder();
 let devicesStore = useDevicesStore();
-
 let sendqueue = [];
 
 function pair() {
@@ -85,28 +84,31 @@ function connect(device) {
         //console.log("Enable notifications");
         txCharacteristic.startNotifications();
 
-        // decode the bencoded packet to a message and handle it
-        const bencode_decoder = decodeTransformer((message) => {
-          const robobuoyStore = useRoboStore(device.id);
-          robobuoyStore.messageHandler(message);
+        devicesStore.adddevice(device);
+
+        const robobuoyStore = useRoboStore(device.id);
+        robobuoyStore.getState();
+
+        // listen for advertisement and update the local rssi
+        device.addEventListener("advertisementreceived", async (event) => {
+          const roboStore = useRoboStore(device.id);
+          roboStore.setlocalrssi(event.rssi);
         });
 
-        // listen for received packets
+        // listen for received packets from the RoboBuoy
         txCharacteristic.addEventListener(
           "characteristicvaluechanged",
           (event) => {
             const packet = utf8decoder.decode(event.target.value);
-            console.log("eventdata", packet);
+            //console.log("eventdata", packet);
             bencode_decoder(packet, "utf-8");
           }
         );
 
-        devicesStore.adddevice(device);
-
-        // listen for advertisement and update the local rssi
-        device.addEventListener("advertisementreceived", async (event) => {
+        // decode the bencoded packet to a message and handle it
+        const bencode_decoder = decodeTransformer((message) => {
           const robobuoyStore = useRoboStore(device.id);
-          robobuoyStore.setlocalrssi(event.rssi);
+          robobuoyStore.messageHandler(message);
         });
 
         console.log("\r\n" + device.name + " Connected.");
@@ -126,17 +128,21 @@ function disconnect(device) {
 }
 
 async function send(device, data) {
-  if (device && device.gatt.connected) {
-    var buffer = encode(data);
-    for (var i = 0; i <= buffer.byteLength; i = i + MTU) {
-      await device.rxCharacteristic
-        .writeValue(buffer.slice(i, i + MTU))
-        .then((resolve) => {
-          setTimeout(resolve, 0);
-        });
+  try {
+    if (device && device.gatt.connected) {
+      var buffer = encode(data);
+      for (var i = 0; i <= buffer.byteLength; i = i + MTU) {
+        await device.rxCharacteristic
+          .writeValue(buffer.slice(i, i + MTU))
+          .then((resolve) => {
+            setTimeout(resolve, 0);
+          });
+      }
+    } else {
+      console.log("Not connected to a device yet.");
     }
-  } else {
-    console.log("Not connected to a device yet.");
+  } catch (e) {
+    // Keep Calm and Carry On
   }
 }
 
