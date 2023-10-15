@@ -1,32 +1,6 @@
 <template>
   <q-page ref="RoboBuoyPositions">
-    <div
-      :style="{
-        height: height + 'px',
-        width: width + 'px',
-      }"
-    >
-      <l-map
-        ref="map"
-        v-model:zoom="zoom"
-        :center="[49.70878, 10.83226]"
-        :use-global-leaflet="false"
-      >
-        <l-tile-layer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          layer-type="base"
-          name="OpenStreetMap"
-          :attribution="attribution"
-          :maxZoom="21"
-        ></l-tile-layer>
-
-        <RoboBuoyPosition
-          v-for="device in devicesStore.connecteddevices"
-          :key="device.id"
-          :deviceid="device.id"
-        />
-      </l-map>
-    </div>
+    <RoboBuoyMap />
     <q-drawer
       side="right"
       show-if-above
@@ -64,20 +38,15 @@
 
 <script>
 import { defineComponent, nextTick } from "vue";
-import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
-
 import { useDevicesStore } from "stores/devicesStore";
 import RoboBuoyStatus from "components/RoboBuoyStatus.vue";
-import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
+import RoboBuoyMap from "src/components/map/RoboBuoyMap.vue";
 
 export default defineComponent({
   name: "RoboBuoyPositions",
   components: {
-    LMap,
-    LTileLayer,
     RoboBuoyStatus,
-    RoboBuoyPosition,
+    RoboBuoyMap,
   },
   setup() {
     const devicesStore = useDevicesStore();
@@ -85,15 +54,7 @@ export default defineComponent({
       devicesStore,
     };
   },
-  data() {
-    return {
-      zoom: 18, //TODO auto zoom
-      height: 900,
-      width: 800,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    };
-  },
+
   mounted() {
     this.height = this.$parent.$el.offsetHeight;
     this.width = this.$parent.$el.offsetWidth;
