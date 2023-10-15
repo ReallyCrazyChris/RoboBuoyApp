@@ -25,8 +25,8 @@ export const useRoboStore = (deviceid) => {
 
       //Position
       positionvalid: false, // valid gps position
-      position: [], // integer north, integer east
-      latitude: 0, // degree decimal north
+      position: ["0", "0"], // string north, string east
+      latitude: 0, // degree decimal north TODO:??????
       longitude: 0, // degree decimal east
       latitude_string: "", // degree decimal north 24 bit precision,
       longitude_string: "", // degree decimal east 24 bit precision
@@ -265,10 +265,7 @@ export const useRoboStore = (deviceid) => {
       //////////////////////////////
 
       addwaypoint(latlng) {
-        const waypoint = [
-          parseFloat(latlng.lat.toFixed(6)),
-          parseFloat(latlng.lng.toFixed(6)),
-        ];
+        const waypoint = [latlng.lat.toFixed(7), latlng.lng.toFixed(7)];
         this.waypoints.push(waypoint);
       },
 

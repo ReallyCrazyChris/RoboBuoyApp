@@ -5,7 +5,7 @@
       width: width + 'px',
     }"
   >
-    <l-map :use-global-leaflet="false" :zoom="1" :center="center">
+    <l-map :use-global-leaflet="true" :zoom="1" :center="center">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
@@ -16,7 +16,7 @@
         @update:center="centerUpdate"
         @update:zoom="zoomUpdate"
       ></l-tile-layer>
-      <l-feature-group @vnode-updated="refer">
+      <l-feature-group :name="'robobuoyposition'">
         <RoboBuoyPosition
           v-for="device in devicesStore.connecteddevices"
           :key="device.id"
@@ -71,9 +71,6 @@ export default defineComponent({
     },
     centerUpdate(center) {
       this.currentCenter = center;
-    },
-    refer(el) {
-      console.log(el);
     },
   },
 });
