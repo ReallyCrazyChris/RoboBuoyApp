@@ -122,7 +122,7 @@ export const useRoboStore = (deviceid) => {
 
     actions: {
       messageHandler(data) {
-        //console.log("messageHandler", data);
+        console.log("messageHandler", data);
         this.$patch(data[1]);
       },
 

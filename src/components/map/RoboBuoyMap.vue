@@ -5,22 +5,25 @@
       width: width + 'px',
     }"
   >
-    <l-map :use-global-leaflet="true" :zoom="1" :center="center">
+    <l-map
+      :use-global-leaflet="false"
+      :zoom="mapStore.zoom"
+      :center="mapStore.center"
+      :bounds="mapStore.bounds"
+    >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
         name="OpenStreetMap"
         :attribution="attribution"
-        :maxZoom="21"
-        :center="center"
-        @update:center="centerUpdate"
-        @update:zoom="zoomUpdate"
+        :maxZoom="19"
       ></l-tile-layer>
-      <l-feature-group :name="'robobuoyposition'">
+      <l-feature-group ref="roboBuoyGroup" :name="'roboBouyPositions'">
         <RoboBuoyPosition
           v-for="device in devicesStore.connecteddevices"
           :key="device.id"
           :deviceid="device.id"
+          @ready="useFeatureGroupBounds"
         />
       </l-feature-group>
     </l-map>
@@ -30,10 +33,10 @@
 <script>
 import { defineComponent, nextTick } from "vue";
 import "leaflet/dist/leaflet.css";
-import { latLngBounds, latLng } from "leaflet";
 import { LMap, LTileLayer, LFeatureGroup } from "@vue-leaflet/vue-leaflet";
 
 import { useDevicesStore } from "stores/devicesStore";
+import { useMapStore } from "src/stores/mapStore";
 import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
 
 export default defineComponent({
@@ -46,8 +49,10 @@ export default defineComponent({
   },
   setup() {
     const devicesStore = useDevicesStore();
+    const mapStore = useMapStore();
     return {
       devicesStore,
+      mapStore,
     };
   },
   data() {
@@ -56,21 +61,19 @@ export default defineComponent({
       width: 800,
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-
-      center: latLng(49.697298818103576, 10.828388524893745),
     };
   },
   mounted() {
     this.height = this.$parent.$el.offsetHeight;
     this.width = this.$parent.$el.offsetWidth;
   },
-  updated() {},
+
   methods: {
-    zoomUpdate(zoom) {
-      this.currentZoom = zoom;
-    },
-    centerUpdate(center) {
-      this.currentCenter = center;
+    useFeatureGroupBounds() {
+      // Access the fraturegroup
+      this.roboBuoyGroup = this.$refs.roboBuoyGroup.leafletObject;
+      // The map should zoominto and center on the group
+      this.mapStore.bounds = this.roboBuoyGroup.getBounds();
     },
   },
 });

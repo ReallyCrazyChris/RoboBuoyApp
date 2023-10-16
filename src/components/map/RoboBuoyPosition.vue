@@ -1,7 +1,6 @@
 <template>
   <l-marker
     v-if="roboStore.position.length"
-    :ref="'sourceMarker'"
     :name="'RoboBuoy'"
     :lat-lng="roboStore.position"
     :zIndexOffset="100"
@@ -89,6 +88,7 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
+import { useMapStore } from "src/stores/mapStore";
 import RoboBuoyMarker from "components/map/RoboBuoyMarker.vue";
 import {
   LMarker,
@@ -100,6 +100,7 @@ import {
 export default {
   name: "RoboBuoyPosition",
   props: ["deviceid"],
+  emits: ["ready"],
   components: {
     LMarker,
     LIcon,
@@ -109,7 +110,13 @@ export default {
   },
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
-    return { roboStore };
+    const mapStore = useMapStore();
+    return { roboStore, mapStore };
+  },
+  mounted() {
+    this.mapStore.center = this.roboStore.position;
+    this.mapStore.zoom = 2;
+    this.$emit("ready");
   },
   computed: {
     waypoints() {
