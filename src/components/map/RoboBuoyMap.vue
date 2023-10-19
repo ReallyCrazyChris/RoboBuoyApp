@@ -11,7 +11,6 @@
       :zoom="mapStore.zoom"
       :center="mapStore.center"
       :bounds="mapStore.bounds"
-      @ready="showRoboBouys"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -20,13 +19,12 @@
         :attribution="attribution"
         :maxZoom="19"
       ></l-tile-layer>
-      <div v-if="roboBouyVisible">
-        <RoboBuoyPosition
-          v-for="device in devicesStore.connecteddevices"
-          :key="device.id"
-          :deviceid="device.id"
-        />
-      </div>
+
+      <RoboBuoyPosition
+        v-for="device in devicesStore.connecteddevices"
+        :key="device.id"
+        :deviceid="device.id"
+      />
     </l-map>
   </div>
 </template>
@@ -35,10 +33,9 @@
 import { defineComponent } from "vue";
 import { useDevicesStore } from "stores/devicesStore";
 import { useMapStore } from "src/stores/mapStore";
-import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
-
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
+import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
 
 export default defineComponent({
   name: "RoboBuoyMap",
@@ -68,12 +65,6 @@ export default defineComponent({
   mounted() {
     this.height = this.$parent.$el.offsetHeight;
     this.width = this.$parent.$el.offsetWidth;
-  },
-
-  methods: {
-    showRoboBouys() {
-      this.roboBouyVisible = true;
-    },
   },
 });
 </script>

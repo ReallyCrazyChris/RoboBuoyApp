@@ -25,11 +25,11 @@ export const useRoboStore = (deviceid) => {
 
       //Position
       positionvalid: false, // valid gps position
-      position: ["0", "0"], // string north, string east
-      latitude: 0, // degree decimal north TODO:??????
-      longitude: 0, // degree decimal east
-      latitude_string: "", // degree decimal north 24 bit precision,
-      longitude_string: "", // degree decimal east 24 bit precision
+      position: [], // string north, string east
+      //latitude: 0, // degree decimal north TODO:??????
+      //longitude: 0, // degree decimal east
+      //latitude_string: "", // degree decimal north 24 bit precision,
+      //longitude_string: "", // degree decimal east 24 bit precision
 
       //Course
       gpscourse: 0, // deg° of the current heading

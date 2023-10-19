@@ -22,21 +22,21 @@
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="'course'"
+        :name="' current course'"
         :value="roboStore.currentcourse"
         :color="roboStore.color"
       ></CourseGuage>
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="'bearing'"
+        :name="'bearing to target'"
         :value="roboStore.desiredcourse"
         :color="roboStore.color"
       ></CourseGuage>
       <DistanceGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="'distance'"
+        :name="'distance to target'"
         :value="roboStore.distance"
         :color="roboStore.color"
       ></DistanceGuage>

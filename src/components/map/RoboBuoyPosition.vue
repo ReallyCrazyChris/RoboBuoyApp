@@ -1,5 +1,5 @@
 <template>
-  <l-feature-group ref="featureGroup" :name="'roboBouyPosition'">
+  <l-feature-group ref="featureGroup" :name="deviceid">
     <l-marker
       v-if="roboStore.position.length"
       :name="'RoboBuoy'"
