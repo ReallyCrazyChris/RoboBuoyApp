@@ -70,6 +70,9 @@ export function decodeTransformer(successHandler) {
       accumulator = "";
     } catch (error) {
       console.log(error);
+      console.log(accumulator);
+      //accumulator = "";
+      throw Error;
     }
   }
   return decodeChunk;

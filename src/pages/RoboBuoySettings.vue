@@ -18,6 +18,8 @@
       <q-separator />
     </q-card>
 
+    <GPSDashboard :deviceid="deviceid" />
+
     <PIDSettings :deviceid="deviceid" />
     <MotorSettings :deviceid="deviceid" />
 
@@ -34,7 +36,7 @@ import PIDSettings from "src/components/settings/PIDSettings.vue";
 import MotorSettings from "src/components/settings/MotorSettings.vue";
 import CompassCalibration from "src/components/settings/CompassCalibration.vue";
 import CompassDashboard from "src/components/dashboards/CompassDashboard.vue";
-
+import GPSDashboard from "src/components/dashboards/GPSDashboard.vue";
 export default {
   name: "RoboBuoySettingsPage",
   props: ["deviceid"],
@@ -44,6 +46,7 @@ export default {
     MotorSettings,
     CompassCalibration,
     CompassDashboard,
+    GPSDashboard,
   },
 
   setup(props) {

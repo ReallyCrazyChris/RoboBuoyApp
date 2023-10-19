@@ -22,12 +22,14 @@
 </template>
 
 <script>
+import { defineComponent, nextTick } from "vue";
 import { useRoboStore } from "stores/roboStore";
 import { ref } from "vue";
 
-export default {
+export default defineComponent({
   name: "RoboBuoyMarker",
   props: ["deviceid"],
+
   components: {},
 
   data() {
@@ -46,6 +48,8 @@ export default {
     };
   },
 
+  mounted() {},
+
   computed: {
     indicatortangle() {
       return (
@@ -53,6 +57,6 @@ export default {
       );
     },
   },
-};
+});
 </script>
 <style></style>

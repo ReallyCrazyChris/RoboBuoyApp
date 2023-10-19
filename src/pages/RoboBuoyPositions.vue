@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { defineComponent, nextTick } from "vue";
+import { defineComponent } from "vue";
 import { useDevicesStore } from "stores/devicesStore";
 import RoboBuoyStatus from "components/RoboBuoyStatus.vue";
 import RoboBuoyMap from "src/components/map/RoboBuoyMap.vue";
@@ -53,11 +53,6 @@ export default defineComponent({
     return {
       devicesStore,
     };
-  },
-
-  mounted() {
-    this.height = this.$parent.$el.offsetHeight;
-    this.width = this.$parent.$el.offsetWidth;
   },
 });
 </script>

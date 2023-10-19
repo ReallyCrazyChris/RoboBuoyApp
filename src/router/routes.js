@@ -15,7 +15,7 @@ const routes = [
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",
         props: true,
-        component: () => import("pages/RoboBuoySettingsPage.vue"),
+        component: () => import("pages/RoboBuoySettings.vue"),
       },
     ],
   },

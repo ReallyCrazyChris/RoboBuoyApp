@@ -6,10 +6,12 @@
     }"
   >
     <l-map
+      ref="map"
       :use-global-leaflet="false"
       :zoom="mapStore.zoom"
       :center="mapStore.center"
       :bounds="mapStore.bounds"
+      @ready="showRoboBouys"
     >
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -18,35 +20,34 @@
         :attribution="attribution"
         :maxZoom="19"
       ></l-tile-layer>
-      <l-feature-group ref="roboBuoyGroup" :name="'roboBouyPositions'">
+      <div v-if="roboBouyVisible">
         <RoboBuoyPosition
           v-for="device in devicesStore.connecteddevices"
           :key="device.id"
           :deviceid="device.id"
-          @ready="useFeatureGroupBounds"
         />
-      </l-feature-group>
+      </div>
     </l-map>
   </div>
 </template>
 
 <script>
-import { defineComponent, nextTick } from "vue";
-import "leaflet/dist/leaflet.css";
-import { LMap, LTileLayer, LFeatureGroup } from "@vue-leaflet/vue-leaflet";
-
+import { defineComponent } from "vue";
 import { useDevicesStore } from "stores/devicesStore";
 import { useMapStore } from "src/stores/mapStore";
 import RoboBuoyPosition from "components/map/RoboBuoyPosition.vue";
 
+import "leaflet/dist/leaflet.css";
+import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
+
 export default defineComponent({
-  name: "RoboBuoyPositions",
+  name: "RoboBuoyMap",
   components: {
     LMap,
     LTileLayer,
     RoboBuoyPosition,
-    LFeatureGroup,
   },
+
   setup() {
     const devicesStore = useDevicesStore();
     const mapStore = useMapStore();
@@ -61,6 +62,7 @@ export default defineComponent({
       width: 800,
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      roboBouyVisible: false,
     };
   },
   mounted() {
@@ -69,11 +71,8 @@ export default defineComponent({
   },
 
   methods: {
-    useFeatureGroupBounds() {
-      // Access the fraturegroup
-      this.roboBuoyGroup = this.$refs.roboBuoyGroup.leafletObject;
-      // The map should zoominto and center on the group
-      this.mapStore.bounds = this.roboBuoyGroup.getBounds();
+    showRoboBouys() {
+      this.roboBouyVisible = true;
     },
   },
 });
