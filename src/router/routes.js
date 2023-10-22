@@ -12,6 +12,10 @@ const routes = [
         component: () => import("pages/RoboBuoyPositions.vue"),
       },
       {
+        path: "racecourse",
+        component: () => import("pages/RaceCourse.vue"),
+      },
+      {
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",
         props: true,
