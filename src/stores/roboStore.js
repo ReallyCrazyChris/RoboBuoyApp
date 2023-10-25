@@ -81,6 +81,7 @@ export const useRoboStore = (deviceid) => {
     getters: {
       isStopped: (state) => state.mode == "stop",
       isManual: (state) => state.mode == "manual",
+      isHold: (state) => state.mode == "hold",
       isAuto: (state) => state.mode == "auto",
       isUnderway: (state) => state.waypoints.length > 0 && state.mode == "auto",
       isHoldStation: (state) =>

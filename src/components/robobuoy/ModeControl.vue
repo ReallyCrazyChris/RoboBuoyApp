@@ -16,6 +16,21 @@
     />
 
     <q-btn
+      v-if="roboStore.isHold"
+      label="Hold"
+      icon="anchor"
+      color="primary"
+      size="sm"
+    />
+    <q-btn
+      v-else
+      label="Hold"
+      icon="anchored"
+      size="sm"
+      @click="roboStore.setmode('hold')"
+    />
+
+    <q-btn
       v-if="roboStore.isStopped"
       label=""
       icon="stop"
