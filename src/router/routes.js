@@ -16,6 +16,10 @@ const routes = [
         component: () => import("pages/RaceCourse.vue"),
       },
       {
+        path: "interaction",
+        component: () => import("pages/InteractionPage.vue"),
+      },
+      {
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",
         props: true,

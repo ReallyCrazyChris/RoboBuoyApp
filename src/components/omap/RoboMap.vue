@@ -6,7 +6,6 @@
     :style="{ height: height + 'px', width: width + 'px' }"
   >
     <ol-view
-      ref="courseView"
       :projection="mapStore.projection"
       :center="mapStore.center"
       :rotation="mapStore.rotation"
@@ -16,13 +15,13 @@
     <ol-tile-layer>
       <ol-source-osm />
     </ol-tile-layer>
-    <ol-layer-group ref="courseGroup" :opacity="1">
+
+    <ol-layer-group>
       <RoboPosition
         v-for="device in devicesStore.connecteddevices"
         :key="device.id"
         :deviceid="device.id"
       />
-
       <RoboPath
         v-for="device in devicesStore.connecteddevices"
         :key="device.id"
@@ -39,9 +38,8 @@ import { useMapStore } from "src/stores/omapStore";
 import RoboPosition from "src/components/omap/RoboPosition.vue";
 import RoboPath from "src/components/omap/RoboPath.vue";
 
-import { View } from "ol";
-import { fromLonLat } from "ol/proj.js";
-import { extend, createEmpty } from "ol/extent.js";
+import { useGeographic } from "ol/proj.js";
+import { extend, createEmpty, getCenter } from "ol/extent.js";
 
 export default defineComponent({
   name: "RoboMap",
@@ -52,6 +50,7 @@ export default defineComponent({
   setup() {
     const devicesStore = useDevicesStore();
     const mapStore = useMapStore();
+    useGeographic();
     return {
       devicesStore,
       mapStore,
@@ -67,30 +66,26 @@ export default defineComponent({
   mounted() {
     this.height = this.$parent.$el.offsetHeight;
     this.width = this.$parent.$el.offsetWidth;
-    this.animateZoom();
   },
 
   methods: {
-    fitToRoboPaths() {
-      const map = this.$refs.courseMap.map;
+    fitToCenterOfPaths() {
+      return null;
+
       const layerGroup = this.$refs.courseGroup.layerGroup;
 
-      var extent = createEmpty();
-      // only RoboPaths are layers, Robo Positions are not :(
-      layerGroup.getLayers().forEach(function (layer) {
-        extend(extent, layer.getSource().getExtent());
+      // create an extent that expands to include all paths
+      var extentOfLayerItems = createEmpty();
+      layerGroup.getLayers().forEach(function (layerItem) {
+        extend(extentOfLayerItems, layerItem.getSource().getExtent());
       });
-      map.getView().fit(extent, map.getSize());
-    },
 
-    animateZoom() {
-      const view = this.$refs.courseView;
-      const point = fromLonLat(this.mapStore.center);
-
-      view.animate(
-        { center: point, duration: 500 },
-        { zoom: 19, duration: 3000 }
-      );
+      // get the centroid of the Layer Items
+      const centroid = getCenter(extentOfLayerItems);
+      if (centroid[0] && centroid[1]) {
+        this.mapStore.center = centroid;
+        //this.mapStore.zoom = 19;
+      }
     },
   },
 });

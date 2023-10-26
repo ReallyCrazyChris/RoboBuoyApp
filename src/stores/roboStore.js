@@ -271,10 +271,10 @@ export const useRoboStore = (deviceid) => {
       },
 
       removewaypoint(index) {
-        this.waypoints.splice(index - 1, 1);
+        this.waypoints.splice(index, 1);
       },
 
-      removewaypoints(index) {
+      removepath(index) {
         this.waypoints.splice(index);
       },
 

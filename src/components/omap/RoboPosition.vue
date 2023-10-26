@@ -12,7 +12,6 @@
 import { defineComponent, nextTick } from "vue";
 import { useRoboStore } from "stores/roboStore";
 import { useMapStore } from "src/stores/omapStore";
-import { fromLonLat } from "ol/proj.js";
 import RoboMarker from "./RoboMarker.vue";
 
 export default defineComponent({
@@ -32,10 +31,7 @@ export default defineComponent({
 
   computed: {
     position() {
-      return fromLonLat([
-        this.roboStore.position[1],
-        this.roboStore.position[0],
-      ]);
+      return [this.roboStore.position[1], this.roboStore.position[0]];
     },
   },
 
