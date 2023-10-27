@@ -16,25 +16,24 @@
       <ol-source-osm />
     </ol-tile-layer>
 
-    <ol-layer-group>
-      <RoboPosition
-        v-for="device in devicesStore.connecteddevices"
-        :key="device.id"
-        :deviceid="device.id"
-      />
-      <RoboPath
-        v-for="device in devicesStore.connecteddevices"
-        :key="device.id"
-        :deviceid="device.id"
-      />
-    </ol-layer-group>
+    <RoboPosition
+      v-for="device in devicesStore.connecteddevices"
+      :key="device.id"
+      :deviceid="device.id"
+    />
+
+    <RoboPath
+      v-for="device in devicesStore.connecteddevices"
+      :key="device.id"
+      :deviceid="device.id"
+    />
   </ol-map>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { useDevicesStore } from "src/stores/devicesStore";
-import { useMapStore } from "src/stores/omapStore";
+import { useOMapStore } from "src/stores/omapStore";
 import RoboPosition from "src/components/omap/RoboPosition.vue";
 import RoboPath from "src/components/omap/RoboPath.vue";
 
@@ -49,7 +48,7 @@ export default defineComponent({
   },
   setup() {
     const devicesStore = useDevicesStore();
-    const mapStore = useMapStore();
+    const mapStore = useOMapStore();
     useGeographic();
     return {
       devicesStore,

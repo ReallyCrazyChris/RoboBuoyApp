@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-export const useMapStore = defineStore("omapStore", {
+export const useOMapStore = defineStore("omapStore", {
   state: () => ({
-    center: ["49.6944390", "10.8274420"],
+    center: [0, 0],
     rotation: 0,
     zoom: 1,
     projection: "EPSG:3857",

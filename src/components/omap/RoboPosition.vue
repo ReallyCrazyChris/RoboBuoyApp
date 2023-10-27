@@ -11,7 +11,7 @@
 <script>
 import { defineComponent, nextTick } from "vue";
 import { useRoboStore } from "stores/roboStore";
-import { useMapStore } from "src/stores/omapStore";
+import { useOMapStore } from "src/stores/omapStore";
 import RoboMarker from "./RoboMarker.vue";
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
   },
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
-    const mapStore = useMapStore();
+    const mapStore = useOMapStore();
     return { roboStore, mapStore };
   },
   data() {

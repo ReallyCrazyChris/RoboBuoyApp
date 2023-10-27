@@ -1,21 +1,23 @@
 <template>
-  <ol-vector-layer>
+  <ol-vector-layer :zIndex="10">
     <ol-source-vector :projection="mapStore.projection">
       <ol-feature
         v-for="(coordinates, index) in pathWaypoints"
         :key="'point' + String(index)"
-        :properties="{ index: index, type: 'pathWaypoints' }"
+        :properties="{ index: index, type: 'pathSegment' }"
       >
-        <ol-geom-line-string
-          v-if="pathWaypoints[index + 1]"
-          :coordinates="[pathWaypoints[index], pathWaypoints[index + 1]]"
-        ></ol-geom-line-string>
-        <ol-style>
-          <ol-style-stroke
-            :color="strokeColor"
-            :width="strokeWidth"
-          ></ol-style-stroke>
-        </ol-style>
+        <div>
+          <ol-geom-line-string
+            v-if="pathWaypoints[index + 1]"
+            :coordinates="[pathWaypoints[index], pathWaypoints[index + 1]]"
+          ></ol-geom-line-string>
+          <ol-style>
+            <ol-style-stroke
+              :color="strokeColor"
+              :width="strokeWidth"
+            ></ol-style-stroke>
+          </ol-style>
+        </div>
       </ol-feature>
 
       <ol-feature
@@ -39,62 +41,57 @@
     </ol-source-vector>
   </ol-vector-layer>
 
-  <ol-vector-layer>
-    <ol-source-vector :projection="mapStore.projection">
-      <ol-interaction-modify :features="selectedFeatures" />
-      <ol-interaction-snap />
-      <ol-feature :properties="{ type: 'marker' }">
-        <ol-geom-point :coordinates="dragMarkerPosition"></ol-geom-point>
-        <ol-style>
-          <ol-style-fill :color="fillColor"></ol-style-fill>
-          <ol-style-stroke
-            :color="strokeColor"
-            :width="strokeWidth"
-          ></ol-style-stroke>
-          <ol-style-icon
-            :src="'https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg'"
-            :scale="2"
-          >
-          </ol-style-icon>
-        </ol-style>
-      </ol-feature>
+  <ol-vector-layer :zIndex="20">
+    <ol-source-vector>
+      <ol-interaction-modify :hitDetection="true" @modifyend="addwaypoint">
+        <ol-feature>
+          <ol-geom-point :coordinates="dragMarkerPosition"></ol-geom-point>
+          <ol-style>
+            <ol-style-icon
+              src="RoboMapPin.png"
+              :scale="0.08"
+              :anchor="[0.5, 1]"
+              :zIndex="50"
+              :color="strokeColor"
+            ></ol-style-icon>
+          </ol-style>
+        </ol-feature>
+      </ol-interaction-modify>
     </ol-source-vector>
   </ol-vector-layer>
 </template>
 
 <script>
-import { defineComponent, inject } from "vue";
+import { defineComponent } from "vue";
+import { colors } from "quasar";
 import { useRoboStore } from "stores/roboStore";
-import { useMapStore } from "src/stores/omapStore";
-import { Collection } from "ol";
-import { click } from "ol/events/condition";
+import { useOMapStore } from "src/stores/omapStore";
+
+const { getPaletteColor } = colors;
 
 export default defineComponent({
   name: "RoboPath",
   props: ["deviceid"],
-
-  components: {},
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
-    const mapStore = useMapStore();
-    var selectedFeatures = new Collection();
-
-    const selectConditions = inject("ol-selectconditions");
-    const selectCondition = selectConditions.click;
-
-    return { roboStore, mapStore, selectedFeatures };
+    const mapStore = useOMapStore();
+    return { roboStore, mapStore };
   },
 
   data() {
     return {
-      radius: 5,
-      strokeWidth: 5,
-      strokeColor: "red",
+      radius: 6,
+      strokeWidth: 4,
+
       fillColor: "white",
     };
   },
 
   computed: {
+    strokeColor() {
+      return getPaletteColor(this.roboStore.color);
+    },
+
     roboBuoyPosition() {
       // latlon -> lonlat ...aaargh
       return [this.roboStore.position[1], this.roboStore.position[0]];
@@ -110,38 +107,44 @@ export default defineComponent({
     pathWaypoints() {
       // also draw the pathWaypoints to the robots positon
       const pathWaypoints = [this.roboBuoyPosition].concat(this.nodeWaypoints);
+
       return pathWaypoints;
     },
     dragMarkerPosition() {
+      // dragMarker is the last in the array
       return this.pathWaypoints[this.pathWaypoints.length - 1];
     },
   },
 
   methods: {
     featureSelected(event) {
-      console.log("featureSelected", event);
       const feature = event.selected[0];
       const featureProps = feature?.getProperties();
-
-      if ("marker" == featureProps?.type) {
-        this.addwaypoint(feature);
-      }
 
       if ("waypoint" == featureProps?.type) {
         this.removewaypoint(featureProps.index);
       }
 
-      if ("pathWaypoints" == featureProps?.type) {
+      if ("pathSegment" == featureProps?.type) {
         this.removepath(featureProps.index);
       }
+
+      const selected = event.target;
+      selected.getFeatures().clear();
+      console.log("featureSelected", selected);
     },
 
-    addwaypoint: function (feature) {
-      console.log("addwaypoint", feature);
-      //const coordinates = feature.getGeometry().getCoordinates();
-      //console.log(coordinates);
-      //this.roboStore.addwaypoint(latlng);
-      //await this.roboStore.setwaypoints();
+    addwaypoint: async function (event) {
+      let waypoint;
+      event.features.forEach(async (feature) => {
+        const coordinates = feature.getGeometry().getCoordinates();
+        // lonlat -> latlon ...arrrgh
+        waypoint = [coordinates[1], coordinates[0]];
+      });
+
+      this.roboStore.addwaypoint(waypoint);
+      await this.roboStore.setwaypoints();
+      console.log("addwaypoint", waypoint);
     },
 
     removewaypoint: async function (index) {

@@ -266,7 +266,10 @@ export const useRoboStore = (deviceid) => {
       //////////////////////////////
 
       addwaypoint(latlng) {
-        const waypoint = [latlng.lat.toFixed(7), latlng.lng.toFixed(7)];
+        const waypoint = [
+          Number(latlng[0]).toFixed(7),
+          Number(latlng[1]).toFixed(7),
+        ];
         this.waypoints.push(waypoint);
       },
 
