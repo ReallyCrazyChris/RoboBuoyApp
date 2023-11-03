@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "SignalStrength",
+  name: "SignalStatus",
   props: ["signalstrength"],
   setup() {
     return {};

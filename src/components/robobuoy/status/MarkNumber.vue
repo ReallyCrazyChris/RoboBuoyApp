@@ -12,7 +12,7 @@
     :max="360"
     :model-value="nodusedmodel"
     :value="indicatorthickness"
-    :angle="indicatortangle"
+    :angle="heading"
   >
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.number }}</div>
@@ -26,7 +26,7 @@ import { useRoboStore } from "stores/roboStore";
 import { ref } from "vue";
 
 export default {
-  name: "MarkerNumber",
+  name: "MarkNumber",
   props: ["number"],
   components: {},
 
@@ -47,7 +47,7 @@ export default {
   },
 
   computed: {
-    indicatortangle() {
+    heading() {
       return (
         this.roboStore.currentcourse - Math.round(this.indicatorthickness / 2)
       );

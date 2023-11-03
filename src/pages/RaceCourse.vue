@@ -6,7 +6,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import RoboMap from "src/components/omap/RoboMap.vue";
+import RoboMap from "src/components/map/RoboMap.vue";
 
 export default defineComponent({
   name: "RaceCourse",

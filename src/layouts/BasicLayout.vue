@@ -6,7 +6,7 @@
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="~assets/logo-mono-white.svg" />
           </q-avatar>
           RoboBuoy
         </q-toolbar-title>
@@ -39,10 +39,10 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Drive",
-    caption: "drive the robobuoy's onto the course",
+    title: "My Robots",
+    caption: "control add and remove your robots",
     icon: "route",
-    link: "#/robobuoypositions",
+    link: "#/myrobots",
   },
   {
     title: "Course",

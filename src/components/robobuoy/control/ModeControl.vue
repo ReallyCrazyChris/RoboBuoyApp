@@ -25,7 +25,7 @@
     <q-btn
       v-else
       label="Hold"
-      icon="anchored"
+      icon="anchor"
       size="sm"
       @click="roboStore.setmode('hold')"
     />
@@ -65,7 +65,7 @@
 <script>
 import { useRoboStore } from "stores/roboStore";
 export default {
-  name: "ManualControl",
+  name: "ModeControl",
   props: ["deviceid"],
   components: {},
   setup(props) {

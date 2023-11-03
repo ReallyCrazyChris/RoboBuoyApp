@@ -65,7 +65,8 @@
 import { defineComponent } from "vue";
 import { colors } from "quasar";
 import { useRoboStore } from "stores/roboStore";
-import { useOMapStore } from "src/stores/omapStore";
+import { useMapStore } from "src/stores/mapStore";
+import { fromLonLat } from "ol/proj";
 
 const { getPaletteColor } = colors;
 
@@ -74,7 +75,7 @@ export default defineComponent({
   props: ["deviceid"],
   setup(props) {
     const roboStore = useRoboStore(props.deviceid);
-    const mapStore = useOMapStore();
+    const mapStore = useMapStore();
     return { roboStore, mapStore };
   },
 
@@ -82,7 +83,6 @@ export default defineComponent({
     return {
       radius: 6,
       strokeWidth: 4,
-
       fillColor: "white",
     };
   },
@@ -92,22 +92,18 @@ export default defineComponent({
       return getPaletteColor(this.roboStore.color);
     },
 
-    roboBuoyPosition() {
-      // latlon -> lonlat ...aaargh
-      return [this.roboStore.position[1], this.roboStore.position[0]];
-    },
     nodeWaypoints() {
       // latlon -> lonlat ...aaargh
-      const nodeWaypoints = this.roboStore.waypoints.map((waypoint) => [
-        waypoint[1],
-        waypoint[0],
-      ]);
+      const nodeWaypoints = this.roboStore.waypoints.map((waypoint) =>
+        fromLonLat([Number(waypoint[1]), Number(waypoint[0])])
+      );
       return nodeWaypoints;
     },
     pathWaypoints() {
       // also draw the pathWaypoints to the robots positon
-      const pathWaypoints = [this.roboBuoyPosition].concat(this.nodeWaypoints);
-
+      const pathWaypoints = [this.roboStore.coordinate].concat(
+        this.nodeWaypoints
+      );
       return pathWaypoints;
     },
     dragMarkerPosition() {
@@ -131,20 +127,18 @@ export default defineComponent({
 
       const selected = event.target;
       selected.getFeatures().clear();
-      console.log("featureSelected", selected);
+      //console.log("featureSelected", selected);
     },
 
     addwaypoint: async function (event) {
-      let waypoint;
-      event.features.forEach(async (feature) => {
-        const coordinates = feature.getGeometry().getCoordinates();
-        // lonlat -> latlon ...arrrgh
-        waypoint = [coordinates[1], coordinates[0]];
+      let coordinate;
+      // the coordinate will always be the last selected feature
+      event.features.forEach(async (selected_feature) => {
+        coordinate = selected_feature.getGeometry().getCoordinates();
       });
 
-      this.roboStore.addwaypoint(waypoint);
+      this.roboStore.addwaypoint(coordinate);
       await this.roboStore.setwaypoints();
-      console.log("addwaypoint", waypoint);
     },
 
     removewaypoint: async function (index) {

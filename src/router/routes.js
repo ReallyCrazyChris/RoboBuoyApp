@@ -16,8 +16,8 @@ const routes = [
         component: () => import("pages/RaceCourse.vue"),
       },
       {
-        path: "interaction",
-        component: () => import("pages/InteractionPage.vue"),
+        path: "myrobots",
+        component: () => import("pages/MyRobots.vue"),
       },
       {
         path: "robobuoysettings/:deviceid",

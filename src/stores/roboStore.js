@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import { $bluetooth } from "src/networking/bluetooth";
-
+// openlayers uses a lonlat projection coordinate system ... very annoying!!!
+import { fromLonLat, toLonLat } from "ol/proj";
 import { useDevicesStore } from "stores/devicesStore";
+
 const deviceStore = useDevicesStore();
 
 export const useRoboStore = (deviceid) => {
@@ -21,19 +23,13 @@ export const useRoboStore = (deviceid) => {
       battery: 90, // % Capacity of battery remaining
 
       // Signal Strength
-      localrssi: 0, // Specific to the APP
+      localrssi: 0, // Specific Measured by this APP
 
       //Position
       positionvalid: false, // valid gps position
-      position: [], // string north, string east
-      //latitude: 0, // degree decimal north TODO:??????
-      //longitude: 0, // degree decimal east
-      //latitude_string: "", // degree decimal north 24 bit precision,
-      //longitude_string: "", // degree decimal east 24 bit precision
-
-      //Course
-      gpscourse: 0, // deg° of the current heading
-      gpsspeed: 0.0, //knots
+      position: [], // latlon gps position of the robot
+      gpscourse: 0, // deg° of the current gps heading
+      gpsspeed: 0.0, // gps knots
       magcourse: 0, // compass course
       magdeclination: 0, // compass magnetic declination
       currentcourse: 0, // deg° of the current heading
@@ -42,7 +38,7 @@ export const useRoboStore = (deviceid) => {
       destination: [], // degree decimal north, degree decimal east
       distance: 0, // (float) meters
       desiredcourse: 0, // deg° of the desired heading
-      waypoints: [], // array of positions
+      waypoints: [], // array of gps positions latlon
       waypointarrivedradius: 0, // waypoint arrived radius (meters)
 
       // Steering
@@ -50,12 +46,6 @@ export const useRoboStore = (deviceid) => {
       Kp: 0,
       Ki: 0,
       Kd: 0,
-
-      // PID variables to matintain course by steering
-      // error : 0,
-      //errSum : 0,
-      //dErr : 0,
-      //lastErr : 0,
 
       // Complimentary Filter tunings
       magalpha: 0, //  filter weighted towards the gyro
@@ -79,6 +69,14 @@ export const useRoboStore = (deviceid) => {
     }),
 
     getters: {
+      // open layers uses a projeciton coordinate system in lonlat
+      coordinate: (state) => {
+        return fromLonLat([
+          Number(state.position[1]),
+          Number(state.position[0]),
+        ]);
+      },
+
       isStopped: (state) => state.mode == "stop",
       isManual: (state) => state.mode == "manual",
       isHold: (state) => state.mode == "hold",
@@ -265,10 +263,12 @@ export const useRoboStore = (deviceid) => {
       // Waypoint Colleciton Methods
       //////////////////////////////
 
-      addwaypoint(latlng) {
+      addwaypoint(coordinate) {
+        // projection coordinate system to lonlat
+        const lonlat = toLonLat(coordinate);
         const waypoint = [
-          Number(latlng[0]).toFixed(7),
-          Number(latlng[1]).toFixed(7),
+          Number(lonlat[1]).toFixed(7),
+          Number(lonlat[0]).toFixed(7),
         ];
         this.waypoints.push(waypoint);
       },
@@ -303,6 +303,5 @@ export const useRoboStore = (deviceid) => {
   })();
 
   store.device = deviceStore.devicebyId(deviceid);
-
   return store;
 };
