@@ -16,14 +16,14 @@
           <div class="text-caption">during the calibration process</div>
         </div>
         <q-btn
-          :loading="roboStore.calibratingcompass"
+          :loading="roboStore.mode == 'calibratemag'"
           class="q-mt-md"
           push
           glossy
           label="Calibrate Compass"
           color="primary"
           icon="explore"
-          @click="roboStore.calibrateMag()"
+          @click="roboStore.setmode('calibratemag')"
         >
           <template v-slot:loading>
             <q-spinner-gears class="q-mx-xs" />

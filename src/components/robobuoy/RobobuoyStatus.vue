@@ -30,16 +30,14 @@
       </q-toolbar>
     </div>
 
-    <q-card-section
-      class="fit row no-wrap justify-evenly items-center content-center"
-    >
+    <q-card-section class="fit row no-wrap justify-evenly">
       <CourseControl :deviceid="roboStore.deviceid"></CourseControl>
       <ThrustControl :deviceid="roboStore.deviceid"></ThrustControl>
     </q-card-section>
 
-    <q-card-actions class="fit row no-wrap justify-evenly">
+    <q-card-section class="fit row no-wrap justify-evenly">
       <ModeControl :deviceid="roboStore.deviceid"></ModeControl>
-    </q-card-actions>
+    </q-card-section>
 
     <!--q-card-actions
       class="fit row no-wrap justify-evenly items-center content-center"

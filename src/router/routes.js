@@ -20,6 +20,14 @@ const routes = [
         component: () => import("pages/MyRobots.vue"),
       },
       {
+        path: "imagelayer",
+        component: () => import("pages/ImageLayer.vue"),
+      },
+      {
+        path: "transformlayer",
+        component: () => import("pages/TransformLayer.vue"),
+      },
+      {
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",
         props: true,

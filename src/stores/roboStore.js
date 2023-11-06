@@ -280,25 +280,6 @@ export const useRoboStore = (deviceid) => {
       removepath(index) {
         this.waypoints.splice(index);
       },
-
-      //////////////////////////////
-      // Compass Calibration Methods
-      //////////////////////////////
-
-      calibrateMag() {
-        // Starts the Compass / Magentometer calibraiton routine
-        this.calibratingcompass = true;
-
-        $bluetooth.send(this.device, [
-          "calibrateMag",
-          this.calibrationsamples,
-          this.calibrationsampletime,
-        ]);
-        // simulate the calibration time
-        setTimeout(() => {
-          this.calibratingcompass = false;
-        }, this.calibrationsamples * this.calibrationsampletime);
-      },
     },
   })();
 

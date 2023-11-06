@@ -7,9 +7,9 @@ const extentOfInterest = createEmpty();
 export const useMapStore = defineStore("mapStore", {
   state: () => ({
     projection: "EPSG:3857",
+    center: [0, 0], // Type: Projection Position, [Lon, Lat]
     rotation: 0,
     zoom: 1,
-    center: [0, 0], // Type: Projection Position, [Lon, Lat]
   }),
   getters: {
     lonlat: (state) => toLonLat(state.center),

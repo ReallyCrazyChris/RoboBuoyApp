@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <rect x="86.025" y="174.948" width="322.756" height="89.472" style="stroke: rgb(0, 0, 0); fill: rgb(238, 238, 238);" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>Floor</title>
+  </rect>
+  <path style="stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; fill: rgb(223, 255, 0);" d="M 29.522 211.268 L 73.322 175.846 L 191.933 144.552 L 427.405 136.893 L 465.045 156.151 L 424.123 175.19 L 234.607 181.317 L 186.9 186.57 L 140.068 196.855 L 84.92 217.207 M 29.517 211.251 L 29.773 228.7 L 73.322 263.983 L 191.933 295.322 L 427.405 302.992 L 465.045 283.706 L 424.123 264.64 L 234.607 258.505 L 186.9 253.244 L 140.068 242.945 L 84.92 222.564 L 84.899 217.218" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>Hull</title>
+  </path>
+  <path style="stroke: rgb(0, 0, 0); paint-order: stroke; stroke-linejoin: round;" d="M 176.614 159.448 L 235.482 152.655 L 391.078 148.491 L 391.953 168.215 L 237.452 172.817 L 178.146 179.172 L 176.614 159.448 Z" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>HullPathcStarboard</title>
+  </path>
+  <path style="stroke: rgb(0, 0, 0); paint-order: stroke; stroke-linejoin: round; transform-origin: 284.502px 277.627px;" d="M 176.614 281.573 L 235.482 288.366 L 391.078 292.53 L 391.953 272.806 L 237.452 268.204 L 178.146 261.849 L 176.614 281.573 Z">
+    <title>HullPathPort</title>
+  </path>
+  <rect style="stroke: rgb(0, 0, 0); stroke-linejoin: round; fill: rgb(255, 255, 255);" x="109.868" y="210.861" width="25.604" height="18.601" rx="5" ry="5" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>BulkheadPortal</title>
+  </rect>
+  <rect style="stroke: rgb(0, 0, 0); stroke-linejoin: round; fill: rgb(170, 170, 170);" x="255.944" y="208.781" width="39.172" height="22.321" rx="5" ry="5" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>SeatSkipper</title>
+  </rect>
+  <rect style="stroke: rgb(0, 0, 0); stroke-linejoin: round; fill: rgb(170, 170, 170); transform-origin: 347.091px 214.362px;" x="299.275" y="208.672" width="39.172" height="22.321" rx="5" ry="5">
+    <title>SeatCrew</title>
+  </rect>
+  <rect style="stroke: rgb(0, 0, 0); stroke-linejoin: round; fill: rgb(136, 136, 136); transform-origin: 259.517px 214.582px;" x="182.851" y="208.892" width="62.807" height="22.321" rx="5" ry="5">
+    <title>SteeringConsole</title>
+  </rect>
+  <ellipse style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" cx="238.546" cy="220.271" rx="6.565" ry="10.504" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>SteeringWheel</title>
+  </ellipse>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(204, 204, 204);" cx="375.43" cy="219.724" rx="4.049" ry="4.049" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>TowingPollard</title>
+  </ellipse>
+  <path style="stroke: rgb(0, 0, 0); fill: rgb(255, 255, 255);" d="M 384.917 196.636 H 407.272 V 243.468 H 384.917 A 5 5 0 0 1 379.917 238.468 V 201.636 A 5 5 0 0 1 384.917 196.636 Z" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>MotorBucket</title>
+  </path>
+  <rect x="408.366" y="176.284" width="3.939" height="87.536" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>Transom</title>
+  </rect>
+  <rect style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" x="139.849" y="196.855" width="3.283" height="46.175" rx="1.6" ry="1.6" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>Bulkhead</title>
+  </rect>
+  <rect style="stroke-linejoin: round; stroke: rgba(0, 0, 0, 0); paint-order: fill; transform-origin: 439.003px 213.925px;" x="391.187" y="208.235" width="39.172" height="22.321" rx="5" ry="5">
+    <title>SeatCrew</title>
+  </rect>
+  <rect style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-linejoin: round;" x="288.332" y="208.891" width="6.127" height="22.321" rx="5" ry="5" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>SeatSkipper</title>
+  </rect>
+  <rect style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-linejoin: round;" x="331.772" y="208.672" width="6.127" height="22.321" rx="5" ry="5" transform="matrix(1, 0, 0, 1, -2.842170943040401e-14, 0)">
+    <title>SeatSkipper</title>
+  </rect>
+  <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" transform="matrix(-0.2877639830112457, 0, 0, 0.43577301502227783, 310.4385681152343, -18.970310211181626)" d="M 366.948 522.946 A 26 26 0 0 1 366.948 573.054 A 34.612 34.612 0 0 0 366.948 522.946 Z">
+    <title>Windscreen</title>
+  </path>
+</svg>

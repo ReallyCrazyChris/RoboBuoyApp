@@ -36,10 +36,7 @@
             >
               <ol-geom-point :coordinates="roboAppCoordinate"></ol-geom-point>
               <ol-style>
-                <ol-style-icon
-                  src="RoboMapPin.png"
-                  :scale="0.1"
-                ></ol-style-icon>
+                <ol-style-icon src="RoboRib.png" :scale="0.2"></ol-style-icon>
               </ol-style>
             </ol-feature>
           </ol-source-vector>

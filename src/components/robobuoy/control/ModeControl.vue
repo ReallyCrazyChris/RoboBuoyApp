@@ -18,14 +18,14 @@
     <q-btn
       v-if="roboStore.isHold"
       label="Hold"
-      icon="anchor"
+      icon="pause"
       color="primary"
       size="sm"
     />
     <q-btn
       v-else
       label="Hold"
-      icon="anchor"
+      icon="pause"
       size="sm"
       @click="roboStore.setmode('hold')"
     />

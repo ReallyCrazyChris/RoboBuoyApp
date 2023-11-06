@@ -7,7 +7,7 @@
   >
     <div class="row no-wrap shadow-1">
       <q-toolbar class="col-6">
-        <MarkerNumber :number="roboStore.number"></MarkerNumber>
+        <MarkNumber :number="roboStore.number"></MarkNumber>
         <q-toolbar-title>{{ roboStore.name }} GPS</q-toolbar-title>
       </q-toolbar>
       <q-toolbar class="col-6">
@@ -52,11 +52,11 @@
 
 <script>
 import { useRoboStore } from "stores/roboStore";
-import MarkerNumber from "components/robobuoy/MarkerNumber.vue";
-import GPSStatus from "components/robobuoy/GPSStatus.vue";
-import CourseGuage from "../generic/CourseGuage.vue";
-import GPSCoordinates from "../generic/GPSCoordinates.vue";
-import DistanceGuage from "../generic/DistanceGuage.vue";
+import MarkNumber from "components/robobuoy/status/MarkNumber.vue";
+import GPSStatus from "components/robobuoy/status/GPSStatus.vue";
+import CourseGuage from "components/generic/CourseGuage.vue";
+import GPSCoordinates from "components/generic/GPSCoordinates.vue";
+import DistanceGuage from "components/generic/DistanceGuage.vue";
 export default {
   name: "GPSDashboard",
   props: {
@@ -66,7 +66,7 @@ export default {
     },
   },
   components: {
-    MarkerNumber,
+    MarkNumber,
     GPSStatus,
     CourseGuage,
     GPSCoordinates,
