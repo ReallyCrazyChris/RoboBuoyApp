@@ -17,7 +17,12 @@
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.number }}</div>
     </div>
-    <q-tooltip class="bg-dark text-white">roboStore.name</q-tooltip>
+    <q-tooltip
+      class="bg-dark text-white"
+      anchor="top middle"
+      self="bottom middle"
+      >roboStore.name</q-tooltip
+    >
   </q-circular-progress>
 </template>
 

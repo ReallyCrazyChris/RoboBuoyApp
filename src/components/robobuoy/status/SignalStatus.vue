@@ -6,7 +6,12 @@
     :color="signalstrength_icon_color"
     :icon="signalstrength_icon"
   >
-    <q-tooltip class="bg-dark text-white">{{ signalstrength }}dBm</q-tooltip>
+    <q-tooltip
+      class="bg-dark text-white"
+      anchor="top middle"
+      self="bottom middle"
+      >{{ signalstrength }}dBm</q-tooltip
+    >
   </q-btn>
 </template>
 

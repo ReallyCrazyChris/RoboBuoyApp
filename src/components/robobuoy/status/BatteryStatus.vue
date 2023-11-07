@@ -7,7 +7,12 @@
     :color="battery_icon_color"
     :icon="battery_icon"
   >
-    <q-tooltip class="bg-dark text-white">Battery {{ battery }}%</q-tooltip>
+    <q-tooltip
+      class="bg-dark text-white"
+      anchor="top middle"
+      self="bottom middle"
+      >Battery {{ battery }}%</q-tooltip
+    >
   </q-btn>
 </template>
 

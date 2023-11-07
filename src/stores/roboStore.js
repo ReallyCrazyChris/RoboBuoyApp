@@ -61,15 +61,10 @@ export const useRoboStore = (deviceid) => {
       mpl: 0, //  min pwm left  : value where the motor starts to turn
       mpr: 0, // min  pwm right : value where the motor starts to turn
       //maxpwm: 110, // maximum pwm signal sent to the motors
-
-      // Compass Calibration
-      calibratingcompass: false,
-      calibrationsamples: 600,
-      calibrationsampletime: 100,
     }),
 
     getters: {
-      // open layers uses a projeciton coordinate system in lonlat
+      // open layers uses a projeciton coordinate system in lonlat ... aaargh
       coordinate: (state) => {
         return fromLonLat([
           Number(state.position[1]),

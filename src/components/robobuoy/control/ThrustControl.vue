@@ -21,7 +21,12 @@
       <div class="text-subtitle2">Thrust</div>
       <div class="text-subtitle2">{{ roboStore.gpsspeed }}kt</div>
     </div>
-    <q-tooltip class="bg-dark text-white">Direction</q-tooltip>
+    <q-tooltip
+      class="bg-dark text-white"
+      anchor="top middle"
+      self="bottom middle"
+      >Thrust</q-tooltip
+    >
   </q-knob>
 </template>
 
