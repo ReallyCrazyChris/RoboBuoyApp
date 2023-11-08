@@ -6,7 +6,7 @@
     color="white"
     :center-color="color"
     track-color="transparent"
-    font-size="0.30em"
+    font-size="0.15em"
     :thickness="0.2"
     :min="0"
     :max="50"
@@ -15,7 +15,7 @@
     :angle="0"
   >
     <div class="column items-center justify-end">
-      <div class="">{{ value }}m</div>
+      <div class="">{{ value }}</div>
       <div class="text-subtitle2">{{ name }}</div>
     </div>
   </q-circular-progress>

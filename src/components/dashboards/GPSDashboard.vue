@@ -6,11 +6,11 @@
     :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2'"
   >
     <div class="row no-wrap shadow-1">
-      <q-toolbar class="col-6">
+      <q-toolbar class="col-10">
         <MarkNumber :number="roboStore.number"></MarkNumber>
-        <q-toolbar-title>{{ roboStore.name }} GPS</q-toolbar-title>
+        <q-toolbar-title>{{ roboStore.name }} GPS </q-toolbar-title>
       </q-toolbar>
-      <q-toolbar class="col-6">
+      <q-toolbar class="col-2">
         <q-space />
         <GPSStatus :positionvalid="roboStore.positionvalid" />
       </q-toolbar>
@@ -19,30 +19,34 @@
     <q-card-section
       class="fit row wrap justify-start items-start content-start"
     >
+      <div class="col-12 text-subtitle2">
+        course, bearing and distance to the next waypoint
+      </div>
+
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="' current course'"
+        :name="' course'"
         :value="roboStore.currentcourse"
         :color="roboStore.color"
       ></CourseGuage>
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="'bearing to target'"
+        :name="' bearing'"
         :value="roboStore.desiredcourse"
         :color="roboStore.color"
       ></CourseGuage>
       <DistanceGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="'distance to target'"
+        :name="'meters'"
         :value="roboStore.distance"
         :color="roboStore.color"
       ></DistanceGuage>
-    </q-card-section>
-    <q-card-section>
+
       <GPSCoordinates
+        class="col-12"
         :latitude="roboStore.position[0]"
         :longitude="roboStore.position[1]"
       />
@@ -78,25 +82,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.rotated {
-  transform: rotate(90deg);
-}
-
-.spin {
-  animation-name: spin;
-  animation-duration: 10000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

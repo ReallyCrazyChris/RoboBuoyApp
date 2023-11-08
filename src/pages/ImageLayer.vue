@@ -13,6 +13,7 @@ import { Style, RegularShape, Fill, Stroke } from "ol/style";
 import { Polygon, LineString, Point, Circle } from "ol/geom";
 import { shiftKeyOnly } from "ol/events/condition";
 import Transform from "ol-ext/interaction/Transform";
+import { composeCssTransform } from "ol/transform.js";
 const mapRef = ref();
 
 onMounted(() => {

@@ -14,8 +14,8 @@
           </div>
         </div>
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="orange">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="orange">
           Kp - proportional gain
         </q-badge>
         <q-slider
@@ -27,11 +27,12 @@
           :step="1"
           label
           label-always
+          switch-label-side
           color="orange"
         ></q-slider>
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="deep-orange">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="deep-orange">
           Ki - integral gain
         </q-badge>
         <q-slider
@@ -43,11 +44,12 @@
           :step="0.1"
           label
           label-always
+          switch-label-side
           color="deep-orange"
         ></q-slider>
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="brown">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="brown">
           Kd - differential gain
         </q-badge>
         <q-slider
@@ -59,13 +61,14 @@
           :step="0.1"
           label
           label-always
+          switch-label-side
           color="brown"
         ></q-slider>
       </div>
 
       <q-card-actions>
-        <q-btn flat @click="roboStore.getPIDsettings()">read</q-btn>
-        <q-btn flat @click="roboStore.savesettings()">Save</q-btn>
+        <q-btn size="sm" @click="roboStore.getPIDsettings()">read</q-btn>
+        <q-btn size="sm" @click="roboStore.savesettings()">Save</q-btn>
       </q-card-actions>
     </q-card-section>
   </q-card>

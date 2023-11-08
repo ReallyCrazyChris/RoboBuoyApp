@@ -56,7 +56,7 @@ export const useRoboStore = (deviceid) => {
       surge: 0, //  desired robot speed cm/s
       steer: 0, //  desired robot angualr rotation deg/s
       vmin: 0, //  minimum robot velocity cm/s
-      vmax: 0, //  maximum robot velocity cm/s
+      vmax: 50, //  maximum robot velocity cm/s
       steergain: 0, // steering gain
       mpl: 0, //  min pwm left  : value where the motor starts to turn
       mpr: 0, // min  pwm right : value where the motor starts to turn

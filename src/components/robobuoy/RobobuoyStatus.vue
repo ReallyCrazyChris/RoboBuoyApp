@@ -24,7 +24,12 @@
           }"
         >
           <q-btn flat round dense color="white" icon="settings">
-            <q-tooltip class="bg-dark text-white">Settings</q-tooltip>
+            <q-tooltip
+              class="bg-dark text-white"
+              anchor="top middle"
+              self="bottom middle"
+              >Settings</q-tooltip
+            >
           </q-btn>
         </router-link>
       </q-toolbar>

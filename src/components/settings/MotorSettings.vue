@@ -15,8 +15,8 @@
           </div>
         </div>
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="indigo">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="indigo">
           Maximum thrust (cm/s)
         </q-badge>
         <q-slider
@@ -28,11 +28,12 @@
           :step="1"
           label
           label-always
+          switch-label-side
           color="indigo"
         ></q-slider>
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="deep-purple">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="deep-purple">
           Steering sensetivity (gain)</q-badge
         >
         <q-slider
@@ -44,11 +45,12 @@
           :step="1"
           label
           label-always
+          switch-label-side
           color="deep-purple"
         />
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="purple">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="purple">
           Left Minimum PWM to rotate</q-badge
         >
         <q-slider
@@ -60,11 +62,12 @@
           :step="1"
           label
           label-always
+          switch-label-side
           color="purple"
         />
       </div>
-      <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="purple">
+      <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="purple">
           Right Minimum PWM to rotate</q-badge
         >
         <q-slider
@@ -76,12 +79,13 @@
           :step="1"
           label
           label-always
+          switch-label-side
           color="purple"
         />
       </div>
       <q-card-actions>
-        <q-btn flat @click="roboStore.getMotorsettings()">read</q-btn>
-        <q-btn flat @click="roboStore.savesettings()">Save</q-btn>
+        <q-btn size="sm" @click="roboStore.getMotorsettings()">read</q-btn>
+        <q-btn size="sm" @click="roboStore.savesettings()">Save</q-btn>
       </q-card-actions>
     </q-card-section>
   </q-card>

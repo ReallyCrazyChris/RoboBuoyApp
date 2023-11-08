@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="teal"> GPS Alpha </q-badge>
+        <q-badge class="col-3 q-mr-md" color="teal">GPS </q-badge>
         <q-slider
           class="col-grow"
           :model-value="roboStore.gpsalpha"
@@ -29,7 +29,7 @@
         ></q-slider>
       </div>
       <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="green"> Compass Alpha </q-badge>
+        <q-badge class="col-3 q-mr-md" color="green">Compass</q-badge>
         <q-slider
           class="col-grow"
           :model-value="roboStore.magalpha"
@@ -43,8 +43,8 @@
         ></q-slider>
       </div>
       <div class="fit row q-pa-md">
-        <q-badge class="col-2 q-mr-md" color="light-green">
-          Declination Alpha
+        <q-badge class="col-3 q-mr-md" color="light-green">
+          Declination
         </q-badge>
         <q-slider
           class="col-grow"
@@ -59,8 +59,8 @@
         ></q-slider>
       </div>
       <q-card-actions>
-        <q-btn flat @click="roboStore.getAlphasettings()">read</q-btn>
-        <q-btn flat @click="roboStore.savesettings()">Save</q-btn>
+        <q-btn size="sm" @click="roboStore.getAlphasettings()">read</q-btn>
+        <q-btn size="sm" @click="roboStore.savesettings()">Save</q-btn>
       </q-card-actions>
     </q-card-section>
   </q-card>

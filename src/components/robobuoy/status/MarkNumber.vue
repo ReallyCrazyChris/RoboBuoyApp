@@ -21,7 +21,7 @@
       class="bg-dark text-white"
       anchor="top middle"
       self="bottom middle"
-      >roboStore.name</q-tooltip
+      >{{ roboStore.name }}</q-tooltip
     >
   </q-circular-progress>
 </template>

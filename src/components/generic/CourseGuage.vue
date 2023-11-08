@@ -6,7 +6,7 @@
     color="white"
     :center-color="color"
     track-color="transparent"
-    font-size="0.30em"
+    font-size="0.15em"
     :thickness="0.2"
     :min="0"
     :max="360"
