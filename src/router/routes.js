@@ -27,6 +27,12 @@ const routes = [
         path: "transformlayer",
         component: () => import("pages/TransformLayer.vue"),
       },
+
+      {
+        path: "course",
+        component: () => import("pages/CoursePage.vue"),
+      },
+
       {
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",

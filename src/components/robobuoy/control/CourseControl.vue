@@ -13,7 +13,7 @@
     :max="360"
     :model-value="nodusedmodel"
     :value="indicatorthickness"
-    :step="10"
+    :step="5"
     :angle="indicatortangle"
     @update:model-value="updatedesiredcourse"
   >
@@ -40,7 +40,7 @@
     :max="360"
     :model-value="nodusedmodel"
     :value="indicatorthickness"
-    :step="10"
+    :step="5"
     :angle="roboStore.currentcourse"
     @update:model-value="updatedesiredcourse"
   >
@@ -99,7 +99,7 @@ export default {
       }
 
       // Rounding is steps of 10
-      newcourse = Math.ceil(newcourse / 10) * 10;
+      newcourse = Math.ceil(newcourse / 5) * 5;
 
       this.roboStore.setdesiredcourse(newcourse);
     },

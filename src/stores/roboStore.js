@@ -56,8 +56,7 @@ export const useRoboStore = (deviceid) => {
       surge: 0, //  desired robot speed cm/s
       steer: 0, //  desired robot angualr rotation deg/s
       vmin: 0, //  minimum robot velocity cm/s
-      vmax: 50, //  maximum robot velocity cm/s
-      steergain: 0, // steering gain
+      vmax: 50, //  maximum robot velocity cm/diff
       mpl: 0, //  min pwm left  : value where the motor starts to turn
       mpr: 0, // min  pwm right : value where the motor starts to turn
       //maxpwm: 110, // maximum pwm signal sent to the motors
@@ -160,6 +159,14 @@ export const useRoboStore = (deviceid) => {
         await $bluetooth.send(this.device, ["dc", this.desiredcourse]);
       },
 
+      async setmagdeclination(val) {
+        this.magdeclination = val;
+        await $bluetooth.send(this.device, [
+          "magdeclination",
+          this.magdeclination,
+        ]);
+      },
+
       async setwaypoints() {
         // applies waypoints to the robobuoy
         await $bluetooth.send(this.device, ["wp", this.waypoints]);
@@ -224,11 +231,6 @@ export const useRoboStore = (deviceid) => {
         await $bluetooth.send(this.device, ["vmax", this.vmax]);
       },
 
-      async setsteergain(val) {
-        this.steergain = val;
-        await $bluetooth.send(this.device, ["steergain", this.steergain]);
-      },
-
       async setmpl(val) {
         this.mpl = val;
         await $bluetooth.send(this.device, ["mpl", this.mpl]);
@@ -252,6 +254,26 @@ export const useRoboStore = (deviceid) => {
 
       getAlphasettings() {
         $bluetooth.send(this.device, ["getAlphasettings"]);
+      },
+
+      ////////////
+      // Actions
+      ///////////
+
+      savesettings() {
+        $bluetooth.send(this.device, ["savesettings"]);
+      },
+
+      loadsettings() {
+        $bluetooth.send(this.device, ["loadsettings"]);
+      },
+
+      saveimuconfig() {
+        $bluetooth.send(this.device, ["saveimuconfig"]);
+      },
+
+      loadimuconfig() {
+        $bluetooth.send(this.device, ["loadimuconfig"]);
       },
 
       //////////////////////////////

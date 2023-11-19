@@ -32,23 +32,7 @@
           color="indigo"
         ></q-slider>
       </div>
-      <div class="fit q-pa-md">
-        <q-badge class="q-mr-md" color="deep-purple">
-          Steering sensetivity (gain)</q-badge
-        >
-        <q-slider
-          class="col-grow"
-          :model-value="roboStore.steergain"
-          @update:model-value="roboStore.setsteergain"
-          :min="1"
-          :max="200"
-          :step="1"
-          label
-          label-always
-          switch-label-side
-          color="deep-purple"
-        />
-      </div>
+
       <div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="purple">
           Left Minimum PWM to rotate</q-badge

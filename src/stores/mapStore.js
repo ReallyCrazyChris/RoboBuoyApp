@@ -16,8 +16,9 @@ export const useMapStore = defineStore("mapStore", {
   },
   actions: {
     zoomToCoordinate(coordinate) {
-      this.center = coordinate;
-      this.zoom = 18;
+      this.center = fromLonLat([10.832274248052466, 49.70878107952494]);
+      //this.center = coordinate;
+      this.zoom = 19;
     },
   },
 });

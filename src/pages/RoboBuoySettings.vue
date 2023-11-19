@@ -19,32 +19,42 @@
     </q-card>
 
     <GPSDashboard :deviceid="deviceid" />
-
+    <RobobuoyStatus :deviceid="deviceid"></RobobuoyStatus>
     <PIDSettings :deviceid="deviceid" />
     <MotorSettings :deviceid="deviceid" />
-
     <AlphaSettings :deviceid="deviceid" />
     <CompassCalibration :deviceid="deviceid" />
+    <DeclinationCalibration :deviceid="deviceid" />
+    <AccelCalibration :deviceid="deviceid" />
+    <GyroCalibration :deviceid="deviceid" />
     <CompassDashboard :deviceid="deviceid"></CompassDashboard>
   </q-page>
 </template>
 
 <script>
 import { useRoboStore } from "stores/roboStore";
+import RobobuoyStatus from "src/components/robobuoy/RobobuoyStatus.vue";
 import AlphaSettings from "src/components/settings/AlphaSettings.vue";
 import PIDSettings from "src/components/settings/PIDSettings.vue";
 import MotorSettings from "src/components/settings/MotorSettings.vue";
 import CompassCalibration from "src/components/settings/CompassCalibration.vue";
+import DeclinationCalibration from "src/components/settings/DeclinationCalibration.vue";
+import AccelCalibration from "src/components/settings/AccelCalibration.vue";
+import GyroCalibration from "src/components/settings/GyroCalibration.vue";
 import CompassDashboard from "src/components/dashboards/CompassDashboard.vue";
 import GPSDashboard from "src/components/dashboards/GPSDashboard.vue";
 export default {
   name: "RoboBuoySettingsPage",
   props: ["deviceid"],
   components: {
+    RobobuoyStatus,
     AlphaSettings,
     PIDSettings,
     MotorSettings,
     CompassCalibration,
+    DeclinationCalibration,
+    AccelCalibration,
+    GyroCalibration,
     CompassDashboard,
     GPSDashboard,
   },

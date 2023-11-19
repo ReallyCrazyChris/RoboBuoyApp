@@ -7,22 +7,24 @@
   >
     <q-card-section>
       <div class="">
-        <div class="text-h6">Compass Calibration</div>
+        <div class="text-h6">Accelerometer Calibration</div>
         <div class="text-caption">
-          Once the robot is stopped an in the water
+          The Robot needs to be in its charge cradel
         </div>
-        <div class="text-caption">you can start the calibration</div>
+        <div class="text-caption">
+          The robot and the charge cradel need to be on a flat surface
+        </div>
       </div>
 
       <q-card-actions>
         <q-btn
           :disabled="roboStore.mode != 'stop'"
-          :loading="roboStore.mode == 'calibratemag'"
+          :loading="roboStore.mode == 'calibrateaccel'"
           class=""
           label="Calibrate"
           color="primary"
-          icon="explore"
-          @click="roboStore.setmode('calibratemag')"
+          icon="3d_rotation"
+          @click="roboStore.setmode('calibrateaccel')"
         >
           <template v-slot:loading>
             <q-spinner-gears class="q-mx-xs" />
@@ -44,7 +46,7 @@
 import { useRoboStore } from "stores/roboStore";
 
 export default {
-  name: "CompassCalibration",
+  name: "AccelCalibration",
   props: ["deviceid"],
   components: {},
 
