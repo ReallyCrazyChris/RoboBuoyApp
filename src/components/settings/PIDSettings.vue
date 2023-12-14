@@ -23,8 +23,8 @@
           :model-value="roboStore.Kp"
           @update:model-value="roboStore.setKp"
           :min="0"
-          :max="100"
-          :step="1"
+          :max="10"
+          :step="0.1"
           label
           label-always
           switch-label-side
@@ -40,8 +40,8 @@
           :model-value="roboStore.Ki"
           @update:model-value="roboStore.setKi"
           :min="0"
-          :max="50"
-          :step="0.1"
+          :max="1"
+          :step="0.01"
           label
           label-always
           switch-label-side
@@ -57,8 +57,8 @@
           :model-value="roboStore.Kd"
           @update:model-value="roboStore.setKd"
           :min="0"
-          :max="100"
-          :step="1"
+          :max="10"
+          :step="0.1"
           label
           label-always
           switch-label-side

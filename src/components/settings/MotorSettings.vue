@@ -16,6 +16,21 @@
         </div>
       </div>
       <div class="fit q-pa-md">
+        <q-badge class="q-mr-md" color="red"> Steer Gain </q-badge>
+        <q-slider
+          class="col-grow"
+          :model-value="roboStore.steergain"
+          @update:model-value="this.roboStore.setsteergain"
+          :min="0"
+          :max="100"
+          :step="1"
+          label
+          label-always
+          switch-label-side
+          color="red"
+        ></q-slider>
+      </div>
+      <div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="indigo">
           Maximum thrust (cm/s)
         </q-badge>

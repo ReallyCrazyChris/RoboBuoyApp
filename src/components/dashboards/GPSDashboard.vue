@@ -26,14 +26,14 @@
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="' course'"
+        :name="' current course'"
         :value="roboStore.currentcourse"
         :color="roboStore.color"
       ></CourseGuage>
       <CourseGuage
         class="col-4 q-pa-sm"
         :deviceid="roboStore.deviceid"
-        :name="' bearing'"
+        :name="' desired course'"
         :value="roboStore.desiredcourse"
         :color="roboStore.color"
       ></CourseGuage>

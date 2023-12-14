@@ -6,64 +6,320 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 import { Map, View, Feature } from "ol";
-import { Layer, Tile, Vector as VectorLayer } from "ol/layer";
+import { Tile, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource } from "ol/source";
 import { transform } from "ol/proj";
-import { Polygon, Circle, LineString, Point } from "ol/geom";
+import { Circle, LineString, Point } from "ol/geom";
 import MapBrowserEventType from "ol/MapBrowserEventType";
 import Collection from "ol/Collection";
 
-import {
-  Translate,
-  Pointer,
-  defaults as defaultInteractions,
-} from "ol/interaction";
-import {
-  getCenter,
-  getTopLeft,
-  getTopRight,
-  getBottomLeft,
-  getBottomRight,
-} from "ol/extent";
-import CircleStyle from "ol/style/Circle";
+import { Translate, Pointer } from "ol/interaction";
+
 import { Style, Fill, Stroke, Text, Icon } from "ol/style";
-import { getArea, getLength } from "ol/sphere";
-import { makeObjectPropertyPusher } from "ol/xml";
-import { extend } from "quasar";
-import TransformLayer_withsvg from "./TransformLayer_withsvg.vue";
 
-const mapRef = ref();
+class Bouy extends Feature {
+  constructor(props) {
+    super({ name: "Buoy" });
+    this.type = "Buoy";
+    this.name = props?.name || "Buoy";
+    this.number = props?.number || "0";
+    this.color = props?.color || "rgb(223,255,1)";
+    this.radius = props?.radius || 5;
+    this.coordinates = props?.coordinates || [0, 0];
 
-// where we are placing the course
-var comitteeBoatGeolocaiton = transform(
-  [10.932036344861501, 49.124145352082735],
-  "EPSG:4326",
-  "EPSG:3857"
-);
+    const buoyGeometry = new Circle(this.coordinates, this.radius);
 
-class RaceCource extends Collection {
-  constructor(
-    name,
-    centerofrotation,
-    extent,
-    padding = 30,
-    color = "rgb(223,255,1)"
-  ) {
-    super();
-    this.name = name || "";
-    this.extent = extent;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-    this.paddingX = padding;
-    this.paddingY = padding;
+    this.setGeometry(buoyGeometry);
+
+    this.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb(223,255,1)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb(223,255,1)",
+          width: 0,
+          lineCap: "round",
+        }),
+        text: new Text({
+          text: String(this.number) || "",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+        }),
+      })
+    );
+  }
+
+  getInteractions(layer) {
+    const translate = new Translate({
+      hitTolerance: 5,
+      layers: [layer],
+      features: new Collection([this]),
+    });
+
+    translate.on("translatestart", (translateEvent) => {
+      //translate.features_ = ;
+    });
+
+    translate.on("translateend", (translateEvent) => {
+      //translate.features_ = dragHandel;
+    });
+
+    return [translate];
+  }
+
+  toObject() {
+    const object = {
+      type: this.type,
+      name: this.name,
+      number: this.number,
+      color: this.color,
+      radius: this.radius,
+      coordinates: this.coordinates,
+    };
+    return object;
   }
 }
 
-class DragHandle extends Feature {
-  constructor(boundaryCenter) {
-    this.setGeometry(new Point(boundaryCenter, 3));
+class Gate {
+  constructor(props) {
+    this.type = "Gate";
+    this.name = props?.name || "Gate";
+    this.number = props?.number || "0";
+    this.color = props?.color || "rgb(223,255,1)";
+    this.radius = props?.radius || 5;
+    this.coordinates = props?.coordinates || [
+      [0, 0],
+      [0, 0],
+    ];
 
-    this.setStyle(
+    this.bouyA = new Feature({
+      geometry: new Circle(this.coordinates[0], this.radius),
+    });
+
+    this.bouyA.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb(223,255,1)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb(223,255,1)",
+          width: 0,
+          lineCap: "round",
+        }),
+        text: new Text({
+          text: String(this.number) + "a",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+        }),
+      })
+    );
+
+    this.bouyB = new Feature({
+      geometry: new Circle(this.coordinates[1], this.radius),
+    });
+
+    this.bouyB.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb(223,255,1)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb(223,255,1)",
+          width: 0,
+          lineCap: "round",
+        }),
+        text: new Text({
+          text: String(this.number) + "b",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+        }),
+      })
+    );
+  }
+
+  getInteractions(layer) {
+    const translateA = new Translate({
+      hitTolerance: 5, //px
+      layers: [layer],
+      features: new Collection([this.bouyA]),
+    });
+
+    translateA.on("translatestart", (translateEvent) => {
+      //translate.features_ = ;
+    });
+
+    translateA.on("translateend", (translateEvent) => {
+      //translate.features_ = dragHandel;
+    });
+
+    const translateB = new Translate({
+      hitTolerance: 5, //px
+      layers: [layer],
+      features: new Collection([this.bouyB]),
+    });
+
+    translateB.on("translatestart", (translateEvent) => {
+      //translate.features_ = ;
+      const a = this.bouyA.getGeometry().getCenter();
+      const b = this.bouyB.getGeometry().getCenter();
+      this.offset = [a[0] - b[0], a[1] - b[1]];
+    });
+
+    translateB.on("translating", (e) => {
+      // BouyA is translated together with BouyB
+      const coordinates = this.bouyB.getGeometry().getCenter();
+      this.bouyA
+        .getGeometry()
+        .setCenter([
+          coordinates[0] + this.offset[0],
+          coordinates[1] + this.offset[1],
+        ]);
+    });
+
+    translateB.on("translateend", (e) => {
+      //translate.features_ = dragHandel;
+    });
+
+    return [translateA, translateB];
+  }
+
+  toObject() {
+    const object = {
+      type: this.type,
+      name: this.name,
+      number: this.number,
+      color: this.color,
+      radius: this.radius,
+      coordinates: this.coordinates,
+    };
+    return object;
+  }
+}
+
+class Startgate {
+  constructor(props) {
+    this.type = "Startgate";
+    this.name = props?.name || "Startgate";
+    this.number = props?.number || "0";
+    this.color = props?.color || "rgb(223,255,1)";
+    this.radius = props?.radius || 5;
+    this.coordinates = props?.coordinates || [
+      [0, 0],
+      [0, 0],
+    ];
+
+    this.preventRotateEventPropagation = false;
+    this.currentCoordinate = [0, 0];
+
+    this.bouyA = new Feature({
+      geometry: new Circle(this.coordinates[0], this.radius),
+    });
+
+    this.bouyA.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb(223,255,1)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb(223,255,1)",
+          width: 0,
+          lineCap: "round",
+        }),
+        text: new Text({
+          text: String(this.number) + "a",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+        }),
+      })
+    );
+
+    this.bouyB = new Feature({
+      geometry: new Circle(this.coordinates[1], this.radius),
+    });
+
+    this.bouyB.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb(223,255,1)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb(223,255,1)",
+          width: 0,
+          lineCap: "round",
+        }),
+        text: new Text({
+          text: String(this.number) + "b",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+        }),
+      })
+    );
+
+    this.startLine = new Feature({
+      geometry: new LineString([this.coordinates[1], this.coordinates[0]]),
+    });
+
+    this.startLine.setStyle(
+      new Style({
+        fill: new Fill({
+          color: this.color || "rgb( 255,0,0)",
+        }),
+        stroke: new Stroke({
+          color: this.color || "rgb( 255,0,0)",
+          width: 5,
+          lineCap: "round",
+          lineDash: [5, 15],
+        }),
+        text: new Text({
+          text: this.name || "start",
+          font: "16px sans-serif",
+          textAlign: "center",
+          justify: "center",
+          offsetY: 15,
+        }),
+      })
+    );
+
+    this.rotateHandel = new Feature({
+      geometry: new Point(
+        [this.coordinates[1][0] + 20, this.coordinates[1][1]],
+        0.0001
+      ),
+    });
+
+    this.rotateHandel.setStyle(
+      new Style({
+        fill: new Fill({
+          color: "lightgrey",
+        }),
+        stroke: new Stroke({
+          color: "white",
+          width: 2,
+          lineCap: "round",
+        }),
+        image: new Icon({
+          color: "#BADA55",
+          src: "icons/cycle_fill1_48px.svg",
+          scale: 0.45,
+          rotateWithView: true,
+        }),
+      })
+    );
+
+    this.dragHandel = new Feature({
+      geometry: new Point(
+        [this.coordinates[1][0], this.coordinates[1][1] - 20],
+        0.0001
+      ),
+    });
+
+    this.dragHandel.setStyle(
       new Style({
         fill: new Fill({
           color: "lightgrey",
@@ -83,367 +339,20 @@ class DragHandle extends Feature {
     );
   }
 
-  setDragableOn(map, layer) {
-    const translate = new Translate({
-      // radius around the given pixecl position will be checked for features  hitTolerance: 5, //px
-      layers: [layer],
-      features: this, // the dragHandle feature(s) is used it initiate the Translate
-    });
-
-    // When the dragHandel starts translating ... translate courceBoundaryFeaturesCollection
-    translate.on("translatestart", (translateEvent) => {
-      translate.features_ = courceBoundaryFeaturesCollection;
-    });
-
-    // When the dragHandel stop translating ... retuen to Translate using the dragHandel only
-    translate.on("translateend", (translateEvent) => {
-      translate.features_ = dragHandel;
-    });
-  }
-}
-
-class Boundary extends Feature {
-  constructor(
-    name,
-    centerofrotation,
-    extent,
-    padding = 30,
-    color = "rgb(223,255,1)"
-  ) {
-    super();
-    this.name = name || "";
-    this.extent = extent;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-    this.paddingX = padding;
-    this.paddingY = padding;
-
-    var p0 = getTopLeft(extent);
-    p0 = [p0[0] - this.paddingX, p0[1] + this.paddingY];
-    var p1 = getTopRight(extent);
-    p1 = [p1[0] + this.paddingX, p1[1] + this.paddingY];
-    var p2 = getBottomRight(extent);
-    p2 = [p2[0] + this.paddingX, p2[1] - this.paddingY];
-    var p3 = getBottomLeft(extent);
-    p3 = [p3[0] - this.paddingX, p3[1] - this.paddingY];
-
-    var courseBoundary = [p0, p1, p2, p3];
-
-    this.setGeometry(new Polygon([courseBoundary]));
-
-    this.setStyle(
-      new Style({
-        stroke: new Stroke({
-          color: "grey",
-          width: 0.5,
-          lineDash: [5, 5],
-        }),
-      })
-    );
-  }
-
-  setDragableOn(map, layer) {
-    const translate = new Translate({
-      hitTolerance: 5, //px
-      layers: [layer],
-      features: new Collection([this]),
-    });
-
-    translate.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-    });
-
-    translate.on("translateend", (translateEvent) => {
-      //translate.features_ = dragHandel;
-    });
-
-    map.addInteraction(translate);
-
-    return this;
-  }
-}
-
-class Buoy extends Feature {
-  constructor(
-    number,
-    centerofrotation,
-    offset,
-    radius,
-    color = "rgb(223,255,1)"
-  ) {
-    super();
-    this.number = number || "";
-    this.offset = offset;
-    this.radius = radius;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-
-    this.offsetCoordinate = [
-      this.centerofrotation[0] + this.offset[0],
-      this.centerofrotation[1] + this.offset[1],
-    ];
-
-    this.setGeometry(new Circle(this.offsetCoordinate, this.radius));
-
-    this.setStyle(
-      new Style({
-        fill: new Fill({
-          color: this.color,
-        }),
-        stroke: new Stroke({
-          color: this.color,
-          width: 0,
-          lineCap: "round",
-        }),
-        text: new Text({
-          text: String(this.number),
-          font: "16px sans-serif",
-          textAlign: "center",
-          justify: "center",
-        }),
-      })
-    );
-  }
-
-  setDragableOn(map, layer) {
-    const translate = new Translate({
-      hitTolerance: 5, //px
-      layers: [layer],
-      features: new Collection([this]),
-    });
-
-    translate.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-    });
-
-    translate.on("translateend", (translateEvent) => {
-      //translate.features_ = dragHandel;
-    });
-
-    map.addInteraction(translate);
-
-    return this;
-  }
-}
-
-class Line extends Feature {
-  constructor(name, centerofrotation, offset, width, color = "rgb(223,255,1)") {
-    super();
-    this.name = name;
-    this.offset = offset;
-    this.width = width;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-
-    this.offsetCoordinate = [
-      this.centerofrotation[0] + this.offset[0],
-      this.centerofrotation[1] + this.offset[1],
-    ];
-
-    this.lineCoordinates = [
-      [this.offsetCoordinate[0] - this.width / 2, this.offsetCoordinate[1]],
-      [this.offsetCoordinate[0] + this.width / 2, this.offsetCoordinate[1]],
-    ];
-
-    this.setGeometry(new LineString(this.lineCoordinates, "XY"));
-
-    this.setStyle(
-      new Style({
-        fill: new Fill({
-          color: this.color,
-        }),
-        stroke: new Stroke({
-          color: this.color,
-          width: 5,
-          lineCap: "round",
-          lineDash: [5, 15],
-        }),
-        text: new Text({
-          text: String(this.name),
-          font: "10px roboto",
-          textAlign: "center",
-          justify: "center",
-          textBaseline: "bottom",
-        }),
-      })
-    );
-  }
-
-  setDragableOn(map, layer) {
-    const translate = new Translate({
-      hitTolerance: 5, //px
-      layers: [layer],
-      features: new Collection([this]),
-    });
-
-    translate.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-    });
-
-    translate.on("translateend", (translateEvent) => {
-      //translate.features_ = dragHandel;
-    });
-
-    map.addInteraction(translate);
-
-    return this;
-  }
-}
-
-class Gate extends Collection {
-  constructor(
-    number,
-    centerofrotation,
-    offset,
-    radius,
-    width,
-    color = "rgb(223,255,1)"
-  ) {
-    super();
-    this.number = number || "";
-    this.offset = offset;
-    this.radius = radius;
-    this.width = width;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-
-    this.gateAOffset = [this.offset[0] - this.width / 2, this.offset[1]];
-    this.gateBOffset = [this.offset[0] + this.width / 2, this.offset[1]];
-
-    this.bouyA = new Buoy(
-      number + "a",
-      this.centerofrotation,
-      this.gateAOffset,
-      this.radius,
-      this.color
-    );
-    this.bouyB = new Buoy(
-      number + "b",
-      this.centerofrotation,
-      this.gateBOffset,
-      this.radius,
-      this.color
-    );
-
-    this.push(this.bouyA);
-    this.push(this.bouyB);
-  }
-
-  setDragableOn(map, layer) {
-    const translateBouyA = new Translate({
+  getInteractions(layer, featureCollection) {
+    const translateA = new Translate({
       hitTolerance: 5, //px
       layers: [layer],
       features: new Collection([this.bouyA]),
     });
 
-    translateBouyA.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
+    translateA.on("translatestart", (translateEvent) => {
+      //translate.features_ = new Collection([this.bouyA]);
     });
 
-    translateBouyA.on("translateend", (translateEvent) => {
-      //translate.features_ = dragHandel;
-    });
-
-    const translateBouyB = new Translate({
-      hitTolerance: 5, //px
-      layers: [layer],
-      features: new Collection([this.bouyB]),
-    });
-
-    translateBouyB.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-      const a = this.bouyA.getGeometry().getCenter();
-      const b = this.bouyB.getGeometry().getCenter();
-      this.offset = [a[0] - b[0], a[1] - b[1]];
-    });
-
-    translateBouyB.on("translating", (e) => {
-      // BouyA is translated together with BouyB
-
-      const coordinates = this.bouyB.getGeometry().getCenter();
-
-      this.bouyA
-        .getGeometry()
-        .setCenter([
-          coordinates[0] + this.offset[0],
-          coordinates[1] + this.offset[1],
-        ]);
-
-      console.log(this.bouyB.getGeometry().getCenter());
-    });
-
-    translateBouyB.on("translateend", (e) => {
-      //translate.features_ = dragHandel;
-    });
-
-    map.addInteraction(translateBouyA);
-    map.addInteraction(translateBouyB);
-
-    return this;
-  }
-}
-
-class StartGate extends Collection {
-  constructor(
-    number,
-    name = "START",
-    centerofrotation,
-    offset,
-    radius,
-    width,
-    color = "rgb(0,255,0)"
-  ) {
-    super();
-    this.number = number || "";
-    this.name = name;
-    this.offset = offset;
-    this.radius = radius;
-    this.width = width;
-    this.color = color;
-    this.centerofrotation = centerofrotation;
-
-    this.gateAOffset = [this.offset[0] - this.width / 2, this.offset[1]];
-    this.gateBOffset = [this.offset[0] + this.width / 2, this.offset[1]];
-
-    this.bouyA = new Buoy(
-      this.number + "a",
-      this.centerofrotation,
-      this.gateAOffset,
-      this.radius,
-      this.color
-    );
-    this.bouyB = new Buoy(
-      this.number + "b",
-      this.centerofrotation,
-      this.gateBOffset,
-      this.radius,
-      this.color
-    );
-
-    this.line = new Line(
-      this.name,
-      this.centerofrotation,
-      this.offset,
-      this.width,
-      this.color
-    );
-
-    this.push(this.bouyA);
-    this.push(this.bouyB);
-    this.push(this.line);
-  }
-
-  setDragableOn(map, layer) {
-    const translateBouyA = new Translate({
-      hitTolerance: 5, //px
-      layers: [layer],
-      features: new Collection([this.bouyA]),
-    });
-
-    translateBouyA.on("translating", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-
-      this.line
+    translateA.on("translating", (e) => {
+      // start Line is Translated when bouyA is moved
+      this.startLine
         .getGeometry()
         .setCoordinates([
           this.bouyA.getGeometry().getCenter(),
@@ -451,64 +360,123 @@ class StartGate extends Collection {
         ]);
     });
 
-    translateBouyA.on("translateend", (translateEvent) => {
+    translateA.on("translateend", (translateEvent) => {
       //translate.features_ = dragHandel;
     });
 
-    const translateBouyB = new Translate({
+    const translateB = new Translate({
       hitTolerance: 5, //px
       layers: [layer],
       features: new Collection([this.bouyB]),
     });
 
-    translateBouyB.on("translatestart", (translateEvent) => {
-      //translate.features_ = courceBoundaryFeaturesCollection;
-      const a = this.bouyA.getGeometry().getCenter();
-      const b = this.bouyB.getGeometry().getCenter();
-      this.offset = [a[0] - b[0], a[1] - b[1]];
+    translateB.on("translatestart", (translateEvent) => {
+      translateB.features_ = new Collection([
+        this.bouyA,
+        this.bouyB,
+        this.startLine,
+        this.dragHandel,
+        this.rotateHandel,
+      ]);
     });
 
-    translateBouyB.on("translating", (e) => {
-      // BouyA is translated together with BouyB
-      const coordinates = this.bouyB.getGeometry().getCenter();
-
-      this.bouyA
-        .getGeometry()
-        .setCenter([
-          coordinates[0] + this.offset[0],
-          coordinates[1] + this.offset[1],
-        ]);
-
-      this.line
-        .getGeometry()
-        .setCoordinates([
-          this.bouyA.getGeometry().getCenter(),
-          this.bouyB.getGeometry().getCenter(),
-        ]);
+    translateB.on("translateend", (e) => {
+      translateB.features_ = new Collection([this.bouyB]);
     });
 
-    translateBouyB.on("translateend", (e) => {
-      //translate.features_ = dragHandel;
+    const translateAll = new Translate({
+      hitTolerance: 5,
+      layers: [layer],
+      features: new Collection([this.dragHandel]),
     });
 
-    map.addInteraction(translateBouyA);
-    map.addInteraction(translateBouyB);
+    translateAll.on("translatestart", (translateEvent) => {
+      translateAll.features_ = featureCollection;
+    });
 
-    return this;
+    translateAll.on("translateend", (translateEvent) => {
+      translateAll.features_ = new Collection([this.dragHandel]);
+    });
+
+    const rotateAll = new Pointer({
+      hitTolerance: 10,
+      layers: [layer],
+      features: new Collection([this.rotateHandel]),
+
+      handleDownEvent: (mapBrowserEvent) => {
+        const clikedOnFeatures = mapBrowserEvent.map.getFeaturesAtPixel(
+          mapBrowserEvent.pixel,
+          {
+            hitTolerance: 10,
+            //TODO add a layer filter
+          }
+        );
+
+        if (clikedOnFeatures.indexOf(this.rotateHandel) > -1) {
+          this.currentCoordinate = mapBrowserEvent.coordinate;
+          this.preventRotateEventPropagation = true;
+          return true; // start a drag sequence
+        }
+      },
+
+      stopDown: () => {
+        return this.preventRotateEventPropagation;
+      },
+
+      handleDragEvent: (mapBrowserEvent) => {
+        const centerofrotation = this.bouyB.getGeometry().getCenter();
+
+        const ax_delta = this.currentCoordinate[0] - centerofrotation[0];
+        const ay_delta = this.currentCoordinate[1] - centerofrotation[1];
+        const aTheta = Math.atan2(ay_delta, ax_delta);
+
+        const bx_delta = mapBrowserEvent.coordinate[0] - centerofrotation[0];
+        const by_delta = mapBrowserEvent.coordinate[1] - centerofrotation[1];
+        const bTheta = Math.atan2(by_delta, bx_delta);
+
+        featureCollection.getArray().forEach((feature) => {
+          feature.getGeometry().rotate(bTheta - aTheta, centerofrotation);
+        });
+
+        this.currentCoordinate = mapBrowserEvent.coordinate;
+      },
+
+      handleUpEvent: () => {
+        this.preventRotateEventPropagation = false;
+      },
+    });
+
+    return [translateA, translateB, translateAll, rotateAll];
+  }
+
+  toObject() {
+    const object = {
+      type: this.type,
+      name: this.name,
+      number: this.number,
+      color: this.color,
+      radius: this.radius,
+      coordinates: this.coordinates,
+    };
+    return object;
   }
 }
 
-/**
- * Build the Map
- */
+// where we are placing the course
+var center = transform(
+  [10.932036344861501, 49.124145352082735],
+  "EPSG:4326",
+  "EPSG:3857"
+);
 
 // Crete Map and View
+const mapRef = ref();
 var map = new Map();
 
 var view = new View({
   projection: "EPSG:3857",
-  center: comitteeBoatGeolocaiton,
-  zoom: 17,
+  center: center,
+  zoom: 18,
 });
 
 map.setView(view);
@@ -520,60 +488,207 @@ map.addLayer(
   })
 );
 
-/**
- *  Build the Race Course
- */
-
-// Create the Race Course Layer
+// Create the Race Course Source andLayer
+const racecource = new VectorSource();
 var raceCourseLayer = new VectorLayer({
-  name: "racingCourseLayer",
-  source: new VectorSource({ wrapX: false }),
+  source: racecource,
+  style: function (feature) {
+    console.log(racecource);
+
+    return new Style({
+      fill: new Fill({
+        color: feature.color,
+      }),
+      stroke: new Stroke({
+        color: "rgba(255,255,255,0.8)",
+      }),
+    });
+  },
 });
 map.addLayer(raceCourseLayer);
 
-// add features to the raceCourseLayer
+const courceObjects = {
+  name: "",
+  description: "",
+  centerofrotation: center,
+  angleofrotation: 45,
+  marks: [
+    {
+      type: "Buoy",
+      name: "",
+      number: 1,
+      color: "",
+      coordinates: null,
+      offset: [0, 100],
+    },
+    {
+      type: "Gate",
+      name: "Finish",
+      number: 3,
+      color: "pink",
+      offset: [
+        [-20, -50],
+        [20, -50],
+      ],
+    },
+    {
+      type: "Startgate",
+      name: "",
+      number: 1,
+      color: "green",
+      offset: [
+        [-20, 0],
+        [20, 0],
+      ],
+    },
 
-raceCourseLayer
-  .getSource()
-  .addFeature(
-    new Buoy(1, comitteeBoatGeolocaiton, [0, 0], 10).setDragableOn(
-      map,
-      raceCourseLayer
-    )
-  );
+    {
+      type: "Buoy",
+      name: "",
+      number: 4,
+      color: "",
+      coordinates: null,
+      offset: [0, -100],
+    },
+  ],
+};
 
-raceCourseLayer
-  .getSource()
-  .addFeature(
-    new Line(
-      "keep clear",
-      comitteeBoatGeolocaiton,
-      [-20, -80],
-      20
-    ).setDragableOn(map, raceCourseLayer)
-  );
+class Course {
+  constructor(racecource, map, centerofrotation) {
+    (this.name = "racecource"),
+      (this.description = "generic"),
+      (this.centerofrotation = centerofrotation),
+      (this.angleofrotation = 45),
+      (this.marks = new Collection());
 
-new Gate(5, comitteeBoatGeolocaiton, [0, 100], 13, 40)
-  .setDragableOn(map, raceCourseLayer)
-  .forEach((gate) => {
-    raceCourseLayer.getSource().addFeature(gate);
-  });
+    this.map = map;
+    this.racecource = racecource;
+    this.courseFeatures = new Collection();
+  }
 
-new StartGate(null, "START", comitteeBoatGeolocaiton, [0, 200], 13, 80)
-  .setDragableOn(map, raceCourseLayer)
-  .forEach((startGate) => {
-    raceCourseLayer.getSource().addFeature(startGate);
-  });
+  addMark(courceObjects, courceObject) {
+    if (courceObject.type == "Buoy") {
+      // construct coordinates from cource center of rotation and offset
+      if (courceObjects.centerofrotation && courceObject.offset) {
+        courceObject.coordinates = [];
 
-raceCourseLayer
-  .getSource()
-  .addFeature(
-    new Boundary(
-      "Race Course",
-      comitteeBoatGeolocaiton,
-      raceCourseLayer.getSource().getExtent()
-    ).setDragableOn(map, raceCourseLayer)
-  );
+        courceObject.coordinates[0] =
+          courceObjects.centerofrotation[0] + courceObject.offset[0];
+
+        courceObject.coordinates[1] =
+          courceObjects.centerofrotation[1] + courceObject.offset[1];
+      }
+
+      const bouy = new Bouy(courceObject);
+
+      this.marks.push(bouy);
+      this.courseFeatures.push(bouy);
+
+      bouy.getInteractions()?.forEach((interaction) => {
+        map.addInteraction(interaction);
+      });
+
+      this.racecource.addFeature(bouy);
+    }
+
+    if (courceObject.type == "Gate") {
+      // construct coordinates from cource center of rotation and offset
+      if (courceObjects.centerofrotation && courceObject.offset) {
+        courceObject.coordinates = [
+          [0, 0],
+          [0, 0],
+        ];
+
+        courceObject.coordinates[0] = [
+          courceObjects.centerofrotation[0] + courceObject.offset[0][0],
+          courceObjects.centerofrotation[1] + courceObject.offset[0][1],
+        ];
+
+        courceObject.coordinates[1] = [
+          courceObjects.centerofrotation[0] + courceObject.offset[1][0],
+          courceObjects.centerofrotation[1] + courceObject.offset[1][1],
+        ];
+      }
+
+      const gate = new Gate(courceObject);
+      this.marks.push(gate);
+
+      this.courseFeatures.push(gate.bouyA);
+      this.courseFeatures.push(gate.bouyB);
+
+      this.racecource.addFeature(gate.bouyA);
+      this.racecource.addFeature(gate.bouyB);
+
+      gate.getInteractions(this.racecource)?.forEach((interaction) => {
+        map.addInteraction(interaction);
+      });
+    }
+
+    if (courceObject.type == "Startgate") {
+      // construct coordinates from cource center of rotation and offset
+      if (courceObjects.centerofrotation && courceObject.offset) {
+        courceObject.coordinates = [
+          [0, 0],
+          [0, 0],
+        ];
+
+        courceObject.coordinates[0] = [
+          courceObjects.centerofrotation[0] + courceObject.offset[0][0],
+          courceObjects.centerofrotation[1] + courceObject.offset[0][1],
+        ];
+
+        courceObject.coordinates[1] = [
+          courceObjects.centerofrotation[0] + courceObject.offset[1][0],
+          courceObjects.centerofrotation[1] + courceObject.offset[1][1],
+        ];
+      }
+
+      const startgate = new Startgate(courceObject);
+      this.marks.push(startgate);
+
+      this.courseFeatures.push(startgate.bouyA);
+      this.courseFeatures.push(startgate.bouyB);
+      this.courseFeatures.push(startgate.startLine);
+      this.courseFeatures.push(startgate.dragHandel);
+      this.courseFeatures.push(startgate.rotateHandel);
+
+      this.racecource.addFeature(startgate.bouyA);
+      this.racecource.addFeature(startgate.bouyB);
+      this.racecource.addFeature(startgate.startLine);
+      this.racecource.addFeature(startgate.dragHandel);
+      this.racecource.addFeature(startgate.rotateHandel);
+
+      startgate
+        .getInteractions(this.racecource, this.courseFeatures)
+        ?.forEach((interaction) => {
+          map.addInteraction(interaction);
+        });
+    }
+  }
+
+  load(courceObjects) {
+    courceObjects.marks.forEach((courceObject) => {
+      this.addMark(courceObjects, courceObject);
+    });
+  }
+
+  toObject() {
+    const object = {
+      name: this.name,
+      description: this.description,
+      centerofrotation: this.centerofrotation,
+      angleofrotation: this.angleofrotation,
+      marks: [],
+    };
+    this.marks.forEach((mark) => {
+      object.marks.push(mark.toObject());
+    });
+    return object;
+  }
+}
+
+const course = new Course(racecource, map);
+course.load(courceObjects);
 
 // show the map
 onMounted(() => {

@@ -56,7 +56,7 @@ export default {
 
   methods: {
     setsurge(surge) {
-      // Rounding is steps of 5
+      // Rounding is steps of 2
       surge = Math.ceil(surge / 2) * 2;
       this.roboStore.setsurge(surge);
     },

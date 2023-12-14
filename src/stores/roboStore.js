@@ -40,6 +40,7 @@ export const useRoboStore = (deviceid) => {
       desiredcourse: 0, // deg° of the desired heading
       waypoints: [], // array of gps positions latlon
       waypointarrivedradius: 0, // waypoint arrived radius (meters)
+      holdgain: 0, // the surge gain used to keep the robot close to the current waypoint while holding
 
       // Steering
       // PID tuning gains to control the steering based on desiredcourse vs currentcourse
@@ -55,6 +56,7 @@ export const useRoboStore = (deviceid) => {
       // Motor Control
       surge: 0, //  desired robot speed cm/s
       steer: 0, //  desired robot angualr rotation deg/s
+      steergain: 0,
       vmin: 0, //  minimum robot velocity cm/s
       vmax: 50, //  maximum robot velocity cm/diff
       mpl: 0, //  min pwm left  : value where the motor starts to turn
@@ -174,10 +176,12 @@ export const useRoboStore = (deviceid) => {
 
       async setwaypointarrivedradius(val) {
         this.waypointarrivedradius = val;
-        await $bluetooth.send(this.device, [
-          "waypointarrivedradius",
-          this.waypointarrivedradius,
-        ]);
+        await $bluetooth.send(this.device, ["wr", this.waypointarrivedradius]);
+      },
+
+      async setholdgain(val) {
+        this.holdgain = val;
+        await $bluetooth.send(this.device, ["holdgain", this.holdgain]);
       },
 
       // Steering PID Updates
@@ -221,6 +225,11 @@ export const useRoboStore = (deviceid) => {
         await $bluetooth.send(this.device, ["surge", this.surge]);
       },
 
+      async setsteergain(val) {
+        this.steergain = val;
+        await $bluetooth.send(this.device, ["steergain", this.steergain]);
+      },
+
       async setvmin(val) {
         this.vmin = val;
         await $bluetooth.send(this.device, ["vmin", this.vmin]);
@@ -244,6 +253,11 @@ export const useRoboStore = (deviceid) => {
       ////////////
       // Requests
       ///////////
+
+      getHoldsettings() {
+        $bluetooth.send(this.device, ["getHoldsettings"]);
+      },
+
       getPIDsettings() {
         $bluetooth.send(this.device, ["getPIDsettings"]);
       },

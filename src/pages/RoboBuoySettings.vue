@@ -20,6 +20,7 @@
 
     <GPSDashboard :deviceid="deviceid" />
     <RobobuoyStatus :deviceid="deviceid"></RobobuoyStatus>
+    <HoldSettings :deviceid="deviceid" />
     <PIDSettings :deviceid="deviceid" />
     <MotorSettings :deviceid="deviceid" />
     <AlphaSettings :deviceid="deviceid" />
@@ -35,6 +36,7 @@
 import { useRoboStore } from "stores/roboStore";
 import RobobuoyStatus from "src/components/robobuoy/RobobuoyStatus.vue";
 import AlphaSettings from "src/components/settings/AlphaSettings.vue";
+import HoldSettings from "src/components/settings/HoldSettings.vue";
 import PIDSettings from "src/components/settings/PIDSettings.vue";
 import MotorSettings from "src/components/settings/MotorSettings.vue";
 import CompassCalibration from "src/components/settings/CompassCalibration.vue";
@@ -49,6 +51,7 @@ export default {
   components: {
     RobobuoyStatus,
     AlphaSettings,
+    HoldSettings,
     PIDSettings,
     MotorSettings,
     CompassCalibration,
