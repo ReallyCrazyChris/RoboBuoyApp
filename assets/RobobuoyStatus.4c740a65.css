@@ -1,0 +1,1 @@
+.rotated{transform:rotate(90deg)}.spin{animation-name:spin;animation-duration:10s;animation-iteration-count:infinite;animation-timing-function:linear}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
