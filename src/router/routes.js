@@ -34,6 +34,16 @@ const routes = [
       },
 
       {
+        path: "gps",
+        component: () => import("pages/GpsPage.vue"),
+      },
+
+      {
+        path: "vmc",
+        component: () => import("pages/VmcPage.vue"),
+      },
+
+      {
         path: "robobuoysettings/:deviceid",
         name: "robobuoysettings",
         props: true,

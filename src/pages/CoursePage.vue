@@ -31,8 +31,10 @@ class Bouy extends Feature {
 
     this.setGeometry(buoyGeometry);
 
-    this.setStyle(
-      new Style({
+    /*
+    this.setStyle((feature) => {
+      console.log(feature);
+      return new Style({
         fill: new Fill({
           color: this.color || "rgb(223,255,1)",
         }),
@@ -47,8 +49,9 @@ class Bouy extends Feature {
           textAlign: "center",
           justify: "center",
         }),
-      })
-    );
+      });
+    });
+    */
   }
 
   getInteractions(layer) {
@@ -95,9 +98,11 @@ class Gate {
     ];
 
     this.bouyA = new Feature({
+      type: "Buoy",
       geometry: new Circle(this.coordinates[0], this.radius),
     });
 
+    /*
     this.bouyA.setStyle(
       new Style({
         fill: new Fill({
@@ -116,8 +121,10 @@ class Gate {
         }),
       })
     );
+    */
 
     this.bouyB = new Feature({
+      props: { type: "Buoy" },
       geometry: new Circle(this.coordinates[1], this.radius),
     });
 
@@ -490,21 +497,44 @@ map.addLayer(
 
 // Create the Race Course Source andLayer
 const racecource = new VectorSource();
+
 var raceCourseLayer = new VectorLayer({
   source: racecource,
-  style: function (feature) {
-    console.log(racecource);
+});
+
+raceCourseLayer.setStyle((feature) => {
+  if ("Buoy" == feature.type) {
+    const fill = new Fill({
+      color: feature.color || "rgb(223,255,1)",
+    });
+
+    const stroke = new Stroke({
+      color: feature.color || "rgb(223,255,1)",
+      width: 0,
+      lineCap: "round",
+    });
+
+    console.log(view.getResolution());
+
+    if (view.getResolution() < 0.7) {
+      var text = new Text({
+        text: String(feature.number) || "",
+        font: "16px sans-serif",
+        textAlign: "center",
+        justify: "center",
+      });
+    }
 
     return new Style({
-      fill: new Fill({
-        color: feature.color,
-      }),
-      stroke: new Stroke({
-        color: "rgba(255,255,255,0.8)",
-      }),
+      fill,
+      stroke,
+      text,
     });
-  },
+  } else {
+    console.log(feature);
+  }
 });
+
 map.addLayer(raceCourseLayer);
 
 const courceObjects = {

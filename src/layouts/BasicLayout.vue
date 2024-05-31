@@ -39,8 +39,8 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "My Robots",
-    caption: "control add and remove your robots",
+    title: "Robots",
+    caption: "add, remove and configure robots",
     icon: "route",
     link: "#/myrobots",
   },
@@ -49,6 +49,18 @@ const linksList = [
     caption: "setup and define the course",
     icon: "map",
     link: "#/racecourse",
+  },
+  {
+    title: "GPS",
+    caption: "position heading speed",
+    icon: "gps_fixed",
+    link: "#/gps",
+  },
+  {
+    title: "VMC",
+    caption: "velocity made course",
+    icon: "explore",
+    link: "#/vmc",
   },
 ];
 

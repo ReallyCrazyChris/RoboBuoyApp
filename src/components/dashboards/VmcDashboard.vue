@@ -2,25 +2,34 @@
   <div class="row">
     <q-card class="full-width">
       <q-card-section>
-        <div class="text-h3 text-center text-positive">Position</div>
+        <div class="text-h3 text-center text-positive">VMC</div>
         <div class="text-h5 text-center text-positive">
-          {{ gpsStore.lon }}
-        </div>
-        <div class="text-h5 text-center text-positive">
-          {{ gpsStore.lat }}
+          {{ markCollection.nextmark.label }}
         </div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h3 text-center text-negative">Speed</div>
+        <div class="text-h1 text-center">{{ vmcStore.vmc }}</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h1 text-center">{{ gpsStore.speed }}</div>
+        <div class="text-h3 text-center text-info">SOG</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h3 text-center text-info">Heading</div>
+        <div class="text-h1 text-center">{{ vmcStore.sog }}</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h1 text-center">{{ gpsStore.heading }}</div>
+        <div class="text-h3 text-center text-negative">RISK %</div>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-h1 text-center">{{ vmcStore.risk }}</div>
+      </q-card-section>
+      <q-separator inset />
+      <q-card-section>
+        <q-option-group
+          v-model="markSelected"
+          :options="markCollection.options"
+          color="green"
+        >
+        </q-option-group>
       </q-card-section>
     </q-card>
   </div>
