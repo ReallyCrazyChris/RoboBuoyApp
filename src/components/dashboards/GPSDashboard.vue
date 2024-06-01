@@ -9,6 +9,9 @@
         <div class="text-h5 text-center text-positive">
           {{ gpsStore.lat }}
         </div>
+        <div class="text-h5 text-center text-positive">
+          {{ gpsStore.accuracy }}
+        </div>
       </q-card-section>
       <q-card-section>
         <div class="text-h3 text-center text-negative">Speed</div>

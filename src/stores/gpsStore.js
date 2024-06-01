@@ -4,8 +4,9 @@ export const useGpsStore = defineStore("gpsStore", {
   state: () => ({
     lon: 49.70878107952494,
     lat: 10.832274248052466,
-    heading: 20,
     speed: 2.7,
+    heading: 20,
+    accuracy: 0,
 
     positionOptions: {
       enableHighAccuracy: true,
@@ -60,6 +61,7 @@ export const useGpsStore = defineStore("gpsStore", {
       this.lat = crd.latitude;
       this.speed = crd.speed;
       this.heading = crd.heading;
+      this.accuracy = crd.accuracy;
     },
 
     watcherror(err) {
