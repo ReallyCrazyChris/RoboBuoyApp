@@ -14,13 +14,13 @@
         <div class="text-h3 text-center text-info">SOG</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h1 text-center">{{ speed }}</div>
+        <div class="text-h1 text-center">{{ vmcStore.sog }}</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h3 text-center text-negative">RISK %</div>
+        <div class="text-h3 text-center text-negative">Efficiency %</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h1 text-center">{{ vmcStore.risk }}</div>
+        <div class="text-h1 text-center">{{ vmcStore.efficiency }}</div>
       </q-card-section>
 
       <q-separator inset />
@@ -58,6 +58,10 @@ export default defineComponent({
   },
 
   mounted() {
+    gps.$subscribe(() => {
+      console.log(gps);
+      vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
+    });
     gps.watchPosition();
   },
 
@@ -66,12 +70,6 @@ export default defineComponent({
   },
 
   computed: {
-    speed: {
-      get() {
-        vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
-        return gps.speed;
-      },
-    },
     markSelected: {
       get() {
         return markCollection.nextmark.id;

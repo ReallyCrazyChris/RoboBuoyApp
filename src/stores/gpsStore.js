@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 
 export const useGpsStore = defineStore("gpsStore", {
   state: () => ({
-    lon: 49.694466202422646,
-    lat: 10.827576803729468,
+    lon: 49.69627211119363,
+    lat: 11,
     speed: 10,
-    heading: 90,
+    heading: 180,
     accuracy: 5,
 
     watchoptions: {
@@ -19,6 +19,7 @@ export const useGpsStore = defineStore("gpsStore", {
 
   actions: {
     watchsuccess(pos) {
+      console.log(pos);
       this.lon = pos.coords.longitude;
       this.lat = pos.coords.latitude;
       this.speed = pos.coords.speed;
