@@ -16,20 +16,8 @@
           speed:{{ gpsStore.speed }}
         </div>
         <div class="text-h5 text-center text-positive">
-          {{ gpsStore.accuracy }}
+          accuracy: {{ gpsStore.accuracy }}
         </div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h3 text-center text-negative">Speed</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h1 text-center">{{ gpsStore.speed }}</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h3 text-center text-info">Heading</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h1 text-center">{{ gpsStore.heading }}</div>
       </q-card-section>
     </q-card>
   </div>

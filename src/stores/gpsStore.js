@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 
 export const useGpsStore = defineStore("gpsStore", {
   state: () => ({
-    lon: 49.70878107952494,
-    lat: 10.832274248052466,
-    speed: 2.7,
-    heading: 20,
-    accuracy: 0,
+    lon: 49.694466202422646,
+    lat: 10.827576803729468,
+    speed: 10,
+    heading: 90,
+    accuracy: 5,
 
     watchoptions: {
       enableHighAccuracy: true,

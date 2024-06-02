@@ -14,7 +14,7 @@
         <div class="text-h3 text-center text-info">SOG</div>
       </q-card-section>
       <q-card-section>
-        <div class="text-h1 text-center">{{ vmcStore.sog }}</div>
+        <div class="text-h1 text-center">{{ speed }}</div>
       </q-card-section>
       <q-card-section>
         <div class="text-h3 text-center text-negative">RISK %</div>
@@ -22,6 +22,7 @@
       <q-card-section>
         <div class="text-h1 text-center">{{ vmcStore.risk }}</div>
       </q-card-section>
+
       <q-separator inset />
       <q-card-section>
         <q-option-group

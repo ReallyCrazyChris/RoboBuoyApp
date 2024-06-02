@@ -6,8 +6,8 @@ export const useVmcStore = defineStore("vmcStore", {
     vmc: 1,
     sog: 2,
     risk: 55,
-    lon: 0,
-    lat: 0,
+    lon: 49.69627211119363,
+    lat: 10.827493354898628,
     distance: 0,
     bearing: 0,
   }),
@@ -27,7 +27,7 @@ export const useVmcStore = defineStore("vmcStore", {
 
       this.risk = 100 * (1 - this.vmc / this.sog);
 
-      console.log(this.bearing, this.heading, deltaAngle);
+      console.log(this.bearing, this.distance, this.vmc, this.risk);
     },
   },
 });
