@@ -10,6 +10,14 @@ export const useVmcStore = defineStore("vmcStore", {
     lat: 10.827493354898628,
     distance: 0,
     bearing: 0,
+
+    selected: 1,
+    lon1: 49.69627211119363,
+    lat1: 10.827493354898628,
+    lon2: 49.69627211119363,
+    lat2: 10.827493354898628,
+    lon3: 49.69627211119363,
+    lat3: 10.827493354898628,
   }),
 
   actions: {

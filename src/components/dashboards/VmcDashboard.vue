@@ -2,35 +2,85 @@
   <div class="row">
     <q-card class="full-width">
       <q-card-section>
-        <div class="text-h3 text-center text-positive">VMC</div>
-        <div class="text-h5 text-center text-positive">
-          {{ markCollection.nextmark.label }}
+        <div class="text-center" style="font-size: 15rem">
+          {{ vmcStore.vmc }}
+        </div>
+        <div class="text-h3 text-center">VMC</div>
+        <div
+          v-if="vmcStore.selected == 1"
+          class="text-h5 text-center text-primary"
+        >
+          Mark 1
+        </div>
+        <div
+          v-if="vmcStore.selected == 2"
+          class="text-h5 text-center text-positive"
+        >
+          Mark 2
+        </div>
+        <div
+          v-if="vmcStore.selected == 3"
+          class="text-h5 text-center text-warning"
+        >
+          Mark 3
         </div>
       </q-card-section>
-      <q-card-section>
-        <div class="text-h1 text-center">{{ vmcStore.vmc }}</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h3 text-center text-info">SOG</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h1 text-center">{{ vmcStore.sog }}</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h3 text-center text-negative">Efficiency %</div>
-      </q-card-section>
-      <q-card-section>
-        <div class="text-h1 text-center">{{ vmcStore.efficiency }}</div>
-      </q-card-section>
-
       <q-separator inset />
       <q-card-section>
-        <q-option-group
-          v-model="markSelected"
-          :options="markCollection.options"
-          color="green"
-        >
-        </q-option-group>
+        <div class="text-center" style="font-size: 8rem">
+          {{ vmcStore.efficiency }}
+        </div>
+        <div class="text-h5 text-center">EFFICIENCY</div>
+      </q-card-section>
+      <q-separator inset />
+      <q-card-section>
+        <div class="row">
+          <q-btn class="self-center" square push color="primary" label="1" />
+          <div col-2 class="q-pa-sm col-9 self-start">
+            <div>lon: 10.69627211119363</div>
+            <div>lat: 49.69627211119363</div>
+          </div>
+
+          <q-btn
+            class="self-center"
+            outline
+            round
+            color="primary"
+            icon="room"
+          />
+        </div>
+
+        <div class="row">
+          <q-btn class="self-center" square color="positive" label="2" />
+          <div col-2 class="q-pa-sm col-9 self-start">
+            <div>lon: 10.69627211119363</div>
+            <div>lat: 49.69627211119363</div>
+          </div>
+
+          <q-btn
+            class="self-center"
+            outline
+            round
+            color="positive"
+            icon="room"
+          />
+        </div>
+
+        <div class="row">
+          <q-btn class="self-center" square color="warning" label="3" />
+          <div col-2 class="q-pa-sm col-9 self-start">
+            <div>lon: 10.69627211119363</div>
+            <div>lat: 49.69627211119363</div>
+          </div>
+
+          <q-btn
+            class="self-center"
+            outline
+            round
+            color="warning"
+            icon="room"
+          />
+        </div>
       </q-card-section>
     </q-card>
   </div>
