@@ -7,10 +7,10 @@ const routes = [
         path: "",
         component: () => import("pages/IndexPage.vue"),
       },
-      {
-        path: "robobuoypositions",
-        component: () => import("pages/RoboBuoyPositions.vue"),
-      },
+      //{
+      //  path: "robobuoypositions",
+      //  component: () => import("pages/RoboBuoyPositions.vue"),
+      //},
       {
         path: "racecourse",
         component: () => import("pages/RaceCourse.vue"),
