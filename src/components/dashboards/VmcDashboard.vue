@@ -43,9 +43,7 @@ import { useGpsStore } from "src/stores/gpsStore";
 
 const markCollection = useMarkCollection();
 const vmcStore = useVmcStore();
-const gpsStore = useGpsStore();
-
-gpsStore.watchPosition();
+const gps = useGpsStore();
 
 export default defineComponent({
   name: "VmcDashboard",
@@ -54,11 +52,25 @@ export default defineComponent({
     return {
       vmcStore,
       markCollection,
-      gpsStore,
+      gps,
     };
   },
 
+  mounted() {
+    gps.watchPosition();
+  },
+
+  unmounted() {
+    gps.clearWatchPosition();
+  },
+
   computed: {
+    speed: {
+      get() {
+        vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
+        return gps.speed;
+      },
+    },
     markSelected: {
       get() {
         return markCollection.nextmark.id;

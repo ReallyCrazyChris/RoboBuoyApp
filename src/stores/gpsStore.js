@@ -8,15 +8,9 @@ export const useGpsStore = defineStore("gpsStore", {
     heading: 20,
     accuracy: 0,
 
-    positionOptions: {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    },
-
     watchoptions: {
-      enableHighAccuracy: false,
-      timeout: 5000,
+      enableHighAccuracy: true,
+      timeout: 30000,
       maximumAge: 0,
     },
 
@@ -24,44 +18,12 @@ export const useGpsStore = defineStore("gpsStore", {
   }),
 
   actions: {
-    positionSuccess(pos) {
-      const crd = pos.coords;
-
-      console.log("Your current position is:");
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`Heading: ${crd.heading}`);
-      console.log(`Speed: ${crd.speed}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-    },
-
-    positionError(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    },
-
-    getPosition() {
-      navigator.geolocation.getCurrentPosition(
-        this.positionSuccess,
-        this.positionError,
-        this.positionOptions
-      );
-    },
-
     watchsuccess(pos) {
-      const crd = pos.coords;
-
-      console.log("Your updated position is:");
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`Heading: ${crd.heading}`);
-      console.log(`Speed: ${crd.speed}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-
-      this.lon = crd.longitude;
-      this.lat = crd.latitude;
-      this.speed = crd.speed;
-      this.heading = crd.heading;
-      this.accuracy = crd.accuracy;
+      this.lon = pos.coords.longitude;
+      this.lat = pos.coords.latitude;
+      this.speed = pos.coords.speed;
+      this.heading = pos.coords.heading;
+      this.accuracy = pos.coords.accuracy;
     },
 
     watcherror(err) {

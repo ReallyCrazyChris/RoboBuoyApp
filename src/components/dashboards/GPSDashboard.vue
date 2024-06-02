@@ -45,8 +45,6 @@ const markCollection = useMarkCollection();
 const vmcStore = useVmcStore();
 const gpsStore = useGpsStore();
 
-gpsStore.watchPosition();
-
 export default defineComponent({
   name: "VmcDashboard",
   components: {},
@@ -56,6 +54,14 @@ export default defineComponent({
       markCollection,
       gpsStore,
     };
+  },
+
+  mounted() {
+    gpsStore.watchPosition();
+  },
+
+  unmounted() {
+    gpsStore.clearWatchPosition();
   },
 
   computed: {
