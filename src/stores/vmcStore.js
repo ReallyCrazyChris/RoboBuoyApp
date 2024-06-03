@@ -16,19 +16,15 @@ export const useVmcStore = defineStore("vmcStore", {
   actions: {
     // update the VMC data using the latest GPS data
     update(lat, lon, heading, speed) {
-      console.log("heading", heading);
-      console.log("speed", speed);
-
-      const p2 = new LatLon(lat, lon);
-      const p1 = new LatLon(this.lat, this.lon);
+      const p1 = new LatLon(lat, lon);
+      const p2 = new LatLon(this.lat, this.lon);
 
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
 
-      console.log("bearing", this.bearing);
-
-      const deltaAngle = this.bearing - heading;
-      const vmc_ms = speed * Math.cos((deltaAngle * Math.PI) / 180.0);
+      const deltaAngle_deg = this.bearing - heading;
+      const deltaAngle_rad = (deltaAngle_deg * Math.PI) / 180.0;
+      const vmc_ms = speed * Math.cos(deltaAngle_rad);
 
       // ms -> knots
       this.sog = Math.round(speed * 19.4384) / 10;
@@ -36,7 +32,6 @@ export const useVmcStore = defineStore("vmcStore", {
 
       this.efficiency = Math.round(100 * (this.vmc / this.sog)) || 0;
 
-      console.log("distance", this.distance);
       console.log("vmc", this.vmc);
       console.log("efficiency", this.efficiency);
     },
