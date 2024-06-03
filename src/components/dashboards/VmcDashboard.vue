@@ -2,43 +2,57 @@
   <div class="row">
     <q-card class="full-width">
       <q-card-section>
-        <div class="text-center" style="font-size: 15rem">
+        <div class="text-center" style="font-size: 10rem">
           {{ vmcStore.vmc }}
         </div>
-        <div class="text-h3 text-center">VMC</div>
+
         <div
-          v-if="vmcStore.selected == 1"
-          class="text-h5 text-center text-primary"
+          v-if="vmcStore.selectedMarkId == 0"
+          class="text-h3 text-center text-primary"
         >
-          Mark 1
+          VMC
         </div>
         <div
-          v-if="vmcStore.selected == 2"
-          class="text-h5 text-center text-positive"
+          v-if="vmcStore.selectedMarkId == 1"
+          class="text-h3 text-center text-positive"
         >
-          Mark 2
+          VMC
         </div>
         <div
-          v-if="vmcStore.selected == 3"
-          class="text-h5 text-center text-warning"
+          v-if="vmcStore.selectedMarkId == 2"
+          class="text-h3 text-center text-warning"
         >
-          Mark 3
+          VMC
         </div>
       </q-card-section>
       <q-separator inset />
       <q-card-section>
-        <div class="text-center" style="font-size: 8rem">
+        <div class="text-center" style="font-size: 10rem">
           {{ vmcStore.efficiency }}
         </div>
         <div class="text-h5 text-center">EFFICIENCY</div>
       </q-card-section>
       <q-separator inset />
+
       <q-card-section>
         <div class="row">
-          <q-btn class="self-center" square push color="primary" label="1" />
+          <q-btn
+            class="self-center"
+            round
+            push
+            color="primary"
+            label="1"
+            @click="
+              vmcStore.setNextCoordinates(
+                0,
+                marks.getLonFor(0),
+                marks.getLatFor(0)
+              )
+            "
+          />
           <div col-2 class="q-pa-sm col-9 self-start">
-            <div>lon: 10.69627211119363</div>
-            <div>lat: 49.69627211119363</div>
+            <div>lon: {{ marks.getLonFor(0) }}</div>
+            <div>lat: {{ marks.getLatFor(0) }}</div>
           </div>
 
           <q-btn
@@ -47,14 +61,27 @@
             round
             color="primary"
             icon="room"
+            @click="marks.setCoordinates(0, gps.lat, gps.lon)"
           />
         </div>
-
         <div class="row">
-          <q-btn class="self-center" square color="positive" label="2" />
+          <q-btn
+            class="self-center"
+            round
+            push
+            color="positive"
+            label="2"
+            @click="
+              vmcStore.setNextCoordinates(
+                1,
+                marks.getLonFor(1),
+                marks.getLatFor(1)
+              )
+            "
+          />
           <div col-2 class="q-pa-sm col-9 self-start">
-            <div>lon: 10.69627211119363</div>
-            <div>lat: 49.69627211119363</div>
+            <div>lon: {{ marks.getLonFor(1) }}</div>
+            <div>lat: {{ marks.getLatFor(1) }}</div>
           </div>
 
           <q-btn
@@ -63,14 +90,27 @@
             round
             color="positive"
             icon="room"
+            @click="marks.setCoordinates(1, gps.lat, gps.lon)"
           />
         </div>
-
         <div class="row">
-          <q-btn class="self-center" square color="warning" label="3" />
+          <q-btn
+            class="self-center"
+            round
+            push
+            color="warning"
+            label="3"
+            @click="
+              vmcStore.setNextCoordinates(
+                2,
+                marks.getLonFor(2),
+                marks.getLatFor(2)
+              )
+            "
+          />
           <div col-2 class="q-pa-sm col-9 self-start">
-            <div>lon: 10.69627211119363</div>
-            <div>lat: 49.69627211119363</div>
+            <div>lon: {{ marks.getLonFor(2) }}</div>
+            <div>lat: {{ marks.getLatFor(2) }}</div>
           </div>
 
           <q-btn
@@ -79,6 +119,7 @@
             round
             color="warning"
             icon="room"
+            @click="marks.setCoordinates(2, gps.lat, gps.lon)"
           />
         </div>
       </q-card-section>
@@ -92,7 +133,7 @@ import { useVmcStore } from "src/stores/vmcStore";
 import { useMarkCollection } from "src/stores/markCollection";
 import { useGpsStore } from "src/stores/gpsStore";
 
-const markCollection = useMarkCollection();
+const marks = useMarkCollection();
 const vmcStore = useVmcStore();
 const gps = useGpsStore();
 
@@ -102,7 +143,7 @@ export default defineComponent({
   setup() {
     return {
       vmcStore,
-      markCollection,
+      marks,
       gps,
     };
   },

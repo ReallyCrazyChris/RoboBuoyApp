@@ -3,21 +3,14 @@ import LatLon from "geodesy/latlon-spherical.js";
 
 export const useVmcStore = defineStore("vmcStore", {
   state: () => ({
-    vmc: 1,
-    sog: 2,
-    efficiency: 55,
-    lon: 49.69627211119363,
-    lat: 10.827493354898628,
+    vmc: 0,
+    sog: 0,
+    efficiency: 0,
+    lon: 0,
+    lat: 0,
     distance: 0,
     bearing: 0,
-
-    selected: 1,
-    lon1: 49.69627211119363,
-    lat1: 10.827493354898628,
-    lon2: 49.69627211119363,
-    lat2: 10.827493354898628,
-    lon3: 49.69627211119363,
-    lat3: 10.827493354898628,
+    selectedMarkId: 0,
   }),
 
   actions: {
@@ -46,6 +39,11 @@ export const useVmcStore = defineStore("vmcStore", {
       console.log("distance", this.distance);
       console.log("vmc", this.vmc);
       console.log("efficiency", this.efficiency);
+    },
+    setNextCoordinates(id, lat, lon) {
+      this.lon = lon;
+      this.lat = lat;
+      this.selectedMarkId = id;
     },
   },
 });
