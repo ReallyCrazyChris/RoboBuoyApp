@@ -142,6 +142,23 @@
       </q-card-section>
     </q-card>
   </div>
+
+  <q-page-sticky position="top-right" :offset="[18, 18]">
+    <q-btn
+      v-if="wakeLock == null"
+      fab
+      icon="lock_open"
+      color="accent"
+      @click="requestWakeLock()"
+    />
+    <q-btn
+      v-if="!(wakeLock == null)"
+      fab
+      icon="lock"
+      color="accent"
+      @click="releaseWakeLock()"
+    />
+  </q-page-sticky>
 </template>
 
 <script>
@@ -153,18 +170,6 @@ import { useGpsStore } from "src/stores/gpsStore";
 const marks = useMarkCollection();
 const vmcStore = useVmcStore();
 const gps = useGpsStore();
-let screenLock;
-
-async function getScreenLock() {
-  if ("wakeLock" in navigator) {
-    try {
-      screenLock = await navigator.wakeLock.request("screen");
-    } catch (err) {
-      console.log(err.name, err.message);
-    }
-    return screenLock;
-  }
-}
 
 export default defineComponent({
   name: "VmcDashboard",
@@ -174,6 +179,7 @@ export default defineComponent({
       vmcStore,
       marks,
       gps,
+      wakeLock: null,
     };
   },
 
@@ -182,14 +188,11 @@ export default defineComponent({
       vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
     });
     gps.watchPosition();
-    getScreenLock();
-    document.documentElement.requestFullscreen();
   },
 
   unmounted() {
     gps.clearWatchPosition();
-    screenLock.release();
-    document.exitFullscreen();
+    releaseWakeLock();
   },
 
   computed: {
@@ -200,6 +203,24 @@ export default defineComponent({
       set(id) {
         markCollection.selectMark(id);
       },
+    },
+  },
+
+  methods: {
+    async requestWakeLock() {
+      try {
+        console.log("requestWakeLock");
+        this.wakeLock = await navigator.wakeLock.request("screen");
+      } catch (err) {
+        releaseWakeLock();
+      }
+    },
+    releaseWakeLock() {
+      if (this.wakeLock) {
+        console.log("releaseWakeLock");
+        this.wakeLock.release();
+        this.wakeLock = null;
+      }
     },
   },
 });
