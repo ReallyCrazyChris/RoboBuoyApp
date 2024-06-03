@@ -11,33 +11,31 @@
 
           <div
             v-if="vmcStore.selectedMarkId == 0"
-            class="col-12 text-h3 text-center text-primary"
+            class="col-12 text-h5 text-center text-primary"
           >
             VMC
           </div>
           <div
             v-if="vmcStore.selectedMarkId == 1"
-            class="col-12 text-h3 text-center text-positive"
+            class="col-12 text-h5 text-center text-positive"
           >
             VMC
           </div>
           <div
             v-if="vmcStore.selectedMarkId == 2"
-            class="col-12 text-h3 text-center text-warning"
+            class="col-12 text-h5 text-center text-warning"
           >
             VMC
           </div>
 
-          <div class="col-6 self-center text-right q-pa-sm">
+          <!--div class="col-6 self-center text-right q-pa-sm">
             lon: {{ marks.getLonFor(0) }}
           </div>
           <div class="col-6 self-center text-left q-pa-sm">
             lat: {{ marks.getLatFor(0) }}
-          </div>
+          </div-->
         </div>
-      </q-card-section>
-      <q-separator inset />
-      <q-card-section>
+
         <div class="text-center" style="font-size: 10rem">
           {{ vmcStore.efficiency }}
         </div>

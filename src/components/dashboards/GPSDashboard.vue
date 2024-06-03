@@ -32,6 +32,18 @@ import { useGpsStore } from "src/stores/gpsStore";
 const markCollection = useMarkCollection();
 const vmcStore = useVmcStore();
 const gpsStore = useGpsStore();
+let screenLock;
+
+async function getScreenLock() {
+  if ("wakeLock" in navigator) {
+    try {
+      screenLock = await navigator.wakeLock.request("screen");
+    } catch (err) {
+      console.log(err.name, err.message);
+    }
+    return screenLock;
+  }
+}
 
 export default defineComponent({
   name: "VmcDashboard",
@@ -46,10 +58,14 @@ export default defineComponent({
 
   mounted() {
     gpsStore.watchPosition();
+    getScreenLock();
+    document.documentElement.requestFullscreen();
   },
 
   unmounted() {
     gpsStore.clearWatchPosition();
+    screenLock.release();
+    document.exitFullscreen();
   },
 
   computed: {
