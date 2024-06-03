@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    {{ config }}
     <q-card class="full-width">
       <q-card-section>
         <div
@@ -139,6 +140,10 @@
             />
           </div>
         </div>
+
+        <div class="col-2 self-center q-pa-sm">
+          <q-btn round push color="info" icon="share" @click="share()" />
+        </div>
       </q-card-section>
     </q-card>
   </div>
@@ -162,7 +167,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, defineProps } from "vue";
 import { useVmcStore } from "src/stores/vmcStore";
 import { useMarkCollection } from "src/stores/markCollection";
 import { useGpsStore } from "src/stores/gpsStore";
@@ -174,6 +179,7 @@ const gps = useGpsStore();
 export default defineComponent({
   name: "VmcDashboard",
   components: {},
+  props: { config: String },
   setup() {
     return {
       vmcStore,
@@ -188,22 +194,15 @@ export default defineComponent({
       vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
     });
     gps.watchPosition();
+    if (this.config) {
+      console.log("config", this.config);
+      marks.decodeMarks(marks.encodeMarks());
+    }
   },
 
   unmounted() {
     gps.clearWatchPosition();
-    releaseWakeLock();
-  },
-
-  computed: {
-    markSelected: {
-      get() {
-        return markCollection.nextmark.id;
-      },
-      set(id) {
-        markCollection.selectMark(id);
-      },
-    },
+    this.releaseWakeLock();
   },
 
   methods: {
@@ -216,11 +215,20 @@ export default defineComponent({
       }
     },
     releaseWakeLock() {
-      if (this.wakeLock) {
+      if (this.wakeLock != null) {
         console.log("releaseWakeLock");
         this.wakeLock.release();
         this.wakeLock = null;
       }
+    },
+    share() {
+      const data = {
+        title: "RoboBouy VMC",
+        text: "Velocity Made Course App",
+        url: "https://reallycrazychris.github.io/#/vmc/" + marks.encodeMarks(),
+      };
+
+      navigator.share(data);
     },
   },
 });

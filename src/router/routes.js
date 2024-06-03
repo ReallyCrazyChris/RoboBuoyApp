@@ -39,6 +39,12 @@ const routes = [
       },
 
       {
+        path: "vmc/:config",
+        component: () => import("pages/VmcPage.vue"),
+        props: true,
+      },
+
+      {
         path: "vmc",
         component: () => import("pages/VmcPage.vue"),
       },

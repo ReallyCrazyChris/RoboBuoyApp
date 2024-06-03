@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import { encode } from "src/networking/encode";
+import { decode } from "src/networking/decode";
+import { Base64 } from "js-base64";
 
 export const useMarkCollection = defineStore("markCollection", {
   state: () => ({
@@ -40,6 +43,12 @@ export const useMarkCollection = defineStore("markCollection", {
     setCoordinates(id, lon, lat) {
       this.markcollection[id].lon = lon;
       this.markcollection[id].lat = lat;
+    },
+    encodeMarks() {
+      return Base64.fromUint8Array(encode(this.markcollection));
+    },
+    decodeMarks(b64string) {
+      this.marks = decode(Base64.toUint8Array(b64string), "utf-8");
     },
   },
 });
