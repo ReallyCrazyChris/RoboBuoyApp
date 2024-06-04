@@ -48,7 +48,9 @@ export const useMarkCollection = defineStore("markCollection", {
       return Base64.fromUint8Array(encode(this.markcollection));
     },
     decodeMarks(b64string) {
-      this.marks = decode(Base64.toUint8Array(b64string), "utf-8");
+      const byteArrayConfig = Base64.toUint8Array(b64string);
+      const marksConfig = decode(byteArrayConfig, "utf-8");
+      this.markcollection = marksConfig;
     },
   },
 });

@@ -196,7 +196,8 @@ export default defineComponent({
     gps.watchPosition();
     if (this.config) {
       console.log("config", this.config);
-      marks.decodeMarks(marks.encodeMarks());
+      //marks.decodeMarks(marks.encodeMarks());
+      marks.decodeMarks(this.config);
     }
   },
 
