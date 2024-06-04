@@ -1,6 +1,5 @@
 <template>
   <div class="row">
-    {{ config }}
     <q-card class="full-width">
       <q-card-section>
         <div
@@ -195,8 +194,6 @@ export default defineComponent({
     });
     gps.watchPosition();
     if (this.config) {
-      console.log("config", this.config);
-      //marks.decodeMarks(marks.encodeMarks());
       marks.decodeMarks(this.config);
     }
   },
