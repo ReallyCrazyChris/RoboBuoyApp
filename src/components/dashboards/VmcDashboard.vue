@@ -193,8 +193,9 @@ export default defineComponent({
       vmcStore.update(gps.lat, gps.lon, gps.heading, gps.speed);
     });
     gps.watchPosition();
-    if (this.config) {
-      marks.decodeMarks(this.config);
+
+    if (this.$route.query.config) {
+      marks.decodeMarks(this.$route.query.config);
     }
   },
 
@@ -223,7 +224,9 @@ export default defineComponent({
       const data = {
         title: "RoboBouy VMC",
         text: "Velocity Made Course App",
-        url: "https://reallycrazychris.github.io/#/vmc/" + marks.encodeMarks(),
+        url:
+          "https://reallycrazychris.github.io/#/vmc?config=" +
+          marks.encodeMarks(),
       };
 
       navigator.share(data);
