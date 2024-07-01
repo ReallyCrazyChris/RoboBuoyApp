@@ -39,11 +39,12 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Robots",
-    caption: "add, remove and configure robots",
-    icon: "route",
-    link: "#/myrobots",
+    title: "Regatta",
+    caption: "about the regatta",
+    icon: "emoji_events",
+    link: "#/regatta",
   },
+
   {
     title: "Course",
     caption: "setup and define the course",
@@ -51,16 +52,36 @@ const linksList = [
     link: "#/racecourse",
   },
   {
-    title: "GPS",
-    caption: "position heading speed",
-    icon: "gps_fixed",
-    link: "#/gps",
+    title: "Marks",
+    caption: "add, remove and configure marks",
+    icon: "tour",
+    link: "#/myrobots",
+  },
+
+  {
+    title: "Register",
+    caption: "particiapte in the regatta",
+    icon: "sailing",
+    link: "#/register",
+  },
+  {
+    title: "Timer",
+    caption: "race start timer",
+    icon: "timer",
+    link: "#/timer",
   },
   {
     title: "VMC",
     caption: "velocity made course",
-    icon: "explore",
+    icon: "speed",
     link: "#/vmc",
+  },
+
+  {
+    title: "Results",
+    caption: "document the results",
+    icon: "sports_score",
+    link: "#/results",
   },
 ];
 

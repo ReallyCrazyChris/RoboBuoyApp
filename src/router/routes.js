@@ -34,14 +34,13 @@ const routes = [
       },
 
       {
-        path: "gps",
-        component: () => import("pages/GpsPage.vue"),
+        path: "register",
+        component: () => import("pages/RegisterPage.vue"),
       },
 
       {
-        path: "vmc/:config",
-        component: () => import("pages/VmcPage.vue"),
-        props: true,
+        path: "timer",
+        component: () => import("pages/TimerPage.vue"),
       },
 
       {

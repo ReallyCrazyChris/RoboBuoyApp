@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <VmcDashboard :config="config"></VmcDashboard>
+    <VmcDashboard></VmcDashboard>
   </q-page>
 </template>
 
@@ -10,7 +10,6 @@ import VmcDashboard from "src/components/dashboards/VmcDashboard.vue";
 
 export default defineComponent({
   name: "VmcPage",
-  props: ["config"],
   components: {
     VmcDashboard,
   },

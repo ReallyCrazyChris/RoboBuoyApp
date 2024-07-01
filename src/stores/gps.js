@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
+import { useMQTT } from "mqtt-vue-hook";
 
-export const useGpsStore = defineStore("gpsStore", {
+const mqttHook = useMQTT();
+
+export const useGps = defineStore("gps", {
   state: () => ({
     lon: 49.69627211119363,
     lat: 11,
-    speed: 10,
+    sog: 10,
     heading: 180,
     accuracy: 5,
 
@@ -19,12 +22,23 @@ export const useGpsStore = defineStore("gpsStore", {
 
   actions: {
     watchsuccess(pos) {
-      console.log(pos);
       this.lon = pos.coords.longitude;
       this.lat = pos.coords.latitude;
-      this.speed = pos.coords.speed;
+      this.sog = Math.round(pos.coords.speed * 19.4384) / 10;
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
+
+      if (mqttHook.isConnected) {
+        mqttHook.publish(
+          "gps/1234",
+          JSON.stringify({
+            lon: this.lon,
+            lat: this.lat,
+            sog: this.sog,
+            heading: this.heading,
+          })
+        );
+      }
     },
 
     watcherror(err) {

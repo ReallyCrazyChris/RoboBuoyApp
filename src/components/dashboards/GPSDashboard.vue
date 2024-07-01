@@ -80,3 +80,4 @@ export default defineComponent({
   },
 });
 </script>
+src/stores/vmc src/stores/gps

@@ -36,6 +36,10 @@ module.exports = configure(function (/* ctx */) {
         client: true,
         path: "openlayersBoot",
       },
+      {
+        client: true,
+        path: "mqttBoot",
+      },
       /**
       {
         client: true, // run on server-side only!
