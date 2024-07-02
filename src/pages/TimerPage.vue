@@ -1,9 +1,8 @@
 <template>
   <q-page>
-    <q-card v-if="snapshot.matches('raceinfo')" flat>
-      <q-img src="~/src/assets/racesignals/lima.png" />
-
+    <q-card v-if="snapshot.matches('raceinfo')">
       <q-card-section>
+        <q-img class="" src="~/src/assets/racesignals/lima.png" />
         <div class="text-h5 q-mt-sm q-mb-xs">Race Information</div>
 
         <q-select
@@ -19,7 +18,7 @@
           </template>
 
           <!--template v-slot:append>
-            <q-avatar square size="25px" font-size="82px" text-color="white">
+            <q-avatar square size="50px">
               <q-img :src="timerSequenceModel.image" />
             </q-avatar>
           </template-->
@@ -50,7 +49,7 @@
           </template>
 
           <template v-slot:append>
-            <q-avatar square size="25px" font-size="82px" text-color="white">
+            <q-avatar square size="50px">
               <q-img :src="classFlagModel.image" />
             </q-avatar>
           </template>
@@ -81,7 +80,7 @@
           </template>
 
           <template v-slot:append>
-            <q-avatar square size="25px" font-size="82px" text-color="white">
+            <q-avatar square size="50px">
               <q-img :src="prepareFlagModel.image" />
             </q-avatar>
           </template>
@@ -103,15 +102,15 @@
           label="Personal Flotation Device"
           v-model="yankeeFlagModel"
           :options="yankeeFlagOptions"
-          color="deep-orange"
-          options-selected-class="text-deep-orange"
+          color="yellow"
+          options-selected-class="text-yellow"
         >
           <template v-slot:selected>
             {{ yankeeFlagModel.description }}
           </template>
 
           <template v-slot:append>
-            <q-avatar square size="25px" font-size="82px" text-color="white">
+            <q-avatar square size="50px">
               <q-img :src="yankeeFlagModel.image" />
             </q-avatar>
           </template>
@@ -146,9 +145,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('class')" flat>
-      <q-img :src="classFlagModel.image" />
-
       <q-card-section>
+        <q-img :src="classFlagModel.image" />
         <div class="text-h1 q-mt-sm q-mb-xs text-center">
           {{ raceTimeFormatter }}
         </div>
@@ -170,9 +168,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('prepare')" flat>
-      <q-img :src="prepareFlagModel.image" />
-
       <q-card-section>
+        <q-img :src="prepareFlagModel.image" />
         <div class="text-h1 q-mt-sm q-mb-xs text-center">
           {{ raceTimeFormatter }}
         </div>
@@ -195,9 +192,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('ready')" flat>
-      <q-img src="~/src/assets/racesignals/classflag.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/classflag.png" />
         <div class="text-h1 q-mt-sm q-mb-xs text-center">
           {{ raceTimeFormatter }}
         </div>
@@ -220,9 +216,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('start')" flat>
-      <q-img src="~/src/assets/racesignals/start.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/start.png" />
         <div class="text-h1 q-mt-sm q-mb-xs text-center">START</div>
       </q-card-section>
 
@@ -243,9 +238,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('racetimer')" flat>
-      <q-img src="~/src/assets/racesignals/race.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/race.png" />
         <div class="text-h1 q-mt-sm q-mb-xs text-center">
           {{ raceTimeFormatter }}
         </div>
@@ -285,9 +279,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('racepostponed')" flat>
-      <q-img src="~/src/assets/racesignals/apflag.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/apflag.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">Racing may continue when practical.</div>
       </q-card-section>
@@ -314,9 +307,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('racepostponed_ashore')" flat>
-      <q-img src="~/src/assets/racesignals/aphotel.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/aphotel.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">
           Return to shore for further informaiton.
@@ -333,9 +325,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('racepostponed_today')" flat>
-      <q-img src="~/src/assets/racesignals/apalpha.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/apalpha.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">No further racing today.</div>
       </q-card-section>
@@ -350,9 +341,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('recallall')" flat>
-      <q-img src="~/src/assets/racesignals/generalrecall.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/generalrecall.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">General Recall</div>
         <div class="text-h6 text-grey">
           This race has been recalled. Return to the start line. Prepare for a
@@ -370,9 +360,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('recallone')" flat>
-      <q-img src="~/src/assets/racesignals/xray.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/xray.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Individual Recall</div>
         <div class="text-h6 text-grey">
           One or more race participans where On Course Side (OCS). Please
@@ -390,9 +379,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('abandon')" flat>
-      <q-img src="~/src/assets/racesignals/november.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/november.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Race Abandoned</div>
         <div class="text-h6 text-grey">This race is Abandoned.</div>
       </q-card-section>
@@ -419,9 +407,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('abandon_ashore')" flat>
-      <q-img src="~/src/assets/racesignals/novhotel.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/novhotel.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
         <div class="text-h6 text-grey">
           All remaning races are abandned. More information will be availabe on
@@ -440,9 +427,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('abandon_today')" flat>
-      <q-img src="~/src/assets/racesignals/novalpha.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/novalpha.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Racing Completed</div>
         <div class="text-h6 text-grey">
           All remaining races are abandoned. There is no more racing today.
@@ -460,9 +446,8 @@
     </q-card>
 
     <q-card v-if="snapshot.matches('raceresults')" flat>
-      <q-img src="~/src/assets/racesignals/results.png" />
-
       <q-card-section>
+        <q-img src="~/src/assets/racesignals/results.png" />
         <div class="text-overline text-orange-9">PRELIMINARY RESULT</div>
         <div class="text-h3 q-mt-sm q-mb-xs">Race 1</div>
         <div class="text-h6 text-grey">12-06-2024 : 11:35am - 12:02pm</div>
