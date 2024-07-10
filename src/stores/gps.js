@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
-
 const mqttHook = useMQTT();
 
-export const useGps = defineStore("gps", {
+export const gpsStoreDefinition = defineStore("gps", {
   state: () => ({
     lon: 0,
     lat: 0,
@@ -57,3 +56,11 @@ export const useGps = defineStore("gps", {
     },
   },
 });
+
+// singleton
+const useGPSStore = gpsStoreDefinition();
+
+// singleton
+export const useGps = () => {
+  return useGPSStore;
+};

@@ -62,15 +62,13 @@
 <script>
 import { defineComponent } from "vue";
 
-import { useMarks } from "src/stores/marks";
-import { useGps } from "src/stores/gps";
 import { useVmc } from "src/stores/vmc";
+import { useMarks } from "src/stores/marks";
 
 import MarksSelect from "src/components/marks/MarksSelect.vue";
 
-const marks = useMarks();
-const gps = useGps();
 const vmc = useVmc();
+const marks = useMarks();
 
 export default defineComponent({
   name: "VmcDashboard",
@@ -81,20 +79,11 @@ export default defineComponent({
     return {
       vmc,
       marks,
-      gps,
       wakeLock: null,
     };
   },
 
-  mounted() {
-    gps.watchPosition();
-    gps.$subscribe(() => {
-      vmc.update(gps.lon, gps.lat, gps.heading, gps.sog);
-    });
-  },
-
   unmounted() {
-    gps.clearWatchPosition();
     this.releaseWakeLock();
   },
 

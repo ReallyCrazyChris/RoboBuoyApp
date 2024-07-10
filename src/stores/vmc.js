@@ -1,17 +1,19 @@
 import { defineStore } from "pinia";
 import { useMarks } from "src/stores/marks";
+import { useGps } from "src/stores/gps";
 import LatLon from "geodesy/latlon-spherical.js";
 import { useMQTT } from "mqtt-vue-hook";
 
 const mqttHook = useMQTT();
 const marks = useMarks();
+const gps = useGps();
 
-export const useVmc = defineStore("vmc", {
+export const vmcStoreDefinition = defineStore("vmc", {
   state: () => ({
-    distance: 0,
-    bearing: 0,
     vmc: 0,
     efficiency: 0,
+    bearing: 0,
+    distance: 0,
   }),
 
   actions: {
@@ -33,9 +35,9 @@ export const useVmc = defineStore("vmc", {
 
       const delta_rad = (delta * Math.PI) / 180.0;
 
-      this.vmc = Math.round(10 * sog * Math.cos(delta_rad)) / 10;
+      this.vmc = Math.round(194.384 * sog * Math.cos(delta_rad)) / 10;
 
-      this.efficiency = Math.round(this.vmc / sog) || 0;
+      this.efficiency = Math.round(100 * (this.vmc / sog)) / 10 || 0;
 
       if (mqttHook.isConnected) {
         mqttHook.publish(
@@ -57,9 +59,17 @@ export const useVmc = defineStore("vmc", {
         );
       }
     },
-    setNextCoordinates(lon, lat) {
-      this.lon = lon;
-      this.lat = lat;
-    },
   },
 });
+
+const vmc = vmcStoreDefinition();
+
+gps.$subscribe(() => {
+  vmc.update(gps.lon, gps.lat, gps.heading, gps.sog);
+});
+
+gps.watchPosition();
+
+export const useVmc = () => {
+  return vmc;
+};

@@ -31,7 +31,6 @@ const marksStoreDefinition = defineStore("marks", {
 
   actions: {
     getSelectedLon() {
-      console.log(this.marks[this.selected].lon);
       return this.marks[this.selected].lon;
     },
 
