@@ -39,22 +39,21 @@ export const useVmc = defineStore("vmc", {
       console.log("vmc", this.vmc);
       console.log("efficiency", this.efficiency);
 
-      /**
       if (mqttHook.isConnected) {
         mqttHook.publish(
-          "vmc/1234",
+          "vmc",
           JSON.stringify({
             lon: this.lon,
             lat: this.lat,
             sog: this.sog,
             vmc: this.vmc,
             efficiency: this.efficiency,
-
             heading: this.heading,
+            bearing: this.bearing,
+            distance: this.distance,
           })
         );
       }
-       */
     },
     setNextCoordinates(id, lat, lon) {
       this.lon = lon;

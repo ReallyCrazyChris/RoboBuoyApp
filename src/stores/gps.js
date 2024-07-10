@@ -10,14 +10,12 @@ export const useGps = defineStore("gps", {
     sog: 0,
     heading: 0,
     accuracy: 5,
-
-    watchoptions: {
+    watchid: null,
+    wathcoptions: {
       enableHighAccuracy: true,
       timeout: 30000,
       maximumAge: 0,
     },
-
-    watchid: null,
   }),
 
   actions: {
@@ -28,17 +26,18 @@ export const useGps = defineStore("gps", {
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
 
-      /**if (mqttHook.isConnected) {
+      if (mqttHook.isConnected) {
         mqttHook.publish(
-          "gps/1234",
+          "gps",
           JSON.stringify({
             lon: this.lon,
             lat: this.lat,
             sog: this.sog,
             heading: this.heading,
+            accuracy: this.accuracy,
           })
         );
-      }*/
+      }
     },
 
     watcherror(err) {
@@ -49,7 +48,7 @@ export const useGps = defineStore("gps", {
       this.watchid = navigator.geolocation.watchPosition(
         this.watchsuccess,
         this.watcherror,
-        this.watchoptions
+        this.wathcoptions
       );
     },
 
