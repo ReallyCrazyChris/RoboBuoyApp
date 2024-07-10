@@ -1,20 +1,20 @@
 <template>
   <q-page>
-    <q-card v-if="snapshot.matches('raceinfo')">
+    <q-card v-if="raceTimer.matches('raceinfo')" flat>
       <q-card-section>
         <q-img class="" src="~/src/assets/racesignals/lima.png" />
         <div class="text-h5 q-mt-sm q-mb-xs">Race Information</div>
 
         <q-select
           label="Time Sequence"
-          v-model="timerSequenceModel"
-          :options="timerSequeceOptions"
+          v-model="raceTimer.timerSequenceModel"
+          :options="raceTimer.timerSequeceOptions"
           color="primary"
           options-selected-class="text-deep-orange"
         >
           <template v-slot:selected>
-            {{ timerSequenceModel.label }} :
-            {{ timerSequenceModel.description }}
+            {{ raceTimer.timerSequenceModel.label }} :
+            {{ raceTimer.timerSequenceModel.description }}
           </template>
 
           <!--template v-slot:append>
@@ -38,19 +38,19 @@
 
         <q-select
           label="Class Flag"
-          v-model="classFlagModel"
-          :options="classFlagOptions"
+          v-model="raceTimer.classFlagModel"
+          :options="raceTimer.classFlagOptions"
           color="primary"
           options-selected-class="text-deep-orange"
         >
           <template v-slot:selected>
-            {{ classFlagModel.label }}
-            {{ classFlagModel.description }}
+            {{ raceTimer.classFlagModel.label }}
+            {{ raceTimer.classFlagModel.description }}
           </template>
 
           <template v-slot:append>
             <q-avatar square size="50px">
-              <q-img :src="classFlagModel.image" />
+              <q-img :src="raceTimer.classFlagModel.image" />
             </q-avatar>
           </template>
 
@@ -69,19 +69,19 @@
 
         <q-select
           label="Preparation Flag"
-          v-model="prepareFlagModel"
-          :options="prepareFlagOptions"
+          v-model="raceTimer.prepareFlagModel"
+          :options="raceTimer.prepareFlagOptions"
           color="secondary"
           options-selected-class="text-deep-orange"
         >
           <template v-slot:selected>
-            {{ prepareFlagModel.label }} :
-            {{ prepareFlagModel.description }}
+            {{ raceTimer.prepareFlagModel.label }} :
+            {{ raceTimer.prepareFlagModel.description }}
           </template>
 
           <template v-slot:append>
             <q-avatar square size="50px">
-              <q-img :src="prepareFlagModel.image" />
+              <q-img :src="raceTimer.prepareFlagModel.image" />
             </q-avatar>
           </template>
 
@@ -100,18 +100,18 @@
 
         <q-select
           label="Personal Flotation Device"
-          v-model="yankeeFlagModel"
-          :options="yankeeFlagOptions"
+          v-model="raceTimer.yankeeFlagModel"
+          :options="raceTimer.yankeeFlagOptions"
           color="yellow"
           options-selected-class="text-yellow"
         >
           <template v-slot:selected>
-            {{ yankeeFlagModel.description }}
+            {{ raceTimer.yankeeFlagModel.description }}
           </template>
 
           <template v-slot:append>
             <q-avatar square size="50px">
-              <q-img :src="yankeeFlagModel.image" />
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
             </q-avatar>
           </template>
 
@@ -134,27 +134,29 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="send({ type: 'postpone' })"
+          @click="raceTimer.postponeraceTransition()"
         />
         <q-btn
           color="positive"
           label="Start Race"
-          @click="send({ type: 'startsequence' })"
+          @click="raceTimer.startraceTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('class')" flat>
+    <q-card v-if="raceTimer.matches('raceclass')" flat>
       <q-card-section>
-        <q-img :src="classFlagModel.image" />
-        <div class="text-h1 q-mt-sm q-mb-xs text-center">
+        <q-img :src="raceTimer.classFlagModel.image" />
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
+        </q-avatar>
+        <div style="font-size: 45vmin" class="text-center">
           {{ raceTimeFormatter }}
         </div>
-      </q-card-section>
-      <q-card-section>
-        <q-avatar square size="50px">
-          <q-img :src="yankeeFlagModel.image" />
-        </q-avatar>
+
+        <div class="text-caption text-center">
+          {{ raceTimer.timerSequenceModel.description }}
+        </div>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom-right">
@@ -162,23 +164,24 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="send({ type: 'postpone' })"
+          @click="raceTimer.postponeraceTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('prepare')" flat>
+    <q-card v-if="raceTimer.matches('prepare')" flat>
       <q-card-section>
-        <q-img :src="prepareFlagModel.image" />
-        <div class="text-h1 q-mt-sm q-mb-xs text-center">
+        <q-img :src="raceTimer.prepareFlagModel.image" />
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
+        </q-avatar>
+        <div style="font-size: 45vmin" class="text-center">
           {{ raceTimeFormatter }}
         </div>
-      </q-card-section>
 
-      <q-card-section>
-        <q-avatar square size="50px">
-          <q-img :src="yankeeFlagModel.image" />
-        </q-avatar>
+        <div class="text-caption text-center">
+          {{ raceTimer.timerSequenceModel.description }}
+        </div>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom-right">
@@ -186,23 +189,25 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="send({ type: 'postpone' })"
+          @click="raceTimer.postponeraceTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('ready')" flat>
+    <q-card v-if="raceTimer.matches('ready')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/classflag.png" />
-        <div class="text-h1 q-mt-sm q-mb-xs text-center">
+
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
+        </q-avatar>
+        <div style="font-size: 45vmin" class="text-center">
           {{ raceTimeFormatter }}
         </div>
-      </q-card-section>
 
-      <q-card-section>
-        <q-avatar square size="50px">
-          <q-img :src="yankeeFlagModel.image" />
-        </q-avatar>
+        <div class="text-caption text-center">
+          {{ raceTimer.timerSequenceModel.description }}
+        </div>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom-right">
@@ -210,20 +215,20 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="send({ type: 'postpone' })"
+          @click="raceTimer.postponeraceTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('start')" flat>
+    <q-card v-if="raceTimer.matches('start')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/start.png" />
-        <div class="text-h1 q-mt-sm q-mb-xs text-center">START</div>
-      </q-card-section>
+        <div style="font-size: 30vmin" class="q-mt-sm q-mb-xs text-center">
+          START
+        </div>
 
-      <q-card-section>
         <q-avatar square size="50px">
-          <q-img :src="yankeeFlagModel.image" />
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
         </q-avatar>
       </q-card-section>
 
@@ -232,53 +237,50 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="send({ type: 'postpone' })"
+          @click="raceTimer.postponeraceTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('racetimer')" flat>
+    <q-card v-if="raceTimer.matches('racetimer')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/race.png" />
-        <div class="text-h1 q-mt-sm q-mb-xs text-center">
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
+        </q-avatar>
+        <div style="font-size: 20vmin" class="text-center">
           {{ raceTimeFormatter }}
         </div>
-      </q-card-section>
-
-      <q-card-section>
-        <q-avatar square size="50px">
-          <q-img :src="yankeeFlagModel.image" />
-        </q-avatar>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom" align="center">
         <q-btn
           color="primary"
           label="Recall One"
-          @click="send({ type: 'recallone' })"
+          @click="raceTimer.recalloneTransition()"
         />
 
         <q-btn
           color="secondary"
           label="Recall All"
-          @click="send({ type: 'recallall' })"
+          @click="raceTimer.recallallTransition()"
         />
 
         <q-btn
           color="accent"
           label="Race Completed"
-          @click="send({ type: 'racecompleted' })"
+          @click="raceTimer.racecompletedTransition()"
         />
         <q-btn
           flat
           color="secondary"
           label="Abandon Race"
-          @click="send({ type: 'abandon' })"
+          @click="raceTimer.abandonTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('racepostponed')" flat>
+    <q-card v-if="raceTimer.matches('racepostponed')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/apflag.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
@@ -290,23 +292,23 @@
           flat
           color="primary"
           label="go to shore"
-          @click="send({ type: 'ashore' })"
+          @click="raceTimer.postponeashoreTransition"
         />
         <q-btn
           flat
           color="primary"
           label="postpone for today"
-          @click="send({ type: 'today' })"
+          @click="raceTimer.postponetodayTransition()"
         />
         <q-btn
           color="primary"
           label="Race info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('racepostponed_ashore')" flat>
+    <q-card v-if="raceTimer.matches('racepostponed_ashore')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/aphotel.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
@@ -319,12 +321,12 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('racepostponed_today')" flat>
+    <q-card v-if="raceTimer.matches('racepostponed_today')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/apalpha.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
@@ -335,12 +337,12 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('recallall')" flat>
+    <q-card v-if="raceTimer.matches('recallall')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/generalrecall.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">General Recall</div>
@@ -354,12 +356,12 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('recallone')" flat>
+    <q-card v-if="raceTimer.matches('recallone')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/xray.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Individual Recall</div>
@@ -373,12 +375,12 @@
         <q-btn
           color="primary"
           label="Continue"
-          @click="send({ type: 'continue' })"
+          @click="raceTimer.racecontinueTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('abandon')" flat>
+    <q-card v-if="raceTimer.matches('raceabandoned')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/november.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Race Abandoned</div>
@@ -390,23 +392,23 @@
           flat
           color="secondary"
           label="Go to shore"
-          @click="send({ type: 'ashore' })"
+          @click="raceTimer.abandonashoreTransition()"
         />
         <q-btn
           flat
           color="secondary"
           label="Racing Completed"
-          @click="send({ type: 'today' })"
+          @click="raceTimer.abandontodayTransition()"
         />
         <q-btn
           color="primary"
           label="Race info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('abandon_ashore')" flat>
+    <q-card v-if="raceTimer.matches('raceabandoned_ashore')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/novhotel.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
@@ -421,12 +423,12 @@
           flat
           color="primary"
           label="Race Info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('abandon_today')" flat>
+    <q-card v-if="raceTimer.matches('raceabandoned_today')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/novalpha.png" />
         <div class="text-h3 q-mt-sm q-mb-xs">Racing Completed</div>
@@ -440,12 +442,12 @@
           flat
           color="primary"
           label="Race Info"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="snapshot.matches('raceresults')" flat>
+    <q-card v-if="raceTimer.matches('raceresults')" flat>
       <q-card-section>
         <q-img src="~/src/assets/racesignals/results.png" />
         <div class="text-overline text-orange-9">PRELIMINARY RESULT</div>
@@ -481,18 +483,18 @@
           flat
           color="secondary"
           label="Go to shore"
-          @click="send({ type: 'ashore' })"
+          @click="raceTimer.abandonashoreTransition()"
         />
         <q-btn
           flat
           color="secondary"
           label="Racing Completed"
-          @click="send({ type: 'today' })"
+          @click="raceTimer.abandontodayTransition()"
         />
         <q-btn
           color="primary"
           label="New Race"
-          @click="send({ type: 'raceinfo' })"
+          @click="raceTimer.raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -501,154 +503,26 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { useMachine } from "@xstate/vue";
-import { machine } from "src/states/raceTimer.js";
+import { useRaceTimer } from "src/stores/raceTimer";
+
+const raceTimer = useRaceTimer();
 
 export default defineComponent({
   name: "RegisterPage",
   components: {},
 
   setup() {
-    const { snapshot, actorRef, send } = useMachine(machine);
-
-    console.log(snapshot, actorRef, send);
     return {
-      snapshot,
-      send,
-
-      timerSequeceOptions: [
-        {
-          label: "1 minute",
-          value: "1",
-          description: "1m - 30s - Start ",
-          image: "src/assets/sequcence/1minute.png",
-        },
-
-        {
-          label: "2 minute",
-          value: "2",
-          description: "2m - 30s - Start ",
-          image: "src/assets/sequcence/2minute.png",
-        },
-        {
-          label: "5 minute",
-          value: "5",
-          description: "5m - 4m - 1m - Start ",
-          image: "src/assets/sequcence/5minute.png",
-        },
-        {
-          label: "10 minute",
-          value: "10",
-          description: "10m - 9m - 1m - Start ",
-          image: "src/assets/sequcence/10minute.png",
-        },
-      ],
-
-      timerSequenceModel: ref({
-        label: "5 minute",
-        value: "5",
-        description: "5m - 4m - 1m - Start ",
-        image: "src/assets/sequcence/5minute.png",
-      }),
-
-      prepareFlagOptions: [
-        {
-          label: "Papa",
-          value: "P",
-          description: "Prepare",
-          image: "src/assets/racesignals/papa.png",
-        },
-        {
-          label: "Italy",
-          value: "I",
-          description: "Rule 30.1",
-          image: "src/assets/racesignals/italy.png",
-        },
-        {
-          label: "Zulu",
-          value: "Z",
-          description: "Rule 30.2",
-          image: "src/assets/racesignals/zulu.png",
-        },
-        {
-          label: "Uniform",
-          value: "U",
-          description: "Rule 30.3",
-          image: "src/assets/racesignals/uniform.png",
-        },
-        {
-          label: "Black",
-          value: "B",
-          description: "Rule 30.4",
-          image: "src/assets/racesignals/black.png",
-        },
-      ],
-
-      prepareFlagModel: ref({
-        label: "Uniform",
-        value: "U",
-        description: "Rule 30.3",
-        image: "src/assets/racesignals/uniform.png",
-      }),
-
-      classFlagOptions: [
-        {
-          label: "Optimist",
-          value: "optimist",
-          description: "",
-          image: "src/assets/boatclasses/optimist.png",
-        },
-        {
-          label: "29er",
-          value: "29er",
-          description: "",
-          image: "src/assets/boatclasses/29er.png",
-        },
-        {
-          label: "ILCA",
-          value: "ilca",
-          description: "",
-          image: "src/assets/boatclasses/ilca.png",
-        },
-      ],
-
-      classFlagModel: ref({
-        label: "Optimist",
-        value: "optimist",
-        description: "",
-        image: "src/assets/boatclasses/optimist.png",
-      }),
-
-      yankeeFlagOptions: [
-        {
-          label: "Yankee",
-          value: true,
-          description: "Wear personal flotation device",
-          image: "src/assets/racesignals/yankee.png",
-        },
-        {
-          label: "No Yankee",
-          value: false,
-          description: "personal flotation devices optional",
-          image: "",
-        },
-      ],
-
-      yankeeFlagModel: ref({
-        label: "Yankee",
-        value: true,
-        description: "Wear personal flotation device",
-        image: "src/assets/racesignals/yankee.png",
-      }),
+      raceTimer,
     };
   },
   computed: {
     raceTimeFormatter() {
-      if (this.snapshot.context.raceTime == undefined) {
+      if (this.raceTimer.raceTime == undefined) {
         return "--:--";
       }
 
-      var racetime = Math.abs(this.snapshot.context.raceTime);
+      var racetime = Math.abs(this.raceTimer.raceTime);
 
       // extract hours
       var hours = parseInt(racetime / 3600);

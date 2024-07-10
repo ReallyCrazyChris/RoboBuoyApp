@@ -22,8 +22,15 @@ export const useVmc = defineStore("vmc", {
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
 
-      // TODO normalize the angles
-      const deltaAngle_deg = this.bearing - heading;
+      var deltaAngle_deg = this.bearing - heading;
+
+      // normalize the angles
+      deltaAngle_deg = deltaAngle_deg % 360;
+
+      if (deltaAngle_deg < 0) {
+        deltaAngle_deg += 360;
+      }
+
       const deltaAngle_rad = (deltaAngle_deg * Math.PI) / 180.0;
 
       this.vmc = Math.round(10 * sog * Math.cos(deltaAngle_rad)) / 10;
@@ -32,6 +39,7 @@ export const useVmc = defineStore("vmc", {
       console.log("vmc", this.vmc);
       console.log("efficiency", this.efficiency);
 
+      /**
       if (mqttHook.isConnected) {
         mqttHook.publish(
           "vmc/1234",
@@ -46,6 +54,7 @@ export const useVmc = defineStore("vmc", {
           })
         );
       }
+       */
     },
     setNextCoordinates(id, lat, lon) {
       this.lon = lon;

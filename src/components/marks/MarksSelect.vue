@@ -58,6 +58,8 @@ export default {
       "MarkSelect"
     );
 
+    // Causes Race Condition
+    /**
     mqttHook.registerEvent(
       "marks/#",
       (topic, message) => {
@@ -67,6 +69,7 @@ export default {
       },
       "MarkSet"
     );
+     */
   },
   unmounted() {
     mqttHook.unRegisterEvent("markselected", "MarkSelect");

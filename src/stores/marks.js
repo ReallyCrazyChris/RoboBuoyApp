@@ -1,18 +1,7 @@
 import { defineStore } from "pinia";
-import { encode } from "src/networking/encode";
-import { decode } from "src/networking/decode";
-import { Base64 } from "js-base64";
-
 import { useMQTT } from "mqtt-vue-hook";
-const mqttHook = useMQTT();
 
-if (mqttHook.isConnected) {
-  mqttHook.subscribe(["markselected", "marks/#"], 1, {}, (err, granted) => {
-    console.log("subscriptions granted", granted);
-  });
-}
-
-export const useMarks = defineStore("marks", {
+const marksStoreDefinition = defineStore("marks", {
   state: () => ({
     selected: 0,
     marks: {
@@ -37,20 +26,6 @@ export const useMarks = defineStore("marks", {
         lat: 0,
         color: "warning",
       },
-      3: {
-        id: 3,
-        label: "Start",
-        lon: 0,
-        lat: 0,
-        color: "orange",
-      },
-      4: {
-        id: 4,
-        label: "Finish",
-        lon: 0,
-        lat: 0,
-        color: "blue",
-      },
     },
   }),
 
@@ -69,7 +44,7 @@ export const useMarks = defineStore("marks", {
     setSelected(id) {
       this.selected = id;
       if (mqttHook.isConnected) {
-        mqttHook.publish("markselected", "" + this.selected);
+        mqttHook.publish("marks", JSON.stringify(this.$state));
       }
     },
 
@@ -78,15 +53,33 @@ export const useMarks = defineStore("marks", {
       this.marks[id].lat = lat;
 
       if (mqttHook.isConnected) {
-        mqttHook.publish(
-          "marks/" + id,
-          JSON.stringify({
-            id: id,
-            lon: this.marks[id].lon,
-            lat: this.marks[id].lat,
-          })
-        );
+        mqttHook.publish("marks", JSON.stringify(this.$state));
       }
     },
   },
 });
+
+// Singleton
+const useMarksStore = marksStoreDefinition();
+
+const mqttHook = useMQTT();
+
+if (mqttHook.isConnected) {
+  mqttHook.subscribe(["marks"], 1, { nl: true }, (err, granted) => {
+    console.log("subscriptions granted", granted);
+  });
+}
+
+mqttHook.registerEvent(
+  "marks",
+  (topic, message) => {
+    useMarksStore.$patch(JSON.parse(message.toString()));
+    console.log(useMarksStore.$state);
+  },
+  "vmcMarksRegistration"
+);
+
+// provide the singleton
+export const useMarks = () => {
+  return useMarksStore;
+};

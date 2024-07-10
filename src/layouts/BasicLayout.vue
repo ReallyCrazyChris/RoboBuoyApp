@@ -8,7 +8,7 @@
           <q-avatar>
             <img src="~assets/logo-mono-white.svg" />
           </q-avatar>
-          RoboBuoy
+          Robo Regatta
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

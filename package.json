@@ -15,24 +15,18 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "@statelyai/inspect": "^0.3.1",
-    "@vue-leaflet/vue-leaflet": "^0.10.1",
-    "@xstate/vue": "^3.1.2",
     "buffer": "^6.0.3",
     "geodesy": "^2.4.0",
     "js-base64": "^3.7.7",
-    "leaflet": "^1.9.4",
     "ol": "^8.1.0",
     "ol-contextmenu": "^5.3.0",
     "ol-ext": "^4.0.11",
     "pinia": "^2.0.11",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "pinia-xstate": "^2.0.2",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0",
-    "vue3-openlayers": "^2.0.1",
-    "xstate": "^5.14.0"
+    "vue3-openlayers": "^2.0.1"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",

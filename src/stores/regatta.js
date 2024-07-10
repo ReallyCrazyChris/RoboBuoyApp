@@ -11,7 +11,28 @@ export const useRegatta = defineStore("regatta", {
     lat: null,
     earliestStart: null,
     latestStart: null,
+    boats: [
+      { id: "asbe", sailnumber: "1234", crewlist: "", role: "committee" },
+    ],
+    races: [{ id: 0, class: "29er", startTime: 0, endTime: 0, results: [] }],
   }),
 
-  actions: {},
+  actions: {
+    submitBoat(sailnumber, crewlist) {
+      this.boats.append({
+        id: "assd",
+        sailnumber: "" + sailnumber,
+        crewlist: "" + crewlist,
+        role: null,
+      });
+    },
+
+    deleteBoat(id) {},
+
+    submitRace(race) {
+      this.boats.append(race);
+    },
+
+    deleteRace(id) {},
+  },
 });

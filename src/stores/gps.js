@@ -28,7 +28,7 @@ export const useGps = defineStore("gps", {
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
 
-      if (mqttHook.isConnected) {
+      /**if (mqttHook.isConnected) {
         mqttHook.publish(
           "gps/1234",
           JSON.stringify({
@@ -38,7 +38,7 @@ export const useGps = defineStore("gps", {
             heading: this.heading,
           })
         );
-      }
+      }*/
     },
 
     watcherror(err) {

@@ -72,9 +72,6 @@ const marks = useMarks();
 const gps = useGps();
 const vmc = useVmc();
 
-import { useMQTT } from "mqtt-vue-hook";
-const mqttHook = useMQTT();
-
 export default defineComponent({
   name: "VmcDashboard",
   components: {
