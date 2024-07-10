@@ -30,6 +30,15 @@ const marksStoreDefinition = defineStore("marks", {
   }),
 
   actions: {
+    getSelectedLon() {
+      console.log(this.marks[this.selected].lon);
+      return this.marks[this.selected].lon;
+    },
+
+    getSelectedLat() {
+      return this.marks[this.selected].lat;
+    },
+
     getLonFor(id) {
       return this.marks[id].lon;
     },
@@ -79,7 +88,7 @@ mqttHook.registerEvent(
   "vmcMarksRegistration"
 );
 
-// provide the singleton
+// singleton
 export const useMarks = () => {
   return useMarksStore;
 };

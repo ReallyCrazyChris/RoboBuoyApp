@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
+import { useMarks } from "src/stores/marks";
 import LatLon from "geodesy/latlon-spherical.js";
 import { useMQTT } from "mqtt-vue-hook";
+
 const mqttHook = useMQTT();
+const marks = useMarks();
 
 export const useVmc = defineStore("vmc", {
   state: () => ({
-    lon: 0,
-    lat: 0,
     distance: 0,
     bearing: 0,
     vmc: 0,
@@ -18,16 +19,14 @@ export const useVmc = defineStore("vmc", {
 
     update(lon, lat, heading, sog) {
       const p1 = new LatLon(lat, lon);
-      const p2 = new LatLon(this.lat, this.lon);
+      const p2 = new LatLon(marks.getSelectedLat(), marks.getSelectedLon());
 
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
 
       var delta = this.bearing - heading;
-
       // normalize the angles
       delta = delta % 360;
-
       if (delta < 0) {
         delta += 360;
       }
@@ -38,14 +37,14 @@ export const useVmc = defineStore("vmc", {
 
       this.efficiency = Math.round(this.vmc / sog) || 0;
 
-      if (mqttHook.isConnected && heading != null) {
+      if (mqttHook.isConnected) {
         mqttHook.publish(
           "vmc",
           JSON.stringify({
             p1lon: lon,
             p1lat: lat,
-            p2lon: this.lon,
-            p2lat: this.lat,
+            p2lon: marks.getSelectedLat(),
+            p2lat: marks.getSelectedLon(),
             sog: this.sog,
             vmc: this.vmc,
             efficiency: this.efficiency,
@@ -58,10 +57,9 @@ export const useVmc = defineStore("vmc", {
         );
       }
     },
-    setNextCoordinates(id, lat, lon) {
+    setNextCoordinates(lon, lat) {
       this.lon = lon;
       this.lat = lat;
-      this.selectedMarkId = id;
     },
   },
 });
