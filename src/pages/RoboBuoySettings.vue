@@ -18,7 +18,7 @@
       <q-separator />
     </q-card>
 
-    <GPSDashboard :deviceid="deviceid" />
+    <!--GPSDashboard :deviceid="deviceid" /-->
     <RobobuoyStatus :deviceid="deviceid"></RobobuoyStatus>
     <HoldSettings :deviceid="deviceid" />
     <PIDSettings :deviceid="deviceid" />
@@ -44,7 +44,7 @@ import DeclinationCalibration from "src/components/settings/DeclinationCalibrati
 import AccelCalibration from "src/components/settings/AccelCalibration.vue";
 import GyroCalibration from "src/components/settings/GyroCalibration.vue";
 import CompassDashboard from "src/components/dashboards/CompassDashboard.vue";
-import GPSDashboard from "src/components/dashboards/GPSDashboard.vue";
+//import GPSDashboard from "src/components/dashboards/GPSDashboard.vue";
 export default {
   name: "RoboBuoySettingsPage",
   props: ["deviceid"],
@@ -59,7 +59,7 @@ export default {
     AccelCalibration,
     GyroCalibration,
     CompassDashboard,
-    GPSDashboard,
+    //GPSDashboard,
   },
 
   setup(props) {

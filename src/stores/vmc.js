@@ -15,6 +15,7 @@ export const useVmc = defineStore("vmc", {
 
   actions: {
     // update the VMC data using the latest GPS data
+
     update(lon, lat, heading, sog) {
       const p1 = new LatLon(lat, lon);
       const p2 = new LatLon(this.lat, this.lon);
@@ -22,34 +23,36 @@ export const useVmc = defineStore("vmc", {
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
 
-      var deltaAngle_deg = this.bearing - heading;
+      var delta = this.bearing - heading;
 
       // normalize the angles
-      deltaAngle_deg = deltaAngle_deg % 360;
+      delta = delta % 360;
 
-      if (deltaAngle_deg < 0) {
-        deltaAngle_deg += 360;
+      if (delta < 0) {
+        delta += 360;
       }
 
-      const deltaAngle_rad = (deltaAngle_deg * Math.PI) / 180.0;
+      const delta_rad = (delta * Math.PI) / 180.0;
 
-      this.vmc = Math.round(10 * sog * Math.cos(deltaAngle_rad)) / 10;
-      this.efficiency = Math.round(141 * (this.vmc / sog)) || 0;
+      this.vmc = Math.round(10 * sog * Math.cos(delta_rad)) / 10;
 
-      console.log("vmc", this.vmc);
-      console.log("efficiency", this.efficiency);
+      this.efficiency = Math.round(this.vmc / sog) || 0;
 
-      if (mqttHook.isConnected) {
+      if (mqttHook.isConnected && heading != null) {
         mqttHook.publish(
           "vmc",
           JSON.stringify({
-            lon: this.lon,
-            lat: this.lat,
+            p1lon: lon,
+            p1lat: lat,
+            p2lon: this.lon,
+            p2lat: this.lat,
             sog: this.sog,
             vmc: this.vmc,
             efficiency: this.efficiency,
-            heading: this.heading,
+            heading: heading,
             bearing: this.bearing,
+            delta: delta,
+            delta_rad: delta_rad,
             distance: this.distance,
           })
         );

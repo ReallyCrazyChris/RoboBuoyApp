@@ -22,7 +22,7 @@ export const useGps = defineStore("gps", {
     watchsuccess(pos) {
       this.lon = pos.coords.longitude;
       this.lat = pos.coords.latitude;
-      this.sog = Math.round(pos.coords.speed * 19.4384) / 10;
+      this.sog = pos.coords.speed;
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
 
