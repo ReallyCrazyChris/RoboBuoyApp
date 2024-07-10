@@ -3,6 +3,7 @@ import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
 function getClientId() {
+  "creates and return a unique client id for the device";
   let clientId = localStorage.getItem("clientId");
 
   if (!clientId) {
@@ -15,8 +16,6 @@ function getClientId() {
 
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(({ app }) => {
-  //const
-
   const clientId = getClientId();
 
   console.log("Booting mqtt client:", clientId);

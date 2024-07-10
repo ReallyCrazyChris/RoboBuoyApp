@@ -5,10 +5,10 @@ const mqttHook = useMQTT();
 
 export const useGps = defineStore("gps", {
   state: () => ({
-    lon: 49.69627211119363,
-    lat: 11,
-    sog: 10,
-    heading: 180,
+    lon: 0,
+    lat: 0,
+    sog: 0,
+    heading: 0,
     accuracy: 5,
 
     watchoptions: {

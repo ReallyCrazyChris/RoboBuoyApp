@@ -25,7 +25,7 @@
         round
         :color="mark.color"
         icon="room"
-        @click="marks.setCoordinates(mark.id, gps.lat, gps.lon)"
+        @click="marks.setCoordinates(mark.id, gps.lon, gps.lat)"
       />
     </div>
   </div>
@@ -38,9 +38,6 @@ import { useGps } from "src/stores/gps";
 const marks = useMarks();
 const gps = useGps();
 
-import { useMQTT } from "mqtt-vue-hook";
-const mqttHook = useMQTT();
-
 export default {
   name: "MarksSelect",
   setup() {
@@ -48,31 +45,6 @@ export default {
       marks,
       gps,
     };
-  },
-  mounted() {
-    mqttHook.registerEvent(
-      "markselected",
-      (topic, message) => {
-        marks.selected = Number(message.toString());
-      },
-      "MarkSelect"
-    );
-
-    // Causes Race Condition
-    /**
-    mqttHook.registerEvent(
-      "marks/#",
-      (topic, message) => {
-        const mark = JSON.parse(message.toString());
-
-        marks.setCoordinates(mark.id, mark.lon, mark.lat);
-      },
-      "MarkSet"
-    );
-     */
-  },
-  unmounted() {
-    mqttHook.unRegisterEvent("markselected", "MarkSelect");
   },
 };
 </script>

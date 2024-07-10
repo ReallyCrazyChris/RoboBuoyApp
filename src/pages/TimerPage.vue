@@ -446,58 +446,6 @@
         />
       </q-card-actions>
     </q-card>
-
-    <q-card v-if="raceTimer.matches('raceresults')" flat>
-      <q-card-section>
-        <q-img src="~/src/assets/racesignals/results.png" />
-        <div class="text-overline text-orange-9">PRELIMINARY RESULT</div>
-        <div class="text-h3 q-mt-sm q-mb-xs">Race 1</div>
-        <div class="text-h6 text-grey">12-06-2024 : 11:35am - 12:02pm</div>
-        <div class="text-h6 text-grey">
-          <q-markup-table>
-            <thead>
-              <tr>
-                <th class="text-left">Pos</th>
-                <th class="text-left">Number</th>
-                <th class="text-left">Crew</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left">1</td>
-                <td class="text-left">29er 1159</td>
-                <td class="text-left">Anna Metz, Ron Coutrage</td>
-              </tr>
-              <tr>
-                <td class="text-left">1</td>
-                <td class="text-left">29er 2127</td>
-                <td class="text-left">Sint McCarthy, David Bush</td>
-              </tr>
-            </tbody>
-          </q-markup-table>
-        </div>
-      </q-card-section>
-
-      <q-card-actions class="fixed-bottom" align="center">
-        <q-btn
-          flat
-          color="secondary"
-          label="Go to shore"
-          @click="raceTimer.abandonashoreTransition()"
-        />
-        <q-btn
-          flat
-          color="secondary"
-          label="Racing Completed"
-          @click="raceTimer.abandontodayTransition()"
-        />
-        <q-btn
-          color="primary"
-          label="New Race"
-          @click="raceTimer.raceinfoTransition()"
-        />
-      </q-card-actions>
-    </q-card>
   </q-page>
 </template>
 
