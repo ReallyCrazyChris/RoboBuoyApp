@@ -37,7 +37,7 @@ export const vmcStoreDefinition = defineStore("vmc", {
 
       this.vmc = Math.round(19.4384 * sog * Math.cos(delta_rad)) / 10;
 
-      this.efficiency = Math.round(100 * (this.vmc / sog)) || 0;
+      this.efficiency = Math.round(100 * (this.vmc / (1.94384 * sog))) || 0;
 
       if (mqttHook.isConnected) {
         mqttHook.publish(
