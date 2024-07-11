@@ -47,31 +47,31 @@ export const prepareFlagOptions = [
     label: "Papa",
     value: "P",
     description: "Prepare",
-    image: "src/assets/racesignals/papa.png",
+    image: "src/assets/racesignals/papa.svg",
   },
   {
     label: "Italy",
     value: "I",
     description: "Rule 30.1",
-    image: "src/assets/racesignals/italy.png",
+    image: "src/assets/racesignals/italy.svg",
   },
   {
     label: "Zulu",
     value: "Z",
     description: "Rule 30.2",
-    image: "src/assets/racesignals/zulu.png",
+    image: "src/assets/racesignals/zulu.svg",
   },
   {
     label: "Uniform",
     value: "U",
     description: "Rule 30.3",
-    image: "src/assets/racesignals/uniform.png",
+    image: "src/assets/racesignals/uniform.svg",
   },
   {
     label: "Black",
     value: "B",
     description: "Rule 30.4",
-    image: "src/assets/racesignals/black.png",
+    image: "src/assets/racesignals/black.svg",
   },
 ];
 
@@ -101,7 +101,7 @@ export const yankeeFlagOptions = [
     label: "Yankee",
     value: true,
     description: "Wear personal flotation device",
-    image: "src/assets/racesignals/yankee.png",
+    image: "src/assets/racesignals/yankee.svg",
   },
   {
     label: "No Yankee",
@@ -156,14 +156,14 @@ export const prepareFlagModel = {
   label: "Papa",
   value: "P",
   description: "Prepare",
-  image: "src/assets/racesignals/papa.png",
+  image: "src/assets/racesignals/papa.svg",
 };
 
 export const yankeeFlagModel = {
   label: "Yankee",
   value: true,
   description: "Wear personal flotation device",
-  image: "src/assets/racesignals/yankee.png",
+  image: "src/assets/racesignals/yankee.svg",
 };
 
 const raceTimerDefinition = defineStore("raceTimer", {

@@ -1,11 +1,12 @@
 <template>
   <q-page>
     <q-card v-if="raceTimer.matches('raceinfo')" flat>
-      <q-card-section>
-        <q-img class="" src="~/src/assets/racesignals/lima.png" />
-        <div class="text-h5 q-mt-sm q-mb-xs">Race Information</div>
+      <q-card-section class="row">
+        <q-img class="col-6" src="~/src/assets/racesignals/lima.svg" />
+        <div class="col-12 text-h5 q-mt-sm q-mb-xs">Race Information</div>
 
         <q-select
+          class="col-12"
           label="Time Sequence"
           v-model="raceTimer.timerSequenceModel"
           :options="raceTimer.timerSequeceOptions"
@@ -37,6 +38,7 @@
         </q-select>
 
         <q-select
+          class="col-12"
           label="Class Flag"
           v-model="raceTimer.classFlagModel"
           :options="raceTimer.classFlagOptions"
@@ -68,6 +70,7 @@
         </q-select>
 
         <q-select
+          class="col-12"
           label="Preparation Flag"
           v-model="raceTimer.prepareFlagModel"
           :options="raceTimer.prepareFlagOptions"
@@ -99,6 +102,7 @@
         </q-select>
 
         <q-select
+          class="col-12"
           label="Personal Flotation Device"
           v-model="raceTimer.yankeeFlagModel"
           :options="raceTimer.yankeeFlagOptions"
@@ -145,16 +149,19 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('raceclass')" flat>
-      <q-card-section>
-        <q-img :src="raceTimer.classFlagModel.image" />
-        <q-avatar square size="50px">
-          <q-img :src="raceTimer.yankeeFlagModel.image" />
-        </q-avatar>
-        <div style="font-size: 45vmin" class="text-center">
+      <q-card-section class="fit row q-gutter-md">
+        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5" src="" />
+        <div class="col-12">
+          <q-avatar square size="50px">
+            <q-img :src="raceTimer.yankeeFlagModel.image" />
+          </q-avatar>
+        </div>
+        <div class="col-12 text-center" style="font-size: 45vmin">
           {{ raceTimeFormatter }}
         </div>
 
-        <div class="text-caption text-center">
+        <div class="col-12 text-caption text-center">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
       </q-card-section>
@@ -170,16 +177,19 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('prepare')" flat>
-      <q-card-section>
-        <q-img :src="raceTimer.prepareFlagModel.image" />
-        <q-avatar square size="50px">
-          <q-img :src="raceTimer.yankeeFlagModel.image" />
-        </q-avatar>
-        <div style="font-size: 45vmin" class="text-center">
+      <q-card-section class="fit row q-gutter-md">
+        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5" :src="raceTimer.prepareFlagModel.image" />
+        <div class="col-12">
+          <q-avatar square size="50px">
+            <q-img :src="raceTimer.yankeeFlagModel.image" />
+          </q-avatar>
+        </div>
+        <div class="col-12 text-center" style="font-size: 45vmin">
           {{ raceTimeFormatter }}
         </div>
 
-        <div class="text-caption text-center">
+        <div class="col-12 text-caption text-center">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
       </q-card-section>
@@ -195,17 +205,19 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('ready')" flat>
-      <q-card-section>
-        <q-img src="~/src/assets/racesignals/classflag.png" />
-
-        <q-avatar square size="50px">
-          <q-img :src="raceTimer.yankeeFlagModel.image" />
-        </q-avatar>
-        <div style="font-size: 45vmin" class="text-center">
+      <q-card-section class="fit row q-gutter-md">
+        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5" src="" />
+        <div class="col-12">
+          <q-avatar square size="50px">
+            <q-img :src="raceTimer.yankeeFlagModel.image" />
+          </q-avatar>
+        </div>
+        <div class="col-12 text-center" style="font-size: 45vmin">
           {{ raceTimeFormatter }}
         </div>
 
-        <div class="text-caption text-center">
+        <div class="col-12 text-caption text-center">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
       </q-card-section>
@@ -221,15 +233,20 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('start')" flat>
-      <q-card-section>
-        <q-img src="~/src/assets/racesignals/start.png" />
-        <div style="font-size: 30vmin" class="q-mt-sm q-mb-xs text-center">
-          START
+      <q-card-section class="fit row q-gutter-md">
+        <div class="col-12 text-center" style="font-size: 30vmin">START</div>
+        <div class="col-12">
+          <q-avatar square size="50px">
+            <q-img :src="raceTimer.yankeeFlagModel.image" />
+          </q-avatar>
+        </div>
+        <div class="col-12 text-center" style="font-size: 25vmin">
+          {{ raceTimeFormatter }}
         </div>
 
-        <q-avatar square size="50px">
-          <q-img :src="raceTimer.yankeeFlagModel.image" />
-        </q-avatar>
+        <div class="col-12 text-caption text-center">
+          {{ raceTimer.timerSequenceModel.description }}
+        </div>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom-right">
@@ -243,13 +260,14 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('racetimer')" flat>
-      <q-card-section>
-        <q-img src="~/src/assets/racesignals/race.png" />
-        <q-avatar square size="50px">
-          <q-img :src="raceTimer.yankeeFlagModel.image" />
-        </q-avatar>
-        <div style="font-size: 20vmin" class="text-center">
+      <q-card-section class="fit row q-gutter-md">
+        <div class="col-12 text-center" style="font-size: 25vmin">
           {{ raceTimeFormatter }}
+        </div>
+        <div class="col-12">
+          <q-avatar square size="50px">
+            <q-img :src="raceTimer.yankeeFlagModel.image" />
+          </q-avatar>
         </div>
       </q-card-section>
 
@@ -282,7 +300,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/apflag.png" />
+        <q-img src="src/assets/racesignals/apflag.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">Racing may continue when practical.</div>
       </q-card-section>
@@ -310,7 +328,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed_ashore')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/aphotel.png" />
+        <q-img src="~/src/assets/racesignals/aphotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">
           Return to shore for further informaiton.
@@ -328,7 +346,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed_today')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/apalpha.png" />
+        <q-img src="~/src/assets/racesignals/apalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">No further racing today.</div>
       </q-card-section>
@@ -363,7 +381,7 @@
 
     <q-card v-if="raceTimer.matches('recallone')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/xray.png" />
+        <q-img src="~/src/assets/racesignals/xray.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Individual Recall</div>
         <div class="text-h6 text-grey">
           One or more race participans where On Course Side (OCS). Please
@@ -382,7 +400,10 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/november.png" />
+        <q-img
+          src="~/src/assets/racesignals/november.svg
+        "
+        />
         <div class="text-h3 q-mt-sm q-mb-xs">Race Abandoned</div>
         <div class="text-h6 text-grey">This race is Abandoned.</div>
       </q-card-section>
@@ -410,7 +431,7 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned_ashore')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/novhotel.png" />
+        <q-img src="~/src/assets/racesignals/novhotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
         <div class="text-h6 text-grey">
           All remaning races are abandned. More information will be availabe on
@@ -430,7 +451,7 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned_today')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/novalpha.png" />
+        <q-img src="~/src/assets/racesignals/novalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Racing Completed</div>
         <div class="text-h6 text-grey">
           All remaining races are abandoned. There is no more racing today.
