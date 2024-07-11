@@ -45,8 +45,8 @@ export const vmcStoreDefinition = defineStore("vmc", {
           JSON.stringify({
             p1lon: lon,
             p1lat: lat,
-            p2lon: marks.getSelectedLat(),
-            p2lat: marks.getSelectedLon(),
+            p2lon: marks.getLon(),
+            p2lat: marks.getLat(),
             sog: this.sog,
             vmc: this.vmc,
             efficiency: this.efficiency,

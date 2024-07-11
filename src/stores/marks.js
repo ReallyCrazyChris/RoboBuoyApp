@@ -66,9 +66,7 @@ const useMarksStore = marksStoreDefinition();
 const mqttHook = useMQTT();
 
 if (mqttHook.isConnected) {
-  mqttHook.subscribe(["marks"], 1, { nl: true }, (err, granted) => {
-    console.log("subscriptions granted", granted);
-  });
+  mqttHook.subscribe(["marks"], 1, { nl: true }, (err, granted) => {});
 }
 
 mqttHook.registerEvent(

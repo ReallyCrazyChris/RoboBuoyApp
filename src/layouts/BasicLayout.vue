@@ -1,14 +1,11 @@
 <template>
-  <q-layout view="Lhh lpR fff">
-    <q-header elevated class="bg-primary text-white">
+  <q-layout view="hhh lpr fff">
+    <q-header class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="~assets/logo-mono-white.svg" />
-          </q-avatar>
-          Robo Regatta
+        <q-toolbar-title class="text-weight-bolder">
+          Robo-Regatta
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -93,9 +90,9 @@ export default defineComponent({
   },
 
   setup() {
-    const devicesStore = useDevicesStore();
     const leftDrawerOpen = ref(false);
-    $bluetooth.reconnect();
+    //const devicesStore = useDevicesStore();
+    //$bluetooth.reconnect();
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
