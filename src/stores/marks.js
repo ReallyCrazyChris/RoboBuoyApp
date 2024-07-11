@@ -30,19 +30,12 @@ const marksStoreDefinition = defineStore("marks", {
   }),
 
   actions: {
-    getSelectedLon() {
+    getLon() {
       return this.marks[this.selected].lon;
     },
 
-    getSelectedLat() {
+    getLat() {
       return this.marks[this.selected].lat;
-    },
-
-    getLonFor(id) {
-      return this.marks[id].lon;
-    },
-    getLatFor(id) {
-      return this.marks[id].lat;
     },
 
     count() {

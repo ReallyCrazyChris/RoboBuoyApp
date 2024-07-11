@@ -15,8 +15,8 @@
       />
     </div>
     <div class="col-8 self-start q-pa-sm">
-      <div>lon: {{ marks.getLonFor(mark.id) }}</div>
-      <div>lat: {{ marks.getLatFor(mark.id) }}</div>
+      <div>lon: {{ mark.lon }}</div>
+      <div>lat: {{ mark.lat }}</div>
     </div>
     <div class="col-2 self-center q-pa-sm">
       <q-btn

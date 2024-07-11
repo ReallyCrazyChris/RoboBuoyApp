@@ -21,7 +21,7 @@ export const vmcStoreDefinition = defineStore("vmc", {
 
     update(lon, lat, heading, sog) {
       const p1 = new LatLon(lat, lon);
-      const p2 = new LatLon(marks.getSelectedLat(), marks.getSelectedLon());
+      const p2 = new LatLon(marks.getLat(), marks.getLon());
 
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
