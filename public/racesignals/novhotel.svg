@@ -1,0 +1,31 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="svg_5">
+   <rect stroke="#007fff" fill="#007fff" x="0" y="-1" width="74.75" height="74.75" id="svg_1"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="74.75" y="-0.50167" width="74.75" height="74.75" id="svg_2"/>
+   <rect stroke="#007fff" fill="#007fff" x="149.5" y="-0.50167" width="74.75" height="74.75" id="svg_3"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="224.25" y="-0.50167" width="74.75" height="74.75" id="svg_4"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="0" y="74.24833" width="74.75" height="74.75" id="svg_6"/>
+   <rect stroke="#007fff" fill="#007fff" x="74.75" y="74.24833" width="74.75" height="74.75" id="svg_7"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="149.5" y="74.24833" width="74.75" height="74.75" id="svg_8"/>
+   <rect stroke="#007fff" fill="#007fff" x="224.25" y="74.24833" width="74.75" height="74.75" id="svg_9"/>
+   <rect stroke="#007fff" fill="#007fff" x="0" y="148.99833" width="74.75" height="74.75" id="svg_10"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="74.75" y="148.99833" width="74.75" height="74.75" id="svg_11"/>
+   <rect stroke="#007fff" fill="#007fff" x="149.5" y="148.99833" width="74.75" height="74.75" id="svg_12"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="224.25" y="148.99833" width="74.75" height="74.75" id="svg_13"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="0" y="223.74833" width="74.75" height="74.75" id="svg_16"/>
+   <rect stroke="#007fff" fill="#007fff" x="74.75" y="223.74833" width="74.75" height="74.75" id="svg_17"/>
+   <rect stroke="#ffffff" fill="#ffffff" x="149.5" y="223.74833" width="74.75" height="74.75" id="svg_18"/>
+   <rect stroke="#007fff" fill="#007fff" x="224.25" y="223.74833" width="74.75" height="74.75" id="svg_19"/>
+  </g>
+ </g>
+
+ <g id="Layer_2">
+  <title>Layer 2</title>
+  <g id="svg_33" stroke="null">
+   <rect fill="#ffffff" x="0" y="360.99999" width="119.5" height="239.00001" id="svg_31" stroke="#ffffff"/>
+   <rect fill="#ff0000" x="119.5" y="360.99999" width="119.5" height="239.00001" id="svg_32" stroke="#ff0000"/>
+  </g>
+ </g>
+</svg>

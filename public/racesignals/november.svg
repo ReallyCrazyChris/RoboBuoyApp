@@ -1,0 +1,24 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_5">
+   <rect fill="#007fff" stroke="#007fff" x="0" y="-1" width="150" height="150" id="svg_1"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="150" y="0" width="150" height="150" id="svg_2"/>
+   <rect fill="#007fff" stroke="#007fff" x="300" y="0" width="150" height="150" id="svg_3"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="450" y="0" width="150" height="150" id="svg_4"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="0" y="150" width="150" height="150" id="svg_6"/>
+   <rect fill="#007fff" stroke="#007fff" x="150" y="150" width="150" height="150" id="svg_7"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="300" y="150" width="150" height="150" id="svg_8"/>
+   <rect fill="#007fff" stroke="#007fff" x="450" y="150" width="150" height="150" id="svg_9"/>
+   <rect fill="#007fff" stroke="#007fff" x="0" y="300" width="150" height="150" id="svg_10"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="150" y="300" width="150" height="150" id="svg_11"/>
+   <rect fill="#007fff" stroke="#007fff" x="300" y="300" width="150" height="150" id="svg_12"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="450" y="300" width="150" height="150" id="svg_13"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="0" y="450" width="150" height="150" id="svg_16"/>
+   <rect fill="#007fff" stroke="#007fff" x="150" y="450" width="150" height="150" id="svg_17"/>
+   <rect fill="#ffffff" stroke="#ffffff" x="300" y="450" width="150" height="150" id="svg_18"/>
+   <rect fill="#007fff" stroke="#007fff" x="450" y="450" width="150" height="150" id="svg_19"/>
+  </g>
+ </g>
+
+</svg>

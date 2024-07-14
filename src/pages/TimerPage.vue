@@ -2,7 +2,7 @@
   <q-page>
     <q-card v-if="raceTimer.matches('raceinfo')" flat>
       <q-card-section class="row">
-        <q-img class="col-6" src="~/src/assets/racesignals/lima.svg" />
+        <q-img class="col-6" src="racesignals/lima.svg" />
         <div class="col-12 text-h5 q-mt-sm q-mb-xs">Race Information</div>
 
         <q-select
@@ -300,7 +300,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed')" flat>
       <q-card-section>
-        <q-img src="src/assets/racesignals/apflag.svg" />
+        <q-img src="racesignals/apflag.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">Racing may continue when practical.</div>
       </q-card-section>
@@ -328,7 +328,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed_ashore')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/aphotel.svg" />
+        <q-img src="racesignals/aphotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">
           Return to shore for further informaiton.
@@ -346,7 +346,7 @@
 
     <q-card v-if="raceTimer.matches('racepostponed_today')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/apalpha.svg" />
+        <q-img src="racesignals/apalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
         <div class="text-h6 text-grey">No further racing today.</div>
       </q-card-section>
@@ -362,7 +362,7 @@
 
     <q-card v-if="raceTimer.matches('recallall')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/generalrecall.png" />
+        <q-img src="racesignals/generalrecall.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">General Recall</div>
         <div class="text-h6 text-grey">
           This race has been recalled. Return to the start line. Prepare for a
@@ -381,7 +381,7 @@
 
     <q-card v-if="raceTimer.matches('recallone')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/xray.svg" />
+        <q-img src="racesignals/xray.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Individual Recall</div>
         <div class="text-h6 text-grey">
           One or more race participans where On Course Side (OCS). Please
@@ -400,10 +400,7 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned')" flat>
       <q-card-section>
-        <q-img
-          src="~/src/assets/racesignals/november.svg
-        "
-        />
+        <q-img src="racesignals/november.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Race Abandoned</div>
         <div class="text-h6 text-grey">This race is Abandoned.</div>
       </q-card-section>
@@ -431,7 +428,7 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned_ashore')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/novhotel.svg" />
+        <q-img src="racesignals/novhotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
         <div class="text-h6 text-grey">
           All remaning races are abandned. More information will be availabe on
@@ -451,7 +448,7 @@
 
     <q-card v-if="raceTimer.matches('raceabandoned_today')" flat>
       <q-card-section>
-        <q-img src="~/src/assets/racesignals/novalpha.svg" />
+        <q-img src="racesignals/novalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Racing Completed</div>
         <div class="text-h6 text-grey">
           All remaining races are abandoned. There is no more racing today.

@@ -1,0 +1,32 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_5" stroke="null">
+   <rect id="svg_1" height="74.75" width="74.75" y="-1" x="0" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_2" height="74.75" width="74.75" y="-0.50167" x="74.75" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_3" height="74.75" width="74.75" y="-0.50167" x="149.5" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_4" height="74.75" width="74.75" y="-0.50167" x="224.25" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_6" height="74.75" width="74.75" y="74.24833" x="0" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_7" height="74.75" width="74.75" y="74.24833" x="74.75" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_8" height="74.75" width="74.75" y="74.24833" x="149.5" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_9" height="74.75" width="74.75" y="74.24833" x="224.25" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_10" height="74.75" width="74.75" y="148.99833" x="0" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_11" height="74.75" width="74.75" y="148.99833" x="74.75" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_12" height="74.75" width="74.75" y="148.99833" x="149.5" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_13" height="74.75" width="74.75" y="148.99833" x="224.25" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_16" height="74.75" width="74.75" y="223.74833" x="0" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_17" height="74.75" width="74.75" y="223.74833" x="74.75" fill="#007fff" stroke="#007fff"/>
+   <rect id="svg_18" height="74.75" width="74.75" y="223.74833" x="149.5" fill="#ffffff" stroke="#ffffff"/>
+   <rect id="svg_19" height="74.75" width="74.75" y="223.74833" x="224.25" fill="#007fff" stroke="#007fff"/>
+  </g>
+ </g>
+
+ <g id="Layer_2">
+  <title>Layer 2</title>
+  <g stroke="null" id="svg_32">
+   <path stroke="#ffffff" fill="#ffffff" opacity="undefined" d="m0,354.40833l122.5,0l0,243.36667l-122.5,0l0,-243.36667z" id="svg_31"/>
+   <path stroke="#007fff" fill="#005fbf" d="m122.5,599l0,-167.825l122.09164,167.825l-122.09164,0z" id="svg_34"/>
+   <path stroke="#005fbf" fill="#005fbf" d="m122.50002,354.40834l0,176.80833l122.49997,-176.80833l-122.49997,0z" id="svg_37"/>
+  </g>
+ </g>
+</svg>

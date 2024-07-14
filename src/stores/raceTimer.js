@@ -5,7 +5,6 @@ export const timerSequeceOptions = [
     label: "2 minute",
     value: "2",
     description: "2m - 1m - 30s - Start ",
-    image: "src/assets/sequcence/2minute.png",
     timeSequence: [
       { time: -2 * 60, event: "raceclass", airhorn: 1 },
       { time: -1 * 60, event: "prepare", airhorn: 1 },
@@ -18,7 +17,6 @@ export const timerSequeceOptions = [
     label: "5 minute",
     value: "5",
     description: "5m - 4m - 1m - Start ",
-    image: "src/assets/sequcence/5minute.png",
     timeSequence: [
       { time: -5 * 60, event: "raceclass", airhorn: 1 },
       { time: -4 * 60, event: "prepare", airhorn: 1 },
@@ -31,7 +29,6 @@ export const timerSequeceOptions = [
     label: "10 minute",
     value: "10",
     description: "10m - 9m - 1m - Start ",
-    image: "src/assets/sequcence/10minute.png",
     timeSequence: [
       { time: -10 * 60, event: "raceclass", airhorn: 1 },
       { time: -9 * 60, event: "prepare", airhorn: 1 },
@@ -47,31 +44,31 @@ export const prepareFlagOptions = [
     label: "Papa",
     value: "P",
     description: "Prepare",
-    image: "src/assets/racesignals/papa.svg",
+    image: "racesignals/papa.svg",
   },
   {
     label: "Italy",
     value: "I",
     description: "Rule 30.1",
-    image: "src/assets/racesignals/italy.svg",
+    image: "racesignals/italy.svg",
   },
   {
     label: "Zulu",
     value: "Z",
     description: "Rule 30.2",
-    image: "src/assets/racesignals/zulu.svg",
+    image: "racesignals/zulu.svg",
   },
   {
     label: "Uniform",
     value: "U",
     description: "Rule 30.3",
-    image: "src/assets/racesignals/uniform.svg",
+    image: "racesignals/uniform.svg",
   },
   {
     label: "Black",
     value: "B",
     description: "Rule 30.4",
-    image: "src/assets/racesignals/black.svg",
+    image: "racesignals/black.svg",
   },
 ];
 
@@ -80,19 +77,19 @@ export const classFlagOptions = [
     label: "Optimist",
     value: "optimist",
     description: "",
-    image: "src/assets/boatclasses/optimist.png",
+    image: "boatclasses/optimist.png",
   },
   {
     label: "29er",
     value: "29er",
     description: "",
-    image: "src/assets/boatclasses/29er.png",
+    image: "boatclasses/29er.png",
   },
   {
     label: "ILCA",
     value: "ilca",
     description: "",
-    image: "src/assets/boatclasses/ilca.png",
+    image: "boatclasses/ilca.png",
   },
 ];
 
@@ -101,7 +98,7 @@ export const yankeeFlagOptions = [
     label: "Yankee",
     value: true,
     description: "Wear personal flotation device",
-    image: "src/assets/racesignals/yankee.svg",
+    image: "racesignals/yankee.svg",
   },
   {
     label: "No Yankee",
@@ -115,7 +112,6 @@ export const timerSequenceModel = {
   label: "5 minute",
   value: "5",
   description: "5m - 4m - 1m - Start ",
-  image: "src/assets/sequcence/5minute.png",
   timeSequence: [
     {
       time: -5 * 60,
@@ -149,21 +145,21 @@ export const classFlagModel = {
   label: "Optimist",
   value: "optimist",
   description: "",
-  image: "src/assets/boatclasses/optimist.png",
+  image: "boatclasses/optimist.png",
 };
 
 export const prepareFlagModel = {
   label: "Papa",
   value: "P",
   description: "Prepare",
-  image: "src/assets/racesignals/papa.svg",
+  image: "racesignals/papa.svg",
 };
 
 export const yankeeFlagModel = {
   label: "Yankee",
   value: true,
   description: "Wear personal flotation device",
-  image: "src/assets/racesignals/yankee.svg",
+  image: "racesignals/yankee.svg",
 };
 
 const raceTimerDefinition = defineStore("raceTimer", {
@@ -302,7 +298,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
       let playCountArray = [];
 
       for (let i = 0; i < playCount; i++) {
-        let soundInstance = new Audio("/src/assets/sounds/airhorn.mp3");
+        let soundInstance = new Audio("sounds/airhorn.mp3");
         playCountArray.push(soundInstance);
 
         if (playCountArray.length < playCount) {
