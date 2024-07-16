@@ -32,4 +32,13 @@ export default boot(({ app }) => {
     username: "SummerTime",
     password: "RoboRegatta1!",
   });
+
+  if (mqttHook.isConnected) {
+    mqttHook.subscribe(
+      ["marks", "timer"],
+      1,
+      { nl: true },
+      (err, granted) => {}
+    );
+  }
 });

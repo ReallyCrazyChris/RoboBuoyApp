@@ -12,23 +12,15 @@
           :options="raceTimer.timerSequeceOptions"
           color="primary"
           options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
         >
           <template v-slot:selected>
             {{ raceTimer.timerSequenceModel.label }} :
             {{ raceTimer.timerSequenceModel.description }}
           </template>
 
-          <!--template v-slot:append>
-            <q-avatar square size="50px">
-              <q-img :src="timerSequenceModel.image" />
-            </q-avatar>
-          </template-->
-
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
-              <!--q-item-section avatar>
-                <q-img :src="scope.opt.image" />
-              </q-item-section-->
               <q-item-section>
                 <q-item-label>{{ scope.opt.label }}</q-item-label>
                 <q-item-label caption>{{ scope.opt.description }}</q-item-label>
@@ -44,6 +36,7 @@
           :options="raceTimer.classFlagOptions"
           color="primary"
           options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
         >
           <template v-slot:selected>
             {{ raceTimer.classFlagModel.label }}
@@ -76,6 +69,7 @@
           :options="raceTimer.prepareFlagOptions"
           color="secondary"
           options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
         >
           <template v-slot:selected>
             {{ raceTimer.prepareFlagModel.label }} :
@@ -108,6 +102,7 @@
           :options="raceTimer.yankeeFlagOptions"
           color="yellow"
           options-selected-class="text-yellow"
+          @update:model-value="raceTimer.publishRaceTimerState()"
         >
           <template v-slot:selected>
             {{ raceTimer.yankeeFlagModel.description }}
@@ -143,26 +138,25 @@
         <q-btn
           color="positive"
           label="Start Race"
-          @click="raceTimer.startraceTransition()"
+          @click="raceTimer.raceclassTransition()"
         />
       </q-card-actions>
     </q-card>
 
     <q-card v-if="raceTimer.matches('raceclass')" flat>
       <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5" src="" />
-        <div class="col-12">
+        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5 q-my-xs" src="" />
+        <div class="col-2 q-my-xs">
           <q-avatar square size="50px">
             <q-img :src="raceTimer.yankeeFlagModel.image" />
           </q-avatar>
         </div>
-        <div class="col-12 text-center" style="font-size: 45vmin">
-          {{ raceTimeFormatter }}
-        </div>
-
-        <div class="col-12 text-caption text-center">
+        <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
+        </div>
+        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+          {{ raceTimeFormatter }}
         </div>
       </q-card-section>
 
@@ -176,21 +170,20 @@
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('prepare')" flat>
+    <q-card v-if="raceTimer.matches('raceprepare')" flat>
       <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5" :src="raceTimer.prepareFlagModel.image" />
-        <div class="col-12">
+        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5 q-my-xs" :src="raceTimer.prepareFlagModel.image" />
+        <div class="col-12 q-my-xs">
           <q-avatar square size="50px">
             <q-img :src="raceTimer.yankeeFlagModel.image" />
           </q-avatar>
         </div>
-        <div class="col-12 text-center" style="font-size: 45vmin">
-          {{ raceTimeFormatter }}
-        </div>
-
-        <div class="col-12 text-caption text-center">
+        <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
+        </div>
+        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+          {{ raceTimeFormatter }}
         </div>
       </q-card-section>
 
@@ -204,21 +197,20 @@
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('ready')" flat>
+    <q-card v-if="raceTimer.matches('raceready')" flat>
       <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5" src="" />
-        <div class="col-12">
+        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
+        <q-img class="col-5 q-my-xs" src="" />
+        <div class="col-12 q-my-xs">
           <q-avatar square size="50px">
             <q-img :src="raceTimer.yankeeFlagModel.image" />
           </q-avatar>
         </div>
-        <div class="col-12 text-center" style="font-size: 45vmin">
-          {{ raceTimeFormatter }}
-        </div>
-
-        <div class="col-12 text-caption text-center">
+        <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
+        </div>
+        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+          {{ raceTimeFormatter }}
         </div>
       </q-card-section>
 
@@ -232,7 +224,7 @@
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('start')" flat>
+    <q-card v-if="raceTimer.matches('racestart')" flat>
       <q-card-section class="fit row q-gutter-md">
         <div class="col-12 text-center" style="font-size: 30vmin">START</div>
         <div class="col-12">
@@ -242,10 +234,6 @@
         </div>
         <div class="col-12 text-center" style="font-size: 25vmin">
           {{ raceTimeFormatter }}
-        </div>
-
-        <div class="col-12 text-caption text-center">
-          {{ raceTimer.timerSequenceModel.description }}
         </div>
       </q-card-section>
 
@@ -261,13 +249,13 @@
 
     <q-card v-if="raceTimer.matches('racetimer')" flat>
       <q-card-section class="fit row q-gutter-md">
-        <div class="col-12 text-center" style="font-size: 25vmin">
-          {{ raceTimeFormatter }}
-        </div>
         <div class="col-12">
           <q-avatar square size="50px">
             <q-img :src="raceTimer.yankeeFlagModel.image" />
           </q-avatar>
+        </div>
+        <div class="col-12 text-center" style="font-size: 25vmin">
+          {{ raceTimeFormatter }}
         </div>
       </q-card-section>
 
@@ -470,8 +458,10 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRaceTimer } from "src/stores/raceTimer";
+import { useMQTT } from "mqtt-vue-hook";
 
 const raceTimer = useRaceTimer();
+const mqttHook = useMQTT();
 
 export default defineComponent({
   name: "RegisterPage",

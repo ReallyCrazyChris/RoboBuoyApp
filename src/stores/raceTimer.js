@@ -1,41 +1,42 @@
 import { defineStore } from "pinia";
-
+import { useMQTT } from "mqtt-vue-hook";
+const mqttHook = useMQTT();
 export const timerSequeceOptions = [
   {
     label: "2 minute",
     value: "2",
     description: "2m - 1m - 30s - Start ",
-    timeSequence: [
-      { time: -2 * 60, event: "raceclass", airhorn: 1 },
-      { time: -1 * 60, event: "prepare", airhorn: 1 },
-      { time: -1 * 30, event: "ready", airhorn: 1 },
-      { time: 0, event: "start", airhorn: 1 },
-      { time: 3, event: "racetimer", airhorn: 0 },
-    ],
+    timeSequence: {
+      raceclass: -120,
+      raceprepare: -60,
+      raceready: -30,
+      racestart: 0,
+      racetimer: 10,
+    },
   },
   {
     label: "5 minute",
     value: "5",
     description: "5m - 4m - 1m - Start ",
-    timeSequence: [
-      { time: -5 * 60, event: "raceclass", airhorn: 1 },
-      { time: -4 * 60, event: "prepare", airhorn: 1 },
-      { time: -1 * 60, event: "ready", airhorn: 1 },
-      { time: 0, event: "start", airhorn: 1 },
-      { time: 3, event: "racetimer", airhorn: 0 },
-    ],
+    timeSequence: {
+      raceclass: -60 * 5,
+      raceprepare: -60 * 4,
+      raceready: -60,
+      racestart: 0,
+      racetimer: 10,
+    },
   },
   {
     label: "10 minute",
     value: "10",
     description: "10m - 9m - 1m - Start ",
-    timeSequence: [
-      { time: -10 * 60, event: "raceclass", airhorn: 1 },
-      { time: -9 * 60, event: "prepare", airhorn: 1 },
-      { time: -1 * 60, event: "ready", airhorn: 1 },
-      { time: 0, event: "start", airhorn: 1 },
-      { time: 3, event: "racetimer", airhorn: 0 },
-    ],
+    timeSequence: {
+      raceclass: -60 * 10,
+      raceprepare: -60 * 9,
+      raceready: -60,
+      racestart: 0,
+      racetimer: 10,
+    },
   },
 ];
 
@@ -109,36 +110,16 @@ export const yankeeFlagOptions = [
 ];
 
 export const timerSequenceModel = {
-  label: "5 minute",
-  value: "5",
-  description: "5m - 4m - 1m - Start ",
-  timeSequence: [
-    {
-      time: -5 * 60,
-      event: "raceclass",
-      airhorn: 1,
-    },
-    {
-      time: -4 * 60,
-      event: "prepare",
-      airhorn: 1,
-    },
-    {
-      time: -1 * 60,
-      event: "ready",
-      airhorn: 1,
-    },
-    {
-      time: 0,
-      event: "start",
-      airhorn: 1,
-    },
-    {
-      time: 3,
-      event: "racetimer",
-      airhorn: 0,
-    },
-  ],
+  label: "2 minute",
+  value: "2",
+  description: "2m - 1m - 30s - Start ",
+  timeSequence: {
+    raceclass: -120,
+    raceprepare: -60,
+    raceready: -30,
+    racestart: 0,
+    racetimer: 10,
+  },
 };
 
 export const classFlagModel = {
@@ -178,9 +159,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
     yankeeFlagOptions,
     intervalId: undefined,
   }),
-
-  persist: false,
-
   actions: {
     matches(statename) {
       if (this.raceState == statename) {
@@ -189,106 +167,175 @@ const raceTimerDefinition = defineStore("raceTimer", {
       return false;
     },
 
+    publishRaceTimerState() {
+      if (mqttHook.isConnected) {
+        mqttHook.publish(
+          "timer",
+          JSON.stringify({
+            startTime: this.startTime,
+            raceState: this.raceState,
+            timerSequenceModel: this.timerSequenceModel,
+            classFlagModel: this.classFlagModel,
+            prepareFlagModel: this.prepareFlagModel,
+            yankeeFlagModel: this.yankeeFlagModel,
+          }),
+          0,
+          { retain: true }
+        );
+      }
+    },
+
     raceinfoTransition() {
+      this.stopSequenceTimer();
+      this.startTime = undefined;
+      this.endTime = undefined;
       this.raceState = "raceinfo";
+      this.publishRaceTimerState();
       this.airhorn(1);
     },
 
-    startraceTransition() {
+    raceclassTransition() {
       this.raceState = "raceclass";
-      this.startSequenceTimer();
+      this.startTime =
+        Date.now() - this.timerSequenceModel.timeSequence.raceclass * 1000;
+      this.raceTime = undefined;
+      this.endTime = undefined;
+      this.publishRaceTimerState();
       this.airhorn(1);
+      this.startSequenceTimer();
+    },
+
+    raceprepareTransition() {
+      this.raceState = "raceprepare";
+      this.publishRaceTimerState();
+      this.airhorn(1);
+    },
+
+    racereadyTransition() {
+      this.raceState = "raceready";
+      this.publishRaceTimerState();
+      this.airhorn(1);
+    },
+
+    racestartTransition() {
+      this.raceState = "racestart";
+      this.publishRaceTimerState();
+      this.airhorn(1);
+    },
+
+    racetimerTransition() {
+      this.raceState = "racetimer";
+      this.publishRaceTimerState();
+    },
+
+    startSequenceTimer() {
+      // clear the racetime
+      clearInterval(this.intervalId);
+
+      this.intervalId = setInterval(() => {
+        this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
+
+        if (
+          this.raceState == "raceclass" &&
+          this.raceTime >= this.timerSequenceModel.timeSequence.raceprepare
+        ) {
+          this.raceprepareTransition();
+        }
+
+        if (
+          this.raceState == "raceprepare" &&
+          this.raceTime >= this.timerSequenceModel.timeSequence.raceready
+        ) {
+          this.racereadyTransition();
+        }
+
+        if (
+          this.raceState == "raceready" &&
+          this.raceTime >= this.timerSequenceModel.timeSequence.racestart
+        ) {
+          this.racestartTransition();
+        }
+
+        if (
+          this.raceState == "racestart" &&
+          this.raceTime >= this.timerSequenceModel.timeSequence.racetimer
+        ) {
+          this.racetimerTransition();
+        }
+      }, 1000);
+    },
+
+    stopSequenceTimer() {
+      this.startTime = undefined;
+      this.raceTime = undefined;
+      this.endTime = Date.now();
+      clearInterval(this.intervalId);
     },
 
     postponeraceTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed";
+      this.publishRaceTimerState();
       this.airhorn(2);
     },
 
     postponeashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed_ashore";
+      this.publishRaceTimerState();
       this.airhorn(2);
     },
 
     postponetodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed_today";
+      this.publishRaceTimerState();
       this.airhorn(2);
     },
 
     recalloneTransition() {
       this.raceState = "recallone";
+      this.publishRaceTimerState();
       this.airhorn(1);
     },
 
     racecontinueTransition() {
+      this.publishRaceTimerState();
       this.raceState = "racetimer";
     },
 
     recallallTransition() {
       this.stopSequenceTimer();
       this.raceState = "recallall";
+      this.publishRaceTimerState();
       this.airhorn(2);
     },
 
     racecompletedTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceinfo";
+      this.publishRaceTimerState();
     },
 
     abandonTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned";
+      this.publishRaceTimerState();
       this.airhorn(3);
     },
 
     abandonashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned_ashore";
+      this.publishRaceTimerState();
       this.airhorn(3);
     },
 
     abandontodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned_today";
+      this.publishRaceTimerState();
       this.airhorn(3);
-    },
-
-    startSequenceTimer() {
-      // clear the racetime
-      clearInterval(this.intervalId);
-      this.raceTime = undefined;
-      this.endTime = undefined;
-
-      // clone the start timing sequence
-      var timeSequence = Object.assign(
-        [],
-        this.timerSequenceModel.timeSequence
-      );
-
-      // set the startTime in the
-      this.startTime = Date.now() - (timeSequence.shift().time * 1000 + 3);
-
-      this.intervalId = setInterval(() => {
-        this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
-
-        // send sequence events to the stateMachine
-        if (timeSequence[0] && timeSequence[0].time <= this.raceTime) {
-          this.raceState = timeSequence[0].event;
-          if (timeSequence[0].airhorn > 0) {
-            this.airhorn(timeSequence[0].airhorn);
-          }
-          timeSequence.shift();
-        }
-      }, 1000);
-    },
-
-    stopSequenceTimer() {
-      this.raceTime = undefined;
-      this.endTime = Date.now();
-      clearInterval(this.intervalId);
     },
 
     airhorn(playCount = 1) {
@@ -313,7 +360,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
     },
   },
 
-  persist: {
+  _persist: {
     paths: [
       "startTime",
       "raceState",
@@ -326,6 +373,40 @@ const raceTimerDefinition = defineStore("raceTimer", {
 });
 
 const raceTimer = raceTimerDefinition();
+
+mqttHook.registerEvent("timer", (topic, message) => {
+  const patch = JSON.parse(message.toString());
+  console.log("patch", patch);
+  raceTimer.$patch(patch);
+
+  if (
+    [
+      "raceclass",
+      "raceprepare",
+      "raceready",
+      "racestart",
+      "racetimer",
+      "recallone",
+    ].includes(raceTimer.raceState)
+  ) {
+    raceTimer.startSequenceTimer();
+  }
+});
+
+// recover from an accidental page relaod
+
+if (
+  [
+    "raceclass",
+    "raceprepare",
+    "raceready",
+    "racestart",
+    "racetimer",
+    "recallone",
+  ].includes(raceTimer.raceState)
+) {
+  raceTimer.startSequenceTimer();
+}
 
 export const useRaceTimer = () => {
   return raceTimer;
