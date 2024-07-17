@@ -1,6 +1,10 @@
 import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
+
+import { useSounds } from "stores/sounds";
+const sounds = useSounds();
+
 export const timerSequeceOptions = [
   {
     label: "2 minute",
@@ -191,36 +195,36 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.endTime = undefined;
       this.raceState = "raceinfo";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
     },
 
     raceclassTransition() {
-      this.raceState = "raceclass";
       this.startTime =
         Date.now() - this.timerSequenceModel.timeSequence.raceclass * 1000;
-      this.raceTime = undefined;
+      this.raceTime = 0;
       this.endTime = undefined;
+      this.raceState = "raceclass";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
       this.startSequenceTimer();
     },
 
     raceprepareTransition() {
       this.raceState = "raceprepare";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
     },
 
     racereadyTransition() {
       this.raceState = "raceready";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
     },
 
     racestartTransition() {
       this.raceState = "racestart";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
     },
 
     racetimerTransition() {
@@ -276,39 +280,39 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.stopSequenceTimer();
       this.raceState = "racepostponed";
       this.publishRaceTimerState();
-      this.airhorn(2);
+      sounds.airhorn(2);
     },
 
     postponeashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed_ashore";
       this.publishRaceTimerState();
-      this.airhorn(2);
+      sounds.airhorn(2);
     },
 
     postponetodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed_today";
       this.publishRaceTimerState();
-      this.airhorn(2);
+      sounds.airhorn(2);
     },
 
     recalloneTransition() {
       this.raceState = "recallone";
       this.publishRaceTimerState();
-      this.airhorn(1);
+      sounds.airhorn(1);
     },
 
     racecontinueTransition() {
-      this.publishRaceTimerState();
       this.raceState = "racetimer";
+      this.publishRaceTimerState();
     },
 
     recallallTransition() {
       this.stopSequenceTimer();
       this.raceState = "recallall";
       this.publishRaceTimerState();
-      this.airhorn(2);
+      sounds.airhorn(2);
     },
 
     racecompletedTransition() {
@@ -321,42 +325,21 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned";
       this.publishRaceTimerState();
-      this.airhorn(3);
+      sounds.airhorn(3);
     },
 
     abandonashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned_ashore";
       this.publishRaceTimerState();
-      this.airhorn(3);
+      sounds.airhorn(3);
     },
 
     abandontodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned_today";
       this.publishRaceTimerState();
-      this.airhorn(3);
-    },
-
-    airhorn(playCount = 1) {
-      const audioContext = new AudioContext();
-      audioContext.resume();
-
-      let playCountArray = [];
-
-      for (let i = 0; i < playCount; i++) {
-        let soundInstance = new Audio("sounds/airhorn.mp3");
-        playCountArray.push(soundInstance);
-
-        if (playCountArray.length < playCount) {
-          playCountArray[i].addEventListener("ended", () => {
-            playCountArray.shift();
-            playCountArray[0].play();
-          });
-        }
-      }
-
-      playCountArray[0].play();
+      sounds.airhorn(3);
     },
   },
 

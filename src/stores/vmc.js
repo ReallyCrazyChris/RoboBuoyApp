@@ -10,6 +10,7 @@ const gps = useGps();
 
 export const vmcStoreDefinition = defineStore("vmc", {
   state: () => ({
+    sog: 0,
     vmc: 0,
     efficiency: 0,
     bearing: 0,
@@ -35,6 +36,7 @@ export const vmcStoreDefinition = defineStore("vmc", {
 
       const delta_rad = (delta * Math.PI) / 180.0;
 
+      this.sog = Math.round(19.4384 * sog) / 10;
       this.vmc = Math.round(19.4384 * sog * Math.cos(delta_rad)) / 10;
 
       this.efficiency = Math.round(100 * (this.vmc / (1.94384 * sog))) || 0;

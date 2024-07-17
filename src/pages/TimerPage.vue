@@ -144,13 +144,28 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('raceclass')" flat>
-      <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5 q-my-xs" src="" />
-        <div class="col-2 q-my-xs">
-          <q-avatar square size="50px">
-            <q-img :src="raceTimer.yankeeFlagModel.image" />
-          </q-avatar>
+      <q-card-section class="fit row">
+        <q-img
+          class="col-5 q-my-xs q-mr-xs"
+          :src="raceTimer.classFlagModel.image"
+        />
+        <q-img class="col-5 q-my-xs q-mr-xs" src="" />
+        <div class="col-1 q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <!--div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <div>
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div-->
         </div>
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
@@ -159,7 +174,6 @@
           {{ raceTimeFormatter }}
         </div>
       </q-card-section>
-
       <q-card-actions class="fixed-bottom-right">
         <q-btn
           flat
@@ -171,13 +185,31 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('raceprepare')" flat>
-      <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5 q-my-xs" :src="raceTimer.prepareFlagModel.image" />
-        <div class="col-12 q-my-xs">
-          <q-avatar square size="50px">
-            <q-img :src="raceTimer.yankeeFlagModel.image" />
-          </q-avatar>
+      <q-card-section class="fit row">
+        <q-img
+          class="col-5 q-my-xs q-mr-xs"
+          :src="raceTimer.classFlagModel.image"
+        />
+        <q-img
+          class="col-5 q-my-xs q-mr-xs"
+          :src="raceTimer.prepareFlagModel.image"
+        />
+        <div class="col-1 q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <!--div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <div>
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div-->
         </div>
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
@@ -198,13 +230,28 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('raceready')" flat>
-      <q-card-section class="fit row q-gutter-md">
-        <q-img class="col-5 q-my-xs" :src="raceTimer.classFlagModel.image" />
-        <q-img class="col-5 q-my-xs" src="" />
-        <div class="col-12 q-my-xs">
-          <q-avatar square size="50px">
-            <q-img :src="raceTimer.yankeeFlagModel.image" />
-          </q-avatar>
+      <q-card-section class="fit row">
+        <q-img
+          class="col-5 q-my-xs q-mr-xs"
+          :src="raceTimer.classFlagModel.image"
+        />
+        <q-img class="col-5 q-my-xs q-mr-xs" src="" />
+        <div class="col-1 q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <!--div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+          <div>
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div-->
         </div>
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
@@ -225,16 +272,19 @@
     </q-card>
 
     <q-card v-if="raceTimer.matches('racestart')" flat>
-      <q-card-section class="fit row q-gutter-md">
-        <div class="col-12 text-center" style="font-size: 30vmin">START</div>
-        <div class="col-12">
-          <q-avatar square size="50px">
-            <q-img :src="raceTimer.yankeeFlagModel.image" />
-          </q-avatar>
-        </div>
-        <div class="col-12 text-center" style="font-size: 25vmin">
+      <q-card-section class="row fit justify-start">
+        <div class="col-10" style="font-size: 12vmin">
           {{ raceTimeFormatter }}
         </div>
+        <div class="col-1 q-ml-xs q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+        </div>
+
+        <div class="col-12 text-center" style="font-size: 30vmin">START</div>
       </q-card-section>
 
       <q-card-actions class="fixed-bottom-right">
@@ -244,22 +294,7 @@
           label="Postpone Race"
           @click="raceTimer.postponeraceTransition()"
         />
-      </q-card-actions>
-    </q-card>
 
-    <q-card v-if="raceTimer.matches('racetimer')" flat>
-      <q-card-section class="fit row q-gutter-md">
-        <div class="col-12">
-          <q-avatar square size="50px">
-            <q-img :src="raceTimer.yankeeFlagModel.image" />
-          </q-avatar>
-        </div>
-        <div class="col-12 text-center" style="font-size: 25vmin">
-          {{ raceTimeFormatter }}
-        </div>
-      </q-card-section>
-
-      <q-card-actions class="fixed-bottom" align="center">
         <q-btn
           color="primary"
           label="Recall One"
@@ -271,17 +306,40 @@
           label="Recall All"
           @click="raceTimer.recallallTransition()"
         />
+      </q-card-actions>
+    </q-card>
 
-        <q-btn
-          color="accent"
-          label="Race Completed"
-          @click="raceTimer.racecompletedTransition()"
-        />
+    <q-card v-if="raceTimer.matches('racetimer')" flat>
+      <q-card-section class="row fit justify-start">
+        <div class="col-10" style="font-size: 12vmin">
+          {{ raceTimeFormatter }}
+        </div>
+        <div class="col-1 q-ml-xs q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6" style="font-size: 10vmin">SOG:</div>
+        <div class="col-6" style="font-size: 35vmin">
+          {{ vmc.sog }}
+        </div>
+      </q-card-section>
+
+      <q-card-actions class="fixed-bottom" align="center">
         <q-btn
           flat
           color="secondary"
           label="Abandon Race"
           @click="raceTimer.abandonTransition()"
+        />
+        <q-btn
+          color="accent"
+          label="Race Completed"
+          @click="raceTimer.racecompletedTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -458,9 +516,11 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRaceTimer } from "src/stores/raceTimer";
+import { useVmc } from "src/stores/vmc";
 import { useMQTT } from "mqtt-vue-hook";
 
 const raceTimer = useRaceTimer();
+const vmc = useVmc();
 const mqttHook = useMQTT();
 
 export default defineComponent({
@@ -470,6 +530,7 @@ export default defineComponent({
   setup() {
     return {
       raceTimer,
+      vmc,
     };
   },
   computed: {
@@ -493,12 +554,12 @@ export default defineComponent({
       let secondsStr = ":" + ("00" + seconds).slice(-2);
 
       // in the last seconds
-      if (hours == 0 && minutes == 0) {
+      if (hours == 0 && minutes == 0 && this.raceTimer.raceTime <= 0) {
         return seconds;
       }
 
       // in the last minutes
-      if (hours == 0) {
+      if (hours == 0 && this.raceTimer.raceTime <= 0) {
         return minutes + secondsStr;
       }
       // show the full time

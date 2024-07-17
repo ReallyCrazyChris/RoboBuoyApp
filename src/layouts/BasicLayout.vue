@@ -80,6 +80,12 @@ const linksList = [
     icon: "sports_score",
     link: "#/results",
   },
+  {
+    title: "Horn",
+    caption: "tuuuut",
+    icon: "campaign",
+    link: "#/horn",
+  },
 ];
 
 export default defineComponent({
