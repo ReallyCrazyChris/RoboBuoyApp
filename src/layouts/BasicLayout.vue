@@ -56,10 +56,10 @@ const linksList = [
   },
 
   {
-    title: "Register",
+    title: "Join",
     caption: "particiapte in the regatta",
     icon: "sailing",
-    link: "#/register",
+    link: "#/join",
   },
   {
     title: "Timer",
@@ -74,12 +74,13 @@ const linksList = [
     link: "#/vmc",
   },
 
-  {
+  /*{
     title: "Results",
     caption: "document the results",
     icon: "sports_score",
     link: "#/results",
   },
+  */
   {
     title: "Horn",
     caption: "tuuuut",

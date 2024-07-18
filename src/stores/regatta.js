@@ -1,38 +1,41 @@
 import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
-
 const mqttHook = useMQTT();
+
+function getRegattaId() {
+  "creates and return a unique client id for the device";
+  let clientId = localStorage.getItem("Id");
+
+  if (!clientId) {
+    clientId = `${Math.random().toString(16).substring(2, 10)}`;
+    localStorage.setItem("clientId", clientId);
+  }
+
+  return clientId;
+}
 
 export const useRegatta = defineStore("regatta", {
   state: () => ({
-    id: "1097",
-    Title: "ZombieBieber",
-    lon: null,
-    lat: null,
-    earliestStart: null,
-    latestStart: null,
-    boats: [
-      { id: "asbe", sailnumber: "1234", crewlist: "", role: "committee" },
-    ],
-    races: [{ id: 0, class: "29er", startTime: 0, endTime: 0, results: [] }],
+    id: "",
+    title: "",
+    description: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    lon: 0,
+    lat: 0,
   }),
 
   actions: {
-    submitBoat(sailnumber, crewlist) {
-      this.boats.append({
-        id: "assd",
-        sailnumber: "" + sailnumber,
-        crewlist: "" + crewlist,
-        role: null,
-      });
+    createRegattaId() {
+      this.id = `${Math.random().toString(16).substring(2, 10)}`;
     },
 
-    deleteBoat(id) {},
-
-    submitRace(race) {
-      this.boats.append(race);
+    setCoordinates(lon, lat) {
+      this.lon = lon;
+      this.lat = lat;
     },
-
-    deleteRace(id) {},
   },
+
+  persist: true,
 });

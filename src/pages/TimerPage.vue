@@ -331,78 +331,17 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="row fit justify-start items-center">
-        <div class="col-6" style="font-size: 10vmin">SOG:</div>
-        <div
-          class="col-6 text-center"
-          style="font-size: 30vmin; line-height: 5rem"
-        >
-          {{ vmc.sog }}
-        </div>
+
+      <q-card-section>
+        <sogview :vmc="vmc" />
       </q-card-section>
 
-      <q-card-section class="row fit justify-start items-center">
-        <div class="col-6">
-          <div style="font-size: 10vmin">VMC:</div>
-          <div class="row fit">
-            <div v-if="vmc.lon == 0 || vmc.lat == 0" class="col-8 text-caption">
-              set the windward mark coordinates
-            </div>
-            <div v-else class="col-8">
-              <div class="text-caption">
-                N {{ parseFloat(vmc.lat).toFixed(3) }}
-              </div>
-              <div class="text-caption">
-                E {{ parseFloat(vmc.lon).toFixed(3) }}
-              </div>
-            </div>
-
-            <div class="col-4 self-end">
-              <q-btn
-                round
-                color="primary"
-                icon="room"
-                @click="vmc.setCoordinates(gps.lon, gps.lat)"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="vmc.lon == 0 || vmc.lat == 0"
-          class="col-6 text-center"
-          style="font-size: 30vmin; line-height: 5rem"
-        >
-          -
-        </div>
-        <div
-          v-else
-          class="col-6 text-center"
-          style="font-size: 30vmin; line-height: 5rem"
-        >
-          {{ vmc.vmc }}
-        </div>
+      <q-card-section>
+        <vmcview :vmc="vmc" :gps="gps" />
       </q-card-section>
 
-      <q-card-section class="row fit justify-start items-center">
-        <div class="col-6">
-          <div style="font-size: 10vmin">Efficiency:</div>
-        </div>
-
-        <div
-          v-if="vmc.lon == 0 || vmc.lat == 0"
-          class="col-6 text-center"
-          style="font-size: 30vmin; line-height: 5rem"
-        >
-          -
-        </div>
-        <div
-          v-else
-          class="col-6 text-center"
-          style="font-size: 30vmin; line-height: 5rem"
-        >
-          {{ vmc.efficiency }}
-        </div>
+      <q-card-section>
+        <efficiencyview :vmc="vmc" />
       </q-card-section>
 
       <q-card-actions class="fixed-bottom" align="center">
@@ -591,6 +530,11 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+
+import sogview from "src/components/vmc/sog.vue";
+import vmcview from "src/components/vmc/vmc.vue";
+import efficiencyview from "src/components/vmc/efficiency.vue";
+
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
 import { useGps } from "src/stores/gps";
@@ -600,8 +544,8 @@ const gps = useGps();
 const vmc = useVmc();
 
 export default defineComponent({
-  name: "RegisterPage",
-  components: {},
+  name: "RaceTimerPage",
+  components: { sogview, vmcview, efficiencyview },
 
   setup() {
     return {

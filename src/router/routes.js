@@ -34,6 +34,11 @@ const routes = [
       },
 
       {
+        path: "regatta",
+        component: () => import("pages/RegattaPage.vue"),
+      },
+
+      {
         path: "register",
         component: () => import("pages/RegisterPage.vue"),
       },
