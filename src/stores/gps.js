@@ -25,6 +25,7 @@ export const gpsStoreDefinition = defineStore("gps", {
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
 
+      /*
       if (mqttHook.isConnected) {
         mqttHook.publish(
           "gps",
@@ -36,7 +37,7 @@ export const gpsStoreDefinition = defineStore("gps", {
             accuracy: this.accuracy,
           })
         );
-      }
+      } */
     },
 
     watcherror(err) {

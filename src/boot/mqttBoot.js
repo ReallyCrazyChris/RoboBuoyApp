@@ -35,7 +35,7 @@ export default boot(({ app }) => {
 
   if (mqttHook.isConnected) {
     mqttHook.subscribe(
-      ["marks", "timer"],
+      ["vmc", "racetimer"],
       1,
       { nl: true },
       (err, granted) => {}

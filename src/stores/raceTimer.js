@@ -174,7 +174,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
     publishRaceTimerState() {
       if (mqttHook.isConnected) {
         mqttHook.publish(
-          "timer",
+          "racetimer",
           JSON.stringify({
             startTime: this.startTime,
             raceState: this.raceState,
@@ -357,11 +357,12 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
 const raceTimer = raceTimerDefinition();
 
-mqttHook.registerEvent("timer", (topic, message) => {
+mqttHook.registerEvent("racetimer", (topic, message) => {
   const patch = JSON.parse(message.toString());
-  console.log("patch", patch);
   raceTimer.$patch(patch);
 
+  // After a Browser refresh and a MQTT reconnect, the retained racetimer state is
+  // Transmitted. Then a Race Timer may need to be started.
   if (
     [
       "raceclass",

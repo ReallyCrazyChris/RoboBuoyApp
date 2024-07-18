@@ -1,65 +1,94 @@
 <template>
   <q-page>
     <q-card flat>
-      <q-card-section>
-        <div class="text-center text-h1 q-py-lg" style="font-size: 10rem">
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6" style="font-size: 10vmin">SOG:</div>
+        <div
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          {{ vmc.sog }}
+        </div>
+      </q-card-section>
+
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6">
+          <div style="font-size: 10vmin">VMC:</div>
+          <div class="row fit">
+            <div v-if="vmc.lon == 0 || vmc.lat == 0" class="col-8 text-caption">
+              set the windward mark coordinates
+            </div>
+            <div v-else class="col-8">
+              <div class="text-caption">N {{ vmc.lat }}</div>
+              <div class="text-caption">E {{ vmc.lon }}</div>
+            </div>
+
+            <div class="col-4 self-end">
+              <q-btn
+                round
+                color="primary"
+                icon="room"
+                @click="vmc.setCoordinates(gps.lon, gps.lat)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-if="vmc.lon == 0 || vmc.lat == 0"
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          -
+        </div>
+        <div
+          v-else
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
           {{ vmc.vmc }}
         </div>
-        <div class="text-center text-h5 q-py-xs">
-          VMC {{ marks.selected + 1 }}
+      </q-card-section>
+
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6">
+          <div style="font-size: 10vmin">Efficiency:</div>
         </div>
 
-        <div class="text-center text-h1 q-py-lg" style="font-size: 10rem">
-          {{ vmc.efficiency }}
+        <div
+          v-if="vmc.lon == 0 || vmc.lat == 0"
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          -
         </div>
-        <div class="text-center text-h5 q-py-xs">EFFICIENCY</div>
-      </q-card-section>
-      <q-card-section>
-        <MarksSelect></MarksSelect>
+        <div
+          v-else
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          {{ vmc.vmc }}
+        </div>
       </q-card-section>
     </q-card>
-
-    <q-page-sticky position="top-right" :offset="[18, 18]">
-      <q-btn
-        v-if="wakeLock == null"
-        fab
-        icon="lock_open"
-        color="accent"
-        size="sm"
-        @click="requestWakeLock()"
-      />
-      <q-btn
-        v-if="!(wakeLock == null)"
-        fab
-        icon="lock"
-        color="accent"
-        size="sm"
-        @click="releaseWakeLock()"
-      />
-    </q-page-sticky>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 
+import { useGps } from "src/stores/gps";
 import { useVmc } from "src/stores/vmc";
-import { useMarks } from "src/stores/marks";
-import MarksSelect from "src/components/marks/MarksSelect.vue";
-
+const gps = useGps();
 const vmc = useVmc();
-const marks = useMarks();
 
 export default defineComponent({
   name: "VmcDashboard",
-  components: {
-    MarksSelect,
-  },
+  components: {},
   setup() {
     return {
       vmc,
-      marks,
-      wakeLock: null,
+      gps,
     };
   },
 

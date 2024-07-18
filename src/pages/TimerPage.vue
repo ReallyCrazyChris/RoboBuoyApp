@@ -170,7 +170,10 @@
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
-        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+        <div
+          class="col-12 text-center q-my-xs"
+          style="font-size: 45vmin; line-height: 10rem"
+        >
           {{ raceTimeFormatter }}
         </div>
       </q-card-section>
@@ -214,7 +217,10 @@
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
-        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+        <div
+          class="col-12 text-center q-my-xs"
+          style="font-size: 45vmin; line-height: 10rem"
+        >
           {{ raceTimeFormatter }}
         </div>
       </q-card-section>
@@ -256,7 +262,10 @@
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
         </div>
-        <div class="col-12 text-center q-my-xs" style="font-size: 45vmin">
+        <div
+          class="col-12 text-center q-my-xs"
+          style="font-size: 45vmin; line-height: 10rem"
+        >
           {{ raceTimeFormatter }}
         </div>
       </q-card-section>
@@ -291,7 +300,7 @@
         <q-btn
           flat
           color="secondary"
-          label="Postpone Race"
+          label="Postpone"
           @click="raceTimer.postponeraceTransition()"
         />
 
@@ -324,8 +333,71 @@
       </q-card-section>
       <q-card-section class="row fit justify-start items-center">
         <div class="col-6" style="font-size: 10vmin">SOG:</div>
-        <div class="col-6" style="font-size: 35vmin">
+        <div
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
           {{ vmc.sog }}
+        </div>
+      </q-card-section>
+
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6">
+          <div style="font-size: 10vmin">VMC:</div>
+          <div class="row fit">
+            <div v-if="vmc.lon == 0 || vmc.lat == 0" class="col-8 text-caption">
+              set the windward mark coordinates
+            </div>
+            <div v-else class="col-8">
+              <div class="text-caption">N {{ vmc.lat }}</div>
+              <div class="text-caption">E {{ vmc.lon }}</div>
+            </div>
+
+            <div class="col-4 self-end">
+              <q-btn
+                round
+                color="primary"
+                icon="room"
+                @click="vmc.setCoordinates(gps.lon, gps.lat)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          v-if="vmc.lon == 0 || vmc.lat == 0"
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          -
+        </div>
+        <div
+          v-else
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          {{ vmc.vmc }}
+        </div>
+      </q-card-section>
+
+      <q-card-section class="row fit justify-start items-center">
+        <div class="col-6">
+          <div style="font-size: 10vmin">Efficiency:</div>
+        </div>
+
+        <div
+          v-if="vmc.lon == 0 || vmc.lat == 0"
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          -
+        </div>
+        <div
+          v-else
+          class="col-6 text-center"
+          style="font-size: 30vmin; line-height: 5rem"
+        >
+          {{ vmc.vmc }}
         </div>
       </q-card-section>
 
@@ -517,11 +589,11 @@
 import { defineComponent, ref } from "vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
-import { useMQTT } from "mqtt-vue-hook";
+import { useGps } from "src/stores/gps";
 
 const raceTimer = useRaceTimer();
+const gps = useGps();
 const vmc = useVmc();
-const mqttHook = useMQTT();
 
 export default defineComponent({
   name: "RegisterPage",
@@ -531,6 +603,7 @@ export default defineComponent({
     return {
       raceTimer,
       vmc,
+      gps,
     };
   },
   computed: {

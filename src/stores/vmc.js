@@ -1,11 +1,10 @@
 import { defineStore } from "pinia";
-import { useMarks } from "src/stores/marks";
 import { useGps } from "src/stores/gps";
 import LatLon from "geodesy/latlon-spherical.js";
 import { useMQTT } from "mqtt-vue-hook";
 
 const mqttHook = useMQTT();
-const marks = useMarks();
+
 const gps = useGps();
 
 export const vmcStoreDefinition = defineStore("vmc", {
@@ -15,14 +14,36 @@ export const vmcStoreDefinition = defineStore("vmc", {
     efficiency: 0,
     bearing: 0,
     distance: 0,
+    lon: 0,
+    lat: 0,
   }),
 
   actions: {
     // update the VMC data using the latest GPS data
 
+    setCoordinates(lon, lat) {
+      this.lon = lon;
+      this.lat = lat;
+
+      console.log("setCoordinates", this.lon, this.lat);
+
+      if (mqttHook.isConnected) {
+        console.log("publishVMCCoordinates", this.lon, this.lat);
+        mqttHook.publish(
+          "vmc",
+          JSON.stringify({
+            lon: this.lon,
+            lat: this.lat,
+          }),
+          0,
+          { retain: true }
+        );
+      }
+    },
+
     update(lon, lat, heading, sog) {
       const p1 = new LatLon(lat, lon);
-      const p2 = new LatLon(marks.getLat(), marks.getLon());
+      const p2 = new LatLon(this.lat, this.lon);
 
       this.bearing = p1.initialBearingTo(p2);
       this.distance = Math.round(p1.distanceTo(p2));
@@ -38,26 +59,19 @@ export const vmcStoreDefinition = defineStore("vmc", {
 
       this.sog = Math.round(19.4384 * sog) / 10;
       this.vmc = Math.round(19.4384 * sog * Math.cos(delta_rad)) / 10;
-
       this.efficiency = Math.round(100 * (this.vmc / (1.94384 * sog))) || 0;
+    },
 
+    publishVmcState() {
       if (mqttHook.isConnected) {
         mqttHook.publish(
           "vmc",
           JSON.stringify({
-            p1lon: lon,
-            p1lat: lat,
-            p2lon: marks.getLon(),
-            p2lat: marks.getLat(),
-            sog: this.sog,
-            vmc: this.vmc,
-            efficiency: this.efficiency,
-            heading: heading,
-            bearing: this.bearing,
-            delta: delta,
-            delta_rad: delta_rad,
-            distance: this.distance,
-          })
+            lon: this.lon,
+            lat: this.lat,
+          }),
+          0,
+          { retain: true }
         );
       }
     },
@@ -65,6 +79,12 @@ export const vmcStoreDefinition = defineStore("vmc", {
 });
 
 const vmc = vmcStoreDefinition();
+
+mqttHook.registerEvent("vmc", (topic, message) => {
+  const patch = JSON.parse(message.toString());
+  console.log("patch vmc", patch);
+  vmc.$patch(patch);
+});
 
 gps.$subscribe(() => {
   vmc.update(gps.lon, gps.lat, gps.heading, gps.sog);
