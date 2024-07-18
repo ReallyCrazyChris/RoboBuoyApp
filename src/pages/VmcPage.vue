@@ -71,7 +71,7 @@
           class="col-6 text-center"
           style="font-size: 30vmin; line-height: 5rem"
         >
-          {{ vmc.vmc }}
+          {{ vmc.efficiency }}
         </div>
       </q-card-section>
     </q-card>
