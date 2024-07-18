@@ -19,8 +19,12 @@
               set the windward mark coordinates
             </div>
             <div v-else class="col-8">
-              <div class="text-caption">N {{ vmc.lat }}</div>
-              <div class="text-caption">E {{ vmc.lon }}</div>
+              <div class="text-caption">
+                N {{ parseFloat(vmc.lat).toFixed(3) }}
+              </div>
+              <div class="text-caption">
+                E {{ parseFloat(vmc.lon).toFixed(3) }}
+              </div>
             </div>
 
             <div class="col-4 self-end">

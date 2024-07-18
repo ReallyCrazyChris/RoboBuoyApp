@@ -25,8 +25,6 @@ export const vmcStoreDefinition = defineStore("vmc", {
       this.lon = lon;
       this.lat = lat;
 
-      console.log("setCoordinates", this.lon, this.lat);
-
       if (mqttHook.isConnected) {
         console.log("publishVMCCoordinates", this.lon, this.lat);
         mqttHook.publish(
@@ -58,8 +56,22 @@ export const vmcStoreDefinition = defineStore("vmc", {
       const delta_rad = (delta * Math.PI) / 180.0;
 
       this.sog = Math.round(19.4384 * sog) / 10;
-      this.vmc = Math.round(19.4384 * sog * Math.cos(delta_rad)) / 10;
-      this.efficiency = Math.round(100 * (this.vmc / (1.94384 * sog))) || 0;
+
+      const vmc = Math.round(19.4384 * sog * Math.cos(delta_rad)) / 10;
+
+      if (!isNaN(vmc)) {
+        this.vmc = vmc;
+      } else {
+        this.vmc = 0;
+      }
+
+      const efficiency = Math.round(100 * (this.vmc / (1.94384 * sog))) || 0;
+
+      if (!isNaN(efficiency)) {
+        this.efficiency = efficiency;
+      } else {
+        this.efficiency = 0;
+      }
     },
 
     publishVmcState() {
