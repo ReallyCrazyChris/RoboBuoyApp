@@ -40,6 +40,10 @@ module.exports = configure(function (/* ctx */) {
         client: true,
         path: "mqttBoot",
       },
+      {
+        client: true,
+        path: "sequencetimerBoot",
+      },
       /**
       {
         client: true, // run on server-side only!

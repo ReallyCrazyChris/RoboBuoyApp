@@ -206,7 +206,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.raceState = "raceclass";
       this.publishRaceTimerState();
       sounds.airhorn(1);
-      this.startSequenceTimer();
     },
 
     raceprepareTransition() {
@@ -233,13 +232,18 @@ const raceTimerDefinition = defineStore("raceTimer", {
     },
 
     startSequenceTimer() {
+      // the sequence timer is 'booted' in 'src/boot/sequencetimerBoot' and runs continously
       // clear the racetime
       clearInterval(this.intervalId);
 
       this.intervalId = setInterval(() => {
-        this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
+        if (Number.isInteger(this.startTime)) {
+          // a start time has been defined
+          this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
+        }
 
         if (
+          this.startTime != undefined &&
           this.raceState == "raceclass" &&
           this.raceTime >= this.timerSequenceModel.timeSequence.raceprepare
         ) {
@@ -247,6 +251,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
         }
 
         if (
+          this.startTime != undefined &&
           this.raceState == "raceprepare" &&
           this.raceTime >= this.timerSequenceModel.timeSequence.raceready
         ) {
@@ -254,6 +259,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
         }
 
         if (
+          this.startTime != undefined &&
           this.raceState == "raceready" &&
           this.raceTime >= this.timerSequenceModel.timeSequence.racestart
         ) {
@@ -261,6 +267,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
         }
 
         if (
+          this.startTime != undefined &&
           this.raceState == "racestart" &&
           this.raceTime >= this.timerSequenceModel.timeSequence.racetimer
         ) {
@@ -271,9 +278,9 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     stopSequenceTimer() {
       this.startTime = undefined;
-      this.raceTime = undefined;
+      //this.raceTime = undefined;
       this.endTime = Date.now();
-      clearInterval(this.intervalId);
+      //clearInterval(this.intervalId);
     },
 
     postponeraceTransition() {
@@ -356,41 +363,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
 });
 
 const raceTimer = raceTimerDefinition();
-
-mqttHook.registerEvent("racetimer", (topic, message) => {
-  const patch = JSON.parse(message.toString());
-  raceTimer.$patch(patch);
-
-  // After a Browser refresh and a MQTT reconnect, the retained racetimer state is
-  // Transmitted. Then a Race Timer may need to be started.
-  if (
-    [
-      "raceclass",
-      "raceprepare",
-      "raceready",
-      "racestart",
-      "racetimer",
-      "recallone",
-    ].includes(raceTimer.raceState)
-  ) {
-    raceTimer.startSequenceTimer();
-  }
-});
-
-// recover from an accidental page relaod
-
-if (
-  [
-    "raceclass",
-    "raceprepare",
-    "raceready",
-    "racestart",
-    "racetimer",
-    "recallone",
-  ].includes(raceTimer.raceState)
-) {
-  raceTimer.startSequenceTimer();
-}
 
 export const useRaceTimer = () => {
   return raceTimer;

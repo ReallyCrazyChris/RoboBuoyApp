@@ -2,18 +2,6 @@ import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
-function getRegattaId() {
-  "creates and return a unique client id for the device";
-  let clientId = localStorage.getItem("Id");
-
-  if (!clientId) {
-    clientId = `${Math.random().toString(16).substring(2, 10)}`;
-    localStorage.setItem("clientId", clientId);
-  }
-
-  return clientId;
-}
-
 export const useRegatta = defineStore("regatta", {
   state: () => ({
     id: "",
@@ -24,6 +12,7 @@ export const useRegatta = defineStore("regatta", {
     endTime: "",
     lon: 0,
     lat: 0,
+    viewmode: true,
   }),
 
   actions: {
@@ -35,7 +24,31 @@ export const useRegatta = defineStore("regatta", {
       this.lon = lon;
       this.lat = lat;
     },
-  },
 
-  persist: true,
+    saveTransition() {
+      this.viewmode = true;
+
+      if (mqttHook.isConnected) {
+        mqttHook.publish(
+          "regatta",
+          JSON.stringify({
+            id: this.id,
+            title: this.title,
+            description: this.description,
+            date: this.date,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            lon: this.lon,
+            lat: this.lat,
+          }),
+          0,
+          { retain: true }
+        );
+      }
+    },
+
+    editTransition() {
+      this.viewmode = false;
+    },
+  },
 });
