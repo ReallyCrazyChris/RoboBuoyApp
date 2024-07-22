@@ -2,54 +2,71 @@
   <q-page>
     <q-card flat>
       <q-card-section style="max-width: 400px">
-        <div class="text-h6">Regatta</div>
+        <div class="text-h6">Regatta Invitaiton</div>
+        <div class="fit row wrap justify-start items-start content-start">
+          <div class="col-10 self-center">
+            <div>setup a regatta</div>
+            <div>share with others</div>
+          </div>
+          <div class="col-2 self-center q-pa-sm">
+            <shareregatta />
+          </div>
+        </div>
+      </q-card-section>
 
+      <q-card-section class="q-pt-none"> </q-card-section>
+      <q-separator inset />
+      <q-card-section class="q-pa-md" style="max-width: 400px">
         <q-input
           v-model="regatta.title"
-          label="title"
-          :borderless="regatta.viewmode"
-          :readonly="regatta.viewmode"
+          filled
+          class="q-pb-sm"
+          label="regatta name"
         />
         <q-input
           v-model="regatta.description"
+          filled
+          class="q-pb-sm"
           label="description"
-          :borderless="regatta.viewmode"
-          :readonly="regatta.viewmode"
         />
 
         <q-input
           v-model="regatta.date"
-          label="date"
+          filled
+          class="q-pb-sm"
+          label="skippers meeting  date and time"
           type="datetime-local"
-          :borderless="regatta.viewmode"
-          :readonly="regatta.viewmode"
         />
 
-        <div class="row fit">
+        <div
+          class="row full-width no-wrap justify-start items-start content-start"
+        >
           <div class="col-6">
             <q-input
-              type="time"
               v-model="regatta.startTime"
-              label="earliest start "
-              :borderless="regatta.viewmode"
-              :readonly="regatta.viewmode"
+              filled
+              class="q-pr-sm"
+              type="time"
+              label="earliest race start "
             />
           </div>
 
           <div class="col-6">
             <q-input
-              type="time"
               v-model="regatta.endTime"
-              label="latest start"
-              :borderless="regatta.viewmode"
-              :readonly="regatta.viewmode"
+              filled
+              class="q-pl-sm"
+              type="time"
+              label="latest race start"
             />
           </div>
         </div>
-
-        <div class="row fit q-py-md items-center">
+      </q-card-section>
+      <q-separator inset />
+      <q-card-section>
+        <div class="row fit q-pa-md">
           <div
-            v-if="(regatta.lon == 0 || regatta.lat == 0) && !regatta.viewmode"
+            v-if="regatta.lon == 0 || regatta.lat == 0"
             class="col-8 text-caption"
           >
             Pin the regatta location
@@ -63,7 +80,7 @@
             </div>
           </div>
 
-          <div v-if="!regatta.viewmode" class="col-3">
+          <div class="col-3">
             <q-btn
               class="float-right"
               round
@@ -74,19 +91,8 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-actions
-        v-if="!regatta.viewmode"
-        class="fixed-bottom"
-        align="right"
-      >
-        <q-btn label="Save" color="primary" @click="regatta.saveTransition" />
-      </q-card-actions>
-      <q-card-actions
-        v-if="regatta.viewmode"
-        class="fixed-bottom"
-        align="right"
-      >
-        <q-btn label="Edit" color="primary" @click="regatta.editTransition" />
+      <q-card-actions class="fixed-bottom" align="right">
+        <q-btn label="OK" color="primary" @click="regatta.saveTransition" />
       </q-card-actions>
     </q-card>
   </q-page>
@@ -94,6 +100,8 @@
 
 <script>
 import { defineComponent } from "vue";
+import shareregatta from "src/components/regatta/RegattaShare.vue";
+import { date } from "quasar";
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
 
@@ -102,12 +110,13 @@ const regatta = useRegatta();
 
 export default defineComponent({
   name: "RegattaPage",
-  components: {},
+  components: { shareregatta },
   setup() {
     return {
       regatta,
       gps,
     };
   },
+  computed: {},
 });
 </script>

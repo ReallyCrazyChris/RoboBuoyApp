@@ -39,8 +39,8 @@ const routes = [
       },
 
       {
-        path: "register",
-        component: () => import("pages/RegisterPage.vue"),
+        path: "join",
+        component: () => import("pages/JoinPage.vue"),
       },
 
       {

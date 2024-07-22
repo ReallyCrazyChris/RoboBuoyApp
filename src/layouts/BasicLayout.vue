@@ -37,10 +37,30 @@ import EssentialLink from "components/EssentialLink.vue";
 const linksList = [
   {
     title: "Regatta",
-    caption: "about the regatta",
+    caption: "create and invite",
     icon: "emoji_events",
     link: "#/regatta",
   },
+  {
+    title: "Join",
+    caption: "join to participate",
+    icon: "sailing",
+    link: "#/join",
+  },
+  {
+    title: "Timer",
+    caption: "start race timer",
+    icon: "timer",
+    link: "#/timer",
+  },
+
+  /*{
+    title: "Results",
+    caption: "document the results",
+    icon: "sports_score",
+    link: "#/results",
+  },
+  */
 
   {
     title: "Course",
@@ -56,31 +76,12 @@ const linksList = [
   },
 
   {
-    title: "Join",
-    caption: "particiapte in the regatta",
-    icon: "sailing",
-    link: "#/join",
-  },
-  {
-    title: "Timer",
-    caption: "race start timer",
-    icon: "timer",
-    link: "#/timer",
-  },
-  {
     title: "VMC",
     caption: "velocity made course",
     icon: "speed",
     link: "#/vmc",
   },
 
-  /*{
-    title: "Results",
-    caption: "document the results",
-    icon: "sports_score",
-    link: "#/results",
-  },
-  */
   {
     title: "Horn",
     caption: "tuuuut",

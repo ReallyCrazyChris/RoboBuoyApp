@@ -5,7 +5,7 @@ const mqttHook = useMQTT();
 
 export const useBoat = defineStore("boat", {
   state: () => ({
-    id: 1234,
+    id: `${Math.random().toString(16).substring(2, 10)}`,
     sailnumber: null,
     crewlist: null,
   }),

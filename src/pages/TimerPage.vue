@@ -3,6 +3,20 @@
     <q-card v-if="raceTimer.matches('raceinfo')" flat>
       <q-card-section class="row">
         <q-img class="col-6" src="racesignals/lima.svg" />
+        <div class="col-6">
+          <div class="fit row wrap justify-start items-end">
+            <div class="col-12 q-px-sm q-py-lg text-center self-start">
+              <shareregatta />
+            </div>
+            <div class="col-12 q-px-sm text-center self-end">
+              {{ regatta.title }}
+            </div>
+            <div class="col-12 q-px-sm text-caption text-center self-end">
+              {{ localDateTime }}
+            </div>
+          </div>
+        </div>
+
         <div class="col-12 text-h5 q-mt-sm q-mb-xs">Race Information</div>
 
         <q-select
@@ -534,24 +548,28 @@ import { defineComponent, ref } from "vue";
 import sogview from "src/components/vmc/sog.vue";
 import vmcview from "src/components/vmc/vmc.vue";
 import efficiencyview from "src/components/vmc/efficiency.vue";
+import shareregatta from "src/components/regatta/RegattaShare.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
 import { useGps } from "src/stores/gps";
+import { useRegatta } from "src/stores/regatta";
 
 const raceTimer = useRaceTimer();
 const gps = useGps();
 const vmc = useVmc();
+const regatta = useRegatta();
 
 export default defineComponent({
   name: "RaceTimerPage",
-  components: { sogview, vmcview, efficiencyview },
+  components: { sogview, vmcview, efficiencyview, shareregatta },
 
   setup() {
     return {
       raceTimer,
       vmc,
       gps,
+      regatta,
     };
   },
   computed: {
@@ -585,6 +603,11 @@ export default defineComponent({
       }
       // show the full time
       return hoursStr + minutesStr + secondsStr;
+    },
+
+    localDateTime() {
+      const date = new Date(regatta.date);
+      return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
     },
   },
   methods: {

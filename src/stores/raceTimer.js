@@ -5,6 +5,9 @@ const mqttHook = useMQTT();
 import { useSounds } from "stores/sounds";
 const sounds = useSounds();
 
+import { useScreen } from "src/stores/screen";
+const screen = useScreen();
+
 export const timerSequeceOptions = [
   {
     label: "2 minute",
@@ -196,6 +199,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.raceState = "raceinfo";
       this.publishRaceTimerState();
       sounds.airhorn(1);
+      screen.requestWakeLock();
     },
 
     raceclassTransition() {

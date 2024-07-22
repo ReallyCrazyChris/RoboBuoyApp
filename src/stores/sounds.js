@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
-const soundsDefinition = defineStore("sounds", {
+export const useSounds = defineStore("sounds", {
   state: () => ({
     audioContext: undefined,
     playCountArray: [],
   }),
   actions: {
     enableAudio() {
-      if (undefined == this.audioContext) {
+      if (typeof this.audioContext == "undefined") {
         this.audioContext = new AudioContext();
       }
     },
@@ -28,9 +28,3 @@ const soundsDefinition = defineStore("sounds", {
     },
   },
 });
-
-const sounds = soundsDefinition();
-
-export const useSounds = () => {
-  return sounds;
-};
