@@ -1,25 +1,33 @@
 <template>
-  <q-btn
-    round
-    push
-    color="primary"
-    icon="lock"
-    @click="screen.requestWakeLock()"
-  >
+  <q-btn round push color="primary" icon="lock" @click="requestWakeLock()">
     <q-tooltip class="primary">Wake Lock</q-tooltip>
   </q-btn>
 </template>
 
 <script>
-import { useScreen } from "src/stores/screen";
-const screen = useScreen();
-
 export default {
   name: "WakeLock",
-  setup() {
+  data() {
     return {
-      screen,
+      wakeLock: undefined,
     };
+  },
+  setup() {
+    return {};
+  },
+  methods: {
+    async requestWakeLock() {
+      if ("wakeLock" in navigator) {
+        try {
+          this.wakeLock = await navigator.wakeLock.request("screen");
+          console.log("ACTIVATED");
+        } catch (err) {
+          console.log("ERROR:", err);
+        }
+      } else {
+        console.log("wakeLock not available");
+      }
+    },
   },
 };
 </script>
