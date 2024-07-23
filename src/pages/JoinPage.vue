@@ -17,7 +17,7 @@
       <q-separator inset />
 
       <q-card-section class="q-pa-md" style="max-width: 400px">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
             filled
             v-model="boat.sailnumber"
@@ -41,6 +41,10 @@
           />
 
           <q-card-actions class="fixed-bottom" align="right">
+            <div v-if="!isWakeLock">
+              <wakelock />
+            </div>
+
             <q-btn label="Join" type="submit" color="primary" />
           </q-card-actions>
         </q-form>
@@ -52,6 +56,8 @@
 <script>
 import { defineComponent } from "vue";
 import shareregatta from "src/components/regatta/RegattaShare.vue";
+
+import wakelock from "src/components/WakeLock.vue";
 
 import { useRegatta } from "src/stores/regatta";
 const regatta = useRegatta();
@@ -66,6 +72,7 @@ export default defineComponent({
   name: "RegisterPage",
   components: {
     shareregatta,
+    wakelock,
   },
   setup() {
     return {
@@ -83,6 +90,14 @@ export default defineComponent({
     localDateTime() {
       const date = new Date(regatta.date);
       return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
+    },
+    isWakeLock() {
+      const wakelock = screen.wakelock;
+      if (typeof wakelock == "undefined") {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
 });
