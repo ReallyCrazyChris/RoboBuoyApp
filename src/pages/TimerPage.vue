@@ -170,16 +170,6 @@
               <q-img :src="raceTimer.yankeeFlagModel.image" />
             </q-avatar>
           </div>
-          <!--div class="q-mb-xs">
-            <q-avatar square size="3.4rem">
-              <q-img :src="raceTimer.yankeeFlagModel.image" />
-            </q-avatar>
-          </div>
-          <div>
-            <q-avatar square size="3.4rem">
-              <q-img :src="raceTimer.yankeeFlagModel.image" />
-            </q-avatar>
-          </div-->
         </div>
         <div class="col-12 text-caption text-center q-my-xs">
           {{ raceTimer.timerSequenceModel.description }}
@@ -608,17 +598,6 @@ export default defineComponent({
     localDateTime() {
       const date = new Date(regatta.date);
       return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
-    },
-  },
-  methods: {
-    shareTimer() {
-      const data = {
-        title: "Race Timer",
-        text: "Ahoy sailor... ready to race",
-        url: "https://reallycrazychris.github.io/#/timer",
-      };
-
-      navigator.share(data);
     },
   },
 });

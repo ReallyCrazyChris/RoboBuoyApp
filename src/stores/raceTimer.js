@@ -5,9 +5,6 @@ const mqttHook = useMQTT();
 import { useSounds } from "stores/sounds";
 const sounds = useSounds();
 
-import { useScreen } from "src/stores/screen";
-const screen = useScreen();
-
 export const timerSequeceOptions = [
   {
     label: "2 minute",
@@ -169,6 +166,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
   actions: {
     matches(statename) {
       if (this.raceState == statename) {
+        console.log("matches", statename);
         return true;
       }
       return false;
@@ -199,7 +197,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.raceState = "raceinfo";
       this.publishRaceTimerState();
       sounds.airhorn(1);
-      screen.requestWakeLock();
     },
 
     raceclassTransition() {
@@ -214,25 +211,25 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     raceprepareTransition() {
       this.raceState = "raceprepare";
-      this.publishRaceTimerState();
+      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racereadyTransition() {
       this.raceState = "raceready";
-      this.publishRaceTimerState();
+      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racestartTransition() {
       this.raceState = "racestart";
-      this.publishRaceTimerState();
+      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racetimerTransition() {
       this.raceState = "racetimer";
-      this.publishRaceTimerState();
+      //this.publishRaceTimerState();
     },
 
     startSequenceTimer() {

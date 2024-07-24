@@ -119,7 +119,6 @@ export default defineComponent({
     // a user interaction is required to active sounds and scrren wakelock
     captureUserInteractionEvent() {
       screen.requestWakeLock();
-      sounds.enableSounds();
       sounds.airhorn(1);
     },
   },

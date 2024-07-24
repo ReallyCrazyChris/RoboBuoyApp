@@ -1,30 +1,39 @@
 import { defineStore } from "pinia";
 
-export const useSounds = defineStore("sounds", {
+const soundsDefinition = defineStore("sounds", {
   state: () => ({
-    audioContext: undefined,
-    playCountArray: [],
+    duration: 0,
+    soundInstance: null,
   }),
   actions: {
-    enableSounds() {
-      if (typeof this.audioContext == "undefined") {
-        this.audioContext = new AudioContext();
-      }
-    },
     airhorn(playCount = 1) {
-      for (let i = 0; i < playCount; i++) {
-        let soundInstance = new Audio("sounds/airhorn.mp3");
-        this.playCountArray.push(soundInstance);
-
-        if (this.playCountArray.length < playCount) {
-          this.playCountArray[i].addEventListener("ended", () => {
-            this.playCountArray.shift();
-            this.playCountArray[0].play();
-          });
-        }
+      if (!!!this.soundInstance) {
+        console.log("init");
+        this.soundInstance = soundInstance;
+        this.soundInstance.volume = 0;
+        this.soundInstance.loop = true;
+        this.soundInstance.play();
       }
 
-      this.playCountArray[0].play();
+      console.log("play");
+      this.soundInstance.currentTime = 0;
+      this.soundInstance.volume = 1;
+
+      setTimeout(() => {
+        soundInstance.volume = 0;
+      }, parseInt(this.duration) * playCount);
     },
   },
 });
+
+const sounds = soundsDefinition();
+
+let soundInstance = new Audio("sounds/airhorn.mp3");
+
+soundInstance.addEventListener("loadedmetadata", () => {
+  sounds.duration = soundInstance.duration * 1000;
+});
+
+export const useSounds = () => {
+  return sounds;
+};
