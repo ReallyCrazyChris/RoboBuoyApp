@@ -41,9 +41,7 @@
           />
 
           <q-card-actions class="fixed-bottom" align="right">
-            <div v-if="!isWakeLock">
-              <wakelock />
-            </div>
+            <wakelock />
 
             <q-btn label="Join" type="submit" color="primary" />
           </q-card-actions>
@@ -65,9 +63,6 @@ const regatta = useRegatta();
 import { useBoat } from "src/stores/boat";
 const boat = useBoat();
 
-import { useScreen } from "src/stores/screen";
-const screen = useScreen();
-
 export default defineComponent({
   name: "RegisterPage",
   components: {
@@ -82,7 +77,6 @@ export default defineComponent({
   },
   methods: {
     onSubmit() {
-      screen.requestWakeLock();
       boat.submit();
     },
   },
@@ -90,14 +84,6 @@ export default defineComponent({
     localDateTime() {
       const date = new Date(regatta.date);
       return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
-    },
-    isWakeLock() {
-      const wakelock = screen.wakelock;
-      if (typeof wakelock == "undefined") {
-        return false;
-      } else {
-        return true;
-      }
     },
   },
 });
