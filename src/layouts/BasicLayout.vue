@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh lpr fff">
+  <q-layout @click.once="captureUserInteractionEvent" view="hhh lpr fff">
     <q-header class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -33,6 +33,11 @@ import { defineComponent, ref } from "vue";
 import { $bluetooth } from "src/networking/bluetooth";
 import { useDevicesStore } from "stores/devicesStore";
 import EssentialLink from "components/EssentialLink.vue";
+
+import { useScreen } from "src/stores/screen";
+import { useSounds } from "src/stores/sounds";
+const screen = useScreen();
+const sounds = useSounds();
 
 const linksList = [
   {
@@ -108,6 +113,15 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
+  },
+
+  methods: {
+    // a user interaction is required to active sounds and scrren wakelock
+    captureUserInteractionEvent() {
+      screen.requestWakeLock();
+      sounds.enableSounds();
+      sounds.airhorn(1);
+    },
   },
 });
 </script>

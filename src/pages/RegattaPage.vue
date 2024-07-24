@@ -92,7 +92,7 @@
         </div>
       </q-card-section>
       <q-card-actions class="fixed-bottom" align="right">
-        <q-btn label="OK" color="primary" @click="regatta.saveTransition" />
+        <q-btn label="Next" color="primary" @click="nextTransition" />
       </q-card-actions>
     </q-card>
   </q-page>
@@ -101,10 +101,13 @@
 <script>
 import { defineComponent } from "vue";
 import shareregatta from "src/components/regatta/RegattaShare.vue";
+import { useScreen } from "src/stores/screen";
+
 import { date } from "quasar";
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
 
+const screen = useScreen();
 const gps = useGps();
 const regatta = useRegatta();
 
@@ -117,6 +120,11 @@ export default defineComponent({
       gps,
     };
   },
-  computed: {},
+  methods: {
+    nextTransition() {
+      regatta.saveTransition();
+      //screen.requestWakeLock();
+    },
+  },
 });
 </script>

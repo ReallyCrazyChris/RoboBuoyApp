@@ -6,7 +6,7 @@ export const useSounds = defineStore("sounds", {
     playCountArray: [],
   }),
   actions: {
-    enableAudio() {
+    enableSounds() {
       if (typeof this.audioContext == "undefined") {
         this.audioContext = new AudioContext();
       }
