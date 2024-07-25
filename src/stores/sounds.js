@@ -11,9 +11,11 @@ const soundsDefinition = defineStore("sounds", {
       this.soundInstance.play();
       this.soundInstance.currentTime = 0;
       this.soundInstance.volume = 1;
+      this.soundInstance.muted = false;
 
       setTimeout(() => {
-        this.soundInstance.volume = 0;
+        this.soundInstance.muted = true;
+        //this.soundInstance.volume = 0;
       }, parseInt(this.duration) * playCount);
     },
   },
