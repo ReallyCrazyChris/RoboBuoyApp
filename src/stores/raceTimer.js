@@ -166,7 +166,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
   actions: {
     matches(statename) {
       if (this.raceState == statename) {
-        console.log("matches", statename);
         return true;
       }
       return false;
@@ -196,7 +195,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.endTime = undefined;
       this.raceState = "raceinfo";
       this.publishRaceTimerState();
-      sounds.airhorn(1);
     },
 
     raceclassTransition() {
@@ -211,25 +209,21 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     raceprepareTransition() {
       this.raceState = "raceprepare";
-      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racereadyTransition() {
       this.raceState = "raceready";
-      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racestartTransition() {
       this.raceState = "racestart";
-      //this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racetimerTransition() {
       this.raceState = "racetimer";
-      //this.publishRaceTimerState();
     },
 
     startSequenceTimer() {
@@ -349,17 +343,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.publishRaceTimerState();
       sounds.airhorn(3);
     },
-  },
-
-  _persist: {
-    paths: [
-      "startTime",
-      "raceState",
-      "timerSequenceModel",
-      "classFlagModel",
-      "prepareFlagModel",
-      "yankeeFlagModel",
-    ],
   },
 });
 
