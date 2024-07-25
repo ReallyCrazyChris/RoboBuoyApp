@@ -189,12 +189,65 @@ const raceTimerDefinition = defineStore("raceTimer", {
       }
     },
 
+    mqttUpdate(patch) {
+      // if the patch creates a state change
+      if (this.raceState != patch.raceState) {
+        if (patch.raceState == "raceinfo") {
+          this.raceinfoTransition();
+        }
+
+        if (patch.raceState == "raceclass") {
+          this.raceclassTransition();
+        }
+
+        if (patch.raceState == "racepostponed") {
+          this.racepostponedTransition();
+        }
+
+        if (patch.raceState == "racepostponedashore") {
+          this.racepostponedashoreTransition();
+        }
+
+        if (patch.raceState == "racepostponedtoday") {
+          this.racepostponedtodayTransition();
+        }
+
+        if (patch.raceState == "recallone") {
+          this.recalloneTransition();
+        }
+
+        if (patch.raceState == "recallall") {
+          this.recallallTransition();
+        }
+
+        /** duplicate "raceinfo" ... now what
+        if (patch.raceState == "raceinfo") {
+          this.racecompletedTransition();
+        }
+        */
+
+        if (patch.raceState == "raceabandoned") {
+          this.raceabandonedTransition();
+        }
+
+        if (patch.raceState == "raceabandonedashore") {
+          this.raceabandonedashoreTransition();
+        }
+
+        if (patch.raceState == "raceabandonedtoday") {
+          this.raceabandonedtodayTransition();
+        }
+      }
+
+      this.$patch(patch);
+    },
+
     raceinfoTransition() {
       this.stopSequenceTimer();
       this.startTime = undefined;
       this.endTime = undefined;
       this.raceState = "raceinfo";
-      this.publishRaceTimerState();
+      sounds.airhorn(1);
     },
 
     raceclassTransition() {
@@ -203,7 +256,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.raceTime = 0;
       this.endTime = undefined;
       this.raceState = "raceclass";
-      this.publishRaceTimerState();
+
       sounds.airhorn(1);
     },
 
@@ -273,74 +326,62 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     stopSequenceTimer() {
       this.startTime = undefined;
-      //this.raceTime = undefined;
       this.endTime = Date.now();
-      //clearInterval(this.intervalId);
     },
 
-    postponeraceTransition() {
+    racepostponedTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed";
-      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
-    postponeashoreTransition() {
+    racepostponedashoreTransition() {
       this.stopSequenceTimer();
-      this.raceState = "racepostponed_ashore";
-      this.publishRaceTimerState();
+      this.raceState = "racepostponedashore";
       sounds.airhorn(2);
     },
 
-    postponetodayTransition() {
+    racepostponedtodayTransition() {
       this.stopSequenceTimer();
-      this.raceState = "racepostponed_today";
-      this.publishRaceTimerState();
+      this.raceState = "racepostponedtoday";
       sounds.airhorn(2);
     },
 
     recalloneTransition() {
       this.raceState = "recallone";
-      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racecontinueTransition() {
       this.raceState = "racetimer";
-      this.publishRaceTimerState();
     },
 
     recallallTransition() {
       this.stopSequenceTimer();
       this.raceState = "recallall";
-      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
     racecompletedTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceinfo";
-      this.publishRaceTimerState();
     },
 
-    abandonTransition() {
+    raceabandonedTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned";
-      this.publishRaceTimerState();
       sounds.airhorn(3);
     },
 
-    abandonashoreTransition() {
+    raceabandonedashoreTransition() {
       this.stopSequenceTimer();
-      this.raceState = "raceabandoned_ashore";
-      this.publishRaceTimerState();
+      this.raceState = "raceabandonedashore";
       sounds.airhorn(3);
     },
 
-    abandontodayTransition() {
+    raceabandonedtodayTransition() {
       this.stopSequenceTimer();
-      this.raceState = "raceabandoned_today";
-      this.publishRaceTimerState();
+      this.raceState = "raceabandonedtoday";
       sounds.airhorn(3);
     },
   },

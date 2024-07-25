@@ -10,14 +10,12 @@ export const useScreen = defineStore("screen", {
       if ("wakeLock" in navigator) {
         try {
           this.wakeLock = await navigator.wakeLock.request("screen");
-          console.log("ACTIVATED");
           this.wakeLockActivated = true;
         } catch (err) {
           console.log("ERROR:", err);
           this.wakeLockActivated = false;
         }
       } else {
-        console.log("wakeLock not available");
         this.wakeLockActivated = false;
       }
     },
@@ -27,7 +25,6 @@ export const useScreen = defineStore("screen", {
         this.wakeLock.release();
         this.wakeLock = null;
         this.wakeLockActivated = false;
-        console.log("RELEASED");
       }
     },
   },

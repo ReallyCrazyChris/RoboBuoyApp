@@ -40,7 +40,10 @@ export default boot(({ app }) => {
   // listen for the latest racetimer state
   mqttHook.registerEvent("racetimer", (topic, message) => {
     const patch = JSON.parse(message.toString());
-    raceTimer.$patch(patch);
+
+    raceTimer.mqttUpdate(patch);
+
+    //raceTimer.$patch(patch);
   });
 
   // listen for the latest vmc state

@@ -147,12 +147,12 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="raceTimer.postponeraceTransition()"
+          @click="racepostponedTransition()"
         />
         <q-btn
           color="positive"
           label="Start Race"
-          @click="raceTimer.raceclassTransition()"
+          @click="raceclassTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -186,7 +186,7 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="raceTimer.postponeraceTransition()"
+          @click="racepostponedTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -234,7 +234,7 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="raceTimer.postponeraceTransition()"
+          @click="racepostponedTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -279,7 +279,7 @@
           flat
           color="secondary"
           label="Postpone Race"
-          @click="raceTimer.postponeraceTransition()"
+          @click="racepostponedTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -305,19 +305,19 @@
           flat
           color="secondary"
           label="Postpone"
-          @click="raceTimer.postponeraceTransition()"
+          @click="racepostponedTransition()"
         />
 
         <q-btn
           color="primary"
           label="Recall One"
-          @click="raceTimer.recalloneTransition()"
+          @click="recalloneTransition()"
         />
 
         <q-btn
           color="secondary"
           label="Recall All"
-          @click="raceTimer.recallallTransition()"
+          @click="recallallTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -353,12 +353,12 @@
           flat
           color="secondary"
           label="Abandon Race"
-          @click="raceTimer.abandonTransition()"
+          @click="raceabandonedTransition()"
         />
         <q-btn
           color="accent"
           label="Race Completed"
-          @click="raceTimer.racecompletedTransition()"
+          @click="racecompletedTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -375,23 +375,23 @@
           flat
           color="primary"
           label="go to shore"
-          @click="raceTimer.postponeashoreTransition"
+          @click="racepostponedashoreTransition()"
         />
         <q-btn
           flat
           color="primary"
           label="postpone for today"
-          @click="raceTimer.postponetodayTransition()"
+          @click="racepostponedtodayTransition()"
         />
         <q-btn
           color="primary"
           label="Race info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('racepostponed_ashore')" flat>
+    <q-card v-if="raceTimer.matches('racepostponedashore')" flat>
       <q-card-section>
         <q-img src="racesignals/aphotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
@@ -404,12 +404,12 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('racepostponed_today')" flat>
+    <q-card v-if="raceTimer.matches('racepostponedtoday')" flat>
       <q-card-section>
         <q-img src="racesignals/apalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Raceing Postponed</div>
@@ -420,7 +420,7 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -439,7 +439,7 @@
         <q-btn
           color="primary"
           label="Race info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -458,7 +458,7 @@
         <q-btn
           color="primary"
           label="Continue"
-          @click="raceTimer.racecontinueTransition()"
+          @click="racecontinueTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -475,23 +475,23 @@
           flat
           color="secondary"
           label="Go to shore"
-          @click="raceTimer.abandonashoreTransition()"
+          @click="raceabandonedashoreTransition()"
         />
         <q-btn
           flat
           color="secondary"
           label="Racing Completed"
-          @click="raceTimer.abandontodayTransition()"
+          @click="raceabandonedtodayTransition()"
         />
         <q-btn
           color="primary"
           label="Race info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('raceabandoned_ashore')" flat>
+    <q-card v-if="raceTimer.matches('raceabandonedashore')" flat>
       <q-card-section>
         <q-img src="racesignals/novhotel.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
@@ -506,12 +506,12 @@
           flat
           color="primary"
           label="Race Info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
 
-    <q-card v-if="raceTimer.matches('raceabandoned_today')" flat>
+    <q-card v-if="raceTimer.matches('raceabandonedtoday')" flat>
       <q-card-section>
         <q-img src="racesignals/novalpha.svg" />
         <div class="text-h3 q-mt-sm q-mb-xs">Racing Completed</div>
@@ -525,7 +525,7 @@
           flat
           color="primary"
           label="Race Info"
-          @click="raceTimer.raceinfoTransition()"
+          @click="raceinfoTransition()"
         />
       </q-card-actions>
     </q-card>
@@ -598,6 +598,85 @@ export default defineComponent({
     localDateTime() {
       const date = new Date(regatta.date);
       return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
+    },
+  },
+  methods: {
+    raceinfoTransition() {
+      raceTimer.raceinfoTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    raceclassTransition() {
+      raceTimer.raceclassTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    /* Currently used by the sequence timer
+    raceprepareTransition() {
+      raceTimer.raceprepareTransition();
+    },
+
+    racereadyTransition() {
+      raceTimer.racereadyTransition();
+    },
+
+    racestartTransition() {
+      raceTimer.racestartTransition();
+    },
+
+    racetimerTransition() {
+      raceTimer.racetimerTransition();
+    },
+    */
+
+    racepostponedTransition() {
+      raceTimer.racepostponedTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    racepostponedashoreTransition() {
+      raceTimer.racepostponedashoreTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    racepostponedtodayTransition() {
+      raceTimer.racepostponedtodayTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    recalloneTransition() {
+      raceTimer.recalloneTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    racecontinueTransition() {
+      raceTimer.racecontinueTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    recallallTransition() {
+      raceTimer.recallallTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    racecompletedTransition() {
+      raceTimer.racecompletedTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    raceabandonedTransition() {
+      raceTimer.raceabandonedTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    raceabandonedashoreTransition() {
+      raceTimer.raceabandonedashoreTransition();
+      raceTimer.publishRaceTimerState();
+    },
+
+    raceabandonedtodayTransition() {
+      raceTimer.raceabandonedtodayTransition();
+      raceTimer.publishRaceTimerState();
     },
   },
 });
