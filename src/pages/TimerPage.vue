@@ -1,23 +1,28 @@
 <template>
   <q-page>
     <q-card v-if="raceTimer.matches('raceinfo')" flat>
-      <q-card-section class="row">
-        <q-img class="col-6" src="racesignals/lima.svg" />
-        <div class="col-6">
-          <div class="fit row wrap justify-start items-end">
-            <div class="col-12 q-px-sm q-py-lg text-center self-start">
-              <shareregatta />
-            </div>
-            <div class="col-12 q-px-sm text-center self-end">
-              {{ regatta.title }}
-            </div>
-            <div class="col-12 q-px-sm text-caption text-center self-end">
-              {{ localDateTime }}
+      <q-card-section>
+        <div class="row items-center">
+          <div class="col-10">
+            <div class="text-h5">{{ regatta.title }}</div>
+            <div class="text-caption">
+              {{ localDateTime }} : race starts from {{ regatta.startTime }} to
+              {{ regatta.endTime }}
             </div>
           </div>
-        </div>
 
-        <div class="col-12 text-h5 q-mt-sm q-mb-xs">Race Information</div>
+          <div class="col-2">
+            <q-btn color="primary" icon="share" @click="shareRegatta()">
+              <q-tooltip class="primary">
+                invite others to participate
+              </q-tooltip>
+            </q-btn>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section class="row">
+        <q-img class="col-6" src="racesignals/lima.svg" />
 
         <q-select
           class="col-12"
@@ -538,7 +543,6 @@ import { defineComponent, ref } from "vue";
 import sogview from "src/components/vmc/sog.vue";
 import vmcview from "src/components/vmc/vmc.vue";
 import efficiencyview from "src/components/vmc/efficiency.vue";
-import shareregatta from "src/components/regatta/RegattaShare.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
@@ -552,7 +556,7 @@ const regatta = useRegatta();
 
 export default defineComponent({
   name: "RaceTimerPage",
-  components: { sogview, vmcview, efficiencyview, shareregatta },
+  components: { sogview, vmcview, efficiencyview },
 
   setup() {
     return {
@@ -597,7 +601,7 @@ export default defineComponent({
 
     localDateTime() {
       const date = new Date(regatta.date);
-      return date.toLocaleDateString() + " - " + date.toLocaleTimeString();
+      return date.toLocaleDateString();
     },
   },
   methods: {
@@ -659,6 +663,16 @@ export default defineComponent({
     raceabandonedtodayTransition() {
       raceTimer.raceabandonedtodayTransition();
       raceTimer.publishRaceTransition("raceabandonedtoday");
+    },
+
+    shareRegatta() {
+      const data = {
+        title: "Join the " + regatta.title,
+        text: regatta.description + " - " + regatta.date,
+        url: "https://reallycrazychris.github.io/#/timer",
+      };
+
+      navigator.share(data);
     },
   },
 });

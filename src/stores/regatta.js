@@ -5,8 +5,8 @@ const mqttHook = useMQTT();
 export const useRegatta = defineStore("regatta", {
   state: () => ({
     id: "",
-    title: "",
-    description: "",
+    title: "Regatta",
+    description: "Come join us for a robo-regatta",
     date: "",
     startTime: "",
     endTime: "",
@@ -49,6 +49,17 @@ export const useRegatta = defineStore("regatta", {
 
     editTransition() {
       this.viewmode = false;
+    },
+
+    clearTransition() {
+      this.viewmode = false;
+      this.title = "";
+      this.description = "";
+      this.date = "";
+      this.startTime = "";
+      this.endTime = "";
+      this.lon = 0;
+      this.lat = 0;
     },
   },
 });

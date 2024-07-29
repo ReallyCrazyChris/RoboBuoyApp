@@ -34,7 +34,6 @@ const soundsDefinition = defineStore("sounds", {
 
         setTimeout(() => {
           this.soundInstance.loop = false;
-          this.soundInstance.mute = true;
         }, parseInt(this.duration) * playCount);
       }
     },

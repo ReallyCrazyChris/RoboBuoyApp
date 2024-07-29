@@ -42,16 +42,17 @@ const sounds = useSounds();
 const linksList = [
   {
     title: "Regatta",
-    caption: "create and invite",
+    caption: "create and share",
     icon: "emoji_events",
     link: "#/regatta",
   },
-  {
+  /* {
     title: "Join",
     caption: "join to participate",
     icon: "sailing",
     link: "#/join",
   },
+  */
   {
     title: "Timer",
     caption: "start race timer",

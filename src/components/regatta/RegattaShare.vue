@@ -1,6 +1,6 @@
 <template>
-  <q-btn round push color="primary" icon="share" @click="shareRegistration()">
-    <q-tooltip class="primary">invite others</q-tooltip>
+  <q-btn label="share" color="positive" icon="share" @click="shareRegatta()">
+    <q-tooltip class="primary">invite others to participate</q-tooltip>
   </q-btn>
 </template>
 
@@ -16,11 +16,11 @@ export default {
     };
   },
   methods: {
-    shareRegistration() {
+    shareRegatta() {
       const data = {
         title: "Join the " + regatta.title,
         text: regatta.description + " - " + regatta.date,
-        url: "https://reallycrazychris.github.io/#/join",
+        url: "https://reallycrazychris.github.io/#/timer",
       };
 
       navigator.share(data);

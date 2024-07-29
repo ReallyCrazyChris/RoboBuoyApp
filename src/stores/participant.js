@@ -3,7 +3,7 @@ import { useMQTT } from "mqtt-vue-hook";
 
 const mqttHook = useMQTT();
 
-export const useBoat = defineStore("boat", {
+export const useParticipant = defineStore("participant", {
   state: () => ({
     id: `${Math.random().toString(16).substring(2, 10)}`,
     sailnumber: null,
@@ -25,6 +25,10 @@ export const useBoat = defineStore("boat", {
           })
         );
       }
+    },
+    clearTransition() {
+      this.sailnumber = "";
+      this.crewlist = "";
     },
   },
 });
