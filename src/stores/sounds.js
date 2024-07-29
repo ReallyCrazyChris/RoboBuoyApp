@@ -6,8 +6,8 @@ const soundsDefinition = defineStore("sounds", {
     soundInstance: null,
   }),
   actions: {
-    async userActionInit() {
-      this.airhorn(1);
+    userActionInit() {
+      this.airhorn(0);
     },
 
     getPromiseFromEvent(item, event) {
@@ -28,13 +28,15 @@ const soundsDefinition = defineStore("sounds", {
         this.duration = this.soundInstance.duration * 1000;
       }
 
-      this.soundInstance.currentTime = 0;
-      this.soundInstance.loop = true;
-      this.soundInstance.play();
+      if (playCount > 0) {
+        this.soundInstance.loop = true;
+        this.soundInstance.play();
 
-      setTimeout(() => {
-        this.soundInstance.loop = false;
-      }, parseInt(this.duration) * playCount);
+        setTimeout(() => {
+          this.soundInstance.loop = false;
+          this.soundInstance.mute = true;
+        }, parseInt(this.duration) * playCount);
+      }
     },
   },
 });

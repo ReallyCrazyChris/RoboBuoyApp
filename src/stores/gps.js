@@ -24,20 +24,6 @@ export const gpsStoreDefinition = defineStore("gps", {
       this.sog = pos.coords.speed;
       this.heading = pos.coords.heading;
       this.accuracy = pos.coords.accuracy;
-
-      /*
-      if (mqttHook.isConnected) {
-        mqttHook.publish(
-          "gps",
-          JSON.stringify({
-            lon: this.lon,
-            lat: this.lat,
-            sog: this.sog,
-            heading: this.heading,
-            accuracy: this.accuracy,
-          })
-        );
-      } */
     },
 
     watcherror(err) {
