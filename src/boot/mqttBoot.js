@@ -48,7 +48,7 @@ export default boot(({ app }) => {
 
   // listen for the latest racetransition action
   mqttHook.registerEvent("racetransition", (topic, message) => {
-    const action = JSON.parse(message.toString());
+    const action = message.toString();
     raceTimer.racetransitionHandler(action);
   });
 

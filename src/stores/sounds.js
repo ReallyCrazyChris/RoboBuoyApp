@@ -6,40 +6,34 @@ const soundsDefinition = defineStore("sounds", {
     soundInstance: null,
   }),
   actions: {
-    userActionInit() {
-      // a user action is requred to play sound :(
-      this.soundInstance = new Audio("sounds/airhorn.mp3");
+    async userActionInit() {
+      this.airhorn(1);
+    },
 
-      // find the duration of the airhorn file
-      this.soundInstance.addEventListener("loadedmetadata", () => {
-        this.duration = this.soundInstance.duration * 1000;
-        this.soundInstance.volume = 1;
-        this.soundInstance.loop = false;
-        this.soundInstance.muted = true;
-        this.soundInstance.play();
+    getPromiseFromEvent(item, event) {
+      return new Promise((resolve) => {
+        const listener = () => {
+          item.removeEventListener(event, listener);
+          console.log(item.duration);
+          resolve();
+        };
+        item.addEventListener(event, listener);
       });
     },
 
-    airhorn(playCount = 1) {
-      console.log("airhorn sound");
+    async airhorn(playCount = 1) {
+      if (!!!this.soundInstance) {
+        this.soundInstance = await new Audio("sounds/airhorn.mp3");
+        await this.getPromiseFromEvent(this.soundInstance, "loadedmetadata");
+        this.duration = this.soundInstance.duration * 1000;
+      }
+
+      this.soundInstance.currentTime = 0;
       this.soundInstance.loop = true;
-      this.soundInstance.muted = false;
       this.soundInstance.play();
 
       setTimeout(() => {
         this.soundInstance.loop = false;
-        this.soundInstance.muted = true;
-      }, parseInt(this.duration) * playCount);
-    },
-
-    _airhorn(playCount = 1) {
-      console.log("airhorn sound");
-      this.soundInstance.muted = false;
-      this.soundInstance.currentTime = 0;
-
-      setTimeout(() => {
-        this.soundInstance.muted = true;
-        this.soundInstance.currentTime = 0;
       }, parseInt(this.duration) * playCount);
     },
   },
