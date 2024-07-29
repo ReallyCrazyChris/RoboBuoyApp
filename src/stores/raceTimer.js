@@ -209,8 +209,6 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     // handles remote transition actions from comitte boat
     racetransitionHandler(action) {
-      console.log("racetransitionHandler", action);
-
       if (action == "raceinfo") {
         this.raceinfoTransition();
       }
@@ -320,6 +318,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.startTime = undefined;
       this.endTime = undefined;
       this.raceState = "raceinfo";
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
@@ -329,27 +328,31 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.raceTime = 0;
       this.endTime = undefined;
       this.raceState = "raceclass";
-
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     raceprepareTransition() {
       this.raceState = "raceprepare";
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racereadyTransition() {
       this.raceState = "raceready";
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racestartTransition() {
       this.raceState = "racestart";
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racetimerTransition() {
       this.raceState = "racetimer";
+      this.publishRaceTimerState();
     },
 
     startSequenceTimer() {
@@ -409,56 +412,66 @@ const raceTimerDefinition = defineStore("raceTimer", {
     racepostponedTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponed";
+      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
     racepostponedashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponedashore";
+      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
     racepostponedtodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "racepostponedtoday";
+      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
     recalloneTransition() {
       this.raceState = "recallone";
+      this.publishRaceTimerState();
       sounds.airhorn(1);
     },
 
     racecontinueTransition() {
       this.raceState = "racetimer";
+      this.publishRaceTimerState();
     },
 
     recallallTransition() {
       this.stopSequenceTimer();
       this.raceState = "recallall";
+      this.publishRaceTimerState();
       sounds.airhorn(2);
     },
 
     racecompletedTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceinfo";
+      this.publishRaceTimerState();
     },
 
     raceabandonedTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandoned";
+      this.publishRaceTimerState();
       sounds.airhorn(3);
     },
 
     raceabandonedashoreTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandonedashore";
+      this.publishRaceTimerState();
       sounds.airhorn(3);
     },
 
     raceabandonedtodayTransition() {
       this.stopSequenceTimer();
       this.raceState = "raceabandonedtoday";
+      this.publishRaceTimerState();
       sounds.airhorn(3);
     },
   },
