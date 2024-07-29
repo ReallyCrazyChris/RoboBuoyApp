@@ -603,80 +603,62 @@ export default defineComponent({
   methods: {
     raceinfoTransition() {
       raceTimer.raceinfoTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("raceinfo");
     },
 
     raceclassTransition() {
       raceTimer.raceclassTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("raceclass");
     },
-
-    /* Currently used by the sequence timer
-    raceprepareTransition() {
-      raceTimer.raceprepareTransition();
-    },
-
-    racereadyTransition() {
-      raceTimer.racereadyTransition();
-    },
-
-    racestartTransition() {
-      raceTimer.racestartTransition();
-    },
-
-    racetimerTransition() {
-      raceTimer.racetimerTransition();
-    },
-    */
 
     racepostponedTransition() {
       raceTimer.racepostponedTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("racepostponed");
     },
 
     racepostponedashoreTransition() {
       raceTimer.racepostponedashoreTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("racepostponedashore");
     },
 
     racepostponedtodayTransition() {
       raceTimer.racepostponedtodayTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("racepostponedtoday");
     },
 
     recalloneTransition() {
       raceTimer.recalloneTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("recallone");
     },
 
     racecontinueTransition() {
       raceTimer.racecontinueTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("racecontinue");
     },
 
     recallallTransition() {
       raceTimer.recallallTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("recallall");
     },
 
     racecompletedTransition() {
       raceTimer.racecompletedTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("racecompleted");
     },
 
     raceabandonedTransition() {
       raceTimer.raceabandonedTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("raceabandoned");
     },
 
     raceabandonedashoreTransition() {
       raceTimer.raceabandonedashoreTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("raceabandonedashore");
     },
 
     raceabandonedtodayTransition() {
       raceTimer.raceabandonedtodayTransition();
-      raceTimer.publishRaceTimerState();
+      raceTimer.publishRaceTransition("raceabandonedtoday");
     },
   },
 });

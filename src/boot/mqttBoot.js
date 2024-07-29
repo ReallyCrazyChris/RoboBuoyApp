@@ -46,6 +46,12 @@ export default boot(({ app }) => {
     //raceTimer.$patch(patch);
   });
 
+  // listen for the latest racetransition action
+  mqttHook.registerEvent("racetransition", (topic, message) => {
+    const action = JSON.parse(message.toString());
+    raceTimer.racetransitionHandler(action);
+  });
+
   // listen for the latest vmc state
   mqttHook.registerEvent("vmc", (topic, message) => {
     const patch = JSON.parse(message.toString());
@@ -58,7 +64,7 @@ export default boot(({ app }) => {
     (topic, message) => {
       console.log("mqtt connected");
       mqttHook.subscribe(
-        ["regatta", "vmc", "racetimer"],
+        ["regatta", "vmc", "racetimer", "racetransition"],
         1,
         { nl: true },
         (err, granted) => {}

@@ -14,13 +14,25 @@ const soundsDefinition = defineStore("sounds", {
       this.soundInstance.addEventListener("loadedmetadata", () => {
         this.duration = this.soundInstance.duration * 1000;
         this.soundInstance.volume = 1;
-        this.soundInstance.loop = true;
+        this.soundInstance.loop = false;
         this.soundInstance.muted = true;
         this.soundInstance.play();
       });
     },
 
     airhorn(playCount = 1) {
+      console.log("airhorn sound");
+      this.soundInstance.loop = true;
+      this.soundInstance.muted = false;
+      this.soundInstance.play();
+
+      setTimeout(() => {
+        this.soundInstance.loop = false;
+        this.soundInstance.muted = true;
+      }, parseInt(this.duration) * playCount);
+    },
+
+    _airhorn(playCount = 1) {
       console.log("airhorn sound");
       this.soundInstance.muted = false;
       this.soundInstance.currentTime = 0;

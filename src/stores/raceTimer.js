@@ -7,13 +7,25 @@ const sounds = useSounds();
 
 export const timerSequeceOptions = [
   {
-    label: "2 minute",
-    value: "2",
-    description: "2m - 1m - 30s - Start ",
+    label: "1 minute",
+    value: "1",
+    description: "1m - 30s - 10s - Start ",
     timeSequence: {
-      raceclass: -120,
-      raceprepare: -60,
-      raceready: -30,
+      raceclass: -60,
+      raceprepare: -30,
+      raceready: -10,
+      racestart: 0,
+      racetimer: 10,
+    },
+  },
+  {
+    label: "3 minute",
+    value: "3",
+    description: "3m - 2m - 1m - Start ",
+    timeSequence: {
+      raceclass: -180,
+      raceprepare: -120,
+      raceready: -60,
       racestart: 0,
       racetimer: 10,
     },
@@ -114,13 +126,13 @@ export const yankeeFlagOptions = [
 ];
 
 export const timerSequenceModel = {
-  label: "2 minute",
-  value: "2",
-  description: "2m - 1m - 30s - Start ",
+  label: "5 minute",
+  value: "5",
+  description: "5m - 4m - 1m - Start ",
   timeSequence: {
-    raceclass: -120,
-    raceprepare: -60,
-    raceready: -30,
+    raceclass: -60 * 5,
+    raceprepare: -60 * 4,
+    raceready: -60,
     racestart: 0,
     racetimer: 10,
   },
@@ -171,6 +183,12 @@ const raceTimerDefinition = defineStore("raceTimer", {
       return false;
     },
 
+    publishRaceTransition(action) {
+      if (mqttHook.isConnected) {
+        mqttHook.publish("racetransition", String(action));
+      }
+    },
+
     publishRaceTimerState() {
       if (mqttHook.isConnected) {
         mqttHook.publish(
@@ -189,9 +207,64 @@ const raceTimerDefinition = defineStore("raceTimer", {
       }
     },
 
+    // handles remote transition actions from comitte boat
+    racetransitionHandler(action) {
+      console.log("racetransitionHandler", action);
+
+      if (action == "raceinfo") {
+        this.raceinfoTransition();
+      }
+
+      if (action == "raceclass") {
+        this.raceclassTransition();
+      }
+
+      if (action == "racepostponed") {
+        this.racepostponedTransition();
+      }
+
+      if (action == "racepostponedashore") {
+        this.racepostponedashoreTransition();
+      }
+
+      if (action == "racepostponedtoday") {
+        this.racepostponedtodayTransition();
+      }
+
+      if (action == "racecompleted") {
+        this.racecompletedTransition();
+      }
+
+      if (action == "recallone") {
+        this.recalloneTransition();
+      }
+
+      if (action == "racecontinue") {
+        this.racecontinueTransition();
+      }
+
+      if (action == "recallall") {
+        this.recallallTransition();
+      }
+
+      if (action == "raceabandoned") {
+        this.raceabandonedTransition();
+      }
+
+      if (action == "raceabandonedashore") {
+        this.raceabandonedashoreTransition();
+      }
+
+      if (action == "raceabandonedtoday") {
+        this.raceabandonedtodayTransition();
+      }
+    },
+
     mqttUpdate(patch) {
+      console.log(patch);
       // if the patch creates a state change
       if (this.raceState != patch.raceState) {
+        this.$patch(patch);
         if (patch.raceState == "raceinfo") {
           this.raceinfoTransition();
         }
@@ -237,9 +310,9 @@ const raceTimerDefinition = defineStore("raceTimer", {
         if (patch.raceState == "raceabandonedtoday") {
           this.raceabandonedtodayTransition();
         }
+      } else {
+        this.$patch(patch);
       }
-
-      this.$patch(patch);
     },
 
     raceinfoTransition() {
@@ -284,44 +357,48 @@ const raceTimerDefinition = defineStore("raceTimer", {
       // clear the racetime
       clearInterval(this.intervalId);
 
-      this.intervalId = setInterval(() => {
-        if (Number.isInteger(this.startTime)) {
-          // a start time has been defined
-          this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
-        }
+      setTimeout(() => {
+        this.intervalId = setInterval(() => {
+          if (Number.isInteger(this.startTime)) {
+            // a start time has been defined
+            this.raceTime = Math.round((Date.now() - this.startTime) / 1000);
+          }
 
-        if (
-          this.startTime != undefined &&
-          this.raceState == "raceclass" &&
-          this.raceTime >= this.timerSequenceModel.timeSequence.raceprepare
-        ) {
-          this.raceprepareTransition();
-        }
+          if (
+            this.startTime != undefined &&
+            this.raceState == "raceclass" &&
+            this.raceTime >= this.timerSequenceModel.timeSequence.raceprepare
+          ) {
+            this.raceprepareTransition();
+          }
 
-        if (
-          this.startTime != undefined &&
-          this.raceState == "raceprepare" &&
-          this.raceTime >= this.timerSequenceModel.timeSequence.raceready
-        ) {
-          this.racereadyTransition();
-        }
+          if (
+            this.startTime != undefined &&
+            this.raceState == "raceprepare" &&
+            this.raceTime >= this.timerSequenceModel.timeSequence.raceready
+          ) {
+            this.racereadyTransition();
+          }
 
-        if (
-          this.startTime != undefined &&
-          this.raceState == "raceready" &&
-          this.raceTime >= this.timerSequenceModel.timeSequence.racestart
-        ) {
-          this.racestartTransition();
-        }
+          if (
+            this.startTime != undefined &&
+            this.raceState == "raceready" &&
+            this.raceTime >= this.timerSequenceModel.timeSequence.racestart
+          ) {
+            this.racestartTransition();
+          }
 
-        if (
-          this.startTime != undefined &&
-          this.raceState == "racestart" &&
-          this.raceTime >= this.timerSequenceModel.timeSequence.racetimer
-        ) {
-          this.racetimerTransition();
-        }
-      }, 1000);
+          if (
+            this.startTime != undefined &&
+            this.raceState == "racestart" &&
+            this.raceTime >= this.timerSequenceModel.timeSequence.racetimer
+          ) {
+            this.racetimerTransition();
+          }
+        }, 1000);
+
+        // syncornize all timers to the closest round second to reduce the time difference between race participants
+      }, 1000 - new Date().getMilliseconds());
     },
 
     stopSequenceTimer() {
