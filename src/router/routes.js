@@ -52,10 +52,6 @@ const routes = [
         path: "vmc",
         component: () => import("pages/VmcPage.vue"),
       },
-      {
-        path: "horn",
-        component: () => import("pages/HornPage.vue"),
-      },
 
       {
         path: "robobuoysettings/:deviceid",

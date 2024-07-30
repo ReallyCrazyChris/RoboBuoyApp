@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page style="max-width: 400px">
     <q-card v-if="raceTimer.matches('raceinfo')" flat>
       <q-card-section>
         <div class="row items-center">
@@ -147,7 +147,7 @@
         </q-select>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -309,7 +309,7 @@
         </q-select>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -348,7 +348,7 @@
           {{ raceTimeFormatter }}
         </div>
       </q-card-section>
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -396,7 +396,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -441,7 +441,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -467,7 +467,7 @@
         <div class="col-12 text-center" style="font-size: 30vmin">START</div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="secondary"
@@ -537,7 +537,7 @@
         <div class="text-h6 text-grey">Racing may continue when practical.</div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           flat
           color="primary"
@@ -567,7 +567,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           color="primary"
           label="Race info"
@@ -583,7 +583,7 @@
         <div class="text-h6 text-grey">No further racing today.</div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           color="primary"
           label="Race info"
@@ -602,7 +602,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           color="primary"
           label="Race info"
@@ -621,7 +621,7 @@
         </div>
       </q-card-section>
 
-      <q-card-actions class="fixed-bottom-right">
+      <q-card-actions align="right">
         <q-btn
           color="primary"
           label="Continue"

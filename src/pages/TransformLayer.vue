@@ -25,6 +25,7 @@ import {
   getBottomLeft,
   getBottomRight,
 } from "ol/extent";
+
 import CircleStyle from "ol/style/Circle";
 import { Style, Fill, Stroke, Text, Icon } from "ol/style";
 import { getArea, getLength } from "ol/sphere";
@@ -165,7 +166,7 @@ courceDragHandel.setStyle(
  **************************/
 
 function markCoordinatePercentile(offsetX = 0, offsetY = 0) {
-  // posiitons hte mark as a persentage of the courseboundary
+  // function positions the  mark as a persentage of the courseboundary
   const percentileUnitY = (boundaryTopRight[1] - boundaryBottomRight[1]) / 100;
   const percentileUnitX =
     (boundaryBottomLeft[0] - boundaryBottomRight[0]) / 100;

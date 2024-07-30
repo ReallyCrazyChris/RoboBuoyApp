@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div style="max-width: 400px">
-      <q-card flat class="window-height">
+      <q-card flat>
         <q-card-section>
           <div class="text-h6">Regatta Invitaiton</div>
           <div class="text-caption">
@@ -83,7 +83,7 @@
           </div>
         </q-card-section>
 
-        <q-card-actions class="fixed-bottom" align="right">
+        <q-card-actions align="right">
           <div @click="nextTransition()">
             <shareregatta />
           </div>

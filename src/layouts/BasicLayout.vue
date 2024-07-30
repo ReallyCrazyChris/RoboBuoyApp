@@ -89,10 +89,10 @@ const linksList = [
   },
 
   {
-    title: "Horn",
-    caption: "tuuuut",
+    title: "cource desginer",
+    caption: "",
     icon: "campaign",
-    link: "#/horn",
+    link: "#/transformlayer",
   },
 ];
 
