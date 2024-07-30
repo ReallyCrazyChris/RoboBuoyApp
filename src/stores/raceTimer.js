@@ -213,6 +213,10 @@ const raceTimerDefinition = defineStore("raceTimer", {
         this.raceinfoTransition();
       }
 
+      if (action == "followme") {
+        this.followmeTransition();
+      }
+
       if (action == "raceclass") {
         this.raceclassTransition();
       }
@@ -318,6 +322,15 @@ const raceTimerDefinition = defineStore("raceTimer", {
       this.startTime = undefined;
       this.endTime = undefined;
       this.raceState = "raceinfo";
+      this.publishRaceTimerState();
+      //sounds.airhorn(1);
+    },
+
+    followmeTransition() {
+      this.stopSequenceTimer();
+      this.startTime = undefined;
+      this.endTime = undefined;
+      this.raceState = "followme";
       this.publishRaceTimerState();
       sounds.airhorn(1);
     },

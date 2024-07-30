@@ -22,6 +22,168 @@
       </q-card-section>
 
       <q-card-section class="row">
+        <q-img class="col-6" src="racesignals/black.svg" />
+
+        <q-select
+          class="col-12"
+          label="Time Sequence"
+          v-model="raceTimer.timerSequenceModel"
+          :options="raceTimer.timerSequeceOptions"
+          color="primary"
+          options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
+        >
+          <template v-slot:selected>
+            {{ raceTimer.timerSequenceModel.label }} :
+            {{ raceTimer.timerSequenceModel.description }}
+          </template>
+
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <q-select
+          class="col-12"
+          label="Class Flag"
+          v-model="raceTimer.classFlagModel"
+          :options="raceTimer.classFlagOptions"
+          color="primary"
+          options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
+        >
+          <template v-slot:selected>
+            {{ raceTimer.classFlagModel.label }}
+            {{ raceTimer.classFlagModel.description }}
+          </template>
+
+          <template v-slot:append>
+            <q-avatar square size="50px">
+              <q-img :src="raceTimer.classFlagModel.image" />
+            </q-avatar>
+          </template>
+
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <q-img :src="scope.opt.image" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <q-select
+          class="col-12"
+          label="Preparation Flag"
+          v-model="raceTimer.prepareFlagModel"
+          :options="raceTimer.prepareFlagOptions"
+          color="secondary"
+          options-selected-class="text-deep-orange"
+          @update:model-value="raceTimer.publishRaceTimerState()"
+        >
+          <template v-slot:selected>
+            {{ raceTimer.prepareFlagModel.label }} :
+            {{ raceTimer.prepareFlagModel.description }}
+          </template>
+
+          <template v-slot:append>
+            <q-avatar square size="50px">
+              <q-img :src="raceTimer.prepareFlagModel.image" />
+            </q-avatar>
+          </template>
+
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <q-img :src="scope.opt.image" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <q-select
+          class="col-12"
+          label="Personal Flotation Device"
+          v-model="raceTimer.yankeeFlagModel"
+          :options="raceTimer.yankeeFlagOptions"
+          color="yellow"
+          options-selected-class="text-yellow"
+          @update:model-value="raceTimer.publishRaceTimerState()"
+        >
+          <template v-slot:selected>
+            {{ raceTimer.yankeeFlagModel.description }}
+          </template>
+
+          <template v-slot:append>
+            <q-avatar square size="50px">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
+          </template>
+
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <q-img :src="scope.opt.image" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ scope.opt.label }}</q-item-label>
+                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </q-card-section>
+
+      <q-card-actions class="fixed-bottom-right">
+        <q-btn
+          flat
+          color="secondary"
+          label="Postpone Race"
+          @click="racepostponedTransition()"
+        />
+        <q-btn
+          color="positive"
+          label="follow me"
+          @click="followmeTransition()"
+        />
+      </q-card-actions>
+    </q-card>
+
+    <q-card v-if="raceTimer.matches('followme')" flat>
+      <q-card-section>
+        <div class="row items-center">
+          <div class="col-10">
+            <div class="text-h5">{{ regatta.title }}</div>
+            <div class="text-caption">
+              {{ localDateTime }} : race starts from {{ regatta.startTime }} to
+              {{ regatta.endTime }}
+            </div>
+          </div>
+
+          <div class="col-2">
+            <q-btn color="primary" icon="share" @click="shareRegatta()">
+              <q-tooltip class="primary">
+                invite others to participate
+              </q-tooltip>
+            </q-btn>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section class="row">
         <q-img class="col-6" src="racesignals/lima.svg" />
 
         <q-select
@@ -608,6 +770,11 @@ export default defineComponent({
     raceinfoTransition() {
       raceTimer.raceinfoTransition();
       raceTimer.publishRaceTransition("raceinfo");
+    },
+
+    followmeTransition() {
+      raceTimer.followmeTransition();
+      raceTimer.publishRaceTransition("followme");
     },
 
     raceclassTransition() {

@@ -41,9 +41,9 @@ export default boot(({ app }) => {
   mqttHook.registerEvent("racetimer", (topic, message) => {
     const patch = JSON.parse(message.toString());
 
-    raceTimer.mqttUpdate(patch);
+    //raceTimer.mqttUpdate(patch);
 
-    //raceTimer.$patch(patch);
+    raceTimer.$patch(patch);
   });
 
   // listen for the latest racetransition action
