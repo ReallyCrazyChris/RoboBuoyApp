@@ -117,9 +117,9 @@ export default defineComponent({
   },
 
   methods: {
-    // a user interaction is required to active sounds and scrren wakelock
+    // a user interaction is required to activate sounds and screen wakelock
     captureUserInteractionEvent() {
-      console.log("captureUserInteractionEvent");
+      //console.log("captureUserInteractionEvent");
       screen.requestWakeLock();
       sounds.userActionInit();
     },
