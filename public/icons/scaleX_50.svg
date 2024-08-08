@@ -1,0 +1,13 @@
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>rotate_50</title>
+  <g transform="rotate(90 25 25)" id="svg_7">
+   <line stroke="#000" y2="35" x2="35" y1="50" x1="25" fill="none" stroke-width="4" id="svg_1"/>
+   <line stroke="#000" y2="35" x2="15" y1="50" x1="25" fill="none" stroke-width="4" id="svg_3"/>
+   <line stroke="#000" x2="25" y1="50" x1="25" fill="none" stroke-width="4" id="svg_4"/>
+   <line stroke="#000" x2="25" y1="15" x1="35" fill="none" stroke-width="4" id="svg_2"/>
+   <line stroke="#000" x2="25" y1="15" x1="15" fill="none" stroke-width="4" id="svg_5"/>
+  </g>
+ </g>
+
+</svg>

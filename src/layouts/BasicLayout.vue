@@ -1,5 +1,5 @@
 <template>
-  <q-layout @click.once="captureUserInteractionEvent" view="hhh lpr fff">
+  <q-layout @click.once="captureUserInteractionEvent" view="hHh lpr fff">
     <q-header class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -10,7 +10,13 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      side="left"
+      behavior="mobile"
+      show-if-above
+      elevated
+    >
       <q-list>
         <q-item-label header></q-item-label>
 
@@ -117,9 +123,9 @@ export default defineComponent({
   },
 
   methods: {
-    // a user interaction is required to activate sounds and screen wakelock
     captureUserInteractionEvent() {
-      //console.log("captureUserInteractionEvent");
+      // once a user interaction is deteted
+      // sounds and screen wakelock can be activated ( browser security )
       screen.requestWakeLock();
       sounds.userActionInit();
     },
