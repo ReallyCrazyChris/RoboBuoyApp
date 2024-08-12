@@ -34,10 +34,10 @@ const routes = [
       },
 
       {
-        path: "robobuoysettings/:deviceid",
-        name: "robobuoysettings",
+        path: "robotsettings/:deviceid",
+        name: "robotsettings",
         props: true,
-        component: () => import("pages/RoboBuoySettings.vue"),
+        component: () => import("pages/RobotSettings.vue"),
       },
     ],
   },
