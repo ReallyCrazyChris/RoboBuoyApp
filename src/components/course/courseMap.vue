@@ -422,9 +422,17 @@ function gateFactory(gate) {
     gateLine.getStyle().getText().setRotation(course.getGateTextRotation(gate));
   });
 
+  const interactions = [];
+  if (!!!gate.p.locked) {
+    interactions.push(translateP);
+  }
+  if (!!!gate.s.locked) {
+    interactions.push(translateS);
+  }
+
   return {
     features: [gatePFeature, gateSFeature, gateLine],
-    interactions: [translateP, translateS],
+    interactions: interactions,
   };
 }
 

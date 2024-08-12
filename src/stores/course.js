@@ -20,29 +20,29 @@ export const useCourse = defineStore("course", {
     anchorHandle: {
       text: "\u2693",
       offset: [0, 0],
-      color: "red",
-      radius: 0,
+      color: "orange",
+      radius: 16,
     },
 
     rotateHandle: {
       text: "\u27F3",
       offset: [-50, 450],
-      color: "red",
-      radius: 10,
+      color: "aqua",
+      radius: 16,
     },
 
     scaleXHandle: {
       text: "\u2194",
       offset: [-200, 450],
-      color: "pink",
-      radius: 10,
+      color: "fuchsia",
+      radius: 16,
     },
 
     scaleYHandle: {
       text: "\u2195",
       offset: [100, 450],
-      color: "lightgreen",
-      radius: 10,
+      color: "lime",
+      radius: 15,
     },
 
     marks: [
@@ -63,11 +63,12 @@ export const useCourse = defineStore("course", {
           text: "",
           offset: [0, 0],
           radius: 8,
+          locked: true,
         },
         p: {
-          text: "",
+          text: "p",
           offset: [-100, 0],
-          radius: 4,
+          radius: 16,
         },
       },
 
@@ -76,14 +77,15 @@ export const useCourse = defineStore("course", {
         color: "blue",
         text: "FINISH",
         s: {
-          text: "\u2690",
+          text: "s",
           offset: [0, 0],
           radius: 4,
+          locked: true,
         },
         p: {
-          text: "\u2690",
+          text: "",
           offset: [71, 71],
-          radius: 4,
+          radius: 16,
         },
       },
 
