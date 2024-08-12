@@ -37,7 +37,7 @@ const routes = [
         path: "robotsettings/:deviceid",
         name: "robotsettings",
         props: true,
-        component: () => import("pages/RobotSettings.vue"),
+        component: () => import("pages/RobotSettingsPage.vue"),
       },
     ],
   },
