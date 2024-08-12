@@ -7,31 +7,6 @@ const routes = [
         path: "",
         component: () => import("pages/IndexPage.vue"),
       },
-      //{
-      //  path: "robobuoypositions",
-      //  component: () => import("pages/RoboBuoyPositions.vue"),
-      //},
-      {
-        path: "racecourse",
-        component: () => import("pages/RaceCourse.vue"),
-      },
-      {
-        path: "myrobots",
-        component: () => import("pages/MyRobots.vue"),
-      },
-      {
-        path: "imagelayer",
-        component: () => import("pages/ImageLayer.vue"),
-      },
-      {
-        path: "transformlayer",
-        component: () => import("pages/TransformLayer.vue"),
-      },
-
-      {
-        path: "course",
-        component: () => import("pages/CoursePage.vue"),
-      },
 
       {
         path: "regatta",
@@ -39,8 +14,8 @@ const routes = [
       },
 
       {
-        path: "join",
-        component: () => import("pages/JoinPage.vue"),
+        path: "course",
+        component: () => import("pages/CoursePage.vue"),
       },
 
       {
@@ -50,7 +25,12 @@ const routes = [
 
       {
         path: "vmc",
-        component: () => import("pages/VmcPage.vue"),
+        component: () => import("pages/VMCPage.vue"),
+      },
+
+      {
+        path: "robots",
+        component: () => import("pages/RobotsPage.vue"),
       },
 
       {

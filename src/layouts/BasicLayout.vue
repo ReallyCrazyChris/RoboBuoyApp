@@ -52,13 +52,14 @@ const linksList = [
     icon: "emoji_events",
     link: "#/regatta",
   },
-  /* {
-    title: "Join",
-    caption: "join to participate",
-    icon: "sailing",
-    link: "#/join",
+
+  {
+    title: "Course",
+    caption: "setup and define the course",
+    icon: "map",
+    link: "#/course",
   },
-  */
+
   {
     title: "Timer",
     caption: "start race timer",
@@ -66,25 +67,11 @@ const linksList = [
     link: "#/timer",
   },
 
-  /*{
-    title: "Results",
-    caption: "document the results",
-    icon: "sports_score",
-    link: "#/results",
-  },
-  */
-
   {
-    title: "Course",
-    caption: "setup and define the course",
-    icon: "map",
-    link: "#/racecourse",
-  },
-  {
-    title: "Marks",
-    caption: "add, remove and configure marks",
+    title: "Robots",
+    caption: "add, remove and configure robotic marks",
     icon: "tour",
-    link: "#/myrobots",
+    link: "#/robots",
   },
 
   {
@@ -92,13 +79,6 @@ const linksList = [
     caption: "velocity made course",
     icon: "speed",
     link: "#/vmc",
-  },
-
-  {
-    title: "cource desginer",
-    caption: "",
-    icon: "campaign",
-    link: "#/transformlayer",
   },
 ];
 

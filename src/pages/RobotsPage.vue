@@ -21,7 +21,7 @@ import { useDevicesStore } from "stores/devicesStore";
 import RobobuoyStatus from "components/robobuoy/RobobuoyStatus.vue";
 
 export default defineComponent({
-  name: "MyRobots",
+  name: "RobotBuoys",
   components: {
     RobobuoyStatus,
   },

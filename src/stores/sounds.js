@@ -14,7 +14,7 @@ const soundsDefinition = defineStore("sounds", {
       return new Promise((resolve) => {
         const listener = () => {
           item.removeEventListener(event, listener);
-          console.log(item.duration);
+          //console.log(item.duration);
           resolve();
         };
         item.addEventListener(event, listener);
