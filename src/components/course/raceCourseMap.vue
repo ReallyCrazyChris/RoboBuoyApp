@@ -34,7 +34,7 @@ const props = defineProps({
   showMap: Boolean,
 });
 
-function courseControlFactory(course) {
+function courseControlFactory() {
   var anchorHandel = new Feature({
     geometry: new Circle(course.centerOfRotation, 16),
   });
@@ -194,7 +194,6 @@ function courseControlFactory(course) {
     view.fit(polygonFromExtent(course.getExtent()));
   });
 
-  /*
   watch(course, () => {
     rotateHandle.getGeometry().setCenter(course.getRotateHandleCenter());
     scaleXHandle.getGeometry().setCenter(course.getScaleXHandleCenter());
@@ -217,7 +216,6 @@ function courseControlFactory(course) {
       .getText()
       .setRotation(-1 * course.rotation);
   });
-**/
 
   return {
     features: [anchorHandel, rotateHandle, scaleXHandle, scaleYHandle],

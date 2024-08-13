@@ -187,6 +187,7 @@ export const useRaceCourse = defineStore("raceCourse", {
 
   actions: {
     publishRaceCourseState() {
+      return;
       if (mqttHook.isConnected) {
         const raceCourseStateJSON = JSON.stringify({
           centerOfRotation: this.centerOfRotation,
