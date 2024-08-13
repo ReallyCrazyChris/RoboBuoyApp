@@ -22,19 +22,21 @@ import { Translate, defaults as defaultInteractions } from "ol/interaction";
 
 import { ZoomToExtent, defaults as defaultControls } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
-import { useCourse } from "src/stores/course";
+import { useRaceCourse } from "src/stores/raceCourse";
 
-const course = useCourse();
+const course = useRaceCourse();
 
 const props = defineProps({
+  mapHeight: Number,
+  mapWidth: Number,
   editCourse: Boolean,
   showBoundary: Boolean,
   showMap: Boolean,
 });
 
-function courseControlFactory() {
+function courseControlFactory(course) {
   var anchorHandel = new Feature({
-    geometry: new Circle(course.centerOfRotation, course.anchorHandle.radius),
+    geometry: new Circle(course.centerOfRotation, 16),
   });
 
   anchorHandel.setStyle(
@@ -48,7 +50,7 @@ function courseControlFactory() {
         lineCap: "round",
       }),
       text: new Text({
-        text: course.anchorHandle.text,
+        text: "\u2693",
         font: "12px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -72,10 +74,7 @@ function courseControlFactory() {
   });
 
   var rotateHandle = new Feature({
-    geometry: new Circle(
-      course.getRotateHandleCenter(),
-      course.rotateHandle.radius
-    ),
+    geometry: new Circle(course.getRotateHandleCenter(), 16),
   });
 
   rotateHandle.setStyle(
@@ -89,7 +88,7 @@ function courseControlFactory() {
         lineCap: "round",
       }),
       text: new Text({
-        text: course.rotateHandle.text,
+        text: "\u27F3",
         font: "14px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -120,10 +119,7 @@ function courseControlFactory() {
   });
 
   var scaleXHandle = new Feature({
-    geometry: new Circle(
-      course.getScaleXHandleCenter(),
-      course.scaleXHandle.radius
-    ),
+    geometry: new Circle(course.getScaleXHandleCenter(), 16),
   });
 
   scaleXHandle.setStyle(
@@ -137,7 +133,7 @@ function courseControlFactory() {
         lineCap: "round",
       }),
       text: new Text({
-        text: course.scaleXHandle.text,
+        text: "\u2194",
         font: "10px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -161,10 +157,7 @@ function courseControlFactory() {
   });
 
   var scaleYHandle = new Feature({
-    geometry: new Circle(
-      course.getScaleYHandleCenter(),
-      course.scaleYHandle.radius
-    ),
+    geometry: new Circle(course.getScaleYHandleCenter(), 16),
   });
 
   scaleYHandle.setStyle(
@@ -178,7 +171,7 @@ function courseControlFactory() {
         lineCap: "round",
       }),
       text: new Text({
-        text: course.scaleYHandle.text,
+        text: "\u2195",
         font: "10px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -201,6 +194,7 @@ function courseControlFactory() {
     view.fit(polygonFromExtent(course.getExtent()));
   });
 
+  /*
   watch(course, () => {
     rotateHandle.getGeometry().setCenter(course.getRotateHandleCenter());
     scaleXHandle.getGeometry().setCenter(course.getScaleXHandleCenter());
@@ -223,6 +217,7 @@ function courseControlFactory() {
       .getText()
       .setRotation(-1 * course.rotation);
   });
+**/
 
   return {
     features: [anchorHandel, rotateHandle, scaleXHandle, scaleYHandle],
@@ -630,6 +625,10 @@ if (props.editCourse) {
 }
 
 courseVectorLayer.getSource().addFeatures(courseFeaturesProducts);
+
+watch(course, (a, b, c) => {
+  console.log(a, b, c);
+});
 
 // view, starting at the center
 var view = new View({

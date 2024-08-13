@@ -1,17 +1,17 @@
 <template>
   <q-page>
-    <courseMap showMap showBoundary editCourse></courseMap>
+    <raceCourseMap showMap showBoundary editCourse></raceCourseMap>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import courseMap from "src/components/course/courseMap.vue";
+import raceCourseMap from "src/components/course/raceCourseMap.vue";
 
 export default defineComponent({
   name: "RaceCourse",
   components: {
-    courseMap,
+    raceCourseMap,
   },
   setup() {},
 });

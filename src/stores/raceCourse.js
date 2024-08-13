@@ -1,14 +1,21 @@
 import { defineStore } from "pinia";
-import { getDistance } from "ol/sphere";
-import { transform } from "ol/proj";
+import { useMQTT } from "mqtt-vue-hook";
 import { boundingExtent } from "ol/extent";
-export const useCourse = defineStore("course", {
+
+const mqttHook = useMQTT();
+
+export const useRaceCourse = defineStore("raceCourse", {
   state: () => ({
     centerOfRotation: [1217300, 6295726],
     rotation: 0,
     scale: [1, 1],
     zoom: 17,
     pointResolution: 1,
+
+    label: "WLRF29ER",
+    description: "29er : Windward / Leeward + Reaching Finish",
+    startSequence:
+      "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 2p \u21A6 FINISH",
 
     extentOffsets: [
       [150, 450],
@@ -18,31 +25,23 @@ export const useCourse = defineStore("course", {
     ],
 
     anchorHandle: {
-      text: "\u2693",
       offset: [0, 0],
       color: "orange",
-      radius: 16,
     },
 
     rotateHandle: {
-      text: "\u27F3",
       offset: [-50, 450],
       color: "aqua",
-      radius: 16,
     },
 
     scaleXHandle: {
-      text: "\u2194",
       offset: [-200, 450],
       color: "fuchsia",
-      radius: 16,
     },
 
     scaleYHandle: {
-      text: "\u2195",
       offset: [100, 450],
       color: "lime",
-      radius: 15,
     },
 
     marks: [
@@ -187,6 +186,29 @@ export const useCourse = defineStore("course", {
   }),
 
   actions: {
+    publishRaceCourseState() {
+      if (mqttHook.isConnected) {
+        const raceCourseStateJSON = JSON.stringify({
+          centerOfRotation: this.centerOfRotation,
+          rotaiton: this.rotation,
+          scale: this.scale,
+          zoom: this.zoom,
+          extentOffsets: this.extentOffsets,
+          anchorHandle: this.anchorHandle,
+          rotateHandle: this.rotateHandle,
+          scaleXHandle: this.scaleXHandle,
+          scaleYHandle: this.scaleYHandle,
+          marks: this.marks,
+          gates: this.gates,
+          lines: this.lines,
+        });
+        console.log("publishRaceCourseState", raceCourseStateJSON);
+        mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
+          retain: true,
+        });
+      }
+    },
+
     rotate(coordinates, angle, anchor) {
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
@@ -499,13 +521,6 @@ export const useCourse = defineStore("course", {
     getLineLineLength(line) {
       const lineSCenter = this.getLineSCenter(line);
       const linePCenter = this.getLinePCenter(line);
-
-      /*return Math.round(
-        getDistance(
-          transform(lineSCenter, "EPSG:3857", "EPSG:4326"),
-          transform(linePCenter, "EPSG:3857", "EPSG:4326")
-        )
-      );*/
 
       var dx = (lineSCenter[0] - linePCenter[0]) * this.pointResolution;
       var dy = (lineSCenter[1] - linePCenter[1]) * this.pointResolution;

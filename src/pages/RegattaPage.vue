@@ -81,6 +81,8 @@
               />
             </div>
           </div>
+          <raceCourseOptions />
+          <raceCourseMap />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -98,6 +100,9 @@ import { defineComponent } from "vue";
 
 import shareregatta from "src/components/regatta/RegattaShare.vue";
 
+import raceCourseMap from "src/components/course/raceCourseMap.vue";
+import raceCourseOptions from "src/components/course/raceCourseOptions.vue";
+
 import { useScreen } from "src/stores/screen";
 
 import { date } from "quasar";
@@ -110,7 +115,7 @@ const regatta = useRegatta();
 
 export default defineComponent({
   name: "RegattaPage",
-  components: { shareregatta },
+  components: { shareregatta, raceCourseOptions, raceCourseMap },
   setup() {
     return {
       regatta,

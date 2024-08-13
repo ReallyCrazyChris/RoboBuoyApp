@@ -14,8 +14,8 @@ const routes = [
       },
 
       {
-        path: "course",
-        component: () => import("pages/CoursePage.vue"),
+        path: "racecourse",
+        component: () => import("pages/RaceCoursePage.vue"),
       },
 
       {

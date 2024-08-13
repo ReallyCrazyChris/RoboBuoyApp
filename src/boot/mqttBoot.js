@@ -1,6 +1,7 @@
 import { boot } from "quasar/wrappers";
 import { useRegatta } from "src/stores/regatta";
 import { useRaceTimer } from "src/stores/raceTimer";
+import { useRaceCourse } from "src/stores/raceCourse";
 import { useVmc } from "src/stores/vmc";
 import { useMQTT } from "mqtt-vue-hook";
 
@@ -23,6 +24,7 @@ export default boot(({ app }) => {
   console.log("Booting mqtt client:", clientId);
 
   const regatta = useRegatta();
+  const raceCourse = useRaceCourse();
   const raceTimer = useRaceTimer();
   const vmc = useVmc();
   const mqttHook = useMQTT();
@@ -38,11 +40,15 @@ export default boot(({ app }) => {
   });
 
   // listen for the latest racetimer state
+  //mqttHook.registerEvent("racecourse", (topic, message) => {
+  //  const patch = JSON.parse(message.toString());
+  //  console.log("apply raceCourse.$patch ", patch);
+  //  raceCourse.$patch(patch);
+  //});
+
+  // listen for the latest racetimer state
   mqttHook.registerEvent("racetimer", (topic, message) => {
     const patch = JSON.parse(message.toString());
-
-    //raceTimer.mqttUpdate(patch);
-
     raceTimer.$patch(patch);
   });
 
@@ -64,7 +70,7 @@ export default boot(({ app }) => {
     (topic, message) => {
       console.log("mqtt connected");
       mqttHook.subscribe(
-        ["regatta", "vmc", "racetimer", "racetransition"],
+        ["regatta", "racecourse", "vmc", "racetimer", "racetransition"],
         1,
         { nl: true },
         (err, granted) => {}
