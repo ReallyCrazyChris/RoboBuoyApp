@@ -81,8 +81,18 @@
               />
             </div>
           </div>
-          <raceCourseOptions />
-          <raceCourseMap />
+        </q-card-section>
+
+        <q-card-section class="q-pa-md">
+          <div class="row">
+            <div class="col-12">
+              <raceCourseOptions />
+            </div>
+            <div class="col-12" ref="mapcontainer">
+              <!-- key forces reaceCourceMap to re-render when cource.label changes :-) -->
+              <raceCourseMap :key="cource.label" />
+            </div>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -108,10 +118,12 @@ import { useScreen } from "src/stores/screen";
 import { date } from "quasar";
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
+import { useRaceCourse } from "src/stores/raceCourse";
 
 const screen = useScreen();
 const gps = useGps();
 const regatta = useRegatta();
+const cource = useRaceCourse();
 
 export default defineComponent({
   name: "RegattaPage",
@@ -120,6 +132,7 @@ export default defineComponent({
     return {
       regatta,
       gps,
+      cource,
     };
   },
   methods: {

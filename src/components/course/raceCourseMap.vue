@@ -1,7 +1,5 @@
 <template>
-  <q-page>
-    <div ref="raceMap" :style="raceMapHeight"></div>
-  </q-page>
+  <div ref="raceMap" :style="raceMapHeight"></div>
 </template>
 
 <script setup>

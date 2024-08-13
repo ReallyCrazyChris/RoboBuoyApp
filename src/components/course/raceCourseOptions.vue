@@ -9,7 +9,6 @@
     @update:model-value="publishRaceCourseState"
   >
     <template v-slot:selected>
-      {{ raceCourse.label }} :
       {{ raceCourse.description }}
     </template>
 
