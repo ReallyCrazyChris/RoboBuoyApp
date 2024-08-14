@@ -10,9 +10,6 @@ export const useRegatta = defineStore("regatta", {
     date: "",
     startTime: "",
     endTime: "",
-    lon: 0,
-    lat: 0,
-    viewmode: true,
   }),
 
   actions: {
@@ -20,14 +17,7 @@ export const useRegatta = defineStore("regatta", {
       this.id = `${Math.random().toString(16).substring(2, 10)}`;
     },
 
-    setCoordinates(lon, lat) {
-      this.lon = lon;
-      this.lat = lat;
-    },
-
-    saveTransition() {
-      this.viewmode = true;
-
+    publishRegattaState() {
       if (mqttHook.isConnected) {
         mqttHook.publish(
           "regatta",
@@ -38,8 +28,6 @@ export const useRegatta = defineStore("regatta", {
             date: this.date,
             startTime: this.startTime,
             endTime: this.endTime,
-            lon: this.lon,
-            lat: this.lat,
           }),
           0,
           { retain: true }
@@ -47,19 +35,15 @@ export const useRegatta = defineStore("regatta", {
       }
     },
 
-    editTransition() {
-      this.viewmode = false;
-    },
+    reset() {
+      var endTime = new Date();
+      endTime.setTime(endTime.getTime() + 1 * 60 * 60 * 1000);
 
-    clearTransition() {
-      this.viewmode = false;
-      this.title = "";
-      this.description = "";
-      this.date = "";
-      this.startTime = "";
-      this.endTime = "";
-      this.lon = 0;
-      this.lat = 0;
+      this.title = "Quick Regatta";
+      this.description = "Join us on the water for a quick regatta";
+      this.date = new Date()?.toISOString().slice(0, 16);
+      this.startTime = new Date().toISOString().substring(11, 16);
+      this.endTime = endTime.toISOString().substring(11, 16);
     },
   },
 });

@@ -1,4 +1,4 @@
-<template>
+<template ref="raceMapContainer">
   <div ref="raceMap" :style="mapHeightWidthStyle()"></div>
 </template>
 
@@ -695,6 +695,7 @@ map.setView(view);
 const raceMap = ref();
 
 function mapHeightWidthStyle() {
+  console.log("height:" + props.height + "px; ");
   return "height:" + props.height + "px; ";
 }
 

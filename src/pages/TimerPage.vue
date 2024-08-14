@@ -705,16 +705,19 @@ import { defineComponent, ref } from "vue";
 import sogview from "src/components/vmc/sog.vue";
 import vmcview from "src/components/vmc/vmc.vue";
 import efficiencyview from "src/components/vmc/efficiency.vue";
+import raceCourseMap from "src/components/course/raceCourseMap.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
+import { useRaceCourse } from "src/stores/raceCourse";
 
 const raceTimer = useRaceTimer();
 const gps = useGps();
 const vmc = useVmc();
 const regatta = useRegatta();
+const course = useRaceCourse();
 
 export default defineComponent({
   name: "RaceTimerPage",
