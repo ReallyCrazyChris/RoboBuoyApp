@@ -1,5 +1,5 @@
 <template>
-  <div ref="raceMap" :style="raceMapHeight"></div>
+  <div ref="raceMap" :style="mapHeightWidthStyle()"></div>
 </template>
 
 <script setup>
@@ -18,18 +18,25 @@ import { fromExtent as polygonFromExtent } from "ol/geom/Polygon";
 
 import { Translate, defaults as defaultInteractions } from "ol/interaction";
 
-import { ZoomToExtent, defaults as defaultControls } from "ol/control";
+import {
+  Zoom,
+  ZoomToExtent,
+  Attribution,
+  defaults as defaultControls,
+} from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
 import { useRaceCourse } from "src/stores/raceCourse";
 
 const course = useRaceCourse();
 
 const props = defineProps({
-  mapHeight: Number,
-  mapWidth: Number,
-  editCourse: Boolean,
-  showBoundary: Boolean,
+  height: Number,
+  width: Number,
   showMap: Boolean,
+  showBoundary: Boolean,
+  showZoom: Boolean,
+  showAttribution: Boolean,
+  editCourse: Boolean,
 });
 
 function courseControlFactory() {
@@ -622,10 +629,6 @@ if (props.editCourse) {
 
 courseVectorLayer.getSource().addFeatures(courseFeaturesProducts);
 
-watch(course, (a, b, c) => {
-  console.log(a, b, c);
-});
-
 // view, starting at the center
 var view = new View({
   projection: "EPSG:3857",
@@ -657,10 +660,25 @@ zoomToExtent.handleZoomToExtent = function () {
   view.fitInternal(polygonFromExtent(extent));
 };
 
+function getControls() {
+  const controls = [];
+
+  if (props.showAttribution) {
+    controls.push(new Attribution());
+  }
+
+  if (props.showZoom) {
+    controls.push(new Zoom());
+    controls.push(zoomToExtent);
+  }
+
+  return controls;
+}
+
 // finally, the map with our custom interactions, controls and overlays
 var map = new Map({
   interactions: defaultInteractions().extend(raceCourseInteractions),
-  controls: defaultControls().extend([zoomToExtent]),
+  controls: getControls(),
 });
 
 // create a tile layer with the OSM source
@@ -675,12 +693,13 @@ map.addLayer(courseVectorLayer);
 map.setView(view);
 
 const raceMap = ref();
-const raceMapHeight = ref("height:500px");
+
+function mapHeightWidthStyle() {
+  return "height:" + props.height + "px; ";
+}
 
 // show the map
 onMounted(() => {
-  raceMapHeight.value =
-    "height:" + raceMap.value.parentNode.clientHeight + "px;";
   map?.setTarget(raceMap.value);
   view.fit(polygonFromExtent(course.getExtent()));
 });

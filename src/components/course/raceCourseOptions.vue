@@ -1,7 +1,8 @@
 <template>
   <q-select
-    class=""
-    label="Course Type"
+    filled
+    class="q-pt-sm"
+    label="race course"
     color="primary"
     options-selected-class="text-deep-orange"
     v-model="raceCourse"
@@ -46,7 +47,7 @@ export default {
       raceCourseOptions: [
         {
           label: "New",
-          description: "29er : Windward / Leeward + Reaching Finish",
+          description: "Windward / Leeward + Reaching Finish",
           startSequence:
             "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 2p \u21A6 FINISH",
 

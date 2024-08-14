@@ -3,45 +3,26 @@
     <div style="max-width: 400px">
       <q-card flat>
         <q-card-section>
-          <div class="text-h6">Regatta Invitaiton</div>
-          <div class="text-caption">
-            create a regatta, share with other participants.
+          <div class="row items-center">
+            <div class="col-8">
+              <div class="text-h6">Regatta Notice</div>
+              <div class="text-caption">share with other participants.</div>
+            </div>
+
+            <div class="col-4" @click="nextTransition()">
+              <shareregatta />
+            </div>
           </div>
         </q-card-section>
 
         <q-separator inset />
         <q-card-section class="q-pa-md">
-          <div class="row full-width no-wrap justify-start items-center">
-            <div class="col-8">
-              <q-input
-                v-model="regatta.title"
-                filled
-                class="q-pb-sm q-pr-sm"
-                label="regatta name"
-              ></q-input>
-            </div>
-            <div class="col-3 q-pb-sm q-pr-sm">
-              <div>
-                <div class="text-caption">pin location</div>
-                <div class="text-caption">
-                  N {{ parseFloat(regatta.lat).toFixed(3) }}
-                </div>
-                <div class="text-caption">
-                  E {{ parseFloat(regatta.lon).toFixed(3) }}
-                </div>
-              </div>
-            </div>
-
-            <div class="col-1 q-pb-sm">
-              <q-btn
-                class="float-right"
-                round
-                color="primary"
-                icon="room"
-                @click="regatta.setCoordinates(gps.lon, gps.lat)"
-              />
-            </div>
-          </div>
+          <q-input
+            v-model="regatta.title"
+            filled
+            class="q-pb-sm"
+            label="regatta name"
+          ></q-input>
 
           <q-input
             v-model="regatta.description"
@@ -81,25 +62,37 @@
               />
             </div>
           </div>
-        </q-card-section>
 
-        <q-card-section class="q-pa-md">
-          <div class="row">
-            <div class="col-12">
+          <div class="row full-width justify-start items-center">
+            <div class="col-12 q-pb-sm">
               <raceCourseOptions />
             </div>
-            <div class="col-12" ref="mapcontainer">
+            <div class="col-8" ref="mapcontainer">
               <!-- key forces reaceCourceMap to re-render when cource.label changes :-) -->
-              <raceCourseMap :key="cource.label" />
+              <raceCourseMap :height="150" showMap :key="cource.label" />
+            </div>
+            <div class="col-3 q-pb-sm q-px-sm">
+              <div>
+                <div class="text-caption">set location</div>
+                <div class="text-caption">
+                  N {{ parseFloat(regatta.lat).toFixed(3) }}
+                </div>
+                <div class="text-caption">
+                  E {{ parseFloat(regatta.lon).toFixed(3) }}
+                </div>
+              </div>
+            </div>
+            <div class="col-1 q-pb-sm">
+              <q-btn
+                class="float-right"
+                round
+                color="primary"
+                icon="room"
+                @click="regatta.setCoordinates(gps.lon, gps.lat)"
+              />
             </div>
           </div>
         </q-card-section>
-
-        <q-card-actions align="right">
-          <div @click="nextTransition()">
-            <shareregatta />
-          </div>
-        </q-card-actions>
       </q-card>
     </div>
   </q-page>
