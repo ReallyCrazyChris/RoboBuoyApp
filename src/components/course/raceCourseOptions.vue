@@ -27,7 +27,6 @@
 <script>
 //    @update:model-value="raceCourse.publishCourseState()"
 import { useRaceCourse } from "src/stores/raceCourse";
-import updown from "src/components/course/courseData/updown.json";
 const raceCourse = useRaceCourse();
 
 export default {
@@ -46,7 +45,6 @@ export default {
   data() {
     return {
       raceCourseOptions: [
-        updown,
         {
           label: "New",
           description: "Windward / Leeward + Reaching Finish",

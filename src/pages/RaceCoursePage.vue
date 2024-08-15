@@ -13,7 +13,8 @@
           show-boundary
           show-zoom
           show-attribution
-          edit-course
+          show-controls
+          can-edit
           :key="cource.label"
         ></raceCourseMap>
       </div>

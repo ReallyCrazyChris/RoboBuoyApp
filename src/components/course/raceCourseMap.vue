@@ -36,7 +36,8 @@ const props = defineProps({
   showBoundary: Boolean,
   showZoom: Boolean,
   showAttribution: Boolean,
-  editCourse: Boolean,
+  showControls: Boolean,
+  canEdit: Boolean,
 });
 
 function courseControlFactory() {
@@ -47,10 +48,10 @@ function courseControlFactory() {
   anchorHandel.setStyle(
     new Style({
       fill: new Fill({
-        color: course.anchorHandle.color,
+        color: course.controls.anchorHandle.color,
       }),
       stroke: new Stroke({
-        color: course.anchorHandle.color,
+        color: course.controls.anchorHandle.color,
         width: 2,
         lineCap: "round",
       }),
@@ -85,10 +86,10 @@ function courseControlFactory() {
   rotateHandle.setStyle(
     new Style({
       fill: new Fill({
-        color: course.rotateHandle.color,
+        color: course.controls.rotateHandle.color,
       }),
       stroke: new Stroke({
-        color: course.rotateHandle.color,
+        color: course.controls.rotateHandle.color,
         width: 2,
         lineCap: "round",
       }),
@@ -130,10 +131,10 @@ function courseControlFactory() {
   scaleXHandle.setStyle(
     new Style({
       fill: new Fill({
-        color: course.scaleXHandle.color,
+        color: course.controls.scaleXHandle.color,
       }),
       stroke: new Stroke({
-        color: course.scaleXHandle.color,
+        color: course.controls.scaleXHandle.color,
         width: 2,
         lineCap: "round",
       }),
@@ -168,10 +169,10 @@ function courseControlFactory() {
   scaleYHandle.setStyle(
     new Style({
       fill: new Fill({
-        color: course.scaleYHandle.color,
+        color: course.controls.scaleYHandle.color,
       }),
       stroke: new Stroke({
-        color: course.scaleYHandle.color,
+        color: course.controls.scaleYHandle.color,
         width: 2,
         lineCap: "round",
       }),
@@ -233,9 +234,9 @@ function courseControlFactory() {
   };
 }
 
-function markFactory(mark) {
+function markFactory(markId, mark) {
   const markFeature = new Feature({
-    geometry: new Circle(course.getMarkCenter(mark), mark.radius),
+    geometry: new Circle(course.getMarkCenter(markId), mark.radius),
     props: {},
   });
 
@@ -268,78 +269,101 @@ function markFactory(mark) {
   });
 
   translate.on("translating", (translateEvent) => {
-    course.setMarkOffset(mark, translateEvent.coordinate);
+    course.setMarkOffset(markId, translateEvent.coordinate);
   });
 
   watch(course, () => {
-    markFeature.getGeometry().setCenter(course.getMarkCenter(mark));
+    markFeature.getGeometry().setCenter(course.getMarkCenter(markId));
     markFeature
       .getStyle()
       .getText()
       .setRotation(-1 * course.rotation);
   });
 
-  return { features: [markFeature], interactions: [translate] };
+  const interactions = [];
+  const features = [];
+
+  if (!!!mark.hidden) {
+    features.push(markFeature);
+  }
+
+  if (!!!mark.locked) {
+    interactions.push(translate);
+  }
+
+  return { features: features, interactions: interactions };
 }
 
-function gateFactory(gate) {
-  const gatePFeature = new Feature({
-    geometry: new Circle(course.getGatePCenter(gate), gate.p.radius),
+function gateFactory(gateId, gate) {
+  const leftMark = course.getMark(gate.leftMarkId);
+  const rightMark = course.getMark(gate.rightMarkId);
+
+  const leftMarkFeature = new Feature({
+    geometry: new Circle(
+      course.getMarkCenter(gate.leftMarkId),
+      leftMark.radius
+    ),
   });
 
-  const gateSFeature = new Feature({
-    geometry: new Circle(course.getGateSCenter(gate), gate.s.radius),
+  const rightMarkFeature = new Feature({
+    geometry: new Circle(
+      course.getMarkCenter(gate.rightMarkId),
+      rightMark.radius
+    ),
   });
 
-  gatePFeature.setStyle(
+  leftMarkFeature.setStyle(
     new Style({
       fill: new Fill({
-        color: gate.color,
+        color: leftMark.color,
       }),
       stroke: new Stroke({
-        color: gate.color,
+        color: leftMark.color,
         width: 2,
         lineCap: "round",
       }),
       text: new Text({
-        text: gate.p.text,
+        text: leftMark.text,
         font: "10px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getGateTextRotation(gate),
+        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
       }),
     })
   );
 
-  gateSFeature.setStyle(
+  rightMarkFeature.setStyle(
     new Style({
       fill: new Fill({
-        color: gate.color,
+        color: rightMark.color,
       }),
       stroke: new Stroke({
-        color: gate.color,
+        color: rightMark.color,
         width: 2,
         lineCap: "round",
       }),
       text: new Text({
-        text: gate.s.text,
+        text: rightMark.text,
         font: "10px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getGateTextRotation(gate),
+        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
       }),
     })
   );
 
-  var gateLine = new Feature({
+  var gateLineFeature = new Feature({
     geometry: new LineString(
-      [course.getGatePCenter(gate), course.getGateSCenter(gate)],
+      [
+        course.getMarkCenter(gate.leftMarkId),
+        course.getMarkCenter(gate.leftMarkId),
+      ],
       "XY"
     ),
     props: {},
   });
 
-  gateLine.setStyle(
+  gateLineFeature.setStyle(
     new Style({
       stroke: new Stroke({
         color: gate.color,
@@ -358,7 +382,7 @@ function gateFactory(gate) {
         textAlign: "center",
         justify: "center",
         offsetY: 0,
-        rotation: course.getGateTextRotation(gate),
+        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
         rotateWithView: true,
         fill: new Fill({
           color: gate.color,
@@ -369,72 +393,249 @@ function gateFactory(gate) {
     })
   );
 
-  const translatePHandel = new Collection([gatePFeature]);
-
-  const translateP = new Translate({
+  const translateLeftMark = new Translate({
     layers: [courseVectorLayer],
-    features: translatePHandel,
+    features: new Collection([leftMarkFeature]),
   });
 
-  translateP.on("translating", (translateEvent) => {
-    course.setGatePOffset(gate, translateEvent.coordinate);
+  translateLeftMark.on("translating", (translateEvent) => {
+    course.setMarkOffset(gate.leftMarkId, translateEvent.coordinate);
   });
 
-  const translateSHandel = new Collection([gateSFeature]);
-
-  const translateS = new Translate({
+  const translateRightMark = new Translate({
     layers: [courseVectorLayer],
-    features: translateSHandel,
+    features: new Collection([rightMarkFeature]),
   });
 
-  translateS.on("translating", (translateEvent) => {
-    course.setGateSOffset(gate, translateEvent.coordinate);
+  translateRightMark.on("translating", (translateEvent) => {
+    course.setMarkOffset(gate.rightMarkId, translateEvent.coordinate);
   });
 
   watch(course, () => {
-    gatePFeature.getGeometry().setCenter(course.getGatePCenter(gate));
-    gateSFeature.getGeometry().setCenter(course.getGateSCenter(gate));
+    leftMarkFeature
+      .getGeometry()
+      .setCenter(course.getMarkCenter(gate.leftMarkId));
+    rightMarkFeature
+      .getGeometry()
+      .setCenter(course.getMarkCenter(gate.rightMarkId));
 
-    gateLine
+    gateLineFeature
       .getGeometry()
       .setCoordinates([
-        course.getGatePCenter(gate),
-        course.getGateSCenter(gate),
+        course.getMarkCenter(gate.leftMarkId),
+        course.getMarkCenter(gate.rightMarkId),
       ]);
 
-    gateLine
+    gateLineFeature
       .getStyle()
       .getText()
       .setText(gate.text + "\n" + course.getGateLineLength(gate) + "m");
 
-    gatePFeature
+    gateLineFeature
       .getStyle()
       .getText()
-      .setRotation(course.getGateTextRotation(gate));
+      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
 
-    gateSFeature
+    leftMarkFeature
       .getStyle()
       .getText()
-      .setRotation(course.getGateTextRotation(gate));
+      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
 
-    gateLine.getStyle().getText().setRotation(course.getGateTextRotation(gate));
+    rightMarkFeature
+      .getStyle()
+      .getText()
+      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
   });
 
   const interactions = [];
-  if (!!!gate.p.locked) {
-    interactions.push(translateP);
+  if (!!!leftMark.locked) {
+    interactions.push(translateLeftMark);
   }
-  if (!!!gate.s.locked) {
-    interactions.push(translateS);
+  if (!!!rightMark.locked) {
+    interactions.push(translateRightMark);
   }
 
   return {
-    features: [gatePFeature, gateSFeature, gateLine],
+    features: [leftMarkFeature, rightMarkFeature, gateLineFeature],
     interactions: interactions,
   };
 }
 
-function lineFactory(line) {
+function lineFactory(lineId, line) {
+  console.log(lineId, line);
+
+  const leftPoint = course.getMark(line.leftPointId);
+  const rightPoint = course.getMark(line.rightPointId);
+
+  const leftPointFeature = new Feature({
+    geometry: new Circle(
+      course.getMarkCenter(line.leftPointId),
+      leftPoint.radius
+    ),
+  });
+
+  const rightPointFeature = new Feature({
+    geometry: new Circle(
+      course.getMarkCenter(line.rightPointId),
+      rightPoint.radius
+    ),
+  });
+
+  leftPointFeature.setStyle(
+    new Style({
+      fill: new Fill({
+        color: leftPoint.color,
+      }),
+      stroke: new Stroke({
+        color: leftPoint.color,
+        width: 2,
+        lineCap: "round",
+      }),
+      text: new Text({
+        text: leftPoint.text,
+        font: "10px sans-serif",
+        textAlign: "center",
+        justify: "center",
+        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+      }),
+    })
+  );
+
+  rightPointFeature.setStyle(
+    new Style({
+      fill: new Fill({
+        color: rightPoint.color,
+      }),
+      stroke: new Stroke({
+        color: rightPoint.color,
+        width: 2,
+        lineCap: "round",
+      }),
+      text: new Text({
+        text: rightPoint.text,
+        font: "10px sans-serif",
+        textAlign: "center",
+        justify: "center",
+        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+      }),
+    })
+  );
+
+  var lineLineFeature = new Feature({
+    geometry: new LineString(
+      [
+        course.getMarkCenter(line.leftPointId),
+        course.getMarkCenter(line.leftPointId),
+      ],
+      "XY"
+    ),
+    props: {},
+  });
+
+  lineLineFeature.setStyle(
+    new Style({
+      stroke: new Stroke({
+        color: line.color,
+        width: 1,
+        lineDash: [1, 3],
+      }),
+      text: new Text({
+        text:
+          "          " +
+          line.text +
+          "          \n" +
+          course.getLineLength(line.leftPointId, line.rightPointId) +
+          "m",
+        font: "8px sans-serif",
+        color: line.color,
+        textAlign: "center",
+        justify: "center",
+        offsetY: 0,
+        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+        rotateWithView: true,
+        fill: new Fill({
+          color: line.color,
+          width: 1,
+        }),
+        placement: "line",
+      }),
+    })
+  );
+
+  const translateLeftMark = new Translate({
+    layers: [courseVectorLayer],
+    features: new Collection([leftPointFeature]),
+  });
+
+  translateLeftMark.on("translating", (translateEvent) => {
+    course.setMarkOffset(line.leftPointId, translateEvent.coordinate);
+  });
+
+  const translateRightMark = new Translate({
+    layers: [courseVectorLayer],
+    features: new Collection([rightPointFeature]),
+  });
+
+  translateRightMark.on("translating", (translateEvent) => {
+    course.setMarkOffset(line.rightPointId, translateEvent.coordinate);
+  });
+
+  watch(course, () => {
+    leftPointFeature
+      .getGeometry()
+      .setCenter(course.getMarkCenter(line.leftPointId));
+    rightPointFeature
+      .getGeometry()
+      .setCenter(course.getMarkCenter(line.rightPointId));
+
+    lineLineFeature
+      .getGeometry()
+      .setCoordinates([
+        course.getMarkCenter(line.leftPointId),
+        course.getMarkCenter(line.rightPointId),
+      ]);
+
+    lineLineFeature
+      .getStyle()
+      .getText()
+      .setText(
+        line.text +
+          "\n" +
+          course.getLineLength(line.leftPointId, line.rightPointId) +
+          "m"
+      );
+
+    lineLineFeature
+      .getStyle()
+      .getText()
+      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
+
+    leftPointFeature
+      .getStyle()
+      .getText()
+      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
+
+    rightPointFeature
+      .getStyle()
+      .getText()
+      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
+  });
+
+  const interactions = [];
+  if (!!!leftPoint.locked) {
+    interactions.push(translateLeftMark);
+  }
+  if (!!!rightPoint.locked) {
+    interactions.push(translateRightMark);
+  }
+
+  return {
+    features: [leftPointFeature, rightPointFeature, lineLineFeature],
+    interactions: interactions,
+  };
+}
+
+function _______________lineFactory(line) {
   const linePFeature = new Feature({
     geometry: new Circle(course.getLinePCenter(line), line.p.radius),
   });
@@ -592,42 +793,75 @@ var courseVectorLayer = new VectorLayer({
   source: new VectorSource({ wrapX: false }),
 });
 
-var courseFeaturesProducts = [];
-var raceCourseInteractions = [];
+var courseFeatures = [];
+var courseInteractions = [];
 
+/*
 if (props.showBoundary) {
   for (var line of course.lines) {
     const lineProduct = lineFactory(line);
-    courseFeaturesProducts.push(...lineProduct.features);
-    if (props.editCourse) {
-      raceCourseInteractions.push(...lineProduct.interactions);
+    courseFeatures.push(...lineProduct.features);
+    if (props.canEdit) {
+      courseInteractions.push(...lineProduct.interactions);
+    }
+  }
+}*/
+
+/*
+for (var mark of course.marks) {
+  const markProduct = markFactory(mark);
+  courseFeatures.push(...markProduct.features);
+  if (props.canEdit) {
+    courseInteractions.push(...markProduct.interactions);
+  }
+}*/
+
+/*
+for (var gate of course.gates) {
+  const gateProduct = gateFactory(gate);
+  courseFeatures.push(...gateProduct.features);
+  if (props.canEdit) {
+    courseInteractions.push(...gateProduct.interactions);
+  }
+}*/
+
+for (var markId in course.marks) {
+  if (course.marks[markId].type == "buoy") {
+    const product = markFactory(markId, course.marks[markId]);
+    courseFeatures.push(...product.features);
+    if (props.canEdit) {
+      courseInteractions.push(...product.interactions);
     }
   }
 }
 
-for (var mark of course.marks) {
-  const markProduct = markFactory(mark);
-  courseFeaturesProducts.push(...markProduct.features);
-  if (props.editCourse) {
-    raceCourseInteractions.push(...markProduct.interactions);
+for (var gateId in course.marks) {
+  if (course.marks[gateId].type == "gate") {
+    const product = gateFactory(gateId, course.marks[gateId]);
+    courseFeatures.push(...product.features);
+    if (props.canEdit) {
+      courseInteractions.push(...product.interactions);
+    }
   }
 }
 
-for (var gate of course.gates) {
-  const gateProduct = gateFactory(gate);
-  courseFeaturesProducts.push(...gateProduct.features);
-  if (props.editCourse) {
-    raceCourseInteractions.push(...gateProduct.interactions);
+for (var lineId in course.marks) {
+  if (course.marks[lineId].type == "line") {
+    const product = lineFactory(lineId, course.marks[lineId]);
+    courseFeatures.push(...product.features);
+    if (props.canEdit) {
+      courseInteractions.push(...product.interactions);
+    }
   }
 }
 
-if (props.editCourse) {
-  const boundryProduct = courseControlFactory();
-  courseFeaturesProducts.push(...boundryProduct.features);
-  raceCourseInteractions.push(...boundryProduct.interactions);
+if (props.showControls) {
+  const controlsProduct = courseControlFactory();
+  courseFeatures.push(...controlsProduct.features);
+  courseInteractions.push(...controlsProduct.interactions);
 }
 
-courseVectorLayer.getSource().addFeatures(courseFeaturesProducts);
+courseVectorLayer.getSource().addFeatures(courseFeatures);
 
 // view, starting at the center
 var view = new View({
@@ -677,7 +911,7 @@ function getControls() {
 
 // finally, the map with our custom interactions, controls and overlays
 var map = new Map({
-  interactions: defaultInteractions().extend(raceCourseInteractions),
+  interactions: defaultInteractions().extend(courseInteractions),
   controls: getControls(),
 });
 
