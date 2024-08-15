@@ -16,7 +16,7 @@
             </div>
           </q-card-section>
 
-          <q-card-section class="">
+          <q-card-section>
             <div class="fit row wrap justify-start items-center content-center">
               <div class="col-11">
                 <q-input
@@ -85,12 +85,12 @@
       </div>
 
       <div class="col q-px-md q-py-none" ref="regattaMapContainer">
-        <!-- key forces reaceCourceMap to re-render when cource.label changes :-) -->
+        <!-- key forces reaceCourseMap to re-render when course.label changes :-) -->
         <raceCourseMap
           v-if="regattaMapContainer?.clientHeight"
           :height="regattaMapContainer?.clientHeight"
           showMap
-          :key="cource.label"
+          :key="course.label"
         />
       </div>
     </div>
@@ -115,7 +115,7 @@ import { useRaceCourse } from "src/stores/raceCourse";
 const screen = useScreen();
 const gps = useGps();
 const regatta = useRegatta();
-const cource = useRaceCourse();
+const course = useRaceCourse();
 
 export default defineComponent({
   name: "RegattaPage",
@@ -131,7 +131,7 @@ export default defineComponent({
     return {
       regatta,
       gps,
-      cource,
+      course,
       regattaMapContainer,
     };
   },

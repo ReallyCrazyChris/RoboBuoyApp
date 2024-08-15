@@ -7,7 +7,7 @@
     options-selected-class="text-deep-orange"
     v-model="raceCourse"
     :options="raceCourseOptions"
-    @update:model-value="publishRaceCourseState"
+    @update:model-value="updateRaceCourseState"
   >
     <template v-slot:selected>
       {{ raceCourse.description }}
@@ -27,6 +27,7 @@
 <script>
 //    @update:model-value="raceCourse.publishCourseState()"
 import { useRaceCourse } from "src/stores/raceCourse";
+import updown from "src/components/course/courseData/updown.json";
 const raceCourse = useRaceCourse();
 
 export default {
@@ -37,14 +38,15 @@ export default {
     };
   },
   methods: {
-    publishRaceCourseState(a, b, c) {
-      raceCourse.$patch(a);
+    updateRaceCourseState(raceCourseState) {
+      raceCourse.$patch(raceCourseState);
+      raceCourse.publishRaceCourseState();
     },
   },
   data() {
     return {
-      // how thick the indicato ris on the knob
       raceCourseOptions: [
+        updown,
         {
           label: "New",
           description: "Windward / Leeward + Reaching Finish",

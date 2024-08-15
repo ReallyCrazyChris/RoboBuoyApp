@@ -1,184 +1,200 @@
 <template>
-  <q-page style="max-width: 400px">
-    <q-card v-if="raceTimer.matches('raceinfo')" flat>
-      <q-card-section>
-        <div class="row items-center">
-          <div class="col-10">
-            <div class="text-h5">{{ regatta.title }}</div>
-            <div class="text-caption">
-              {{ localDateTime }} : race starts from {{ regatta.startTime }} to
-              {{ regatta.endTime }}
+  <q-page>
+    <div
+      v-if="raceTimer.matches('raceinfo')"
+      class="column"
+      style="min-height: inherit"
+    >
+      <q-card class="col-1" flat>
+        <q-card-section>
+          <div class="row">
+            <div class="col-7">
+              <div class="text-h5">{{ regatta.title }}</div>
+              <div class="text-caption">
+                {{ localDateTime }} ( {{ regatta.startTime }} -
+                {{ regatta.endTime }})
+              </div>
+            </div>
+
+            <div class="col-5" align="right">
+              <shareregatta />
             </div>
           </div>
+        </q-card-section>
+      </q-card>
 
-          <div class="col-2">
-            <q-btn color="primary" icon="share" @click="shareRegatta()">
-              <q-tooltip class="primary">
-                invite others to participate
-              </q-tooltip>
-            </q-btn>
-          </div>
-        </div>
-      </q-card-section>
-
-      <q-card-section class="row">
-        <q-img class="col-6" src="racesignals/black.svg" />
-
-        <q-select
-          class="col-12"
-          label="Time Sequence"
-          v-model="raceTimer.timerSequenceModel"
-          :options="raceTimer.timerSequeceOptions"
-          color="primary"
-          options-selected-class="text-deep-orange"
-          @update:model-value="raceTimer.publishRaceTimerState()"
-        >
-          <template v-slot:selected>
-            {{ raceTimer.timerSequenceModel.label }} :
-            {{ raceTimer.timerSequenceModel.description }}
-          </template>
-
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section>
-                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-
-        <q-select
-          class="col-12"
-          label="Class Flag"
-          v-model="raceTimer.classFlagModel"
-          :options="raceTimer.classFlagOptions"
-          color="primary"
-          options-selected-class="text-deep-orange"
-          @update:model-value="raceTimer.publishRaceTimerState()"
-        >
-          <template v-slot:selected>
-            {{ raceTimer.classFlagModel.label }}
-            {{ raceTimer.classFlagModel.description }}
-          </template>
-
-          <template v-slot:append>
-            <q-avatar square size="50px">
-              <q-img :src="raceTimer.classFlagModel.image" />
-            </q-avatar>
-          </template>
-
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section avatar>
-                <q-img :src="scope.opt.image" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-
-        <q-select
-          class="col-12"
-          label="Preparation Flag"
-          v-model="raceTimer.prepareFlagModel"
-          :options="raceTimer.prepareFlagOptions"
-          color="secondary"
-          options-selected-class="text-deep-orange"
-          @update:model-value="raceTimer.publishRaceTimerState()"
-        >
-          <template v-slot:selected>
-            {{ raceTimer.prepareFlagModel.label }} :
-            {{ raceTimer.prepareFlagModel.description }}
-          </template>
-
-          <template v-slot:append>
-            <q-avatar square size="50px">
-              <q-img :src="raceTimer.prepareFlagModel.image" />
-            </q-avatar>
-          </template>
-
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section avatar>
-                <q-img :src="scope.opt.image" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-
-        <q-select
-          class="col-12"
-          label="Personal Flotation Device"
-          v-model="raceTimer.yankeeFlagModel"
-          :options="raceTimer.yankeeFlagOptions"
-          color="yellow"
-          options-selected-class="text-yellow"
-          @update:model-value="raceTimer.publishRaceTimerState()"
-        >
-          <template v-slot:selected>
-            {{ raceTimer.yankeeFlagModel.description }}
-          </template>
-
-          <template v-slot:append>
-            <q-avatar square size="50px">
-              <q-img :src="raceTimer.yankeeFlagModel.image" />
-            </q-avatar>
-          </template>
-
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section avatar>
-                <q-img :src="scope.opt.image" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ scope.opt.label }}</q-item-label>
-                <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn
-          flat
-          color="secondary"
-          label="Postpone Race"
-          @click="racepostponedTransition()"
+      <div class="col q-px-md q-py-none" ref="regattaMapContainer">
+        <raceCourseMap
+          v-if="regattaMapContainer?.clientHeight"
+          :height="regattaMapContainer?.clientHeight"
+          showMap
+          showZoom
+          :key="course.label"
         />
-        <q-btn
-          color="positive"
-          label="follow me"
-          @click="followmeTransition()"
-        />
-      </q-card-actions>
-    </q-card>
+      </div>
+
+      <q-card class="col-1">
+        <q-card-section class="row">
+          <q-select
+            class="col-12"
+            label="Time and Sequence"
+            v-model="raceTimer.timerSequenceModel"
+            :options="raceTimer.timerSequeceOptions"
+            color="primary"
+            options-selected-class="text-deep-orange"
+            @update:model-value="raceTimer.publishRaceTimerState()"
+          >
+            <template v-slot:selected>
+              {{ raceTimer.timerSequenceModel.label }} :
+              {{ raceTimer.timerSequenceModel.description }}
+            </template>
+
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                  <q-item-label caption>{{
+                    scope.opt.description
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+          <q-select
+            class="col-12"
+            label="Class Flag"
+            v-model="raceTimer.classFlagModel"
+            :options="raceTimer.classFlagOptions"
+            color="primary"
+            options-selected-class="text-deep-orange"
+            @update:model-value="raceTimer.publishRaceTimerState()"
+          >
+            <template v-slot:selected>
+              {{ raceTimer.classFlagModel.label }}
+              {{ raceTimer.classFlagModel.description }}
+            </template>
+
+            <template v-slot:append>
+              <q-avatar square size="50px">
+                <q-img :src="raceTimer.classFlagModel.image" />
+              </q-avatar>
+            </template>
+
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <q-img :src="scope.opt.image" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                  <q-item-label caption>{{
+                    scope.opt.description
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+          <q-select
+            class="col-12"
+            label="Preparation Flag"
+            v-model="raceTimer.prepareFlagModel"
+            :options="raceTimer.prepareFlagOptions"
+            color="secondary"
+            options-selected-class="text-deep-orange"
+            @update:model-value="raceTimer.publishRaceTimerState()"
+          >
+            <template v-slot:selected>
+              {{ raceTimer.prepareFlagModel.label }} :
+              {{ raceTimer.prepareFlagModel.description }}
+            </template>
+
+            <template v-slot:append>
+              <q-avatar square size="50px">
+                <q-img :src="raceTimer.prepareFlagModel.image" />
+              </q-avatar>
+            </template>
+
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <q-img :src="scope.opt.image" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                  <q-item-label caption>{{
+                    scope.opt.description
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+          <q-select
+            class="col-12"
+            label="Personal Flotation Device"
+            v-model="raceTimer.yankeeFlagModel"
+            :options="raceTimer.yankeeFlagOptions"
+            color="yellow"
+            options-selected-class="text-yellow"
+            @update:model-value="raceTimer.publishRaceTimerState()"
+          >
+            <template v-slot:selected>
+              {{ raceTimer.yankeeFlagModel.description }}
+            </template>
+
+            <template v-slot:append>
+              <q-avatar square size="50px">
+                <q-img :src="raceTimer.yankeeFlagModel.image" />
+              </q-avatar>
+            </template>
+
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <q-img :src="scope.opt.image" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                  <q-item-label caption>{{
+                    scope.opt.description
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            color="secondary"
+            label="Postpone Race"
+            @click="racepostponedTransition()"
+          />
+          <q-btn
+            color="positive"
+            label="follow me"
+            @click="followmeTransition()"
+          />
+        </q-card-actions>
+      </q-card>
+    </div>
 
     <q-card v-if="raceTimer.matches('followme')" flat>
       <q-card-section>
-        <div class="row items-center">
-          <div class="col-10">
+        <div class="row">
+          <div class="col-7">
             <div class="text-h5">{{ regatta.title }}</div>
             <div class="text-caption">
-              {{ localDateTime }} : race starts from {{ regatta.startTime }} to
-              {{ regatta.endTime }}
+              {{ localDateTime }} ( {{ regatta.startTime }} -
+              {{ regatta.endTime }})
             </div>
           </div>
 
-          <div class="col-2">
-            <q-btn color="primary" icon="share" @click="shareRegatta()">
-              <q-tooltip class="primary">
-                invite others to participate
-              </q-tooltip>
-            </q-btn>
+          <div class="col-5" align="right">
+            <shareregatta />
           </div>
         </div>
       </q-card-section>
@@ -702,16 +718,18 @@
 <script>
 import { defineComponent, ref } from "vue";
 
+import shareregatta from "src/components/regatta/RegattaShare.vue";
+
 import sogview from "src/components/vmc/sog.vue";
 import vmcview from "src/components/vmc/vmc.vue";
 import efficiencyview from "src/components/vmc/efficiency.vue";
 import raceCourseMap from "src/components/course/raceCourseMap.vue";
 
-import { useRaceTimer } from "src/stores/raceTimer";
 import { useVmc } from "src/stores/vmc";
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
 import { useRaceCourse } from "src/stores/raceCourse";
+import { useRaceTimer } from "src/stores/raceTimer";
 
 const raceTimer = useRaceTimer();
 const gps = useGps();
@@ -721,14 +739,24 @@ const course = useRaceCourse();
 
 export default defineComponent({
   name: "RaceTimerPage",
-  components: { sogview, vmcview, efficiencyview },
+  components: {
+    shareregatta,
+    raceCourseMap,
+    sogview,
+    vmcview,
+    efficiencyview,
+  },
 
   setup() {
+    const regattaMapContainer = ref(null);
+
     return {
       raceTimer,
       vmc,
       gps,
       regatta,
+      course,
+      regattaMapContainer,
     };
   },
   computed: {
@@ -833,16 +861,6 @@ export default defineComponent({
     raceabandonedtodayTransition() {
       raceTimer.raceabandonedtodayTransition();
       raceTimer.publishRaceTransition("raceabandonedtoday");
-    },
-
-    shareRegatta() {
-      const data = {
-        title: "Join the " + regatta.title,
-        text: regatta.description + " - " + regatta.date,
-        url: "https://reallycrazychris.github.io/#/timer",
-      };
-
-      navigator.share(data);
     },
   },
 });
