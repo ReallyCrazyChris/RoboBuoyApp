@@ -10,6 +10,8 @@
           v-if="raceCoursePageMapContainer?.clientHeight"
           :height="raceCoursePageMapContainer?.clientHeight"
           show-map
+          show-title
+          show-sequence
           show-boundary
           show-zoom
           show-attribution

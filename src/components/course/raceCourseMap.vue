@@ -9,7 +9,7 @@ import { Map, View, Feature } from "ol";
 
 import { Tile, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource } from "ol/source";
-import { Circle, LineString } from "ol/geom";
+import { Circle, LineString, Point } from "ol/geom";
 import Collection from "ol/Collection";
 import { getCenter } from "ol/extent";
 
@@ -33,20 +33,136 @@ const props = defineProps({
   height: Number,
   width: Number,
   showMap: Boolean,
-  showBoundary: Boolean,
   showZoom: Boolean,
+  showTitle: Boolean,
+  showSequence: Boolean,
+  showBoundary: Boolean,
   showAttribution: Boolean,
   showControls: Boolean,
   canEdit: Boolean,
 });
 
-function courseControlFactory() {
-  var anchorHandel = new Feature({
-    geometry: new Circle(course.centerOfRotation, 16),
+function titleFactory() {
+  var labelFeature = new Feature({
+    geometry: new Point(course.forwardTransform(course.title.offset)),
   });
 
-  anchorHandel.setStyle(
-    new Style({
+  labelFeature.setStyle((feature, resolution) => {
+    return new Style({
+      fill: new Fill({
+        color: course.title.color,
+      }),
+      stroke: new Stroke({
+        color: course.title.color,
+        width: 2,
+        lineCap: "round",
+      }),
+      text: new Text({
+        text: course.title.description,
+        font: Math.round(18 / resolution) + "px sans-serif",
+        textAlign: "center",
+        justify: "center",
+        rotation: -1 * course.rotation,
+
+        overflow: false,
+        placement: "point",
+        padding: [0, 100, 0, 100],
+        declutterMode: "declutter",
+        scale: 1,
+      }),
+    });
+  });
+
+  const titleTranslate = new Translate({
+    layers: [courseVectorLayer],
+    features: new Collection([labelFeature]),
+  });
+
+  titleTranslate.on("translating", (translateEvent) => {
+    course.title.offset = course.reverseTransform(translateEvent.coordinate);
+  });
+
+  titleTranslate.on("translateend", (translateEvent) => {
+    // fit the rotated cource to the view
+  });
+
+  watch(course, () => {
+    labelFeature
+      .getGeometry()
+      .setCoordinates(course.forwardTransform(course.title.offset));
+  });
+
+  return {
+    features: [labelFeature],
+    interactions: [titleTranslate],
+  };
+}
+
+function sequenceFactory() {
+  var sequenceFeature = new Feature({
+    geometry: new Point(course.forwardTransform(course.sequence.offset)),
+  });
+
+  sequenceFeature.setStyle((feature, resolution) => {
+    return new Style({
+      fill: new Fill({
+        color: course.sequence.color,
+      }),
+      stroke: new Stroke({
+        color: course.sequence.color,
+        width: 2,
+        lineCap: "round",
+      }),
+      text: new Text({
+        text: course.sequence.options[course.sequence.id].description,
+        font: Math.round(16 / resolution) + "px sans-serif",
+        textAlign: "center",
+        justify: "center",
+        rotation: -1 * course.rotation,
+
+        overflow: false,
+        placement: "line",
+        padding: [0, 100, 0, 100],
+        declutterMode: "declutter",
+        scale: 1,
+      }),
+    });
+  });
+
+  const sequenceTranslate = new Translate({
+    layers: [courseVectorLayer],
+    features: new Collection([sequenceFeature]),
+  });
+
+  sequenceTranslate.on("translating", (translateEvent) => {
+    course.sequence.offset = course.reverseTransform(translateEvent.coordinate);
+  });
+
+  sequenceTranslate.on("translateend", (translateEvent) => {
+    // fit the rotated cource to the view
+  });
+
+  watch(course, () => {
+    sequenceFeature
+      .getGeometry()
+      .setCoordinates(course.forwardTransform(course.sequence.offset));
+  });
+
+  return {
+    features: [sequenceFeature],
+    interactions: [sequenceTranslate],
+  };
+}
+
+function courseControlFactory() {
+  var anchorHandel = new Feature({
+    geometry: new Circle(course.centerOfRotation, 0),
+  });
+
+  anchorHandel.setStyle((feature, resolution) => {
+    feature.getGeometry().setRadius(Math.round(resolution * 12));
+
+    return new Style({
       fill: new Fill({
         color: course.controls.anchorHandle.color,
       }),
@@ -57,13 +173,13 @@ function courseControlFactory() {
       }),
       text: new Text({
         text: "\u2693",
-        font: "12px sans-serif",
+        font: "16px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
       }),
-    })
-  );
+    });
+  });
 
   const anchorHandleTranslate = new Translate({
     layers: [courseVectorLayer],
@@ -80,11 +196,13 @@ function courseControlFactory() {
   });
 
   var rotateHandle = new Feature({
-    geometry: new Circle(course.getRotateHandleCenter(), 16),
+    geometry: new Circle(course.getRotateHandleCenter(), 0),
   });
 
-  rotateHandle.setStyle(
-    new Style({
+  rotateHandle.setStyle((feature, resolution) => {
+    feature.getGeometry().setRadius(Math.round(resolution * 10));
+
+    return new Style({
       fill: new Fill({
         color: course.controls.rotateHandle.color,
       }),
@@ -95,7 +213,7 @@ function courseControlFactory() {
       }),
       text: new Text({
         text: "\u27F3",
-        font: "14px sans-serif",
+        font: "16px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -105,10 +223,8 @@ function courseControlFactory() {
         padding: [0, 100, 0, 100],
         declutterMode: "declutter",
       }),
-    })
-  );
-
-  // Translate the Mark
+    });
+  });
 
   const rotateHandleTranslate = new Translate({
     layers: [courseVectorLayer],
@@ -128,8 +244,10 @@ function courseControlFactory() {
     geometry: new Circle(course.getScaleXHandleCenter(), 16),
   });
 
-  scaleXHandle.setStyle(
-    new Style({
+  scaleXHandle.setStyle((feature, resolution) => {
+    feature.getGeometry().setRadius(Math.round(resolution * 10));
+
+    return new Style({
       fill: new Fill({
         color: course.controls.scaleXHandle.color,
       }),
@@ -140,13 +258,13 @@ function courseControlFactory() {
       }),
       text: new Text({
         text: "\u2194",
-        font: "10px sans-serif",
+        font: "16px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
       }),
-    })
-  );
+    });
+  });
 
   const scaleXHandleTranslate = new Translate({
     layers: [courseVectorLayer],
@@ -166,8 +284,10 @@ function courseControlFactory() {
     geometry: new Circle(course.getScaleYHandleCenter(), 16),
   });
 
-  scaleYHandle.setStyle(
-    new Style({
+  scaleYHandle.setStyle((feature, resolution) => {
+    feature.getGeometry().setRadius(Math.round(resolution * 10));
+
+    return new Style({
       fill: new Fill({
         color: course.controls.scaleYHandle.color,
       }),
@@ -178,13 +298,13 @@ function courseControlFactory() {
       }),
       text: new Text({
         text: "\u2195",
-        font: "10px sans-serif",
+        font: "16px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
       }),
-    })
-  );
+    });
+  });
 
   const scaleYHandleTranslate = new Translate({
     layers: [courseVectorLayer],
@@ -204,23 +324,6 @@ function courseControlFactory() {
     rotateHandle.getGeometry().setCenter(course.getRotateHandleCenter());
     scaleXHandle.getGeometry().setCenter(course.getScaleXHandleCenter());
     scaleYHandle.getGeometry().setCenter(course.getScaleYHandleCenter());
-
-    anchorHandel
-      .getStyle()
-      .getText()
-      .setRotation(-1 * course.rotation);
-    rotateHandle
-      .getStyle()
-      .getText()
-      .setRotation(-1 * course.rotation);
-    scaleXHandle
-      .getStyle()
-      .getText()
-      .setRotation(-1 * course.rotation);
-    scaleYHandle
-      .getStyle()
-      .getText()
-      .setRotation(-1 * course.rotation);
   });
 
   return {
@@ -237,11 +340,10 @@ function courseControlFactory() {
 function markFactory(markId, mark) {
   const markFeature = new Feature({
     geometry: new Circle(course.getMarkCenter(markId), mark.radius),
-    props: {},
   });
 
-  markFeature.setStyle(
-    new Style({
+  markFeature.setStyle((feature, resolution) => {
+    return new Style({
       fill: new Fill({
         color: mark.color,
       }),
@@ -252,14 +354,14 @@ function markFactory(markId, mark) {
       }),
       text: new Text({
         text: mark.text,
-        font: "10px sans-serif",
+        font: Math.round(18 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
         olverflow: false,
       }),
-    })
-  );
+    });
+  });
 
   const translateHandel = new Collection([markFeature]);
 
@@ -274,10 +376,6 @@ function markFactory(markId, mark) {
 
   watch(course, () => {
     markFeature.getGeometry().setCenter(course.getMarkCenter(markId));
-    markFeature
-      .getStyle()
-      .getText()
-      .setRotation(-1 * course.rotation);
   });
 
   const interactions = [];
@@ -295,25 +393,19 @@ function markFactory(markId, mark) {
 }
 
 function gateFactory(gateId, gate) {
-  const leftMark = course.getMark(gate.leftMarkId);
-  const rightMark = course.getMark(gate.rightMarkId);
+  const leftMark = course.getMark(gate.leftId);
+  const rightMark = course.getMark(gate.rightId);
 
   const leftMarkFeature = new Feature({
-    geometry: new Circle(
-      course.getMarkCenter(gate.leftMarkId),
-      leftMark.radius
-    ),
+    geometry: new Circle(course.getMarkCenter(gate.leftId), leftMark.radius),
   });
 
   const rightMarkFeature = new Feature({
-    geometry: new Circle(
-      course.getMarkCenter(gate.rightMarkId),
-      rightMark.radius
-    ),
+    geometry: new Circle(course.getMarkCenter(gate.rightId), rightMark.radius),
   });
 
-  leftMarkFeature.setStyle(
-    new Style({
+  leftMarkFeature.setStyle((feature, resolution) => {
+    return new Style({
       fill: new Fill({
         color: leftMark.color,
       }),
@@ -324,16 +416,16 @@ function gateFactory(gateId, gate) {
       }),
       text: new Text({
         text: leftMark.text,
-        font: "10px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
+        rotation: course.getTextRotation(gate.leftId, gate.rightId),
       }),
-    })
-  );
+    });
+  });
 
-  rightMarkFeature.setStyle(
-    new Style({
+  rightMarkFeature.setStyle((feature, resolution) => {
+    return new Style({
       fill: new Fill({
         color: rightMark.color,
       }),
@@ -344,27 +436,23 @@ function gateFactory(gateId, gate) {
       }),
       text: new Text({
         text: rightMark.text,
-        font: "10px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
+        rotation: course.getTextRotation(gate.leftId, gate.rightId),
       }),
-    })
-  );
+    });
+  });
 
   var gateLineFeature = new Feature({
     geometry: new LineString(
-      [
-        course.getMarkCenter(gate.leftMarkId),
-        course.getMarkCenter(gate.leftMarkId),
-      ],
+      [course.getMarkCenter(gate.leftId), course.getMarkCenter(gate.leftId)],
       "XY"
     ),
-    props: {},
   });
 
-  gateLineFeature.setStyle(
-    new Style({
+  gateLineFeature.setStyle((feature, resolution) => {
+    return new Style({
       stroke: new Stroke({
         color: gate.color,
         width: 1,
@@ -375,14 +463,14 @@ function gateFactory(gateId, gate) {
           "          " +
           gate.text +
           "          \n" +
-          course.getGateLineLength(gate) +
+          course.getLineLength(gate.leftId, gate.rightId) +
           "m",
-        font: "8px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         color: gate.color,
         textAlign: "center",
         justify: "center",
         offsetY: 0,
-        rotation: course.getTextRotation(gate.leftMarkId, gate.rightMarkId),
+        rotation: course.getTextRotation(gate.leftId, gate.rightId),
         rotateWithView: true,
         fill: new Fill({
           color: gate.color,
@@ -390,8 +478,8 @@ function gateFactory(gateId, gate) {
         }),
         placement: "line",
       }),
-    })
-  );
+    });
+  });
 
   const translateLeftMark = new Translate({
     layers: [courseVectorLayer],
@@ -399,7 +487,7 @@ function gateFactory(gateId, gate) {
   });
 
   translateLeftMark.on("translating", (translateEvent) => {
-    course.setMarkOffset(gate.leftMarkId, translateEvent.coordinate);
+    course.setMarkOffset(gate.leftId, translateEvent.coordinate);
   });
 
   const translateRightMark = new Translate({
@@ -408,43 +496,21 @@ function gateFactory(gateId, gate) {
   });
 
   translateRightMark.on("translating", (translateEvent) => {
-    course.setMarkOffset(gate.rightMarkId, translateEvent.coordinate);
+    course.setMarkOffset(gate.rightId, translateEvent.coordinate);
   });
 
   watch(course, () => {
-    leftMarkFeature
-      .getGeometry()
-      .setCenter(course.getMarkCenter(gate.leftMarkId));
+    leftMarkFeature.getGeometry().setCenter(course.getMarkCenter(gate.leftId));
     rightMarkFeature
       .getGeometry()
-      .setCenter(course.getMarkCenter(gate.rightMarkId));
+      .setCenter(course.getMarkCenter(gate.rightId));
 
     gateLineFeature
       .getGeometry()
       .setCoordinates([
-        course.getMarkCenter(gate.leftMarkId),
-        course.getMarkCenter(gate.rightMarkId),
+        course.getMarkCenter(gate.leftId),
+        course.getMarkCenter(gate.rightId),
       ]);
-
-    gateLineFeature
-      .getStyle()
-      .getText()
-      .setText(gate.text + "\n" + course.getGateLineLength(gate) + "m");
-
-    gateLineFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
-
-    leftMarkFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
-
-    rightMarkFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(gate.leftMarkId, gate.rightMarkId));
   });
 
   const interactions = [];
@@ -462,27 +528,19 @@ function gateFactory(gateId, gate) {
 }
 
 function lineFactory(lineId, line) {
-  console.log(lineId, line);
-
-  const leftPoint = course.getMark(line.leftPointId);
-  const rightPoint = course.getMark(line.rightPointId);
+  const leftPoint = course.getMark(line.leftId);
+  const rightPoint = course.getMark(line.rightId);
 
   const leftPointFeature = new Feature({
-    geometry: new Circle(
-      course.getMarkCenter(line.leftPointId),
-      leftPoint.radius
-    ),
+    geometry: new Circle(course.getMarkCenter(line.leftId), leftPoint.radius),
   });
 
   const rightPointFeature = new Feature({
-    geometry: new Circle(
-      course.getMarkCenter(line.rightPointId),
-      rightPoint.radius
-    ),
+    geometry: new Circle(course.getMarkCenter(line.rightId), rightPoint.radius),
   });
 
-  leftPointFeature.setStyle(
-    new Style({
+  leftPointFeature.setStyle((feature, resolution) => {
+    return new Style({
       fill: new Fill({
         color: leftPoint.color,
       }),
@@ -493,16 +551,16 @@ function lineFactory(lineId, line) {
       }),
       text: new Text({
         text: leftPoint.text,
-        font: "10px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+        rotation: course.getTextRotation(line.leftId, line.rightId),
       }),
-    })
-  );
+    });
+  });
 
-  rightPointFeature.setStyle(
-    new Style({
+  rightPointFeature.setStyle((feature, resolution) => {
+    return new Style({
       fill: new Fill({
         color: rightPoint.color,
       }),
@@ -513,27 +571,24 @@ function lineFactory(lineId, line) {
       }),
       text: new Text({
         text: rightPoint.text,
-        font: "10px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
-        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+        rotation: course.getTextRotation(line.leftId, line.rightId),
       }),
-    })
-  );
+    });
+  });
 
-  var lineLineFeature = new Feature({
+  var lineFeature = new Feature({
     geometry: new LineString(
-      [
-        course.getMarkCenter(line.leftPointId),
-        course.getMarkCenter(line.leftPointId),
-      ],
+      [course.getMarkCenter(line.leftId), course.getMarkCenter(line.leftId)],
       "XY"
     ),
     props: {},
   });
 
-  lineLineFeature.setStyle(
-    new Style({
+  lineFeature.setStyle((feature, resolution) => {
+    return new Style({
       stroke: new Stroke({
         color: line.color,
         width: 1,
@@ -544,14 +599,14 @@ function lineFactory(lineId, line) {
           "          " +
           line.text +
           "          \n" +
-          course.getLineLength(line.leftPointId, line.rightPointId) +
+          course.getLineLength(line.leftId, line.rightId) +
           "m",
-        font: "8px sans-serif",
+        font: Math.round(16 / resolution) + "px sans-serif",
         color: line.color,
         textAlign: "center",
         justify: "center",
         offsetY: 0,
-        rotation: course.getTextRotation(line.leftPointId, line.rightPointId),
+        rotation: course.getTextRotation(line.leftId, line.rightId),
         rotateWithView: true,
         fill: new Fill({
           color: line.color,
@@ -559,8 +614,8 @@ function lineFactory(lineId, line) {
         }),
         placement: "line",
       }),
-    })
-  );
+    });
+  });
 
   const translateLeftMark = new Translate({
     layers: [courseVectorLayer],
@@ -568,7 +623,7 @@ function lineFactory(lineId, line) {
   });
 
   translateLeftMark.on("translating", (translateEvent) => {
-    course.setMarkOffset(line.leftPointId, translateEvent.coordinate);
+    course.setMarkOffset(line.leftId, translateEvent.coordinate);
   });
 
   const translateRightMark = new Translate({
@@ -577,48 +632,21 @@ function lineFactory(lineId, line) {
   });
 
   translateRightMark.on("translating", (translateEvent) => {
-    course.setMarkOffset(line.rightPointId, translateEvent.coordinate);
+    course.setMarkOffset(line.rightId, translateEvent.coordinate);
   });
 
   watch(course, () => {
-    leftPointFeature
-      .getGeometry()
-      .setCenter(course.getMarkCenter(line.leftPointId));
+    leftPointFeature.getGeometry().setCenter(course.getMarkCenter(line.leftId));
     rightPointFeature
       .getGeometry()
-      .setCenter(course.getMarkCenter(line.rightPointId));
+      .setCenter(course.getMarkCenter(line.rightId));
 
-    lineLineFeature
+    lineFeature
       .getGeometry()
       .setCoordinates([
-        course.getMarkCenter(line.leftPointId),
-        course.getMarkCenter(line.rightPointId),
+        course.getMarkCenter(line.leftId),
+        course.getMarkCenter(line.rightId),
       ]);
-
-    lineLineFeature
-      .getStyle()
-      .getText()
-      .setText(
-        line.text +
-          "\n" +
-          course.getLineLength(line.leftPointId, line.rightPointId) +
-          "m"
-      );
-
-    lineLineFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
-
-    leftPointFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
-
-    rightPointFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getTextRotation(line.leftPointId, line.rightPointId));
   });
 
   const interactions = [];
@@ -630,155 +658,8 @@ function lineFactory(lineId, line) {
   }
 
   return {
-    features: [leftPointFeature, rightPointFeature, lineLineFeature],
+    features: [leftPointFeature, rightPointFeature, lineFeature],
     interactions: interactions,
-  };
-}
-
-function _______________lineFactory(line) {
-  const linePFeature = new Feature({
-    geometry: new Circle(course.getLinePCenter(line), line.p.radius),
-  });
-
-  const lineSFeature = new Feature({
-    geometry: new Circle(course.getLineSCenter(line), line.s.radius),
-  });
-
-  linePFeature.setStyle(
-    new Style({
-      fill: new Fill({
-        color: line.color,
-      }),
-      stroke: new Stroke({
-        color: line.color,
-        width: 2,
-        lineCap: "round",
-      }),
-      text: new Text({
-        text: line.p.text,
-        font: "10px sans-serif",
-        textAlign: "center",
-        justify: "center",
-        rotation: course.getLineTextRotation(line),
-      }),
-    })
-  );
-
-  lineSFeature.setStyle(
-    new Style({
-      fill: new Fill({
-        color: line.color,
-      }),
-      stroke: new Stroke({
-        color: line.color,
-        width: 2,
-        lineCap: "round",
-      }),
-      text: new Text({
-        text: line.s.text,
-        font: "10px sans-serif",
-        textAlign: "center",
-        justify: "center",
-        rotation: course.getLineTextRotation(line),
-      }),
-    })
-  );
-
-  var lineLine = new Feature({
-    geometry: new LineString(
-      [course.getLinePCenter(line), course.getLineSCenter(line)],
-      "XY"
-    ),
-    props: {},
-  });
-
-  lineLine.setStyle(
-    new Style({
-      stroke: new Stroke({
-        color: line.color,
-        width: 1,
-        lineDash: [1, 3],
-      }),
-      text: new Text({
-        text:
-          "          " +
-          line.text +
-          "          \n               " +
-          course.getLineLineLength(line) +
-          "m                ",
-        font: "8px sans-serif",
-        color: line.color,
-        textAlign: "center",
-        justify: "center",
-        offsetY: 0,
-        rotation: course.getLineTextRotation(line),
-        rotateWithView: true,
-        fill: new Fill({
-          color: line.color,
-          width: 1,
-        }),
-        overflow: false,
-        placement: "line",
-        padding: [0, 100, 0, 100],
-        declutterMode: "declutter",
-      }),
-    })
-  );
-
-  const translatePHandel = new Collection([linePFeature]);
-
-  const translateP = new Translate({
-    layers: [courseVectorLayer],
-    features: translatePHandel,
-  });
-
-  translateP.on("translating", (translateEvent) => {
-    course.setLinePOffset(line, translateEvent.coordinate);
-  });
-
-  const translateSHandel = new Collection([lineSFeature]);
-
-  const translateS = new Translate({
-    layers: [courseVectorLayer],
-    features: translateSHandel,
-  });
-
-  translateS.on("translating", (translateEvent) => {
-    course.setLineSOffset(line, translateEvent.coordinate);
-  });
-
-  watch(course, () => {
-    linePFeature.getGeometry().setCenter(course.getLinePCenter(line));
-    lineSFeature.getGeometry().setCenter(course.getLineSCenter(line));
-
-    lineLine
-      .getGeometry()
-      .setCoordinates([
-        course.getLinePCenter(line),
-        course.getLineSCenter(line),
-      ]);
-
-    lineLine
-      .getStyle()
-      .getText()
-      .setText(line.text + "\n" + course.getLineLineLength(line) + "m");
-
-    linePFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getLineTextRotation(line));
-
-    lineSFeature
-      .getStyle()
-      .getText()
-      .setRotation(course.getLineTextRotation(line));
-
-    lineLine.getStyle().getText().setRotation(course.getLineTextRotation(line));
-  });
-
-  return {
-    features: [linePFeature, lineSFeature, lineLine],
-    interactions: [], // [translateP, translateS],
   };
 }
 
@@ -796,34 +677,29 @@ var courseVectorLayer = new VectorLayer({
 var courseFeatures = [];
 var courseInteractions = [];
 
-/*
+if (props.showTitle) {
+  const titleProduct = titleFactory();
+  courseFeatures.push(...titleProduct.features);
+  courseInteractions.push(...titleProduct.interactions);
+}
+
+if (props.showSequence) {
+  const sequenceProduct = sequenceFactory();
+  courseFeatures.push(...sequenceProduct.features);
+  courseInteractions.push(...sequenceProduct.interactions);
+}
+
 if (props.showBoundary) {
-  for (var line of course.lines) {
-    const lineProduct = lineFactory(line);
-    courseFeatures.push(...lineProduct.features);
-    if (props.canEdit) {
-      courseInteractions.push(...lineProduct.interactions);
+  for (var lineId in course.marks) {
+    if (course.marks[lineId].type == "line") {
+      const product = lineFactory(lineId, course.marks[lineId]);
+      courseFeatures.push(...product.features);
+      if (props.canEdit) {
+        courseInteractions.push(...product.interactions);
+      }
     }
   }
-}*/
-
-/*
-for (var mark of course.marks) {
-  const markProduct = markFactory(mark);
-  courseFeatures.push(...markProduct.features);
-  if (props.canEdit) {
-    courseInteractions.push(...markProduct.interactions);
-  }
-}*/
-
-/*
-for (var gate of course.gates) {
-  const gateProduct = gateFactory(gate);
-  courseFeatures.push(...gateProduct.features);
-  if (props.canEdit) {
-    courseInteractions.push(...gateProduct.interactions);
-  }
-}*/
+}
 
 for (var markId in course.marks) {
   if (course.marks[markId].type == "buoy") {
@@ -838,16 +714,6 @@ for (var markId in course.marks) {
 for (var gateId in course.marks) {
   if (course.marks[gateId].type == "gate") {
     const product = gateFactory(gateId, course.marks[gateId]);
-    courseFeatures.push(...product.features);
-    if (props.canEdit) {
-      courseInteractions.push(...product.interactions);
-    }
-  }
-}
-
-for (var lineId in course.marks) {
-  if (course.marks[lineId].type == "line") {
-    const product = lineFactory(lineId, course.marks[lineId]);
     courseFeatures.push(...product.features);
     if (props.canEdit) {
       courseInteractions.push(...product.interactions);

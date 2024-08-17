@@ -8,7 +8,6 @@ export const useRaceCourse = defineStore("raceCourse", {
   state: () => ({
     zoom: 17,
     pointResolution: 1,
-
     centerOfRotation: [1217300, 6295726],
     rotation: 0,
     scale: [1, 1],
@@ -20,40 +19,45 @@ export const useRaceCourse = defineStore("raceCourse", {
       [-250, -150],
     ],
 
-    label: "WLRF29ER",
-    description: "29er : Windward / Leeward + Reaching Finish",
+    title: {
+      label: "WLRF29ER",
+      description: "29er : Windward / Leeward + Reaching Finish",
+      author: "Chris Bentley",
+      copywright: "cc",
+      offset: [-50, 420],
+      color: "black",
+    },
 
-    sequenceid: 0,
-    sequenceOptions: [
-      {
-        id: 0,
-        lapCount: 1,
-        sequence: [0, 1, 4, 100],
-        lable: "L1",
-        description:
-          "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 2p \u21A6 FINISH",
+    sequence: {
+      offset: [-50, -120],
+      id: 2,
+      options: {
+        0: {
+          lapCount: 1,
+          sequence: [0, 1, 7, 100],
+          lable: "L1",
+          description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+        },
+        1: {
+          lapCount: 2,
+          sequence: [0, 1, 5, 1, 7, 100],
+          lable: "L2",
+          description:
+            "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
+        },
+        2: {
+          lapCount: 3,
+          sequence: [0, 1, 5, 1, 5, 1, 7, 100],
+          lable: "L3",
+          description:
+            "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
+        },
       },
-      {
-        id: 1,
-        lapCount: 2,
-        sequence: [0, 1, 2, 1, 4, 100],
-        lable: "L2",
-        description:
-          "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1 \u21A6 2s / 2p \u21A6 2p  \u21A6 FINISH",
-      },
-      {
-        id: 2,
-        lapCount: 3,
-        sequence: [0, 1, 2, 1, 2, 1, 4, 100],
-        lable: "L3",
-        description:
-          "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1 \u21A6 2s / 2p\u21A6 1 \u21A6 2s / 2p\u21A6 2p  \u21A6 FINISH",
-      },
-    ],
+      color: "grey",
+    },
 
     controls: {
       anchorHandle: {
-        offset: [0, 0],
         color: "orange",
       },
 
@@ -63,12 +67,12 @@ export const useRaceCourse = defineStore("raceCourse", {
       },
 
       scaleXHandle: {
-        offset: [-200, 450],
+        offset: [-200, 400],
         color: "fuchsia",
       },
 
       scaleYHandle: {
-        offset: [100, 450],
+        offset: [100, 400],
         color: "lime",
       },
     },
@@ -78,14 +82,14 @@ export const useRaceCourse = defineStore("raceCourse", {
         type: "gate",
         color: "orange",
         text: "START",
-        leftMarkId: 1,
-        rightMarkId: 2,
+        leftId: 1,
+        rightId: 2,
       },
 
       1: {
         type: "mark",
         text: "L",
-        offset: [-150, 0],
+        offset: [-100, 0],
         color: "orange",
         radius: 10,
         locked: false,
@@ -94,7 +98,7 @@ export const useRaceCourse = defineStore("raceCourse", {
       2: {
         type: "mark",
         text: "R",
-        offset: [-10, 0],
+        offset: [0, 0],
         color: "orange",
         radius: 10,
         locked: true,
@@ -110,9 +114,26 @@ export const useRaceCourse = defineStore("raceCourse", {
       },
 
       5: {
-        type: "buoy",
-        text: "2",
-        offset: [-50, -100],
+        type: "gate",
+        color: "yellow",
+        text: "",
+        leftId: 6,
+        rightId: 7,
+      },
+
+      6: {
+        type: "mark",
+        text: "2S",
+        offset: [-100, 71],
+        color: "yellow",
+        radius: 10,
+        locked: false,
+      },
+
+      7: {
+        type: "mark",
+        text: "2P",
+        offset: [0, 71],
         color: "yellow",
         radius: 10,
         locked: false,
@@ -122,14 +143,14 @@ export const useRaceCourse = defineStore("raceCourse", {
         type: "gate",
         color: "grey",
         text: "FINSH",
-        leftMarkId: 101,
-        rightMarkId: 102,
+        leftId: 101,
+        rightId: 102,
       },
 
       101: {
         type: "gatemark",
-        text: "L",
-        offset: [-150, -10],
+        text: "",
+        offset: [71, 71],
         color: "blue",
         radius: 10,
         locked: false,
@@ -138,7 +159,7 @@ export const useRaceCourse = defineStore("raceCourse", {
       102: {
         type: "gatemark",
         text: "R",
-        offset: [-10, -10],
+        offset: [0, 0],
         color: "blue",
         radius: 10,
         locked: true,
@@ -147,9 +168,9 @@ export const useRaceCourse = defineStore("raceCourse", {
       104: {
         type: "line",
         color: "grey",
-        text: "Top Boundary",
-        leftPointId: 105,
-        rightPointId: 106,
+        text: "windward boundary",
+        leftId: 105,
+        rightId: 106,
       },
 
       105: {
@@ -173,9 +194,9 @@ export const useRaceCourse = defineStore("raceCourse", {
       107: {
         type: "line",
         color: "grey",
-        text: "Lower Boundary",
-        leftPointId: 108,
-        rightPointId: 109,
+        text: "leeward boundary",
+        leftId: 108,
+        rightId: 109,
       },
 
       108: {
@@ -199,9 +220,9 @@ export const useRaceCourse = defineStore("raceCourse", {
       110: {
         type: "line",
         color: "red",
-        text: "Right Boundary",
-        leftPointId: 111,
-        rightPointId: 112,
+        text: "course right",
+        leftId: 111,
+        rightId: 112,
       },
 
       111: {
@@ -225,9 +246,9 @@ export const useRaceCourse = defineStore("raceCourse", {
       113: {
         type: "line",
         color: "green",
-        text: "Left Boundary",
-        leftPointId: 114,
-        rightPointId: 115,
+        text: "course left",
+        leftId: 114,
+        rightId: 115,
       },
 
       114: {
@@ -235,7 +256,7 @@ export const useRaceCourse = defineStore("raceCourse", {
         text: "",
         offset: [-200, 400],
         color: "red",
-        radius: 0,
+        radius: 10,
         locked: true,
       },
 
@@ -248,73 +269,6 @@ export const useRaceCourse = defineStore("raceCourse", {
         locked: true,
       },
     },
-
-    lines: [
-      {
-        id: 0,
-      },
-      {
-        id: 1,
-        color: "black",
-        text: "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 2p \u21A6 FINISH",
-        s: {
-          text: "",
-          offset: [100, -100],
-          radius: 0,
-        },
-        p: {
-          text: "",
-          offset: [-200, -100],
-          radius: 0,
-        },
-      },
-      {
-        id: 2,
-        color: "red",
-        text: "left",
-        s: {
-          text: "",
-          offset: [-200, 400],
-          radius: 0,
-        },
-        p: {
-          text: "",
-          offset: [-200, -100],
-          radius: 0,
-        },
-      },
-      {
-        id: 3,
-        color: "green",
-        text: "right",
-        s: {
-          text: "",
-          offset: [100, 400],
-          radius: 0,
-        },
-        p: {
-          text: "",
-          offset: [100, -100],
-          radius: 0,
-        },
-      },
-
-      {
-        id: 4,
-        color: "grey",
-        text: "",
-        s: {
-          text: "",
-          offset: [-50, 0],
-          radius: 0,
-        },
-        p: {
-          text: "",
-          offset: [-50, 350],
-          radius: 0,
-        },
-      },
-    ],
   }),
 
   actions: {
@@ -326,14 +280,16 @@ export const useRaceCourse = defineStore("raceCourse", {
           rotaiton: this.rotation,
           scale: this.scale,
           zoom: this.zoom,
+
+          label: this.label,
+          description: this.description,
+
           extentOffsets: this.extentOffsets,
           anchorHandle: this.anchorHandle,
           rotateHandle: this.rotateHandle,
           scaleXHandle: this.scaleXHandle,
           scaleYHandle: this.scaleYHandle,
           marks: this.marks,
-          gates: this.gates,
-          lines: this.lines,
         });
         console.log("publishRaceCourseState", raceCourseStateJSON);
         mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
@@ -397,17 +353,7 @@ export const useRaceCourse = defineStore("raceCourse", {
     },
 
     setRotateHandleOffset(markCenter) {
-      const handle = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.rotateHandle.offset = [
-        ((handle[0] - this.centerOfRotation[0]) * this.po) /
-          this.scale[0](handle[1] - this.centerOfRotation[1]) /
-          this.scale[1],
-      ];
+      this.rotateHandle.offset = this.reverseTransform(markCenter);
     },
 
     getRotateHandleCenter() {
@@ -504,52 +450,9 @@ export const useRaceCourse = defineStore("raceCourse", {
       return this.forwardTransform(this.marks[markId].offset);
     },
 
-    setGatePOffset({ id }, markCenter) {
-      const mark_ = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.gates[id].p.offset = [
-        ((mark_[0] - this.centerOfRotation[0]) / this.scale[0]) *
-          this.pointResolution,
-        ((mark_[1] - this.centerOfRotation[1]) / this.scale[1]) *
-          this.pointResolution,
-      ];
-    },
-
-    setGateSOffset({ id }, markCenter) {
-      const mark_ = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.gates[id].s.offset = [
-        ((mark_[0] - this.centerOfRotation[0]) / this.scale[0]) *
-          this.pointResolution,
-        ((mark_[1] - this.centerOfRotation[1]) / this.scale[1]) *
-          this.pointResolution,
-      ];
-    },
-
-    getGateSCenter({ id }) {
-      return this.rotate(
-        [
-          this.centerOfRotation[0] +
-            (this.gates[id].s.offset[0] * this.scale[0]) / this.pointResolution,
-          this.centerOfRotation[1] +
-            (this.gates[id].s.offset[1] * this.scale[1]) / this.pointResolution,
-        ],
-        this.rotation,
-        this.centerOfRotation
-      );
-    },
-
-    getGateLineLength(gate) {
-      const leftMarkCenter = this.getMarkCenter(gate.leftMarkId);
-      const rightMarkCenter = this.getMarkCenter(gate.rightMarkId);
+    getLineLength(leftId, rightId) {
+      const leftMarkCenter = this.getMarkCenter(leftId);
+      const rightMarkCenter = this.getMarkCenter(rightId);
 
       var dx = (leftMarkCenter[0] - rightMarkCenter[0]) * this.pointResolution;
       var dy = (leftMarkCenter[1] - rightMarkCenter[1]) * this.pointResolution;
@@ -557,108 +460,12 @@ export const useRaceCourse = defineStore("raceCourse", {
       return Math.round(Math.sqrt(dx ** 2 + dy ** 2));
     },
 
-    getLineLength(leftMarkId, rightMarkId) {
-      const leftMarkCenter = this.getMarkCenter(leftMarkId);
-      const rightMarkCenter = this.getMarkCenter(rightMarkId);
-
-      var dx = (leftMarkCenter[0] - rightMarkCenter[0]) * this.pointResolution;
-      var dy = (leftMarkCenter[1] - rightMarkCenter[1]) * this.pointResolution;
-
-      return Math.round(Math.sqrt(dx ** 2 + dy ** 2));
-    },
-
-    getGateTextRotation(gate) {
-      const leftMarkCenter = this.getMarkCenter(gate.leftMarkId);
-      const rightMarkCenter = this.getMarkCenter(gate.rightMarkId);
+    getTextRotation(leftId, rightId) {
+      const leftMarkCenter = this.getMarkCenter(leftId);
+      const rightMarkCenter = this.getMarkCenter(rightId);
 
       var dx = rightMarkCenter[0] - leftMarkCenter[0];
       var dy = rightMarkCenter[1] - leftMarkCenter[1];
-
-      return -1 * Math.atan2(dy, dx);
-    },
-
-    getTextRotation(leftMarkId, rightMarkId) {
-      const leftMarkCenter = this.getMarkCenter(leftMarkId);
-      const rightMarkCenter = this.getMarkCenter(rightMarkId);
-
-      var dx = rightMarkCenter[0] - leftMarkCenter[0];
-      var dy = rightMarkCenter[1] - leftMarkCenter[1];
-
-      return -1 * Math.atan2(dy, dx);
-    },
-
-    setLinePOffset({ id }, markCenter) {
-      const mark_ = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.lines[id].p.offset = [
-        ((mark_[0] - this.centerOfRotation[0]) / this.scale[0]) *
-          this.pointResolution,
-        ((mark_[1] - this.centerOfRotation[1]) / this.scale[1]) *
-          this.pointResolution,
-      ];
-    },
-
-    getLinePCenter({ id }) {
-      return this.rotate(
-        [
-          this.centerOfRotation[0] +
-            (this.lines[id].p.offset[0] * this.scale[0]) / this.pointResolution,
-          this.centerOfRotation[1] +
-            (this.lines[id].p.offset[1] * this.scale[1]) / this.pointResolution,
-        ],
-        this.rotation,
-        this.centerOfRotation
-      );
-    },
-
-    setLineSOffset({ id }, markCenter) {
-      const mark_ = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.lines[id].s.offset = [
-        ((mark_[0] - this.centerOfRotation[0]) / this.scale[0]) *
-          this.pointResolution,
-        ((mark_[1] - this.centerOfRotation[1]) / this.scale[1]) *
-          this.pointResolution,
-      ];
-    },
-
-    getLineSCenter({ id }) {
-      return this.rotate(
-        [
-          this.centerOfRotation[0] +
-            (this.lines[id].s.offset[0] * this.scale[0]) / this.pointResolution,
-          this.centerOfRotation[1] +
-            (this.lines[id].s.offset[1] * this.scale[1]) / this.pointResolution,
-        ],
-        this.rotation,
-        this.centerOfRotation
-      );
-    },
-
-    getLineLineLength(line) {
-      const lineSCenter = this.getLineSCenter(line);
-      const linePCenter = this.getLinePCenter(line);
-
-      var dx = (lineSCenter[0] - linePCenter[0]) * this.pointResolution;
-      var dy = (lineSCenter[1] - linePCenter[1]) * this.pointResolution;
-
-      return Math.round(Math.sqrt(dx ** 2 + dy ** 2));
-    },
-
-    getLineTextRotation(line) {
-      const lineSCenter = this.getLineSCenter(line);
-      const linePCenter = this.getLinePCenter(line);
-
-      var dx = lineSCenter[0] - linePCenter[0];
-      var dy = lineSCenter[1] - linePCenter[1];
 
       return -1 * Math.atan2(dy, dx);
     },
