@@ -22,11 +22,12 @@
 </template>
 
 <script>
+import { useVmc } from "src/stores/vmc";
+const vmc = useVmc();
 export default {
   name: "efficiencyView",
-  props: ["vmc"],
   setup() {
-    return {};
+    return { vmc };
   },
 };
 </script>

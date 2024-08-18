@@ -1,9 +1,0 @@
-<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>arrow_down_50</title>
-  <line id="arrow_down_50_1" stroke-width="4" fill="none" x1="25" y1="50" x2="50" y2="25" stroke="#000"/>
-  <line id="arrow_down_50_2" stroke-width="4" fill="none" x1="25" y1="50" x2="0"  y2="25" stroke="#000" />
-  <line id="arrow_down_50_3" stroke-width="4" fill="none" x1="25" y1="50" x2="25" y2="0" stroke="#000"/>
- </g>
-
-</svg>

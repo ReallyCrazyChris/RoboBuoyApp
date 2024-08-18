@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
-import { boundingExtent, returnOrUpdate } from "ol/extent";
+import { boundingExtent } from "ol/extent";
 
 const mqttHook = useMQTT();
 
@@ -21,38 +21,41 @@ export const useRaceCourse = defineStore("raceCourse", {
 
     title: {
       label: "WLRF29ER",
-      description: "29er : Windward / Leeward + Reaching Finish",
-      author: "Chris Bentley",
-      copywright: "cc",
+      description: "Windward / Leeward + Reaching Finish",
       offset: [-50, 420],
       color: "black",
     },
 
     sequence: {
       offset: [-50, -120],
-      id: 2,
-      options: {
-        0: {
+      selected: {
+        lapCount: 1,
+        sequence: [0, 1, 7, 100],
+        label: "L1",
+        description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+      },
+      options: [
+        {
           lapCount: 1,
           sequence: [0, 1, 7, 100],
-          lable: "L1",
+          label: "L1",
           description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
         },
-        1: {
+        {
           lapCount: 2,
           sequence: [0, 1, 5, 1, 7, 100],
-          lable: "L2",
+          label: "L2",
           description:
             "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
         },
-        2: {
+        {
           lapCount: 3,
           sequence: [0, 1, 5, 1, 5, 1, 7, 100],
-          lable: "L3",
+          label: "L3",
           description:
             "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
         },
-      },
+      ],
       color: "grey",
     },
 
@@ -272,6 +275,10 @@ export const useRaceCourse = defineStore("raceCourse", {
   }),
 
   actions: {
+    getSelectedSequence() {
+      return this.sequence.options[this.sequence.selected];
+    },
+
     publishRaceCourseState() {
       return;
       if (mqttHook.isConnected) {
@@ -281,8 +288,8 @@ export const useRaceCourse = defineStore("raceCourse", {
           scale: this.scale,
           zoom: this.zoom,
 
-          label: this.label,
-          description: this.description,
+          title: this.title,
+          sequence: this.sequence,
 
           extentOffsets: this.extentOffsets,
           anchorHandle: this.anchorHandle,
@@ -291,7 +298,7 @@ export const useRaceCourse = defineStore("raceCourse", {
           scaleYHandle: this.scaleYHandle,
           marks: this.marks,
         });
-        console.log("publishRaceCourseState", raceCourseStateJSON);
+        //console.log("publishRaceCourseState", raceCourseStateJSON);
         mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
           retain: true,
         });
@@ -326,10 +333,6 @@ export const useRaceCourse = defineStore("raceCourse", {
       );
     },
 
-    getMark(markId) {
-      return this.marks[markId];
-    },
-
     // transforms map coordinates to cource offset
     reverseTransform(coordinates) {
       const point = this.rotate(
@@ -346,6 +349,10 @@ export const useRaceCourse = defineStore("raceCourse", {
       ];
 
       return offset;
+    },
+
+    getMark(markId) {
+      return this.marks[markId];
     },
 
     setAnchorHandleOffset(markCenter) {
@@ -461,6 +468,7 @@ export const useRaceCourse = defineStore("raceCourse", {
     },
 
     getTextRotation(leftId, rightId) {
+      console.log("getTextRotation(leftId, rightId)", leftId, rightId);
       const leftMarkCenter = this.getMarkCenter(leftId);
       const rightMarkCenter = this.getMarkCenter(rightId);
 

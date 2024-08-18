@@ -40,11 +40,14 @@
 </template>
 
 <script>
+import { useVmc } from "src/stores/vmc";
+import { useGps } from "src/stores/gps";
+const vmc = useVmc();
+const gps = useGps();
 export default {
   name: "vmcView",
-  props: ["vmc", "gps"],
   setup() {
-    return {};
+    return { vmc, gps };
   },
 };
 </script>

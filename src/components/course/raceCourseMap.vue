@@ -1,4 +1,4 @@
-<template ref="raceMapContainer">
+<template>
   <div ref="raceMap" :style="mapHeightWidthStyle()"></div>
 </template>
 
@@ -114,7 +114,7 @@ function sequenceFactory() {
         lineCap: "round",
       }),
       text: new Text({
-        text: course.sequence.options[course.sequence.id].description,
+        text: course.sequence.selected.description,
         font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -160,7 +160,7 @@ function courseControlFactory() {
   });
 
   anchorHandel.setStyle((feature, resolution) => {
-    feature.getGeometry().setRadius(Math.round(resolution * 12));
+    //feature.getGeometry().setRadius(Math.round(resolution * 12));
 
     return new Style({
       fill: new Fill({
@@ -196,12 +196,10 @@ function courseControlFactory() {
   });
 
   var rotateHandle = new Feature({
-    geometry: new Circle(course.getRotateHandleCenter(), 0),
+    geometry: new Circle(course.getRotateHandleCenter(), 16),
   });
 
   rotateHandle.setStyle((feature, resolution) => {
-    feature.getGeometry().setRadius(Math.round(resolution * 10));
-
     return new Style({
       fill: new Fill({
         color: course.controls.rotateHandle.color,
@@ -245,8 +243,6 @@ function courseControlFactory() {
   });
 
   scaleXHandle.setStyle((feature, resolution) => {
-    feature.getGeometry().setRadius(Math.round(resolution * 10));
-
     return new Style({
       fill: new Fill({
         color: course.controls.scaleXHandle.color,
@@ -285,8 +281,6 @@ function courseControlFactory() {
   });
 
   scaleYHandle.setStyle((feature, resolution) => {
-    feature.getGeometry().setRadius(Math.round(resolution * 10));
-
     return new Style({
       fill: new Fill({
         color: course.controls.scaleYHandle.color,

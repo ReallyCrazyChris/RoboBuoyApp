@@ -108,6 +108,12 @@ export const classFlagOptions = [
     description: "",
     image: "boatclasses/ilca.png",
   },
+  {
+    label: "Melges 24",
+    value: "m24",
+    description: "",
+    image: "boatclasses/m24.png",
+  },
 ];
 
 export const yankeeFlagOptions = [

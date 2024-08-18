@@ -1,7 +1,7 @@
-export const WLR29ER = {
+export const WLR49ER = {
   title: {
-    label: "WLRF29ER",
-    description: "29er : Windward / Leeward",
+    label: "WLRF49ER",
+    description: "49er : Windward / Leeward",
     offset: [-50, 420],
     color: "black",
   },
@@ -133,7 +133,7 @@ export const WLR29ER = {
     101: {
       type: "gatemark",
       text: "",
-      offset: [71, 71],
+      offset: [0, -20],
       color: "blue",
       radius: 10,
       locked: false,
@@ -142,7 +142,7 @@ export const WLR29ER = {
     102: {
       type: "gatemark",
       text: "R",
-      offset: [0, 0],
+      offset: [-100, -20],
       color: "blue",
       radius: 10,
       locked: true,

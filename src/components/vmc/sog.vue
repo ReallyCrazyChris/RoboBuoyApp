@@ -8,11 +8,13 @@
 </template>
 
 <script>
+import { useVmc } from "src/stores/vmc";
+const vmc = useVmc();
 export default {
   name: "sogView",
-  props: ["vmc"],
+
   setup() {
-    return {};
+    return { vmc };
   },
 };
 </script>

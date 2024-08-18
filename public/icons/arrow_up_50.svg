@@ -1,9 +1,0 @@
-<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>arrow_up</title>
-  <line stroke-width="4" fill="none" x1="0" y1="25" x2="25" id="svg_1"  y2="0" stroke="#000"/>
-  <line stroke-width="4" fill="none" x1="50" y1="25" x2="25" id="svg_3"  stroke="#000" y2="0"/>
-  <line stroke-width="4" fill="none" stroke="#000" x1="25" y1="50" x2="25" y2="0" id="svg_4" />
- </g>
-
-</svg>

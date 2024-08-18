@@ -1,0 +1,151 @@
+<template>
+  <div class="row">
+    <q-select
+      class="col-12"
+      label="Time and Start Sequence"
+      v-model="raceTimer.timerSequenceModel"
+      :options="raceTimer.timerSequeceOptions"
+      color="primary"
+      options-selected-class="text-deep-orange"
+      @update:model-value="raceTimer.publishRaceTimerState()"
+    >
+      <template v-slot:selected>
+        {{ raceTimer.timerSequenceModel.label }} :
+        {{ raceTimer.timerSequenceModel.description }}
+      </template>
+
+      <template v-slot:option="scope">
+        <q-item v-bind="scope.itemProps">
+          <q-item-section>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+
+    <q-select
+      class="col-12"
+      label="Class Flag"
+      v-model="raceTimer.classFlagModel"
+      :options="raceTimer.classFlagOptions"
+      color="primary"
+      options-selected-class="text-deep-orange"
+      @update:model-value="raceTimer.publishRaceTimerState()"
+    >
+      <template v-slot:selected>
+        {{ raceTimer.classFlagModel.label }}
+        {{ raceTimer.classFlagModel.description }}
+      </template>
+
+      <template v-slot:append>
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.classFlagModel.image" />
+        </q-avatar>
+      </template>
+
+      <template v-slot:option="scope">
+        <q-item v-bind="scope.itemProps">
+          <q-item-section avatar>
+            <q-img :src="scope.opt.image" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+
+    <q-select
+      class="col-12"
+      label="Preparation Flag"
+      v-model="raceTimer.prepareFlagModel"
+      :options="raceTimer.prepareFlagOptions"
+      color="secondary"
+      options-selected-class="text-deep-orange"
+      @update:model-value="raceTimer.publishRaceTimerState()"
+    >
+      <template v-slot:selected>
+        {{ raceTimer.prepareFlagModel.label }} :
+        {{ raceTimer.prepareFlagModel.description }}
+      </template>
+
+      <template v-slot:append>
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.prepareFlagModel.image" />
+        </q-avatar>
+      </template>
+
+      <template v-slot:option="scope">
+        <q-item v-bind="scope.itemProps">
+          <q-item-section avatar>
+            <q-img :src="scope.opt.image" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+
+    <q-select
+      class="col-12"
+      label="Personal Flotation Device"
+      v-model="raceTimer.yankeeFlagModel"
+      :options="raceTimer.yankeeFlagOptions"
+      color="yellow"
+      options-selected-class="text-yellow"
+      @update:model-value="raceTimer.publishRaceTimerState()"
+    >
+      <template v-slot:selected>
+        {{ raceTimer.yankeeFlagModel.description }}
+      </template>
+
+      <template v-slot:append>
+        <q-avatar square size="50px">
+          <q-img :src="raceTimer.yankeeFlagModel.image" />
+        </q-avatar>
+      </template>
+
+      <template v-slot:option="scope">
+        <q-item v-bind="scope.itemProps">
+          <q-item-section avatar>
+            <q-img :src="scope.opt.image" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ scope.opt.label }}</q-item-label>
+            <q-item-label caption>{{ scope.opt.description }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-select>
+  </div>
+</template>
+
+<script>
+import { useRegatta } from "src/stores/regatta";
+import { useRaceTimer } from "src/stores/raceTimer";
+import shareregatta from "src/components/regatta/RegattaShare.vue";
+
+const regatta = useRegatta();
+const raceTimer = useRaceTimer();
+
+export default {
+  name: "raceInfoOptions",
+  components: {},
+
+  setup(props) {
+    return { regatta, raceTimer };
+  },
+
+  computed: {
+    localDateTime() {
+      const date = new Date(regatta.date);
+      return date.toLocaleDateString();
+    },
+  },
+};
+</script>
+<style></style>

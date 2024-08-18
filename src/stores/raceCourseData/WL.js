@@ -1,7 +1,7 @@
-export const WLR29ER = {
+export const WL = {
   title: {
-    label: "WLRF29ER",
-    description: "29er : Windward / Leeward",
+    label: "WL",
+    description: "Windward / Leeward",
     offset: [-50, 420],
     color: "black",
   },
@@ -10,70 +10,49 @@ export const WLR29ER = {
     offset: [-50, -120],
     selected: {
       lapCount: 1,
-      sequence: [0, 1, 7, 100],
+      sequence: [0, 4, 1, 100],
       label: "L1",
-      description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+      description: "START \u21A6 1 \u21A6 FINISH",
     },
     options: [
       {
         lapCount: 1,
-        sequence: [0, 1, 7, 100],
+        sequence: [0, 4, 1, 100],
         label: "L1",
         description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
       },
       {
         lapCount: 2,
-        sequence: [0, 1, 5, 1, 7, 100],
+        sequence: [0, 4, 1, 4, 1, 100],
         label: "L2",
         description:
-          "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
+          "START \u21A6 1 \u21A6 2p \u21A6 1  \u21A6 2p  \u21A6 FINISH",
       },
       {
         lapCount: 3,
-        sequence: [0, 1, 5, 1, 5, 1, 7, 100],
+        sequence: [0, 4, 1, 4, 1, 4, 1, 100],
         label: "L3",
         description:
-          "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
+          "START \u21A6 1 \u21A6  2p  \u21A6 1 \u21A6  2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
       },
     ],
     color: "grey",
-  },
-
-  controls: {
-    anchorHandle: {
-      color: "orange",
-    },
-
-    rotateHandle: {
-      offset: [-50, 450],
-      color: "aqua",
-    },
-
-    scaleXHandle: {
-      offset: [-200, 400],
-      color: "fuchsia",
-    },
-
-    scaleYHandle: {
-      offset: [100, 400],
-      color: "lime",
-    },
   },
 
   marks: {
     0: {
       type: "gate",
       color: "orange",
-      text: "START",
+      text: "START / FINISH",
       leftId: 1,
       rightId: 2,
     },
 
     1: {
       type: "mark",
-      text: "L",
+      text: "2P",
       offset: [-100, 0],
-      color: "orange",
+      color: "yellow",
       radius: 10,
       locked: false,
     },
@@ -96,58 +75,7 @@ export const WLR29ER = {
       locked: false,
     },
 
-    5: {
-      type: "gate",
-      color: "yellow",
-      text: "",
-      leftId: 6,
-      rightId: 7,
-    },
-
-    6: {
-      type: "mark",
-      text: "2S",
-      offset: [-100, 71],
-      color: "yellow",
-      radius: 10,
-      locked: false,
-    },
-
-    7: {
-      type: "mark",
-      text: "2P",
-      offset: [0, 71],
-      color: "yellow",
-      radius: 10,
-      locked: false,
-    },
-
-    100: {
-      type: "gate",
-      color: "grey",
-      text: "FINSH",
-      leftId: 101,
-      rightId: 102,
-    },
-
-    101: {
-      type: "gatemark",
-      text: "",
-      offset: [71, 71],
-      color: "blue",
-      radius: 10,
-      locked: false,
-    },
-
-    102: {
-      type: "gatemark",
-      text: "R",
-      offset: [0, 0],
-      color: "blue",
-      radius: 10,
-      locked: true,
-    },
-
+    // boundry lines
     104: {
       type: "line",
       color: "grey",
@@ -250,6 +178,27 @@ export const WLR29ER = {
       color: "red",
       radius: 0,
       locked: true,
+    },
+  },
+
+  controls: {
+    anchorHandle: {
+      color: "orange",
+    },
+
+    rotateHandle: {
+      offset: [-50, 450],
+      color: "aqua",
+    },
+
+    scaleXHandle: {
+      offset: [-200, 400],
+      color: "fuchsia",
+    },
+
+    scaleYHandle: {
+      offset: [100, 400],
+      color: "lime",
     },
   },
 };

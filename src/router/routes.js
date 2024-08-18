@@ -20,7 +20,7 @@ const routes = [
 
       {
         path: "timer",
-        component: () => import("pages/TimerPage.vue"),
+        component: () => import("pages/RaceTimerPage.vue"),
       },
 
       {
