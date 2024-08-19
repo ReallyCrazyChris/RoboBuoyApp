@@ -34,7 +34,7 @@ const props = defineProps({
   width: Number,
   showMap: Boolean,
   showZoom: Boolean,
-  showTitle: Boolean,
+
   showSequence: Boolean,
   showBoundary: Boolean,
   showAttribution: Boolean,
@@ -42,30 +42,30 @@ const props = defineProps({
   canEdit: Boolean,
 });
 
-function titleFactory(title) {
-  var tileFeature = new Feature({
-    geometry: new Point(course.forwardTransform(title.offset)),
+function labelFactory(label) {
+  var labelFeature = new Feature({
+    geometry: new Point(course.forwardTransform(label.offset)),
   });
 
   watch(course, () => {
-    tileFeature
+    labelFeature
       .getGeometry()
-      .setCoordinates(course.forwardTransform(title.offset));
+      .setCoordinates(course.forwardTransform(label.offset));
   });
 
-  tileFeature.setStyle((feature, resolution) => {
+  labelFeature.setStyle((feature, resolution) => {
     return new Style({
       fill: new Fill({
-        color: title.color,
+        color: label.color,
       }),
       stroke: new Stroke({
-        color: title.color,
+        color: label.color,
         width: 2,
         lineCap: "round",
       }),
       text: new Text({
-        text: course.title.description,
-        font: Math.round(18 / resolution) + "px sans-serif",
+        text: label.text,
+        font: Math.round(20 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -79,80 +79,23 @@ function titleFactory(title) {
     });
   });
 
-  const titleTranslate = new Translate({
+  const labelTranslate = new Translate({
     layers: [courseVectorLayer],
-    features: new Collection([tileFeature]),
+    features: new Collection([labelFeature]),
   });
 
-  titleTranslate.on("translating", (translateEvent) => {
-    course.title.offset = course.reverseTransform(translateEvent.coordinate);
+  labelTranslate.on("translating", (translateEvent) => {
+    label.offset = course.reverseTransform(translateEvent.coordinate);
   });
 
-  titleTranslate.on("translateend", (translateEvent) => {
+  labelTranslate.on("translateend", (translateEvent) => {
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
 
   return {
-    features: [tileFeature],
-    interactions: [titleTranslate],
-  };
-}
-
-function sequenceFactory(sequence) {
-  var sequenceFeature = new Feature({
-    geometry: new Point(course.forwardTransform(sequence.offset)),
-  });
-
-  sequenceFeature.setStyle((feature, resolution) => {
-    return new Style({
-      fill: new Fill({
-        color: sequence.color,
-      }),
-      stroke: new Stroke({
-        color: sequence.color,
-        width: 2,
-        lineCap: "round",
-      }),
-      text: new Text({
-        text: sequence.options[sequence.selected].description,
-        font: Math.round(16 / resolution) + "px sans-serif",
-        textAlign: "center",
-        justify: "center",
-        rotation: -1 * course.rotation,
-
-        overflow: false,
-        placement: "line",
-        padding: [0, 100, 0, 100],
-        declutterMode: "declutter",
-        scale: 1,
-      }),
-    });
-  });
-
-  const sequenceTranslate = new Translate({
-    layers: [courseVectorLayer],
-    features: new Collection([sequenceFeature]),
-  });
-
-  sequenceTranslate.on("translating", (translateEvent) => {
-    course.sequence.offset = course.reverseTransform(translateEvent.coordinate);
-  });
-
-  sequenceTranslate.on("translateend", (translateEvent) => {
-    view.fit(polygonFromExtent(course.getExtent()));
-    course.publishRaceCourseState();
-  });
-
-  watch(course, () => {
-    sequenceFeature
-      .getGeometry()
-      .setCoordinates(course.forwardTransform(sequence.offset));
-  });
-
-  return {
-    features: [sequenceFeature],
-    interactions: [sequenceTranslate],
+    features: [labelFeature],
+    interactions: [labelTranslate],
   };
 }
 
@@ -508,11 +451,12 @@ function gateFactory(gate) {
         justify: "center",
         offsetY: 0,
         rotation: course.getTextRotation(gate.left, gate.right),
-        rotateWithView: true,
+        rotateWithView: false,
         fill: new Fill({
           color: gate.color,
           width: 1,
         }),
+
         placement: "line",
       }),
     });
@@ -590,23 +534,6 @@ var courseVectorLayer = new VectorLayer({
 var courseFeatures = [];
 var courseInteractions = [];
 
-var titleVectorLayer = new VectorLayer({
-  name: "titleVectorLayer",
-  source: new VectorSource({ wrapX: false }),
-});
-
-if (props.showTitle) {
-  const titleProduct = titleFactory(course.title);
-  titleVectorLayer.getSource().addFeatures(titleProduct.features);
-  courseInteractions.push(...titleProduct.interactions);
-}
-
-if (props.showSequence) {
-  const sequenceProduct = sequenceFactory(course.sequence);
-  courseFeatures.push(...sequenceProduct.features);
-  courseInteractions.push(...sequenceProduct.interactions);
-}
-
 for (var item of course.features) {
   if (item.type == "buoy") {
     const product = buoyFactory(item);
@@ -630,6 +557,16 @@ if (props.showBoundary) {
   for (var item of course.features) {
     if (item.type == "line") {
       const product = gateFactory(item);
+      courseFeatures.push(...product.features);
+      if (props.canEdit) {
+        courseInteractions.push(...product.interactions);
+      }
+    }
+  }
+
+  for (var item of course.features) {
+    if (item.type == "label") {
+      const product = labelFactory(item);
       courseFeatures.push(...product.features);
       if (props.canEdit) {
         courseInteractions.push(...product.interactions);
@@ -719,7 +656,6 @@ if (props.showMap) {
   map.addLayer(osmlayer);
 }
 map.addLayer(courseVectorLayer);
-map.addLayer(titleVectorLayer);
 map.setView(view);
 
 const raceCourseMap = ref();

@@ -6,13 +6,11 @@
           v-if="raceCoursePageMapContainer?.clientHeight"
           :height="raceCoursePageMapContainer?.clientHeight"
           show-map
-          show-title
-          show-sequence
           show-boundary
           show-zoom
           show-controls
           can-edit
-          :key="cource.title"
+          :key="cource.signature"
         ></raceCourseMap>
       </div>
       <div class="col-1 q-px-md q-py-none">

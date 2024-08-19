@@ -2,28 +2,23 @@ import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 import { boundingExtent } from "ol/extent";
 
+import { WLR29ER } from "./raceCourseData/WLR29ER";
 const mqttHook = useMQTT();
 
 export const useRaceCourse = defineStore("raceCourse", {
   state: () => ({
-    zoom: 17,
-    pointResolution: 1,
     centerOfRotation: [1217300, 6295726],
     rotation: 0,
     scale: [1, 1],
+    signature: Date.now(),
+    pointResolution: 1,
 
-    extentOffsets: [
+    boundry: [
       [150, 500],
       [-250, 500],
-      [150, -150],
-      [-250, -150],
+      [150, -250],
+      [-250, -250],
     ],
-
-    title: {
-      label: "WL",
-      description: "Windward / Leeward",
-      offset: [-50, 450],
-    },
 
     anchorHandle: {
       color: "orange",
@@ -44,148 +39,10 @@ export const useRaceCourse = defineStore("raceCourse", {
       color: "lime",
     },
 
-    features: [
-      {
-        type: "buoy",
-        text: "1a",
-        offset: [-50, 350],
-        color: "yellow",
-        radius: 10,
-        locked: false,
-      },
-
-      {
-        type: "gate",
-        color: "orange",
-        text: "START / FIN",
-        left: {
-          text: "L",
-          offset: [-100, 0],
-          color: "orange",
-          radius: 10,
-          locked: false,
-        },
-        right: {
-          text: "R",
-          offset: [0, 0],
-          color: "orange",
-          radius: 10,
-          locked: true,
-        },
-      },
-
-      {
-        type: "line",
-        color: "black",
-        text: "",
-        left: {
-          text: "",
-          offset: [-200, 400],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-        right: {
-          text: "",
-          offset: [100, 400],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-      },
-
-      {
-        type: "line",
-        color: "grey",
-        text: "leeward",
-        left: {
-          text: "",
-          offset: [-200, -150],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-        right: {
-          text: "",
-          offset: [100, -150],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-      },
-
-      {
-        type: "line",
-        color: "grey",
-        text: "left",
-        left: {
-          text: "",
-          offset: [-200, 400],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-        right: {
-          text: "",
-          offset: [-200, -150],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-      },
-
-      {
-        type: "line",
-        color: "black",
-        text: "right",
-        left: {
-          text: "",
-          offset: [100, 400],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-        right: {
-          text: "",
-          offset: [100, -150],
-          color: "grey",
-          radius: 0,
-          locked: true,
-        },
-      },
-    ],
-
-    sequence: {
-      offset: [-50, -170],
-      color: "grey",
-      selected: 0,
-      options: [
-        {
-          lapCount: 1,
-          label: "L1",
-          description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
-        },
-        {
-          lapCount: 2,
-          label: "L2",
-          description:
-            "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
-        },
-        {
-          lapCount: 3,
-          label: "L3",
-          description:
-            "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
-        },
-      ],
-    },
+    features: WLR29ER,
   }),
 
-  getters: {
-    selectedSequence({ sequence }) {
-      return sequence.options[sequence.selected];
-    },
-  },
+  getters: {},
 
   actions: {
     publishRaceCourseState() {
@@ -194,17 +51,13 @@ export const useRaceCourse = defineStore("raceCourse", {
           centerOfRotation: this.centerOfRotation,
           rotation: this.rotation,
           scale: this.scale,
-          zoom: this.zoom,
-
-          title: this.title,
-          sequence: this.sequence,
-
-          extentOffsets: this.extentOffsets,
+          boundry: this.boundry,
           anchorHandle: this.anchorHandle,
           rotateHandle: this.rotateHandle,
           scaleXHandle: this.scaleXHandle,
           scaleYHandle: this.scaleYHandle,
           features: this.features,
+          signature: Date.now(),
         });
         mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
           retain: true,
@@ -330,7 +183,7 @@ export const useRaceCourse = defineStore("raceCourse", {
       // so that the course can fill the screen space
 
       var extentCoordinates = [];
-      this.extentOffsets.forEach((offset) => {
+      this.boundry.forEach((offset) => {
         extentCoordinates.push(this.forwardTransform(offset));
       });
 

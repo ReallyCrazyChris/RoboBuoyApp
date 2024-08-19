@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-9">
+    <!--div class="col-9">
       <q-select
         class="col-9 q-pr-sm"
         label="course"
@@ -48,33 +48,17 @@
           </q-item>
         </template>
       </q-select>
-    </div>
+    </div-->
   </div>
 </template>
 
 <script>
-//    @update:model-value="course.publishCourseState()"
-import { useRaceCourse } from "src/stores/raceCourse";
-import { useRaceCourseOptions } from "src/stores/raceCourseOptions";
-
-const course = useRaceCourse();
-const courseOptions = useRaceCourseOptions();
-
 export default {
   name: "courseOptions",
   setup(props) {
-    return {
-      course,
-      courseOptions,
-    };
+    return {};
   },
-  methods: {
-    setSequenceOption(selectedSequenceOption) {
-      course.sequence.selected = course.sequence.options.indexOf(
-        selectedSequenceOption
-      );
-    },
-  },
+  methods: {},
 };
 </script>
 <style></style>

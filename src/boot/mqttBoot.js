@@ -42,7 +42,6 @@ export default boot(({ app }) => {
   // listen for the latest racetimer state
   mqttHook.registerEvent("racecourse", (topic, message) => {
     const patch = JSON.parse(message.toString());
-    console.log(patch);
     raceCourse.$patch(patch);
   });
 
