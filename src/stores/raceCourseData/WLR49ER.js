@@ -132,25 +132,19 @@ export const WLR49ER_FEATURES = [
   },
 ];
 
-export const WLR49ER_LAPS = {
-  selectedLap: 0,
-  lapOptions: [
-    {
-      lapCount: 1,
-      label: "L1",
-      description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
-    },
-    {
-      lapCount: 2,
-      label: "L2",
-      description:
-        "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
-    },
-    {
-      lapCount: 3,
-      label: "L3",
-      description:
-        "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
-    },
-  ],
-};
+export const WLR49ER_LAPS = [
+  {
+    label: "L1",
+    description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+  },
+  {
+    label: "L2",
+    description:
+      "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
+  },
+  {
+    label: "L3",
+    description:
+      "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
+  },
+];

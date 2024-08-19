@@ -1,16 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-9">
       <q-select
         label="course"
         color="primary"
         options-selected-class="text-deep-orange"
-        :modelValue="raceCourseOptions.selectedOption"
+        :modelValue="raceCourseOptions.selectedCourse"
         :options="raceCourseOptions.meta"
         @update:model-value="raceCourseOptions.applySelectedOption"
       >
         <template v-slot:selected>
-          {{ raceCourseOptions.selectedOption.name }}
+          {{ raceCourseOptions.selectedCourse.name }}
         </template>
 
         <template v-slot:option="scope">
@@ -24,28 +24,28 @@
       </q-select>
     </div>
 
-    <!--div class="col-3">
+    <div class="col-3">
       <q-select
         label="laps"
         color="primary"
         options-selected-class="text-deep-orange"
-        :modelValue="course.selectedSequence"
-        :options="course.sequence.options"
-        @update:model-value="setSequenceOption"
+        :modelValue="raceCourseOptions.selectedLap"
+        :options="raceCourseOptions.lapOptions"
+        @update:model-value="raceCourseOptions.applySelectedLap"
       >
         <template v-slot:selected>
-          {{ course.selectedSequence.lapCount }}
+          {{ raceCourseOptions.selectedLap.label }}
         </template>
 
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section>
-              <q-item-label caption>{{ scope.opt.lapCount }} laps</q-item-label>
+              <q-item-label caption>{{ scope.opt.label }}</q-item-label>
             </q-item-section>
           </q-item>
         </template>
       </q-select>
-    </div-->
+    </div>
   </div>
 </template>
 
@@ -59,7 +59,6 @@ export default {
   setup(props) {
     return { raceCourseOptions };
   },
-  methods: {},
 };
 </script>
 <style></style>

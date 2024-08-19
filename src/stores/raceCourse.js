@@ -44,6 +44,9 @@ export const useRaceCourse = defineStore("raceCourse", {
     },
 
     features: WLR29ER_FEATURES,
+    selectedCourseItem: 0,
+    lap: WLR29ER_LAPS[0],
+    selectedLapItem: 0,
   }),
 
   getters: {},
@@ -61,6 +64,8 @@ export const useRaceCourse = defineStore("raceCourse", {
           scaleXHandle: this.scaleXHandle,
           scaleYHandle: this.scaleYHandle,
           features: this.features,
+          selectedCourseItem: this.selectedCourseItem,
+          selectedLapItem: this.selectedLapItem,
           signature: Date.now(),
         });
         mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
