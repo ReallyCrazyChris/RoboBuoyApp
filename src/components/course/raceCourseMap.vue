@@ -1,5 +1,5 @@
 <template>
-  <div ref="raceMap" :style="mapHeightWidthStyle()"></div>
+  <div ref="raceCourseMap" :style="'height:' + props.height + 'px; '"></div>
 </template>
 
 <script setup>
@@ -25,8 +25,8 @@ import {
   defaults as defaultControls,
 } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
-import { useRaceCourse } from "src/stores/raceCourse";
 
+import { useRaceCourse } from "src/stores/raceCourse";
 const course = useRaceCourse();
 
 const props = defineProps({
@@ -42,24 +42,24 @@ const props = defineProps({
   canEdit: Boolean,
 });
 
-function titleFactory() {
+function titleFactory(title) {
   var tileFeature = new Feature({
-    geometry: new Point(course.forwardTransform(course.title.offset)),
+    geometry: new Point(course.forwardTransform(title.offset)),
   });
 
   watch(course, () => {
     tileFeature
       .getGeometry()
-      .setCoordinates(course.forwardTransform(course.title.offset));
+      .setCoordinates(course.forwardTransform(title.offset));
   });
 
   tileFeature.setStyle((feature, resolution) => {
     return new Style({
       fill: new Fill({
-        color: course.title.color,
+        color: title.color,
       }),
       stroke: new Stroke({
-        color: course.title.color,
+        color: title.color,
         width: 2,
         lineCap: "round",
       }),
@@ -90,6 +90,7 @@ function titleFactory() {
 
   titleTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
+    course.publishRaceCourseState();
   });
 
   return {
@@ -98,23 +99,23 @@ function titleFactory() {
   };
 }
 
-function sequenceFactory() {
+function sequenceFactory(sequence) {
   var sequenceFeature = new Feature({
-    geometry: new Point(course.forwardTransform(course.sequence.offset)),
+    geometry: new Point(course.forwardTransform(sequence.offset)),
   });
 
   sequenceFeature.setStyle((feature, resolution) => {
     return new Style({
       fill: new Fill({
-        color: course.sequence.color,
+        color: sequence.color,
       }),
       stroke: new Stroke({
-        color: course.sequence.color,
+        color: sequence.color,
         width: 2,
         lineCap: "round",
       }),
       text: new Text({
-        text: course.selectedSequence.description,
+        text: sequence.options[sequence.selected].description,
         font: Math.round(16 / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
@@ -140,12 +141,13 @@ function sequenceFactory() {
 
   sequenceTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
+    course.publishRaceCourseState();
   });
 
   watch(course, () => {
     sequenceFeature
       .getGeometry()
-      .setCoordinates(course.forwardTransform(course.sequence.offset));
+      .setCoordinates(course.forwardTransform(sequence.offset));
   });
 
   return {
@@ -154,12 +156,7 @@ function sequenceFactory() {
   };
 }
 
-function courseControlFactory(
-  anchorHandle,
-  rotateHandle,
-  scaleXHandle,
-  scaleYHandle
-) {
+function anchorFactory(anchorHandle) {
   var anchorFeature = new Feature({
     geometry: new Circle(course.centerOfRotation, 20),
   });
@@ -196,8 +193,20 @@ function courseControlFactory(
   anchorFeatureTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
+  watch(course, () => {
+    anchorFeature.getGeometry().setCenter(course.centerOfRotation);
+  });
+
+  return {
+    features: [anchorFeature],
+    interactions: [anchorFeatureTranslate],
+  };
+}
+
+function rotateFactory(rotateHandle) {
   var rotateFeature = new Feature({
     geometry: new Circle(course.forwardTransform(rotateHandle.offset), 16),
   });
@@ -239,8 +248,22 @@ function courseControlFactory(
   rotateFeatureTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
+  watch(course, () => {
+    rotateFeature
+      .getGeometry()
+      .setCenter(course.forwardTransform(rotateHandle.offset));
+  });
+
+  return {
+    features: [rotateFeature],
+    interactions: [rotateFeatureTranslate],
+  };
+}
+
+function scaleXFactory(scaleXHandle) {
   var scaleXFeature = new Feature({
     geometry: new Circle(course.forwardTransform(scaleXHandle.offset), 16),
   });
@@ -277,8 +300,22 @@ function courseControlFactory(
   scaleXFeatureTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
+  watch(course, () => {
+    scaleXFeature
+      .getGeometry()
+      .setCenter(course.forwardTransform(scaleXHandle.offset));
+  });
+
+  return {
+    features: [scaleXFeature],
+    interactions: [scaleXFeatureTranslate],
+  };
+}
+
+function scaleYFactory(scaleYHandle) {
   var scaleYFeature = new Feature({
     geometry: new Circle(course.forwardTransform(scaleYHandle.offset), 16),
   });
@@ -315,28 +352,18 @@ function courseControlFactory(
   scaleYFeatureTranslate.on("translateend", (translateEvent) => {
     // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
   watch(course, () => {
-    rotateFeature
-      .getGeometry()
-      .setCenter(course.forwardTransform(rotateHandle.offset));
-    scaleXFeature
-      .getGeometry()
-      .setCenter(course.forwardTransform(scaleXHandle.offset));
     scaleYFeature
       .getGeometry()
       .setCenter(course.forwardTransform(scaleYHandle.offset));
   });
 
   return {
-    features: [anchorFeature, rotateFeature, scaleXFeature, scaleYFeature],
-    interactions: [
-      anchorFeatureTranslate,
-      rotateFeatureTranslate,
-      scaleXFeatureTranslate,
-      scaleYFeatureTranslate,
-    ],
+    features: [scaleYFeature],
+    interactions: [scaleYFeatureTranslate],
   };
 }
 
@@ -375,6 +402,12 @@ function buoyFactory(buoy) {
 
   translate.on("translating", (translateEvent) => {
     buoy.offset = course.reverseTransform(translateEvent.coordinate);
+  });
+
+  translate.on("translateend", (translateEvent) => {
+    // fit the rotated cource to the view
+    view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
   watch(course, () => {
@@ -499,6 +532,11 @@ function gateFactory(gate) {
     gate.left.offset = course.reverseTransform(translateEvent.coordinate);
   });
 
+  translateleft.on("translateend", (translateEvent) => {
+    view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
+  });
+
   const translateright = new Translate({
     layers: [courseVectorLayer],
     features: new Collection([rightFeature]),
@@ -506,6 +544,11 @@ function gateFactory(gate) {
 
   translateright.on("translating", (translateEvent) => {
     gate.right.offset = course.reverseTransform(translateEvent.coordinate);
+  });
+
+  translateright.on("translateend", (translateEvent) => {
+    view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
   });
 
   watch(course, () => {
@@ -558,16 +601,13 @@ var titleVectorLayer = new VectorLayer({
 });
 
 if (props.showTitle) {
-  const titleProduct = titleFactory();
-
+  const titleProduct = titleFactory(course.title);
   titleVectorLayer.getSource().addFeatures(titleProduct.features);
-
-  //courseFeatures.push(...titleProduct.features);
   courseInteractions.push(...titleProduct.interactions);
 }
 
 if (props.showSequence) {
-  const sequenceProduct = sequenceFactory();
+  const sequenceProduct = sequenceFactory(course.sequence);
   courseFeatures.push(...sequenceProduct.features);
   courseInteractions.push(...sequenceProduct.interactions);
 }
@@ -604,14 +644,21 @@ if (props.showBoundary) {
 }
 
 if (props.showControls) {
-  const controlsProduct = courseControlFactory(
-    course.anchorHandle,
-    course.rotateHandle,
-    course.scaleXHandle,
-    course.scaleYHandle
-  );
-  courseFeatures.push(...controlsProduct.features);
-  courseInteractions.push(...controlsProduct.interactions);
+  const anchorProduct = anchorFactory(course.anchorHandle);
+  courseFeatures.push(...anchorProduct.features);
+  courseInteractions.push(...anchorProduct.interactions);
+
+  const rotateProduct = rotateFactory(course.rotateHandle);
+  courseFeatures.push(...rotateProduct.features);
+  courseInteractions.push(...rotateProduct.interactions);
+
+  const scaleXProduct = scaleXFactory(course.scaleXHandle);
+  courseFeatures.push(...scaleXProduct.features);
+  courseInteractions.push(...scaleXProduct.interactions);
+
+  const scaleYProduct = scaleYFactory(course.scaleYHandle);
+  courseFeatures.push(...scaleYProduct.features);
+  courseInteractions.push(...scaleYProduct.interactions);
 }
 
 courseVectorLayer.getSource().addFeatures(courseFeatures);
@@ -680,17 +727,12 @@ map.addLayer(courseVectorLayer);
 map.addLayer(titleVectorLayer);
 map.setView(view);
 
-const raceMap = ref();
-
-function mapHeightWidthStyle() {
-  console.log("height:" + props.height + "px; ");
-  return "height:" + props.height + "px; ";
-}
+const raceCourseMap = ref();
 
 // show the map
 onMounted(() => {
-  map?.setTarget(raceMap.value);
-  view.fit(polygonFromExtent(course.getExtent()));
+  map?.setTarget(raceCourseMap.value);
+  //view.fit(polygonFromExtent(course.getExtent()));
 });
 
 // garbage collect the map

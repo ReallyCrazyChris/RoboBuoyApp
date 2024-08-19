@@ -189,11 +189,10 @@ export const useRaceCourse = defineStore("raceCourse", {
 
   actions: {
     publishRaceCourseState() {
-      return;
       if (mqttHook.isConnected) {
         const raceCourseStateJSON = JSON.stringify({
           centerOfRotation: this.centerOfRotation,
-          rotaiton: this.rotation,
+          rotation: this.rotation,
           scale: this.scale,
           zoom: this.zoom,
 
@@ -205,9 +204,8 @@ export const useRaceCourse = defineStore("raceCourse", {
           rotateHandle: this.rotateHandle,
           scaleXHandle: this.scaleXHandle,
           scaleYHandle: this.scaleYHandle,
-          marks: this.marks,
+          features: this.features,
         });
-        //console.log("publishRaceCourseState", raceCourseStateJSON);
         mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
           retain: true,
         });
