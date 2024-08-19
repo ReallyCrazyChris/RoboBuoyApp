@@ -10,7 +10,7 @@
         @update:model-value="raceCourseOptions.applySelectedOption"
       >
         <template v-slot:selected>
-          {{ raceCourseOptions.selectedCourse.name }}
+          {{ raceCourseOptions.selectedCourse.description }}
         </template>
 
         <template v-slot:option="scope">

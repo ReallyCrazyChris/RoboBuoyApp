@@ -1,6 +1,6 @@
 export const WLR29ER_META = {
   name: "WLRF29ER",
-  description: "29er Windward / Leeward + Reaching Finish",
+  description: "29er Windward / Leeward",
 };
 
 export const WLR29ER_FEATURES = [
