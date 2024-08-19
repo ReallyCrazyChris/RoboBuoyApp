@@ -1,12 +1,12 @@
-export const WLR29ER_META = {
-  name: "WLRF29ER",
-  description: "29er Windward / Leeward + Reaching Finish",
+export const WLR49ER_META = {
+  name: "WLRF49ER",
+  description: "49ER Windward / Leeward + Reaching Finish",
 };
 
-export const WLR29ER_FEATURES = [
+export const WLR49ER_FEATURES = [
   {
     type: "label",
-    text: "29er Windward / Leeward",
+    text: "49ER Windward / Leeward",
     offset: [-50, 450],
     color: "black",
     size: 30,
@@ -15,7 +15,7 @@ export const WLR29ER_FEATURES = [
 
   {
     type: "buoy",
-    text: "1a",
+    text: "1j",
     offset: [-50, 350],
     color: "yellow",
     radius: 10,
@@ -24,7 +24,7 @@ export const WLR29ER_FEATURES = [
 
   {
     type: "buoy",
-    text: "1b",
+    text: "1v",
     offset: [-150, 350],
     color: "yellow",
     radius: 10,
@@ -132,7 +132,7 @@ export const WLR29ER_FEATURES = [
   },
 ];
 
-export const WLR29ER_LAPS = {
+export const WLR49ER_LAPS = {
   selectedLap: 0,
   lapOptions: [
     {

@@ -65,7 +65,7 @@ function labelFactory(label) {
       }),
       text: new Text({
         text: label.text,
-        font: Math.round(20 / resolution) + "px sans-serif",
+        font: Math.round(label.size / resolution) + "px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -75,6 +75,9 @@ function labelFactory(label) {
         padding: [0, 100, 0, 100],
         declutterMode: "declutter",
         scale: 1,
+        fill: new Fill({
+          color: label.color,
+        }),
       }),
     });
   });
@@ -93,9 +96,15 @@ function labelFactory(label) {
     course.publishRaceCourseState();
   });
 
+  const interactions = [];
+
+  if (!!!label.locked) {
+    interactions.push(labelTranslate);
+  }
+
   return {
     features: [labelFeature],
-    interactions: [labelTranslate],
+    interactions: interactions,
   };
 }
 

@@ -2,7 +2,11 @@ import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 import { boundingExtent } from "ol/extent";
 
-import { WLR29ER } from "./raceCourseData/WLR29ER";
+import {
+  WLR29ER_META,
+  WLR29ER_FEATURES,
+  WLR29ER_LAPS,
+} from "./raceCourseData/WLR29ER";
 const mqttHook = useMQTT();
 
 export const useRaceCourse = defineStore("raceCourse", {
@@ -39,7 +43,7 @@ export const useRaceCourse = defineStore("raceCourse", {
       color: "lime",
     },
 
-    features: WLR29ER,
+    features: WLR29ER_FEATURES,
   }),
 
   getters: {},

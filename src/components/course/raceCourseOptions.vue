@@ -1,33 +1,30 @@
 <template>
   <div class="row">
-    <!--div class="col-9">
+    <div class="col-12">
       <q-select
-        class="col-9 q-pr-sm"
         label="course"
         color="primary"
         options-selected-class="text-deep-orange"
-        :modelValue="courseOptions.selectedOption"
-        :options="courseOptions.options"
-        @update:model-value="courseOptions.applySelectedOption"
+        :modelValue="raceCourseOptions.selectedOption"
+        :options="raceCourseOptions.meta"
+        @update:model-value="raceCourseOptions.applySelectedOption"
       >
         <template v-slot:selected>
-          {{ courseOptions.selectedOption.title.label }}
+          {{ raceCourseOptions.selectedOption.name }}
         </template>
 
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section>
-              <q-item-label>{{ scope.opt.title.label }}</q-item-label>
-              <q-item-label caption>{{
-                scope.opt.title.description
-              }}</q-item-label>
+              <q-item-label>{{ scope.opt.name }}</q-item-label>
+              <q-item-label caption>{{ scope.opt.description }}</q-item-label>
             </q-item-section>
           </q-item>
         </template>
       </q-select>
     </div>
 
-    <div class="col-3">
+    <!--div class="col-3">
       <q-select
         label="laps"
         color="primary"
@@ -53,10 +50,14 @@
 </template>
 
 <script>
+import { useRaceCourseOptions } from "src/stores/raceCourseOptions";
+
+const raceCourseOptions = useRaceCourseOptions();
+
 export default {
-  name: "courseOptions",
+  name: "raceCourseOptions",
   setup(props) {
-    return {};
+    return { raceCourseOptions };
   },
   methods: {},
 };
