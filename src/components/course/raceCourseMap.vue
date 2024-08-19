@@ -89,7 +89,7 @@ function titleFactory(title) {
   });
 
   titleTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
+    view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
 
@@ -140,7 +140,7 @@ function sequenceFactory(sequence) {
   });
 
   sequenceTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
+    view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
 
@@ -191,7 +191,6 @@ function anchorFactory(anchorHandle) {
   });
 
   anchorFeatureTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
@@ -246,7 +245,6 @@ function rotateFactory(rotateHandle) {
   });
 
   rotateFeatureTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
@@ -298,7 +296,6 @@ function scaleXFactory(scaleXHandle) {
   });
 
   scaleXFeatureTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
@@ -350,7 +347,6 @@ function scaleYFactory(scaleYHandle) {
   });
 
   scaleYFeatureTranslate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
@@ -405,7 +401,6 @@ function buoyFactory(buoy) {
   });
 
   translate.on("translateend", (translateEvent) => {
-    // fit the rotated cource to the view
     view.fit(polygonFromExtent(course.getExtent()));
     course.publishRaceCourseState();
   });
@@ -732,7 +727,7 @@ const raceCourseMap = ref();
 // show the map
 onMounted(() => {
   map?.setTarget(raceCourseMap.value);
-  //view.fit(polygonFromExtent(course.getExtent()));
+  view.fit(polygonFromExtent(course.getExtent()));
 });
 
 // garbage collect the map
