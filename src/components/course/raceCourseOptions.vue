@@ -4,15 +4,14 @@
       <q-select
         class="col-9 q-pr-sm"
         label="course"
-        name="yo"
         color="primary"
         options-selected-class="text-deep-orange"
-        v-model="raceCourse"
-        :options="raceCourseOptions"
-        @update:model-value="updateRaceCourseState"
+        :modelValue="courseOptions.selectedOption"
+        :options="courseOptions.options"
+        @update:model-value="courseOptions.applySelectedOption"
       >
         <template v-slot:selected>
-          {{ raceCourse.title.description }}
+          {{ courseOptions.selectedOption.title.label }}
         </template>
 
         <template v-slot:option="scope">
@@ -33,18 +32,18 @@
         label="laps"
         color="primary"
         options-selected-class="text-deep-orange"
-        v-model="raceCourse.sequence.selected"
-        :options="raceCourse.sequence.options"
-        @update:model-value="updateRaceCourseSequence"
+        :modelValue="course.selectedSequence"
+        :options="course.sequence.options"
+        @update:model-value="setSequenceOption"
       >
         <template v-slot:selected>
-          {{ raceCourse.sequence.selected.lapCount }}
+          {{ course.selectedSequence.lapCount }}
         </template>
 
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section>
-              <q-item-label caption>{{ scope.opt.lapCount }}</q-item-label>
+              <q-item-label caption>{{ scope.opt.lapCount }} laps</q-item-label>
             </q-item-section>
           </q-item>
         </template>
@@ -54,33 +53,27 @@
 </template>
 
 <script>
-//    @update:model-value="raceCourse.publishCourseState()"
+//    @update:model-value="course.publishCourseState()"
 import { useRaceCourse } from "src/stores/raceCourse";
-import { WLR29ER } from "src/stores/raceCourseData/WLR29ER";
-import { WLR49ER } from "src/stores/raceCourseData/WLR49ER";
-import { WL } from "src/stores/raceCourseData/WL";
+import { useRaceCourseOptions } from "src/stores/raceCourseOptions";
 
-const raceCourse = useRaceCourse();
+const course = useRaceCourse();
+const courseOptions = useRaceCourseOptions();
 
 export default {
-  name: "raceCourseOptions",
+  name: "courseOptions",
   setup(props) {
     return {
-      raceCourse,
+      course,
+      courseOptions,
     };
   },
   methods: {
-    updateRaceCourseState(raceCourseOption) {
-      raceCourse.$patch(raceCourseOption);
-      raceCourse.publishRaceCourseState();
+    setSequenceOption(selectedSequenceOption) {
+      course.sequence.selected = course.sequence.options.indexOf(
+        selectedSequenceOption
+      );
     },
-
-    updateRaceCourseSequence(sequence) {},
-  },
-  data() {
-    return {
-      raceCourseOptions: [WL, WLR29ER, WLR49ER],
-    };
   },
 };
 </script>

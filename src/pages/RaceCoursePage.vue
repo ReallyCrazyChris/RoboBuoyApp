@@ -12,7 +12,7 @@
           show-zoom
           show-controls
           can-edit
-          :key="cource.label"
+          :key="cource.title"
         ></raceCourseMap>
       </div>
       <div class="col-1 q-px-md q-py-none">

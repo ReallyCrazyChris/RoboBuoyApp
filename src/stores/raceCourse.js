@@ -13,272 +13,181 @@ export const useRaceCourse = defineStore("raceCourse", {
     scale: [1, 1],
 
     extentOffsets: [
-      [150, 450],
-      [-250, 450],
+      [150, 500],
+      [-250, 500],
       [150, -150],
       [-250, -150],
     ],
 
     title: {
-      label: "WLRF29ER",
-      description: "Windward / Leeward + Reaching Finish",
+      label: "WL",
+      description: "Windward / Leeward",
+      offset: [-50, 450],
+    },
+
+    anchorHandle: {
+      color: "orange",
+    },
+
+    rotateHandle: {
       offset: [-50, 420],
-      color: "black",
+      color: "aqua",
     },
 
-    sequence: {
-      offset: [-50, -120],
-      selected: {
-        lapCount: 1,
-        sequence: [0, 1, 7, 100],
-        label: "L1",
-        description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
-      },
-      options: [
-        {
-          lapCount: 1,
-          sequence: [0, 1, 7, 100],
-          label: "L1",
-          description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
-        },
-        {
-          lapCount: 2,
-          sequence: [0, 1, 5, 1, 7, 100],
-          label: "L2",
-          description:
-            "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
-        },
-        {
-          lapCount: 3,
-          sequence: [0, 1, 5, 1, 5, 1, 7, 100],
-          label: "L3",
-          description:
-            "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
-        },
-      ],
-      color: "grey",
+    scaleXHandle: {
+      offset: [-200, 400],
+      color: "fuchsia",
     },
 
-    controls: {
-      anchorHandle: {
-        color: "orange",
-      },
-
-      rotateHandle: {
-        offset: [-50, 450],
-        color: "aqua",
-      },
-
-      scaleXHandle: {
-        offset: [-200, 400],
-        color: "fuchsia",
-      },
-
-      scaleYHandle: {
-        offset: [100, 400],
-        color: "lime",
-      },
+    scaleYHandle: {
+      offset: [100, 400],
+      color: "lime",
     },
 
-    marks: {
-      0: {
-        type: "gate",
-        color: "orange",
-        text: "START",
-        leftId: 1,
-        rightId: 2,
-      },
-
-      1: {
-        type: "mark",
-        text: "L",
-        offset: [-100, 0],
-        color: "orange",
-        radius: 10,
-        locked: false,
-      },
-
-      2: {
-        type: "mark",
-        text: "R",
-        offset: [0, 0],
-        color: "orange",
-        radius: 10,
-        locked: true,
-      },
-
-      4: {
+    features: [
+      {
         type: "buoy",
-        text: "1",
+        text: "1a",
         offset: [-50, 350],
         color: "yellow",
         radius: 10,
         locked: false,
       },
 
-      5: {
+      {
         type: "gate",
-        color: "yellow",
+        color: "orange",
+        text: "START / FIN",
+        left: {
+          text: "L",
+          offset: [-100, 0],
+          color: "orange",
+          radius: 10,
+          locked: false,
+        },
+        right: {
+          text: "R",
+          offset: [0, 0],
+          color: "orange",
+          radius: 10,
+          locked: true,
+        },
+      },
+
+      {
+        type: "line",
+        color: "black",
         text: "",
-        leftId: 6,
-        rightId: 7,
+        left: {
+          text: "",
+          offset: [-200, 400],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
+        right: {
+          text: "",
+          offset: [100, 400],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
       },
 
-      6: {
-        type: "mark",
-        text: "2S",
-        offset: [-100, 71],
-        color: "yellow",
-        radius: 10,
-        locked: false,
-      },
-
-      7: {
-        type: "mark",
-        text: "2P",
-        offset: [0, 71],
-        color: "yellow",
-        radius: 10,
-        locked: false,
-      },
-
-      100: {
-        type: "gate",
-        color: "grey",
-        text: "FINSH",
-        leftId: 101,
-        rightId: 102,
-      },
-
-      101: {
-        type: "gatemark",
-        text: "",
-        offset: [71, 71],
-        color: "blue",
-        radius: 10,
-        locked: false,
-      },
-
-      102: {
-        type: "gatemark",
-        text: "R",
-        offset: [0, 0],
-        color: "blue",
-        radius: 10,
-        locked: true,
-      },
-
-      104: {
+      {
         type: "line",
         color: "grey",
-        text: "windward boundary",
-        leftId: 105,
-        rightId: 106,
+        text: "leeward",
+        left: {
+          text: "",
+          offset: [-200, -150],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
+        right: {
+          text: "",
+          offset: [100, -150],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
       },
 
-      105: {
-        type: "linepoint",
-        text: "",
-        offset: [-200, 400],
-        color: "grey",
-        radius: 0,
-        locked: true,
-      },
-
-      106: {
-        type: "linepoint",
-        text: "",
-        offset: [100, 400],
-        color: "grey",
-        radius: 0,
-        locked: true,
-      },
-
-      107: {
+      {
         type: "line",
         color: "grey",
-        text: "leeward boundary",
-        leftId: 108,
-        rightId: 109,
+        text: "left",
+        left: {
+          text: "",
+          offset: [-200, 400],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
+        right: {
+          text: "",
+          offset: [-200, -150],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
       },
 
-      108: {
-        type: "linepoint",
-        text: "",
-        offset: [-200, -100],
-        color: "grey",
-        radius: 0,
-        locked: true,
-      },
-
-      109: {
-        type: "linepoint",
-        text: "",
-        offset: [100, -100],
-        color: "grey",
-        radius: 0,
-        locked: true,
-      },
-
-      110: {
+      {
         type: "line",
-        color: "red",
-        text: "course right",
-        leftId: 111,
-        rightId: 112,
+        color: "black",
+        text: "right",
+        left: {
+          text: "",
+          offset: [100, 400],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
+        right: {
+          text: "",
+          offset: [100, -150],
+          color: "grey",
+          radius: 0,
+          locked: true,
+        },
       },
+    ],
 
-      111: {
-        type: "linepoint",
-        text: "",
-        offset: [100, 400],
-        color: "red",
-        radius: 0,
-        locked: true,
-      },
-
-      112: {
-        type: "linepoint",
-        text: "",
-        offset: [100, -100],
-        color: "red",
-        radius: 0,
-        locked: true,
-      },
-
-      113: {
-        type: "line",
-        color: "green",
-        text: "course left",
-        leftId: 114,
-        rightId: 115,
-      },
-
-      114: {
-        type: "linepoint",
-        text: "",
-        offset: [-200, 400],
-        color: "red",
-        radius: 10,
-        locked: true,
-      },
-
-      115: {
-        type: "linepoint",
-        text: "",
-        offset: [-200, -100],
-        color: "red",
-        radius: 0,
-        locked: true,
-      },
+    sequence: {
+      offset: [-50, -170],
+      color: "grey",
+      selected: 0,
+      options: [
+        {
+          lapCount: 1,
+          label: "L1",
+          description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+        },
+        {
+          lapCount: 2,
+          label: "L2",
+          description:
+            "START \u21A6 1 \u21A6 2s / 2p \u21A6 1 \u21A6 1  \u21A6 2p  \u21A6 FINISH",
+        },
+        {
+          lapCount: 3,
+          label: "L3",
+          description:
+            "START \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2s / 2p  \u21A6 1 \u21A6 2p  \u21A6 FINISH",
+        },
+      ],
     },
   }),
 
-  actions: {
-    getSelectedSequence() {
-      return this.sequence.options[this.sequence.selected];
+  getters: {
+    selectedSequence({ sequence }) {
+      return sequence.options[sequence.selected];
     },
+  },
 
+  actions: {
     publishRaceCourseState() {
       return;
       if (mqttHook.isConnected) {
@@ -351,52 +260,19 @@ export const useRaceCourse = defineStore("raceCourse", {
       return offset;
     },
 
-    getMark(markId) {
-      return this.marks[markId];
-    },
-
-    setAnchorHandleOffset(markCenter) {
-      this.centerOfRotation = markCenter;
-    },
-
-    setRotateHandleOffset(markCenter) {
-      this.rotateHandle.offset = this.reverseTransform(markCenter);
-    },
-
-    getRotateHandleCenter() {
-      return this.forwardTransform(this.controls.rotateHandle.offset);
-    },
-
     setCourseRotation(markCenter) {
       const dx = markCenter[0] - this.centerOfRotation[0];
       const dy = markCenter[1] - this.centerOfRotation[1];
 
       const correction = Math.atan2(
-        this.controls.rotateHandle.offset[0] / this.pointResolution,
-        this.controls.rotateHandle.offset[1] / this.pointResolution
+        this.rotateHandle.offset[0] / this.pointResolution,
+        this.rotateHandle.offset[1] / this.pointResolution
       );
 
       this.rotation = -1 * Math.atan2(dx, dy) + correction;
     },
 
-    setScaleYHandleOffset(markCenter) {
-      const handle = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.scaleYHandle.offset = [
-        this.scaleYHandle.offset[0],
-        (handle[1] - this.centerOfRotation[1]) / this.scale[1],
-      ];
-    },
-
-    getScaleYHandleCenter() {
-      return this.forwardTransform(this.controls.scaleYHandle.offset);
-    },
-
-    setCourseScaleY(markCenter) {
+    setScaleY(markCenter) {
       const mark = this.rotate(
         markCenter,
         -1 * this.rotation,
@@ -407,31 +283,13 @@ export const useRaceCourse = defineStore("raceCourse", {
       var dy = mark[1] - this.centerOfRotation[1];
 
       const scaleY =
-        (Math.sqrt(dy ** 2) /
-          Math.sqrt(this.controls.scaleYHandle.offset[1] ** 2)) *
+        (Math.sqrt(dy ** 2) / Math.sqrt(this.scaleYHandle.offset[1] ** 2)) *
         this.pointResolution;
 
       this.scale = [this.scale[0], scaleY];
     },
 
-    setScaleXHandleOffset(markCenter) {
-      const handle = this.rotate(
-        markCenter,
-        -1 * this.rotation,
-        this.centerOfRotation
-      );
-
-      this.scaleXHandle.offset = [
-        (handle[0] - this.centerOfRotation[0]) / this.scale[0],
-        this.scaleYHandle.offset[1],
-      ];
-    },
-
-    getScaleXHandleCenter() {
-      return this.forwardTransform(this.controls.scaleXHandle.offset);
-    },
-
-    setCourseScaleX(markCenter) {
+    setScaleX(markCenter) {
       const mark = this.rotate(
         markCenter,
         -1 * this.rotation,
@@ -442,38 +300,28 @@ export const useRaceCourse = defineStore("raceCourse", {
       var dy = mark[1] - this.centerOfRotation[1];
 
       const scaleX =
-        (Math.sqrt(dx ** 2) /
-          Math.sqrt(this.controls.scaleXHandle.offset[0] ** 2)) *
+        (Math.sqrt(dx ** 2) / Math.sqrt(this.scaleXHandle.offset[0] ** 2)) *
         this.pointResolution;
 
       this.scale = [scaleX, this.scale[1]];
     },
 
-    setMarkOffset(markId, markCenter) {
-      this.marks[markId].offset = this.reverseTransform(markCenter);
-    },
+    getLineLength(left, right) {
+      const leftCenter = this.forwardTransform(left.offset);
+      const rightCenter = this.forwardTransform(right.offset);
 
-    getMarkCenter(markId) {
-      return this.forwardTransform(this.marks[markId].offset);
-    },
-
-    getLineLength(leftId, rightId) {
-      const leftMarkCenter = this.getMarkCenter(leftId);
-      const rightMarkCenter = this.getMarkCenter(rightId);
-
-      var dx = (leftMarkCenter[0] - rightMarkCenter[0]) * this.pointResolution;
-      var dy = (leftMarkCenter[1] - rightMarkCenter[1]) * this.pointResolution;
+      var dx = (leftCenter[0] - rightCenter[0]) * this.pointResolution;
+      var dy = (leftCenter[1] - rightCenter[1]) * this.pointResolution;
 
       return Math.round(Math.sqrt(dx ** 2 + dy ** 2));
     },
 
-    getTextRotation(leftId, rightId) {
-      console.log("getTextRotation(leftId, rightId)", leftId, rightId);
-      const leftMarkCenter = this.getMarkCenter(leftId);
-      const rightMarkCenter = this.getMarkCenter(rightId);
+    getTextRotation(left, right) {
+      const leftCenter = this.forwardTransform(left.offset);
+      const rightCenter = this.forwardTransform(right.offset);
 
-      var dx = rightMarkCenter[0] - leftMarkCenter[0];
-      var dy = rightMarkCenter[1] - leftMarkCenter[1];
+      var dx = rightCenter[0] - leftCenter[0];
+      var dy = rightCenter[1] - leftCenter[1];
 
       return -1 * Math.atan2(dy, dx);
     },
@@ -485,18 +333,7 @@ export const useRaceCourse = defineStore("raceCourse", {
 
       var extentCoordinates = [];
       this.extentOffsets.forEach((offset) => {
-        extentCoordinates.push(
-          this.rotate(
-            [
-              this.centerOfRotation[0] +
-                (offset[0] * this.scale[0]) / this.pointResolution,
-              this.centerOfRotation[1] +
-                (offset[1] * this.scale[1]) / this.pointResolution,
-            ],
-            this.rotation,
-            this.centerOfRotation
-          )
-        );
+        extentCoordinates.push(this.forwardTransform(offset));
       });
 
       return boundingExtent(extentCoordinates);
