@@ -1,6 +1,12 @@
 import { defineStore } from "pinia";
 
 import {
+  SIMPLE_META,
+  SIMPLE_FEATURES,
+  SIMPLE_LAPS,
+} from "src/stores/raceCourseData/SIMPLE";
+
+import {
   WLR29ER_META,
   WLR29ER_FEATURES,
   WLR29ER_LAPS,
@@ -17,9 +23,9 @@ const course = useRaceCourse();
 
 export const useRaceCourseOptions = defineStore("raceCourseOptions", {
   state: () => ({
-    meta: [WLR29ER_META, WLR49ER_META],
-    features: [WLR29ER_FEATURES, WLR49ER_FEATURES],
-    laps: [WLR29ER_LAPS, WLR49ER_LAPS],
+    meta: [SIMPLE_META, WLR29ER_META, WLR49ER_META],
+    features: [SIMPLE_FEATURES, WLR29ER_FEATURES, WLR49ER_FEATURES],
+    laps: [SIMPLE_LAPS, WLR29ER_LAPS, WLR49ER_LAPS],
   }),
 
   getters: {

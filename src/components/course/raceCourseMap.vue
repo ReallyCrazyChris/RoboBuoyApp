@@ -466,7 +466,7 @@ function gateFactory(gate) {
           width: 1,
         }),
 
-        placement: "line",
+        placement: "point",
       }),
     });
   });
@@ -529,6 +529,55 @@ function gateFactory(gate) {
   };
 }
 
+function lapInfoFactory(lapInfo) {
+  var lapInfoFeature = new Feature({
+    geometry: new LineString(
+      [
+        course.forwardTransform(lapInfo.left.offset),
+        course.forwardTransform(lapInfo.right.offset),
+      ],
+      "XY"
+    ),
+  });
+
+  lapInfoFeature.setStyle((feature, resolution) => {
+    return new Style({
+      text: new Text({
+        text: "Course route: " + course.lap?.description,
+        font: Math.round(lapInfo.size / resolution) + "px sans-serif",
+        color: lapInfo.color,
+        textAlign: "center",
+        justify: "center",
+        offsetY: 0,
+        rotation: course.getTextRotation(lapInfo.left, lapInfo.right),
+        rotateWithView: false,
+        fill: new Fill({
+          color: lapInfo.color,
+          width: 1,
+        }),
+
+        placement: "line",
+        padding: [0, 100, 0, 100],
+        declutterMode: "declutter",
+      }),
+    });
+  });
+
+  watch(course, () => {
+    lapInfoFeature
+      .getGeometry()
+      .setCoordinates([
+        course.forwardTransform(lapInfo.left.offset),
+        course.forwardTransform(lapInfo.right.offset),
+      ]);
+  });
+
+  return {
+    features: [lapInfoFeature],
+    interactions: [],
+  };
+}
+
 /**********************
  * Cource Vector Layer
  * ********************
@@ -576,6 +625,16 @@ if (props.showBoundary) {
   for (var item of course.features) {
     if (item.type == "label") {
       const product = labelFactory(item);
+      courseFeatures.push(...product.features);
+      if (props.canEdit) {
+        courseInteractions.push(...product.interactions);
+      }
+    }
+  }
+
+  for (var item of course.features) {
+    if (item.type == "lapinfo") {
+      const product = lapInfoFactory(item);
       courseFeatures.push(...product.features);
       if (props.canEdit) {
         courseInteractions.push(...product.interactions);

@@ -1,18 +1,18 @@
 <template>
   <div class="column" style="min-height: inherit">
-    <q-card class="col-1 q-py-none" flat>
+    <q-card class="col q-py-none" flat>
       <q-card-section>
-        <raceInfoRegatta></raceInfoRegatta>
+        <raceInfoRegatta />
+
+        <raceCourseOptions class="col q-my-md" />
+        <raceCourseLapInfo />
+
+        <raceInfoOptions class="col q-my-md" />
       </q-card-section>
     </q-card>
 
-    <div class="col q-px-md q-py-none">
-      <raceCourseOptions />
-      <raceInfoOptions />
-    </div>
-
     <div class="col-1 q-px-md q-py-none">
-      <q-card>
+      <q-card flat>
         <q-card-actions align="right">
           <q-btn
             flat
@@ -36,6 +36,7 @@ import { ref } from "vue";
 import raceInfoRegatta from "src/components/timer/raceInfoRegatta.vue";
 import raceInfoOptions from "src/components/timer/raceInfoOptions.vue";
 import raceCourseOptions from "src/components/course/raceCourseOptions.vue";
+import raceCourseLapInfo from "src/components/course/raceCourseLapInfo.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
@@ -49,6 +50,7 @@ export default {
     raceInfoRegatta,
     raceInfoOptions,
     raceCourseOptions,
+    raceCourseLapInfo,
   },
 
   setup(props) {
