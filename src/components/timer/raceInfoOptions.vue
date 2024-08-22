@@ -1,7 +1,10 @@
 <template>
-  <div class="row">
+  <div class="q-pt-sm">
     <q-select
-      class="col-12"
+      class="q-pb-sm"
+      filled
+      dense
+      readonly
       label="Time and Start Sequence"
       v-model="raceTimer.timerSequenceModel"
       :options="raceTimer.timerSequeceOptions"
@@ -25,8 +28,9 @@
     </q-select>
 
     <q-select
-      class="col-12"
-      label="Class Flag"
+      class="q-pb-sm"
+      filled
+      label="Class"
       v-model="raceTimer.classFlagModel"
       :options="raceTimer.classFlagOptions"
       color="primary"
@@ -58,7 +62,8 @@
     </q-select>
 
     <q-select
-      class="col-12"
+      class="q-pb-sm"
+      filled
       label="Preparation Flag"
       v-model="raceTimer.prepareFlagModel"
       :options="raceTimer.prepareFlagOptions"
@@ -91,7 +96,8 @@
     </q-select>
 
     <q-select
-      class="col-12"
+      class="q-pb-sm"
+      filled
       label="Personal Flotation Device"
       v-model="raceTimer.yankeeFlagModel"
       :options="raceTimer.yankeeFlagOptions"
@@ -127,14 +133,12 @@
 <script>
 import { useRegatta } from "src/stores/regatta";
 import { useRaceTimer } from "src/stores/raceTimer";
-import shareregatta from "src/components/regatta/RegattaShare.vue";
 
 const regatta = useRegatta();
 const raceTimer = useRaceTimer();
 
 export default {
   name: "raceInfoOptions",
-  components: {},
 
   setup(props) {
     return { regatta, raceTimer };

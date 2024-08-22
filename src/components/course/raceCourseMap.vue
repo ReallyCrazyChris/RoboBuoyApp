@@ -39,7 +39,7 @@ const props = defineProps({
   showBoundary: Boolean,
   showAttribution: Boolean,
   showControls: Boolean,
-  canEdit: Boolean,
+  readonly: Boolean,
 });
 
 function labelFactory(label) {
@@ -596,7 +596,7 @@ for (var item of course.features) {
   if (item.type == "buoy") {
     const product = buoyFactory(item);
     courseFeatures.push(...product.features);
-    if (props.canEdit) {
+    if (!!!props.readonly) {
       courseInteractions.push(...product.interactions);
     }
   }
@@ -606,7 +606,7 @@ for (var item of course.features) {
   if (item.type == "gate") {
     const product = gateFactory(item);
     courseFeatures.push(...product.features);
-    if (props.canEdit) {
+    if (!!!props.readonly) {
       courseInteractions.push(...product.interactions);
     }
   }
@@ -616,7 +616,7 @@ if (props.showBoundary) {
     if (item.type == "line") {
       const product = gateFactory(item);
       courseFeatures.push(...product.features);
-      if (props.canEdit) {
+      if (!!!props.readonly) {
         courseInteractions.push(...product.interactions);
       }
     }
@@ -626,7 +626,7 @@ if (props.showBoundary) {
     if (item.type == "label") {
       const product = labelFactory(item);
       courseFeatures.push(...product.features);
-      if (props.canEdit) {
+      if (!!!props.readonly) {
         courseInteractions.push(...product.interactions);
       }
     }
@@ -636,14 +636,14 @@ if (props.showBoundary) {
     if (item.type == "lapinfo") {
       const product = lapInfoFactory(item);
       courseFeatures.push(...product.features);
-      if (props.canEdit) {
+      if (!!!props.readonly) {
         courseInteractions.push(...product.interactions);
       }
     }
   }
 }
 
-if (props.showControls) {
+if (!!!props.readonly) {
   const anchorProduct = anchorFactory(course.anchorHandle);
   courseFeatures.push(...anchorProduct.features);
   courseInteractions.push(...anchorProduct.interactions);

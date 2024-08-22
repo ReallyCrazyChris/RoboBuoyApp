@@ -1,13 +1,15 @@
 <template>
   <div class="row">
-    <div class="col-7">
-      <div class="text">{{ regatta.title }} {{ localDateTime }}</div>
-      <div class="text-caption">
-        {{ regatta.description }}
+    <div class="col-8">
+      <div class="">{{ regatta.title }} {{ localDate }} {{ localTime }}</div>
+      <div class="">
+        {{ regatta.description }} The course is blblb wit 3 laps, racing startts
+        are initiated form 00.00 untill 21:00
       </div>
+      <div></div>
     </div>
 
-    <div class="col-5" align="right">
+    <div class="col-4" align="right">
       <shareregatta />
     </div>
   </div>
@@ -32,9 +34,13 @@ export default {
   },
 
   computed: {
-    localDateTime() {
+    localDate() {
       const date = new Date(regatta.date);
       return date.toLocaleDateString();
+    },
+    localTime() {
+      const date = new Date(regatta.date);
+      return date.toLocaleTimeString().substring(0, 5);
     },
   },
 };

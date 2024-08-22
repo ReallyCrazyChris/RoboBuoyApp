@@ -1,23 +1,11 @@
 <template>
-  <div class="row fit justify-start items-center">
-    <div class="col-6">
-      <div style="font-size: 10vmin">Efficiency:</div>
-    </div>
-
-    <div
-      v-if="vmc.lon == 0 || vmc.lat == 0"
-      class="col-6 text-center"
-      style="font-size: 30vmin; line-height: 5rem"
-    >
-      -
-    </div>
-    <div
-      v-else
-      class="col-6 text-center"
-      style="font-size: 30vmin; line-height: 5rem"
-    >
+  <div class="row fit">
+    <div class="col-6 fitFontSizeLarge">Efficiency</div>
+    <div class="col-6 text-center fitFontSizeLarge">
       {{ vmc.efficiency }}
     </div>
+    <div class="col-6"></div>
+    <div class="col-6 text-center fitFontSizeMedium">%</div>
   </div>
 </template>
 
@@ -31,3 +19,16 @@ export default {
   },
 };
 </script>
+<style>
+.fitFontSizeLarge {
+  font-size: 16px;
+  font-size: 12vmin;
+  line-height: 1;
+}
+
+.fitFontSizeMedium {
+  font-size: 16px;
+  font-size: 5vmin;
+  line-height: 1;
+}
+</style>

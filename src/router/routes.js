@@ -19,7 +19,12 @@ const routes = [
       },
 
       {
-        path: "timer",
+        path: "joinregatta",
+        component: () => import("pages/JoinRegattaPage.vue"),
+      },
+
+      {
+        path: "racetimer",
         component: () => import("pages/RaceTimerPage.vue"),
       },
 

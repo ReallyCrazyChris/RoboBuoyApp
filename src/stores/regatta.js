@@ -41,9 +41,9 @@ export const useRegatta = defineStore("regatta", {
 
       this.title = "Quick Regatta";
       this.description = "Join us on the water for a quick regatta";
-      this.date = new Date()?.toISOString().slice(0, 16);
-      this.startTime = new Date().toISOString().substring(11, 16);
-      this.endTime = endTime.toISOString().substring(11, 16);
+      this.date = new Date().toISOString().slice(0, 16);
+      this.startTime = new Date().toLocaleTimeString().substring(0, 5);
+      this.endTime = endTime.toLocaleTimeString().substring(0, 5);
     },
   },
 });

@@ -1,11 +1,5 @@
 <template>
-  <div v-if="size == 0" style="font-size: 15vmin; line-height: 10rem">
-    {{ raceTimeFormatter }}
-  </div>
-  <div v-if="size == 1" style="font-size: 45vmin; line-height: 10rem">
-    {{ raceTimeFormatter }}
-  </div>
-  <div v-if="size == 2" style="font-size: 45vmin; line-height: 10rem">
+  <div class="fontFit">
     {{ raceTimeFormatter }}
   </div>
 </template>
@@ -17,10 +11,7 @@ export default {
   name: "raceTimerLarge",
 
   data() {
-    return {
-      // how thick the indicato ris on the knob
-      size: 0,
-    };
+    return {};
   },
 
   setup() {
@@ -63,4 +54,11 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.fontFit {
+  border: 0px solid black;
+  font-size: 16px;
+  font-size: 19vmin;
+  line-height: 1;
+}
+</style>

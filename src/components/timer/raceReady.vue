@@ -28,7 +28,7 @@
     <div class="col-1 q-px-md q-py-none"></div>
 
     <div class="col-1 q-px-md q-py-none">
-      <q-card>
+      <q-card flat>
         <q-card-actions align="right">
           <q-btn
             flat

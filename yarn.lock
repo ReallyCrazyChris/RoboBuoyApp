@@ -2417,6 +2417,11 @@ ol-ext@^4.0.11:
   resolved "https://registry.yarnpkg.com/ol-ext/-/ol-ext-4.0.18.tgz#87e68566bae1a7821e3a1af8b7019409ce922324"
   integrity sha512-zzeTAoCg9IocaM7LlXiLNnVCgVmfxxLzlDTWvYn3Y2gFxtICHSfRrIQl/8vumgBjftBksVl1Fds8P5uFReTmew==
 
+ol-geocoder@^4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/ol-geocoder/-/ol-geocoder-4.3.3.tgz#e1b756d419bd14a3a5ca36b5ec518f7a7b881a19"
+  integrity sha512-uCXygiNVldMNGgi7H0pLMMMnEey8Nlx/k3brq4knCnmtapC9P1lbel7NydMNGgdymUgm1jq4T5ENvIngTJW44A==
+
 ol@^8.0.0, ol@^8.1.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/ol/-/ol-8.2.0.tgz#145153eab0ea3b5d04f51f46d6c69c224cccd5c3"

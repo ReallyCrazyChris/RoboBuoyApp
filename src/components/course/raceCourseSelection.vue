@@ -1,9 +1,12 @@
 <template>
-  <div class="row">
+  <div class="row q-pt-sm">
     <div class="col-9">
       <q-select
-        label="course"
+        filled
+        dense
+        label="course type"
         color="primary"
+        class="q-pr-sm"
         options-selected-class="text-deep-orange"
         :modelValue="raceCourseOptions.selectedCourse"
         :options="raceCourseOptions.meta"
@@ -26,6 +29,9 @@
 
     <div class="col-3">
       <q-select
+        filled
+        dense
+        align="right"
         label="laps"
         color="primary"
         options-selected-class="text-deep-orange"

@@ -1,9 +1,11 @@
 <template>
-  <div class="row fit justify-start items-center">
-    <div class="col-6" style="font-size: 10vmin">SOG:</div>
-    <div class="col-6 text-center" style="font-size: 30vmin; line-height: 5rem">
-      {{ vmc.vmc }}
+  <div class="row fit">
+    <div class="col-6 fitFontSizeLarge">SOG</div>
+    <div class="col-6 text-center fitFontSizeLarge">
+      {{ vmc.sog }}
     </div>
+    <div class="col-6"></div>
+    <div class="col-6 text-center fitFontSizeMedium">knots</div>
   </div>
 </template>
 
@@ -18,3 +20,16 @@ export default {
   },
 };
 </script>
+<style>
+.fitFontSizeLarge {
+  font-size: 16px;
+  font-size: 19vmin;
+  line-height: 1;
+}
+
+.fitFontSizeMedium {
+  font-size: 16px;
+  font-size: 5vmin;
+  line-height: 1;
+}
+</style>

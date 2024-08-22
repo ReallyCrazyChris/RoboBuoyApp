@@ -7,7 +7,9 @@
     </q-card>
 
     <div class="col q-px-md q-py-none">
-      <div class="row"><q-img class="col-4" src="racesignals/lima.svg" /></div>
+      <div class="imagesSize">
+        <q-img src="racesignals/lima.svg" />
+      </div>
     </div>
 
     <div class="col-1 q-px-md q-py-none">
@@ -69,4 +71,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.imagesSize {
+  width: 30vmin;
+  height: 30vmin;
+}
+</style>

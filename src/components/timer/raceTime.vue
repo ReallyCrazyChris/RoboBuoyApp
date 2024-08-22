@@ -1,13 +1,13 @@
 <template>
   <div class="column" style="min-height: inherit">
-    <div class="col q-px-md q-py-none">
+    <div class="col q-py-none">
       <q-card flat>
-        <q-card-section class="row fit justify-start">
-          <div class="col-10">
+        <q-card-section class="row">
+          <div class="col-10 self-center">
             <raceTimerLarge />
           </div>
-          <div class="col-1 q-ml-xs q-my-xs">
-            <div class="q-mb-xs">
+          <div class="col-1 self-center">
+            <div class="">
               <q-avatar square size="3.4rem">
                 <q-img :src="raceTimer.yankeeFlagModel.image" />
               </q-avatar>
@@ -28,22 +28,20 @@
       </q-card>
     </div>
 
-    <div class="col-1 q-px-md q-py-none">
-      <q-card>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="Abandon Race"
-            @click="raceabandonedTransition()"
-          />
-          <q-btn
-            color="accent"
-            label="Race Completed"
-            @click="racecompletedTransition()"
-          />
-        </q-card-actions>
-      </q-card>
+    <div class="col-1 q-pa-xs">
+      <div align="right">
+        <q-btn
+          flat
+          color="secondary"
+          label="Abandon Race"
+          @click="raceabandonedTransition()"
+        />
+        <q-btn
+          color="accent"
+          label="Race Completed"
+          @click="racecompletedTransition()"
+        />
+      </div>
     </div>
   </div>
 </template>

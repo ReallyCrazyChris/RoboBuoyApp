@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title class="text-weight-bolder">
-          Robo-Regatta
+          Quick Regatta
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -61,10 +61,17 @@ const linksList = [
   },
 
   {
+    title: "Join",
+    caption: "join the regatta",
+    icon: "map",
+    link: "#/joinregatta",
+  },
+
+  {
     title: "Timer",
     caption: "start race timer",
     icon: "timer",
-    link: "#/timer",
+    link: "#/racetimer",
   },
 
   {

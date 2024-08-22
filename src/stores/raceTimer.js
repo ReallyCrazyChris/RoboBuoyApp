@@ -91,6 +91,12 @@ export const prepareFlagOptions = [
 
 export const classFlagOptions = [
   {
+    label: "Open to All",
+    value: "any",
+    description: "",
+    image: "boatclasses/any.png",
+  },
+  {
     label: "Optimist",
     value: "optimist",
     description: "",

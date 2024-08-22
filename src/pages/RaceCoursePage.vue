@@ -13,10 +13,17 @@
           :key="cource.signature"
         ></raceCourseMap>
       </div>
-      <div class="col-1 q-px-md q-py-none">
-        <raceCourseOptions />
-      </div>
     </div>
+    <q-page-sticky position="bottom-left" :offset="[18, 18]">
+      <q-btn icon="arrow_back" color="positive" @click="regattaTransition()" />
+    </q-page-sticky>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        icon="arrow_forward"
+        color="positive"
+        @click="joinRegattaTransition()"
+      />
+    </q-page-sticky>
   </q-page>
 </template>
 
@@ -31,7 +38,6 @@
 import { defineComponent, ref } from "vue";
 import { useRaceCourse } from "src/stores/raceCourse";
 import raceCourseMap from "src/components/course/raceCourseMap.vue";
-import raceCourseOptions from "src/components/course/raceCourseOptions.vue";
 
 const cource = useRaceCourse();
 
@@ -39,7 +45,6 @@ export default defineComponent({
   name: "RaceCourse",
   components: {
     raceCourseMap,
-    raceCourseOptions,
   },
   setup() {
     // makes sure the raceCourseMap fills the parent element to the maximum
@@ -50,7 +55,14 @@ export default defineComponent({
       cource,
     };
   },
-  mounted() {},
+  methods: {
+    joinRegattaTransition() {
+      this.$router.push("joinregatta");
+    },
+    regattaTransition() {
+      this.$router.push("regatta");
+    },
+  },
 });
 </script>
 <style></style>
