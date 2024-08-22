@@ -94,7 +94,7 @@ import raceAbandonedToday from "src/components/timer/raceAbandonedToday.vue";
 
 import { useGps } from "src/stores/gps";
 import { useRegatta } from "src/stores/regatta";
-import { useRaceCourse } from "src/stores/raceCourse";
+import { useCourse } from "src/stores/course";
 import { useRaceTimer } from "src/stores/raceTimer";
 
 const raceTimer = useRaceTimer();
@@ -102,7 +102,7 @@ const gps = useGps();
 import { useVmc } from "src/stores/vmc";
 const vmc = useVmc();
 const regatta = useRegatta();
-const course = useRaceCourse();
+const course = useCourse();
 
 export default defineComponent({
   name: "RaceTimerPage",

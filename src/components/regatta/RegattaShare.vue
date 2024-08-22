@@ -9,7 +9,7 @@ import { useRegatta } from "src/stores/regatta";
 const regatta = useRegatta();
 
 export default {
-  name: "RegattaShare",
+  name: "regattaShare",
   setup() {
     return {
       regatta,

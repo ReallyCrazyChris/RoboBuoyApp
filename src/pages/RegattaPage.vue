@@ -5,25 +5,22 @@
         <q-card flat>
           <q-card-section>
             <div class="text-h6">Regatta Notice</div>
-
             <q-separator />
-            <regattaInfo readonly />
-
+            <regattaSettings :readonly="false" />
             <q-separator />
-            <raceInfoOptions readonly />
+            <raceSettings :readonly="false" />
             <q-separator />
-            <raceCourseOptions readonly />
+            <courseSelection :readonly="false" />
           </q-card-section>
           <q-card-section>
-            <raceCourseMap
+            <courseMap
               :height="300"
               show-map
               show-boundary
               show-zoom
               show-controls
-              :readonly="true"
               :key="course.signature"
-            ></raceCourseMap>
+            ></courseMap>
           </q-card-section>
           <q-card-section>
             <div class="row">
@@ -34,7 +31,7 @@
                   @click="resetTransition()"
                 />
               </div>
-              <div class="col-9">hi</div>
+              <div class="col-9"></div>
               <div class="col-1">
                 <q-btn
                   icon="arrow_forward"
@@ -52,13 +49,13 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import regattaInfo from "src/components/regatta/regattaInfo.vue";
-import raceCourseOptions from "src/components/course/raceCourseOptions.vue";
-import raceInfoOptions from "src/components/timer/raceInfoOptions.vue";
-import raceCourseMap from "src/components/course/raceCourseMap.vue";
+import regattaSettings from "src/components/regatta/regattaSettings.vue";
+import courseSelection from "src/components/course/courseSelection.vue";
+import raceSettings from "src/components/race/raceSettings.vue";
+import courseMap from "src/components/course/courseMap.vue";
 
-import { useRaceCourse } from "src/stores/raceCourse";
-const course = useRaceCourse();
+import { useCourse } from "src/stores/course";
+const course = useCourse();
 
 import { useRegatta } from "src/stores/regatta";
 const regatta = useRegatta();
@@ -66,13 +63,13 @@ const regatta = useRegatta();
 export default defineComponent({
   name: "RegattaPage",
   components: {
-    regattaInfo,
-    raceInfoOptions,
-    raceCourseOptions,
-    raceCourseMap,
+    regattaSettings,
+    raceSettings,
+    courseSelection,
+    courseMap,
   },
   setup() {
-    // makes sure the raceCourseMap fills the parent element to the maximum
+    // makes sure the courseMap fills the parent element to the maximum
     return {
       regatta,
       course,
@@ -86,7 +83,7 @@ export default defineComponent({
     },
     courseSetupTransition() {
       regatta.publishRegattaState();
-      this.$router.push("racecourse");
+      this.$router.push("course");
     },
   },
 });

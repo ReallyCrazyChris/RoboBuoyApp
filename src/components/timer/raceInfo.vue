@@ -6,8 +6,8 @@
       </q-card-section>
     </q-card>
 
-    <div class="col" ref="raceCoursePageMapContainer">
-      <raceCourseMap
+    <!--div class="col" ref="raceCoursePageMapContainer">
+      <courseMap
         v-if="raceCoursePageMapContainer?.clientHeight"
         :height="raceCoursePageMapContainer?.clientHeight"
         show-map
@@ -16,8 +16,8 @@
         show-controls
         can-edit
         :key="course.signature"
-      ></raceCourseMap>
-    </div>
+      ></courseMap>
+    </div-->
 
     <div class="col-1 q-p-none">
       <q-card flat>
@@ -42,26 +42,26 @@
 <script>
 import { ref } from "vue";
 import raceInfoRegatta from "src/components/timer/raceInfoRegatta.vue";
-import raceInfoOptions from "src/components/timer/raceInfoOptions.vue";
-import raceCourseOptions from "src/components/course/raceCourseOptions.vue";
-import raceCourseLapInfo from "src/components/course/raceCourseLapInfo.vue";
+import raceInfo from "src/components/timer/raceInfo.vue";
+import courseSelection from "src/components/course/courseSelection.vue";
+import courseLaps from "src/components/course/courseLaps.vue";
 
-import raceCourseMap from "src/components/course/raceCourseMap.vue";
+import courseMap from "src/components/course/courseMap.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRaceCourse } from "src/stores/raceCourse";
+import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
-const course = useRaceCourse();
+const course = useCourse();
 
 export default {
   name: "raceInfo",
   components: {
-    raceInfoRegatta,
-    raceCourseMap,
-    //raceInfoOptions,
-    //raceCourseOptions,
-    //raceCourseLapInfo,
+    //raceInfoRegatta,
+    //courseMap,
+    //raceInfo,
+    //courseSelection,
+    //courseLaps,
   },
 
   setup(props) {

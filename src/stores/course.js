@@ -9,7 +9,7 @@ import {
 } from "./raceCourseData/WLR29ER";
 const mqttHook = useMQTT();
 
-export const useRaceCourse = defineStore("raceCourse", {
+export const useCourse = defineStore("course", {
   state: () => ({
     centerOfRotation: [1217300, 6295726],
     rotation: 0,
@@ -68,7 +68,7 @@ export const useRaceCourse = defineStore("raceCourse", {
           selectedLapItem: this.selectedLapItem,
           signature: Date.now(),
         });
-        mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
+        mqttHook.publish("course", raceCourseStateJSON, 0, {
           retain: true,
         });
       }

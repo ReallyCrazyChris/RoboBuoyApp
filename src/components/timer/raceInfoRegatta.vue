@@ -18,7 +18,7 @@
 <script>
 import { useRegatta } from "src/stores/regatta";
 import { useRaceTimer } from "src/stores/raceTimer";
-import shareregatta from "src/components/regatta/RegattaShare.vue";
+import shareregatta from "src/components/regatta/regattaShare.vue";
 
 const regatta = useRegatta();
 const raceTimer = useRaceTimer();

@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-1 q-px-md q-py-none">
-      <raceInfoOptions />
+      <raceInfo />
     </div>
 
     <div class="col-1 q-px-md q-py-none">
@@ -39,19 +39,19 @@
 <script>
 import { ref } from "vue";
 import raceInfoRegatta from "src/components/timer/raceInfoRegatta.vue";
-import raceInfoOptions from "src/components/timer/raceInfoOptions.vue";
+import raceInfo from "src/components/timer/raceInfo.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRaceCourse } from "src/stores/raceCourse";
+import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
-const course = useRaceCourse();
+const course = useCourse();
 
 export default {
   name: "raceFollowe",
   components: {
     raceInfoRegatta,
-    raceInfoOptions,
+    raceInfo,
   },
 
   setup(props) {

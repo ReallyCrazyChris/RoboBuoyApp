@@ -2,7 +2,7 @@
   <q-page>
     <div class="column" style="min-height: inherit">
       <div class="col" ref="raceCoursePageMapContainer">
-        <raceCourseMap
+        <courseMap
           v-if="raceCoursePageMapContainer?.clientHeight"
           :height="raceCoursePageMapContainer?.clientHeight"
           show-map
@@ -11,7 +11,7 @@
           show-controls
           can-edit
           :key="cource.signature"
-        ></raceCourseMap>
+        ></courseMap>
       </div>
     </div>
     <q-page-sticky position="bottom-left" :offset="[18, 18]">
@@ -36,18 +36,18 @@
           can-edit*/
 
 import { defineComponent, ref } from "vue";
-import { useRaceCourse } from "src/stores/raceCourse";
-import raceCourseMap from "src/components/course/raceCourseMap.vue";
+import { useCourse } from "src/stores/course";
+import courseMap from "src/components/course/courseMap.vue";
 
-const cource = useRaceCourse();
+const cource = useCourse();
 
 export default defineComponent({
   name: "RaceCourse",
   components: {
-    raceCourseMap,
+    courseMap,
   },
   setup() {
-    // makes sure the raceCourseMap fills the parent element to the maximum
+    // makes sure the courseMap fills the parent element to the maximum
     const raceCoursePageMapContainer = ref(null);
 
     return {

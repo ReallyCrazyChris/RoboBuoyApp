@@ -57,7 +57,7 @@ const linksList = [
     title: "Course",
     caption: "setup and define the race course",
     icon: "map",
-    link: "#/racecourse",
+    link: "#/course",
   },
 
   {

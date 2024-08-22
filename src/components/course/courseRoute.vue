@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import { useRaceCourse } from "src/stores/raceCourse";
-const course = useRaceCourse();
+import { useCourse } from "src/stores/course";
+const course = useCourse();
 
 export default {
-  name: "raceCourseLapInfo",
+  name: "courseRoute",
   setup() {
     return { course };
   },

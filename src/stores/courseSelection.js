@@ -18,10 +18,10 @@ import {
   WLR49ER_LAPS,
 } from "src/stores/raceCourseData/WLR49ER";
 
-import { useRaceCourse } from "src/stores/raceCourse";
-const course = useRaceCourse();
+import { useCourse } from "src/stores/course";
+const course = useCourse();
 
-export const useRaceCourseOptions = defineStore("raceCourseOptions", {
+export const useRaceCourseOptions = defineStore("courseSelection", {
   state: () => ({
     meta: [SIMPLE_META, WLR29ER_META, WLR49ER_META],
     features: [SIMPLE_FEATURES, WLR29ER_FEATURES, WLR49ER_FEATURES],

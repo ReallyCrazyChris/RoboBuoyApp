@@ -1,5 +1,5 @@
 <template>
-  <div ref="raceCourseMap" :style="'height:' + props.height + 'px; '"></div>
+  <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
 </template>
 
 <script setup>
@@ -26,8 +26,8 @@ import {
 } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
 
-import { useRaceCourse } from "src/stores/raceCourse";
-const course = useRaceCourse();
+import { useCourse } from "src/stores/course";
+const course = useCourse();
 
 const props = defineProps({
   height: Number,
@@ -726,11 +726,11 @@ if (props.showMap) {
 map.addLayer(courseVectorLayer);
 map.setView(view);
 
-const raceCourseMap = ref();
+const courseMap = ref();
 
 // show the map
 onMounted(() => {
-  map?.setTarget(raceCourseMap.value);
+  map?.setTarget(courseMap.value);
   view.fit(polygonFromExtent(course.getExtent()));
 });
 

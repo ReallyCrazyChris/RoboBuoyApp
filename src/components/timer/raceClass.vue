@@ -46,7 +46,7 @@
 import raceTimerLarge from "src/components/timer/raceTimerLarge.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRaceCourse } from "src/stores/raceCourse";
+import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
 

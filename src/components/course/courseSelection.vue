@@ -2,18 +2,19 @@
   <div class="row q-pt-sm">
     <div class="col-9">
       <q-select
-        filled
+        :filled="!readonly"
+        :readonly
         dense
         label="course type"
         color="primary"
         class="q-pr-sm"
         options-selected-class="text-deep-orange"
-        :modelValue="raceCourseOptions.selectedCourse"
-        :options="raceCourseOptions.meta"
-        @update:model-value="raceCourseOptions.applySelectedOption"
+        :modelValue="courseSelection.selectedCourse"
+        :options="courseSelection.meta"
+        @update:model-value="courseSelection.applySelectedOption"
       >
         <template v-slot:selected>
-          {{ raceCourseOptions.selectedCourse.description }}
+          {{ courseSelection.selectedCourse.description }}
         </template>
 
         <template v-slot:option="scope">
@@ -29,18 +30,19 @@
 
     <div class="col-3">
       <q-select
-        filled
+        :filled="!readonly"
+        :readonly
         dense
         align="right"
         label="laps"
         color="primary"
         options-selected-class="text-deep-orange"
-        :modelValue="raceCourseOptions.selectedLap"
-        :options="raceCourseOptions.lapOptions"
-        @update:model-value="raceCourseOptions.applySelectedLap"
+        :modelValue="courseSelection.selectedLap"
+        :options="courseSelection.lapOptions"
+        @update:model-value="courseSelection.applySelectedLap"
       >
         <template v-slot:selected>
-          {{ raceCourseOptions.selectedLap.label }}
+          {{ courseSelection.selectedLap.label }}
         </template>
 
         <template v-slot:option="scope">
@@ -56,14 +58,15 @@
 </template>
 
 <script>
-import { useRaceCourseOptions } from "src/stores/raceCourseOptions";
+import { useRaceCourseOptions } from "src/stores/courseSelection";
 
-const raceCourseOptions = useRaceCourseOptions();
+const courseSelection = useRaceCourseOptions();
 
 export default {
-  name: "raceCourseOptions",
+  name: "courseSelection",
+  props: ["readonly"],
   setup(props) {
-    return { raceCourseOptions };
+    return { courseSelection };
   },
 };
 </script>

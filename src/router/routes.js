@@ -14,13 +14,13 @@ const routes = [
       },
 
       {
-        path: "racecourse",
+        path: "course",
         component: () => import("pages/RaceCoursePage.vue"),
       },
 
       {
         path: "joinregatta",
-        component: () => import("pages/JoinRegattaPage.vue"),
+        component: () => import("pages/RegattaJoinPage.vue"),
       },
 
       {
