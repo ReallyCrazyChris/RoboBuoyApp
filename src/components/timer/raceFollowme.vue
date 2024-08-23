@@ -3,7 +3,7 @@
     <q-card class="col-1 q-py-none" flat>
       <q-card-section>
         <div class="row">
-          <div class="col-6 text-h6">Prepare to Race</div>
+          <div class="col-6 text-h6">Race Ready</div>
           <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
         </div>
       </q-card-section>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import regattaShare from "src/components/regatta/regattaShare.vue";
 import raceSettings from "src/components/race/raceSettings.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useCourse } from "src/stores/course";
@@ -47,7 +48,7 @@ const course = useCourse();
 
 export default {
   name: "raceFollome",
-  components: { raceSettings },
+  components: { raceSettings, regattaShare },
 
   setup(props) {
     return { course };

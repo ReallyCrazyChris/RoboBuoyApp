@@ -3,7 +3,7 @@
     <q-card class="col-1 q-py-none" flat>
       <q-card-section>
         <div class="row">
-          <div class="col-6 text-h6">Prepare to Race</div>
+          <div class="col-6 text-h6">Prepare Race</div>
           <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
         </div>
       </q-card-section>
