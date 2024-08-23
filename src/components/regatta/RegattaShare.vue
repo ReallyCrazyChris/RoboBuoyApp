@@ -18,9 +18,9 @@ export default {
   methods: {
     shareRegatta() {
       const data = {
-        title: "Join the " + regatta.title,
+        title: regatta.name,
         text: regatta.description + " - " + regatta.date,
-        url: "https://reallycrazychris.github.io/#/timer",
+        url: "https://reallycrazychris.github.io/#/joinregatta",
       };
 
       navigator.share(data);
