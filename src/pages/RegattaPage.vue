@@ -4,8 +4,11 @@
       <div class="col">
         <q-card flat>
           <q-card-section>
-            <div class="text-h6">Regatta Notice</div>
-            <q-separator />
+            <div class="row fit q-pb-sm">
+              <div class="col-6 text-h6">Regatta Notice</div>
+              <div class="col-6" align="right"><regattaShare /></div>
+            </div>
+
             <regattaSettingsEdit :readonly="false" />
             <q-separator />
             <courseSelection :readonly="false" />
@@ -47,6 +50,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import regattaShare from "src/components/regatta/regattaShare.vue";
 import regattaSettingsEdit from "src/components/regatta/regattaSettingsEdit.vue";
 import courseSelection from "src/components/course/courseSelection.vue";
 
@@ -63,6 +67,7 @@ export default defineComponent({
   components: {
     regattaSettingsEdit,
     courseSelection,
+    regattaShare,
     courseMap,
   },
   setup() {
