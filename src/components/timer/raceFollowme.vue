@@ -2,7 +2,10 @@
   <div class="column" style="min-height: inherit">
     <q-card class="col-1 q-py-none" flat>
       <q-card-section>
-        <raceInfoRegatta></raceInfoRegatta>
+        <div class="row">
+          <div class="col-6 text-h6">Prepare to Race</div>
+          <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
+        </div>
       </q-card-section>
     </q-card>
 
@@ -12,9 +15,7 @@
       </div>
     </div>
 
-    <div class="col-1 q-px-md q-py-none">
-      <raceInfo />
-    </div>
+    <div class="col-1 q-px-md q-py-none"><raceSettings /></div>
 
     <div class="col-1 q-px-md q-py-none">
       <q-card>
@@ -37,10 +38,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import raceInfoRegatta from "src/components/timer/raceInfoRegatta.vue";
-import raceInfo from "src/components/timer/raceInfo.vue";
-
+import raceSettings from "src/components/race/raceSettings.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useCourse } from "src/stores/course";
 
@@ -48,11 +46,8 @@ const raceTimer = useRaceTimer();
 const course = useCourse();
 
 export default {
-  name: "raceFollowe",
-  components: {
-    raceInfoRegatta,
-    raceInfo,
-  },
+  name: "raceFollome",
+  components: { raceSettings },
 
   setup(props) {
     return { course };
@@ -75,5 +70,17 @@ export default {
 .imagesSize {
   width: 30vmin;
   height: 30vmin;
+}
+
+.q-field {
+  &.q-field--readonly {
+    &.q-field--standard {
+      .q-field__control {
+        &:before {
+          border-bottom-style: none;
+        }
+      }
+    }
+  }
 }
 </style>

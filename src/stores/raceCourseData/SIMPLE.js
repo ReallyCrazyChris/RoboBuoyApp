@@ -25,7 +25,7 @@ export const SIMPLE_FEATURES = [
   {
     type: "gate",
     color: "orange",
-    text: "START / FIN",
+    text: "START",
     left: {
       text: "2",
       offset: [-100, 0],
@@ -34,7 +34,7 @@ export const SIMPLE_FEATURES = [
       locked: false,
     },
     right: {
-      text: "",
+      text: "2",
       offset: [0, 0],
       color: "orange",
       radius: 10,

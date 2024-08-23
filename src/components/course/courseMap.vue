@@ -543,7 +543,7 @@ function lapInfoFactory(lapInfo) {
   lapInfoFeature.setStyle((feature, resolution) => {
     return new Style({
       text: new Text({
-        text: "Course route: " + course.lap?.description,
+        text: course.lap?.description,
         font: Math.round(lapInfo.size / resolution) + "px sans-serif",
         color: lapInfo.color,
         textAlign: "center",

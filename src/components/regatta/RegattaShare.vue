@@ -1,5 +1,5 @@
 <template>
-  <q-btn label="share" color="primary" icon="share" @click="shareRegatta()">
+  <q-btn label="share" color="positive" icon="share" @click="shareRegatta()">
     <q-tooltip class="primary">invite others to participate</q-tooltip>
   </q-btn>
 </template>

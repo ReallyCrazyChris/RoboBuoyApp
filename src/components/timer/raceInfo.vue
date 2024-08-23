@@ -2,35 +2,39 @@
   <div class="column" style="min-height: inherit">
     <q-card class="col-1 q-py-none" flat>
       <q-card-section>
-        <raceInfoRegatta />
+        <div class="row">
+          <div class="col-6 text-h6">Prepare to Race</div>
+          <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
+        </div>
       </q-card-section>
     </q-card>
 
-    <!--div class="col" ref="raceCoursePageMapContainer">
+    <div class="col q-px-md q-py-none">
       <courseMap
-        v-if="raceCoursePageMapContainer?.clientHeight"
-        :height="raceCoursePageMapContainer?.clientHeight"
+        :height="120"
         show-map
         show-boundary
         show-zoom
         show-controls
-        can-edit
+        :readonly="true"
         :key="course.signature"
       ></courseMap>
-    </div-->
+    </div>
 
-    <div class="col-1 q-p-none">
-      <q-card flat>
+    <div class="col-1 q-px-md q-py-none"><raceSettings /></div>
+
+    <div class="col-1 q-px-md q-py-none">
+      <q-card>
         <q-card-actions align="right">
           <q-btn
             flat
             color="secondary"
-            label="Postpone Race"
+            label="postpone"
             @click="racepostponedTransition()"
           />
           <q-btn
             color="positive"
-            label="follow me"
+            label="Follow me"
             @click="followmeTransition()"
           />
         </q-card-actions>
@@ -40,44 +44,39 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import raceInfoRegatta from "src/components/timer/raceInfoRegatta.vue";
-import raceInfo from "src/components/timer/raceInfo.vue";
-import courseSelection from "src/components/course/courseSelection.vue";
-import courseLaps from "src/components/course/courseLaps.vue";
-
+import regattaShare from "src/components/regatta/regattaShare.vue";
+import raceSettings from "src/components/race/raceSettings.vue";
 import courseMap from "src/components/course/courseMap.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
+import { useRegatta } from "src/stores/regatta";
 import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
+const regatta = useRegatta();
 const course = useCourse();
 
 export default {
   name: "raceInfo",
   components: {
-    //raceInfoRegatta,
-    //courseMap,
-    //raceInfo,
-    //courseSelection,
-    //courseLaps,
+    courseMap,
+    raceSettings,
+    regattaShare,
   },
 
   setup(props) {
-    const raceCoursePageMapContainer = ref(null);
-    return { course, raceCoursePageMapContainer };
+    return { regatta, course };
   },
 
   methods: {
-    followmeTransition() {
-      raceTimer.followmeTransition();
-      raceTimer.publishRaceTransition("followme");
-    },
-
     racepostponedTransition() {
       raceTimer.racepostponedTransition();
       raceTimer.publishRaceTransition("racepostponed");
+    },
+
+    followmeTransition() {
+      raceTimer.followmeTransition();
+      raceTimer.publishRaceTransition("followme");
     },
   },
 };

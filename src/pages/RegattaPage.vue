@@ -6,9 +6,7 @@
           <q-card-section>
             <div class="text-h6">Regatta Notice</div>
             <q-separator />
-            <regattaSettings :readonly="false" />
-            <q-separator />
-            <raceSettings :readonly="false" />
+            <regattaSettingsEdit :readonly="false" />
             <q-separator />
             <courseSelection :readonly="false" />
           </q-card-section>
@@ -49,9 +47,9 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import regattaSettings from "src/components/regatta/regattaSettings.vue";
+import regattaSettingsEdit from "src/components/regatta/regattaSettingsEdit.vue";
 import courseSelection from "src/components/course/courseSelection.vue";
-import raceSettings from "src/components/race/raceSettings.vue";
+
 import courseMap from "src/components/course/courseMap.vue";
 
 import { useCourse } from "src/stores/course";
@@ -63,8 +61,7 @@ const regatta = useRegatta();
 export default defineComponent({
   name: "RegattaPage",
   components: {
-    regattaSettings,
-    raceSettings,
+    regattaSettingsEdit,
     courseSelection,
     courseMap,
   },

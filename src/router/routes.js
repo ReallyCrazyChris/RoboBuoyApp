@@ -9,6 +9,11 @@ const routes = [
       },
 
       {
+        path: "home",
+        component: () => import("pages/IndexPage.vue"),
+      },
+
+      {
         path: "regatta",
         component: () => import("pages/RegattaPage.vue"),
       },

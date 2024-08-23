@@ -5,7 +5,7 @@
         :filled="!readonly"
         :readonly
         dense
-        v-model="regatta.title"
+        v-model="regatta.name"
         class="q-pb-sm"
         label="name"
       ></q-input>
@@ -66,7 +66,7 @@ import { useRegatta } from "src/stores/regatta";
 const regatta = useRegatta();
 
 export default {
-  name: "regattaOptions",
+  name: "regattaSettingsEdit",
   props: ["readonly"],
   setup() {
     return {
