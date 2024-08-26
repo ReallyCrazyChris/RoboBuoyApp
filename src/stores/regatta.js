@@ -8,8 +8,8 @@ export const useRegatta = defineStore("regatta", {
     name: "Quick Regatta",
     description: "Come join us for a quick regatta",
     date: "",
-    earliestStartTime: "d",
-    latestStartTime: "d",
+    earliestStartTime: "",
+    latestStartTime: "",
   }),
 
   getters: {
@@ -71,6 +71,7 @@ export const useRegatta = defineStore("regatta", {
     reset() {
       this.name = "";
       this.description = "";
+      this.presetDateTime();
     },
   },
 });

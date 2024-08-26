@@ -19,7 +19,12 @@ export default {
     shareRegatta() {
       const data = {
         title: regatta.name,
-        text: regatta.description + " - " + regatta.date,
+        text:
+          regatta.description +
+          " - " +
+          regatta.localDate +
+          " @ " +
+          regatta.localTime,
         url: "https://reallycrazychris.github.io/#/joinregatta",
       };
 

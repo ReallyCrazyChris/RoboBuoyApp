@@ -56,6 +56,7 @@ export default defineComponent({
   },
   methods: {
     raceJoinTransition() {
+      this.regatta.publishRegattaState();
       this.$router.push("joinregatta");
     },
   },

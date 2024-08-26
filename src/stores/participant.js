@@ -3,6 +3,8 @@ import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
 export const useParticipant = defineStore("participant", {
+  persist: true,
+
   state: () => ({
     id: "",
     crewnames: "",
