@@ -1,45 +1,42 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-px-md q-py-none">
-      <q-card flat>
-        <q-card-section class="fit row">
-          <q-img
-            class="col-5 q-my-xs q-mr-xs"
-            :src="raceTimer.classFlagModel.image"
-          />
-          <q-img class="col-5 q-my-xs q-mr-xs" src="" />
-          <div class="col-1 q-my-xs">
-            <div class="q-mb-xs">
-              <q-avatar square size="3.4rem">
-                <q-img :src="raceTimer.yankeeFlagModel.image" />
-              </q-avatar>
-            </div>
+  <q-card flat class="column" style="min-height: inherit">
+    <q-card-section class="col">
+      <div class="fit row">
+        <q-img
+          class="col-5 q-my-xs q-mr-xs"
+          :src="raceTimer.classFlagModel.image"
+        />
+        <div class="col-5 q-my-xs q-mr-xs" />
+        <div class="col-1 q-my-xs">
+          <div class="q-mb-xs">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
           </div>
-          <div class="col-12 text-caption text-center q-my-xs">
-            {{ raceTimer.timerSequenceModel.description }}
-          </div>
-          <div class="col-12 text-center q-my-xs">
-            <raceTimerLarge />
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
+        </div>
+        <div class="col-12 text-caption text-center q-my-xs">
+          {{ raceTimer.timerSequenceModel.description }}
+        </div>
+        <div class="col-12 text-center q-my-xs">
+          <raceTimerLarge />
+        </div>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <sogview class="q-py-sm" />
+      <vmcview class="q-py-sm" />
+      <efficiencyview class="q-py-sm" />
+    </q-card-section>
 
-    <div class="col-1 q-px-md q-py-none"></div>
-
-    <div class="col-1 q-px-md q-py-none">
-      <q-card flat>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="Postpone Race"
-            @click="racepostponedTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    <q-card-actions class="col-1" align="right">
+      <q-btn
+        flat
+        color="secondary"
+        label="Postpone Race"
+        @click="racepostponedTransition()"
+      />
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
@@ -54,7 +51,7 @@ export default {
   name: "raceReady",
   components: { raceTimerLarge },
 
-  setup(props) {
+  setup() {
     return { raceTimer };
   },
 

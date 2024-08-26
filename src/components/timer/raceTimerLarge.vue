@@ -1,6 +1,6 @@
 <template>
-  <div class="fontFit">
-    {{ raceTimeFormatter }}
+  <div :style="'font-size:' + fontSize">
+    {{ raceTimeFormatter() }}
   </div>
 </template>
 
@@ -11,14 +11,18 @@ export default {
   name: "raceTimerLarge",
 
   data() {
-    return {};
+    return {
+      fontSize: "50vmin",
+    };
   },
 
   setup() {
     return { raceTimer };
   },
 
-  computed: {
+  computed: {},
+
+  methods: {
     raceTimeFormatter() {
       if (this.raceTimer.raceTime == undefined) {
         return "--:--";
@@ -38,17 +42,19 @@ export default {
       let minutesStr = ":" + ("00" + minutes).slice(-2);
       let secondsStr = ":" + ("00" + seconds).slice(-2);
 
-      // in the last seconds
+      // in the last seconds e.g. 02
       if (hours == 0 && minutes == 0 && this.raceTimer.raceTime <= 0) {
-        return seconds;
+        this.fontSize = "44vmin";
+        return "" + seconds;
       }
 
-      // in the last minutes
+      // in the last minutes e.g. 05:02
       if (hours == 0 && this.raceTimer.raceTime <= 0) {
-        return minutes + secondsStr;
+        this.fontSize = "44vmin";
+        return "" + minutes + secondsStr;
       }
-      // show the full time
-
+      // show the full time 00:05:02
+      this.fontSize = "18vmin";
       return hoursStr + minutesStr + secondsStr;
     },
   },

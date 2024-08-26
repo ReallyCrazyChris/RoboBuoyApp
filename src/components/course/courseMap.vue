@@ -1,5 +1,11 @@
 <template>
-  <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
+  <div>
+    <courseSelection :readonly="readonly" />
+    <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
+    <div class="text-caption text-center">
+      {{ course.lap.description }} ( laps: {{ course.lap.lapCount }})
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -26,6 +32,7 @@ import {
 } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
 
+import courseSelection from "src/components/course/courseSelection.vue";
 import { useCourse } from "src/stores/course";
 const course = useCourse();
 

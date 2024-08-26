@@ -1,49 +1,39 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-py-none">
-      <q-card flat>
-        <q-card-section class="row">
-          <div class="col-10 self-center">
-            <raceTimerLarge />
+  <q-card flat class="column" style="min-height: inherit">
+    <q-card-section class="col">
+      <div class="row">
+        <div class="col-10 self-center">
+          <raceTimerLarge />
+        </div>
+        <div class="col-1 self-center">
+          <div class="">
+            <q-avatar square size="3.4rem">
+              <q-img :src="raceTimer.yankeeFlagModel.image" />
+            </q-avatar>
           </div>
-          <div class="col-1 self-center">
-            <div class="">
-              <q-avatar square size="3.4rem">
-                <q-img :src="raceTimer.yankeeFlagModel.image" />
-              </q-avatar>
-            </div>
-          </div>
-        </q-card-section>
-        <q-card-section>
-          <sogview />
-        </q-card-section>
-
-        <q-card-section>
-          <vmcview />
-        </q-card-section>
-
-        <q-card-section>
-          <efficiencyview />
-        </q-card-section>
-      </q-card>
-    </div>
-
-    <div class="col-1 q-pa-xs">
-      <div align="right">
-        <q-btn
-          flat
-          color="secondary"
-          label="Abandon Race"
-          @click="raceabandonedTransition()"
-        />
-        <q-btn
-          color="accent"
-          label="Race Completed"
-          @click="racecompletedTransition()"
-        />
+        </div>
       </div>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-section>
+      <sogview class="q-py-sm" />
+      <vmcview class="q-py-sm" />
+      <efficiencyview class="q-py-sm" />
+    </q-card-section>
+
+    <q-card-actions class="col-1" align="right">
+      <q-btn
+        flat
+        color="secondary"
+        label="Abandon Race"
+        @click="raceabandonedTransition()"
+      />
+      <q-btn
+        color="accent"
+        label="Race Completed"
+        @click="racecompletedTransition()"
+      />
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>

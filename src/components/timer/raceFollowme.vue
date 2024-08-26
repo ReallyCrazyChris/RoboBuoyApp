@@ -3,8 +3,10 @@
     <q-card class="col-1 q-py-none" flat>
       <q-card-section>
         <div class="row">
-          <div class="col-6 text-h6">Race Ready</div>
-          <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
+          <div class="col-12 text-h6">Follow Me</div>
+          <div class="col-12">
+            proceed to the start line and prepare for the start
+          </div>
         </div>
       </q-card-section>
     </q-card>
@@ -38,7 +40,6 @@
 </template>
 
 <script>
-import regattaShare from "src/components/regatta/regattaShare.vue";
 import raceSettings from "src/components/race/raceSettings.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useCourse } from "src/stores/course";
@@ -48,7 +49,7 @@ const course = useCourse();
 
 export default {
   name: "raceFollome",
-  components: { raceSettings, regattaShare },
+  components: { raceSettings },
 
   setup(props) {
     return { course };
@@ -69,8 +70,8 @@ export default {
 </script>
 <style>
 .imagesSize {
-  width: 30vmin;
-  height: 30vmin;
+  width: 35vmin;
+  height: 35vmin;
 }
 
 .q-field {

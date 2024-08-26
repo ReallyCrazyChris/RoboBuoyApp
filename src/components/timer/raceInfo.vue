@@ -1,46 +1,37 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <q-card class="col-1 q-py-none" flat>
-      <q-card-section>
-        <div class="row">
-          <div class="col-6 text-h6">Prepare Race</div>
-          <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
+  <q-card flat class="column" style="min-height: inherit">
+    <q-card-section class="col q-pt-sm q-pb-none">
+      <div class="row">
+        <div class="col-12 text-h6">{{ regatta.name }}</div>
+        <div class="col-12 text-caption text-weight-bold">
+          {{ regatta.description }}
         </div>
-      </q-card-section>
-    </q-card>
 
-    <div class="col q-px-md q-py-none">
+        <div class="col-6 text-caption text-weight-bold">
+          {{ regatta.localDate }} @ {{ regatta.localTime }}
+        </div>
+      </div>
+    </q-card-section>
+    <q-card-section class="col q-pt-none">
       <courseMap
-        :height="120"
+        :height="300"
         show-map
         show-boundary
         show-zoom
         show-controls
-        :readonly="true"
         :key="course.signature"
       ></courseMap>
-    </div>
-
-    <div class="col-1 q-px-md q-py-none"><raceSettings /></div>
-
-    <div class="col-1 q-px-md q-py-none">
-      <q-card>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="postpone"
-            @click="racepostponedTransition()"
-          />
-          <q-btn
-            color="positive"
-            label="Follow me"
-            @click="followmeTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-actions class="col-1 q-pt-none" align="right">
+      <q-btn
+        flat
+        color="secondary"
+        label="postpone"
+        @click="racepostponedTransition()"
+      />
+      <q-btn color="positive" label="Follow me" @click="followmeTransition()" />
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
@@ -60,8 +51,6 @@ export default {
   name: "raceInfo",
   components: {
     courseMap,
-    raceSettings,
-    regattaShare,
   },
 
   setup(props) {

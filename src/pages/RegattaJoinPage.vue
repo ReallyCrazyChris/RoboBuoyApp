@@ -1,22 +1,38 @@
 <template>
   <q-page>
-    <q-card flat>
-      <q-card-section class="q-pb-xs">
-        <div class="row">
+    <q-card flat class="column" style="min-height: inherit">
+      <q-card-section class="col">
+        <div class="row q-pb-md">
           <div class="col-12 text-h6">Participate</div>
+          <div class="col-6 text-weight-bold">{{ regatta.name }}</div>
+          <div class="col-6 text-caption text-weight-bold">
+            {{ regatta.localDate }} @ {{ regatta.localTime }}
+          </div>
         </div>
-      </q-card-section>
-    </q-card>
-    <q-card flat>
-      <q-card-section>
-        <div class="row">
+        <q-separator />
+        <div class="row q-py-md">
+          <div class="col-12 text-caption text-weight-bold">
+            {{ regatta.description }}
+          </div>
+          <div class="col-6 text-caption">Earliest start</div>
+          <div class="col-6 text-caption text-weight-bold">
+            {{ regatta.earliestStartTime }}
+          </div>
+          <div class="col-6 text-caption">Latest start</div>
+          <div class="col-6 text-caption text-weight-bold">
+            {{ regatta.latestStartTime }}
+          </div>
+
+          <div class="col-6 text-caption">Location</div>
+          <div class="col-6 text-caption">locatorpin</div>
+        </div>
+        <q-separator />
+        <div class="row q-py-md">
           <div class="col-12">
             <q-input
-              :filled="!readonly"
-              :readonly
-              dense
-              v-model="participant.crewnames"
               class="q-pb-sm"
+              filled
+              v-model="participant.crewnames"
               label="crew names [ e.g.  alina rogers, john jakobs]"
               type="text"
             />
@@ -24,18 +40,17 @@
 
           <div class="col-12">
             <q-input
-              :filled="!readonly"
-              :readonly
-              dense
+              filled
               v-model="participant.sailnumber"
-              class="q-pb-sm"
               label="sail number"
               type="text"
             />
           </div>
         </div>
+        <q-separator />
       </q-card-section>
-      <q-card-actions>
+
+      <q-card-actions class="col-1">
         <div class="row fit">
           <div class="col-10">
             <q-btn
@@ -55,45 +70,11 @@
         </div>
       </q-card-actions>
     </q-card>
-
-    <q-separator />
-
-    <q-card flat>
-      <q-card-section>
-        <div class="row">
-          <div class="col-6 text-h6">Regatta Details</div>
-          <div class="col-6 q-pr-sm" align="right"><regattaShare /></div>
-        </div>
-
-        <regattaSettingsEdit :readonly="true" />
-        <courseSelection :readonly="true" />
-        <div class="text-caption">
-          Number of laps {{ course.lap.lapCount }},
-        </div>
-        <div class="text-caption">
-          Course route {{ course.lap.description }}
-        </div>
-        <courseMap
-          :height="300"
-          show-map
-          show-boundary
-          show-zoom
-          show-controls
-          :readonly="true"
-          :key="course.signature"
-        ></courseMap>
-      </q-card-section>
-    </q-card>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-
-import regattaSettingsEdit from "src/components/regatta/regattaSettingsEdit.vue";
-import courseSelection from "src/components/course/courseSelection.vue";
-import regattaShare from "src/components/regatta/regattaShare.vue";
-import courseMap from "src/components/course/courseMap.vue";
 
 import { useParticipant } from "src/stores/participant";
 import { useRegatta } from "src/stores/regatta";
@@ -105,13 +86,7 @@ const course = useCourse();
 
 export default defineComponent({
   name: "RegattaPage",
-  props: ["readonly"],
-  components: {
-    regattaSettingsEdit,
-    courseSelection,
-    regattaShare,
-    courseMap,
-  },
+  components: {},
   setup() {
     // makes sure the courseMap fills the parent element to the maximum
     return {
@@ -131,16 +106,4 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.q-field {
-  &.q-field--readonly {
-    &.q-field--standard {
-      .q-field__control {
-        &:before {
-          border-bottom-style: none;
-        }
-      }
-    }
-  }
-}
-</style>
+<style></style>

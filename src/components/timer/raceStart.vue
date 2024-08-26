@@ -1,49 +1,45 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-px-md q-py-none">
-      <q-card-section class="row fit justify-start">
-        <div class="col-10">
+  <q-card flat class="column" style="min-height: inherit">
+    <q-card-section class="col">
+      <div class="row">
+        <div class="col-10 self-center">
           <raceTimerLarge />
         </div>
-        <div class="col-1 q-ml-xs q-my-xs">
-          <div class="q-mb-xs">
+        <div class="col-1 self-center">
+          <div class="">
             <q-avatar square size="3.4rem">
               <q-img :src="raceTimer.yankeeFlagModel.image" />
             </q-avatar>
           </div>
         </div>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <sogview class="q-py-sm" />
+      <div class="col-12 text-center" style="font-size: 30vmin">START</div>
+    </q-card-section>
 
-        <div class="col-12 text-center" style="font-size: 30vmin">START</div>
-      </q-card-section>
-    </div>
+    <q-card-actions class="col-1" align="right">
+      <q-btn
+        flat
+        color="secondary"
+        label="Postpone"
+        @click="racepostponedTransition()"
+      />
 
-    <div class="col-1 q-px-md q-py-none"></div>
+      <q-btn
+        color="primary"
+        label="Recall One"
+        @click="recalloneTransition()"
+      />
 
-    <div class="col-1 q-px-md q-py-none">
-      <q-card>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="Postpone"
-            @click="racepostponedTransition()"
-          />
-
-          <q-btn
-            color="primary"
-            label="Recall One"
-            @click="recalloneTransition()"
-          />
-
-          <q-btn
-            color="secondary"
-            label="Recall All"
-            @click="recallallTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+      <q-btn
+        color="secondary"
+        label="Recall All"
+        @click="recallallTransition()"
+      />
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>

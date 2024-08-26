@@ -1,7 +1,7 @@
 <template>
-  <div class="row fit">
+  <div class="row">
     <div class="col-6">
-      <div class="fitFontSizeLarge">VMC</div>
+      <div class="fontSize">VMC</div>
       <div class="row q-pl-sm">
         <div class="col-5">
           <div class="text-caption">N {{ parseFloat(vmc.lat).toFixed(3) }}</div>
@@ -19,10 +19,10 @@
       </div>
     </div>
     <div class="col-6">
-      <div class="text-center fitFontSizeLarge">
+      <div class="text-center fontSize">
         {{ vmc.vmc }}
       </div>
-      <div class="text-center fitFontSizeMedium">knots</div>
+      <div class="text-center fontSizeUnits">knots</div>
     </div>
   </div>
 </template>
@@ -40,13 +40,13 @@ export default {
 };
 </script>
 <style>
-.fitFontSizeLarge {
+.fontSize {
   font-size: 16px;
   font-size: 12vmin;
   line-height: 1;
 }
 
-.fitFontSizeMedium {
+.fontSizeUnits {
   font-size: 16px;
   font-size: 5vmin;
   line-height: 1;

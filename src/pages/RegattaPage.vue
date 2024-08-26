@@ -1,50 +1,28 @@
 <template>
   <q-page>
-    <div class="column">
-      <div class="col">
-        <q-card flat>
-          <q-card-section>
-            <div class="row fit q-pb-sm">
-              <div class="col-6 text-h6">Regatta Notice</div>
-              <div class="col-6" align="right"><regattaShare /></div>
-            </div>
+    <q-card flat class="column" style="min-height: inherit">
+      <q-card-section class="col-1 q-pb-none">
+        <div class="row q-pb-sm">
+          <div class="col-6 text-h6">Regatta Notice</div>
+          <div class="col-6" align="right">
+            <regattaShare @click="raceJoinTransition()" />
+          </div>
+        </div>
 
-            <regattaSettingsEdit :readonly="false" />
-            <q-separator />
-            <courseSelection :readonly="false" />
-          </q-card-section>
-          <q-card-section>
-            <courseMap
-              :height="300"
-              show-map
-              show-boundary
-              show-zoom
-              show-controls
-              :key="course.signature"
-            ></courseMap>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-1">
-                <q-btn
-                  icon="restart_alt"
-                  color="positive"
-                  @click="resetTransition()"
-                />
-              </div>
-              <div class="col-9"></div>
-              <div class="col-1">
-                <q-btn
-                  icon="arrow_forward"
-                  color="positive"
-                  @click="courseSetupTransition()"
-                />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+        <regattaSettingsEdit />
+      </q-card-section>
+
+      <q-card-section class="col-1 q-pt-none">
+        <courseMap
+          :height="180"
+          show-map
+          show-boundary
+          show-zoom
+          show-controls
+          :key="course.signature"
+        ></courseMap>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -52,7 +30,6 @@
 import { defineComponent, ref } from "vue";
 import regattaShare from "src/components/regatta/regattaShare.vue";
 import regattaSettingsEdit from "src/components/regatta/regattaSettingsEdit.vue";
-import courseSelection from "src/components/course/courseSelection.vue";
 
 import courseMap from "src/components/course/courseMap.vue";
 
@@ -66,7 +43,7 @@ export default defineComponent({
   name: "RegattaPage",
   components: {
     regattaSettingsEdit,
-    courseSelection,
+
     regattaShare,
     courseMap,
   },
@@ -77,15 +54,9 @@ export default defineComponent({
       course,
     };
   },
-
   methods: {
-    resetTransition() {
-      regatta.reset();
-      regatta.publishRegattaState();
-    },
-    courseSetupTransition() {
-      regatta.publishRegattaState();
-      this.$router.push("course");
+    raceJoinTransition() {
+      this.$router.push("joinregatta");
     },
   },
 });

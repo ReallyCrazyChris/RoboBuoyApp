@@ -9,19 +9,18 @@
           show-boundary
           show-zoom
           show-controls
-          can-edit
+          :readonly="false"
           :key="cource.signature"
         ></courseMap>
       </div>
     </div>
+
     <q-page-sticky position="bottom-left" :offset="[18, 18]">
-      <q-btn icon="arrow_back" color="positive" @click="regattaTransition()" />
-    </q-page-sticky>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
-        icon="arrow_forward"
+        round
+        icon="arrow_back"
         color="positive"
-        @click="joinRegattaTransition()"
+        @click="backTransition()"
       />
     </q-page-sticky>
   </q-page>
@@ -56,11 +55,8 @@ export default defineComponent({
     };
   },
   methods: {
-    joinRegattaTransition() {
-      this.$router.push("joinregatta");
-    },
-    regattaTransition() {
-      this.$router.push("regatta");
+    backTransition() {
+      this.$router.go(-1);
     },
   },
 });

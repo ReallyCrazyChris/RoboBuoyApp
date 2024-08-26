@@ -1,6 +1,6 @@
 <template>
   <div class="fit row wrap justify-start items-center content-center q-pt-sm">
-    <div class="col-12">
+    <div class="col-10">
       <q-input
         :filled="!readonly"
         :readonly
@@ -9,6 +9,10 @@
         class="q-pb-sm"
         label="name"
       ></q-input>
+    </div>
+
+    <div class="col-2 self-start" align="right">
+      <q-btn round icon="delete" color="primary" @click="regatta.reset()" />
     </div>
 
     <div class="col-12">
@@ -22,16 +26,25 @@
       />
     </div>
 
-    <div class="col-12">
+    <div class="col-10 q-pb-sm q-pr-sm">
       <q-input
         :filled="!readonly"
         :readonly
         dense
         v-model="regatta.date"
-        class="q-pb-sm"
         label="date and time"
         type="datetime-local"
       />
+    </div>
+
+    <div class="col-2 self-start" align="right">
+      <q-btn
+        round
+        icon="today"
+        color="primary"
+        @click="regatta.presetDateTime()"
+        ><q-tooltip class="bg-primary">current date & time</q-tooltip></q-btn
+      >
     </div>
 
     <div class="col-6">
@@ -39,7 +52,7 @@
         :filled="!readonly"
         :readonly
         dense
-        v-model="regatta.startTime"
+        v-model="regatta.earliestStartTime"
         class="q-pb-sm q-pr-xs"
         type="time"
         label="earliest race start "
@@ -51,7 +64,7 @@
         :filled="!readonly"
         :readonly
         dense
-        v-model="regatta.endTime"
+        v-model="regatta.latestStartTime"
         class="q-pb-sm q-pl-xs"
         type="time"
         label="latest race start"

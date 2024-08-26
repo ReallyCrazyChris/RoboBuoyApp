@@ -4,8 +4,8 @@
   - title
   - lon
   - lat
-  - startTimeStamp
-  - endTimeStamp
+  - earliestStartTimeStamp
+  - latestStartTimeStamp
   - webpage
   - email
 
@@ -41,7 +41,7 @@
 - race/raceid
 
   - id
-  - startTime
+  - earliestStartTime
   - finishTime
 
 - result/raceid/boatid

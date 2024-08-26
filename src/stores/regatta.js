@@ -8,9 +8,18 @@ export const useRegatta = defineStore("regatta", {
     name: "Quick Regatta",
     description: "Come join us for a quick regatta",
     date: "",
-    startTime: "",
-    endTime: "",
+    earliestStartTime: "d",
+    latestStartTime: "d",
   }),
+
+  getters: {
+    localDate(state) {
+      return state.date.slice(0, 10);
+    },
+    localTime(state) {
+      return state.date.slice(11, 16);
+    },
+  },
 
   actions: {
     createRegattaId() {
@@ -26,8 +35,8 @@ export const useRegatta = defineStore("regatta", {
             title: this.title,
             description: this.description,
             date: this.date,
-            startTime: this.startTime,
-            endTime: this.endTime,
+            earliestStartTime: this.earliestStartTime,
+            latestStartTime: this.latestStartTime,
           }),
           0,
           { retain: true }
@@ -35,15 +44,33 @@ export const useRegatta = defineStore("regatta", {
       }
     },
 
-    reset() {
-      var endTime = new Date();
-      endTime.setTime(endTime.getTime() + 1 * 60 * 60 * 1000);
+    presetDateTime() {
+      const earliestStartTimeUTC = new Date();
 
-      this.title = "Quick Regatta";
-      this.description = "Join us on the water for a quick regatta";
-      this.date = new Date().toISOString().slice(0, 16);
-      this.startTime = new Date().toLocaleTimeString().substring(0, 5);
-      this.endTime = endTime.toLocaleTimeString().substring(0, 5);
+      // round up to the next full hour
+      earliestStartTimeUTC.setMinutes(earliestStartTimeUTC.getMinutes() + 31);
+      earliestStartTimeUTC.setMinutes(0);
+
+      const latestStartTimeUTC = new Date(earliestStartTimeUTC);
+      // allow for 2 hours to start races
+      latestStartTimeUTC.setHours(latestStartTimeUTC.getHours() + 2);
+
+      this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 16);
+
+      this.earliestStartTime = earliestStartTimeUTC
+        .toLocaleTimeString()
+        .substring(0, 5);
+
+      this.latestStartTime = latestStartTimeUTC
+        .toLocaleTimeString()
+        .substring(0, 5);
+    },
+
+    reset() {
+      this.name = "";
+      this.description = "";
     },
   },
 });
