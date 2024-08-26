@@ -73,16 +73,4 @@ export default {
   width: 35vmin;
   height: 35vmin;
 }
-
-.q-field {
-  &.q-field--readonly {
-    &.q-field--standard {
-      .q-field__control {
-        &:before {
-          border-bottom-style: none;
-        }
-      }
-    }
-  }
-}
 </style>

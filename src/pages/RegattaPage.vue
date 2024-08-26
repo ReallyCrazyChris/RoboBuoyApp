@@ -61,17 +61,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.q-field {
-  &.q-field--readonly {
-    &.q-field--standard {
-      .q-field__control {
-        &:before {
-          border-bottom-style: none;
-        }
-      }
-    }
-  }
-}
-</style>
