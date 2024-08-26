@@ -9,17 +9,16 @@
           show-boundary
           show-zoom
           show-controls
-          :readonly="false"
           :key="cource.signature"
         ></courseMap>
       </div>
     </div>
 
-    <q-page-sticky position="bottom-left" :offset="[18, 18]">
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         round
         icon="arrow_back"
-        color="positive"
+        color="primary"
         @click="backTransition()"
       />
     </q-page-sticky>

@@ -3,28 +3,44 @@
     <q-card flat class="column" style="min-height: inherit">
       <q-card-section class="col">
         <div class="row q-pb-md">
-          <div class="col-12 text-h6">Participate</div>
-          <div class="col-6 text-weight-bold">{{ regatta.name }}</div>
-          <div class="col-6 text-caption text-weight-bold">
-            {{ regatta.localDate }} @ {{ regatta.localTime }}
+          <div class="col-6 text-h6 q-pb-md">Participate</div>
+
+          <div class="col-6 q-pb-md" align="right">
+            <regattaShare />
+          </div>
+
+          <div class="col-12 text-weight-bold">
+            {{ regatta.name }} : {{ regatta.localDate }} @
+            {{ regatta.localTime }}
+          </div>
+
+          <div class="col-12 text-caption text-weight-bold q-pb-sm">
+            {{ regatta.description }}
+          </div>
+
+          <div class="col-6 text-caption self-center">
+            {{ regatta.location }}
+          </div>
+          <div class="col-6 self-center text-right">
+            <q-btn
+              round
+              size="sm"
+              icon="map"
+              color="primary"
+              @click="showCourseTransition"
+            />
           </div>
         </div>
         <q-separator />
         <div class="row q-py-md">
-          <div class="col-12 text-caption text-weight-bold">
-            {{ regatta.description }}
-          </div>
           <div class="col-6 text-caption">Earliest start</div>
-          <div class="col-6 text-caption text-weight-bold">
+          <div class="col-6 text-caption text-weight-bold text-center">
             {{ regatta.earliestStartTime }}
           </div>
           <div class="col-6 text-caption">Latest start</div>
-          <div class="col-6 text-caption text-weight-bold">
+          <div class="col-6 text-caption text-weight-bold text-center">
             {{ regatta.latestStartTime }}
           </div>
-
-          <div class="col-6 text-caption">Location</div>
-          <div class="col-6 text-caption">locatorpin</div>
         </div>
         <q-separator />
         <div class="row q-py-md">
@@ -75,6 +91,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import regattaShare from "src/components/regatta/regattaShare.vue";
 
 import { useParticipant } from "src/stores/participant";
 import { useRegatta } from "src/stores/regatta";
@@ -86,7 +103,7 @@ const course = useCourse();
 
 export default defineComponent({
   name: "RegattaPage",
-  components: {},
+  components: { regattaShare },
   setup() {
     // makes sure the courseMap fills the parent element to the maximum
     return {
@@ -97,6 +114,10 @@ export default defineComponent({
   },
 
   methods: {
+    showCourseTransition() {
+      this.$router.push("course");
+    },
+
     noThanksTransition() {
       this.$router.push("home");
     },

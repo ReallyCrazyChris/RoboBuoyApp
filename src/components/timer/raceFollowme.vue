@@ -1,11 +1,19 @@
 <template>
   <div class="column" style="min-height: inherit">
     <q-card class="col-1 q-py-none" flat>
-      <q-card-section>
+      <q-card-section class="q-py-none">
         <div class="row">
           <div class="col-12 text-h6">Follow Me</div>
-          <div class="col-12">
-            proceed to the start line and prepare for the start
+          <div class="col-10 self-center">proceed to the start line</div>
+
+          <div class="col-2 text-right self-center">
+            <q-btn
+              round
+              size="sm"
+              icon="map"
+              color="primary"
+              @click="showCourseTransition"
+            />
           </div>
         </div>
       </q-card-section>
@@ -56,6 +64,10 @@ export default {
   },
 
   methods: {
+    showCourseTransition() {
+      this.$router.push("course");
+    },
+
     raceclassTransition() {
       raceTimer.raceclassTransition();
       raceTimer.publishRaceTransition("raceclass");

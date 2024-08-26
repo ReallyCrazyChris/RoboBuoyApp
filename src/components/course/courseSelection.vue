@@ -2,19 +2,18 @@
   <div class="row q-pt-sm">
     <div class="col-9">
       <q-select
-        :filled="!readonly"
-        :readonly
+        filled
         dense
-        label="course type"
+        label="course"
         color="primary"
         class="q-pr-sm"
         options-selected-class="text-deep-orange"
-        :modelValue="courseSelection.selectedCourse"
-        :options="courseSelection.meta"
-        @update:model-value="courseSelection.applySelectedOption"
+        :modelValue="course.courseType"
+        :options="course.courseTypes"
+        @update:model-value="course.selectCourseType"
       >
         <template v-slot:selected>
-          {{ courseSelection.selectedCourse.description }}
+          {{ course.courseType.description }}
         </template>
 
         <template v-slot:option="scope">
@@ -30,19 +29,18 @@
 
     <div class="col-3">
       <q-select
-        :filled="!readonly"
-        :readonly
+        filled
         dense
         align="right"
         label="laps"
         color="primary"
         options-selected-class="text-deep-orange"
-        :modelValue="courseSelection.selectedLap"
-        :options="courseSelection.lapOptions"
-        @update:model-value="courseSelection.applySelectedLap"
+        :modelValue="course.lap"
+        :options="course.lapTypes"
+        @update:model-value="course.selectLapType"
       >
         <template v-slot:selected>
-          {{ courseSelection.selectedLap.label }}
+          {{ course.lap.label }}
         </template>
 
         <template v-slot:option="scope">
@@ -58,15 +56,13 @@
 </template>
 
 <script>
-import { useRaceCourseOptions } from "src/stores/courseSelection";
-
-const courseSelection = useRaceCourseOptions();
+import { useCourse } from "src/stores/course";
+const course = useCourse();
 
 export default {
   name: "courseSelection",
-  props: ["readonly"],
-  setup(props) {
-    return { courseSelection };
+  setup() {
+    return { course };
   },
 };
 </script>

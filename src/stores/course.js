@@ -1,13 +1,11 @@
 import { defineStore } from "pinia";
-import { useMQTT } from "mqtt-vue-hook";
 import { boundingExtent } from "ol/extent";
 
-import {
-  WLR29ER_META,
-  WLR29ER_FEATURES,
-  WLR29ER_LAPS,
-} from "./raceCourseData/WLR29ER";
+import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
+
+import { useCourseRegistary } from "src/stores/courseRegistery";
+const courseRegistery = useCourseRegistary();
 
 export const useCourse = defineStore("course", {
   state: () => ({
@@ -43,29 +41,53 @@ export const useCourse = defineStore("course", {
       color: "lime",
     },
 
-    features: WLR29ER_FEATURES,
-    selectedCourseItem: 0,
-    lap: WLR29ER_LAPS[0],
-    selectedLapItem: 0,
+    selectedLap: 0,
+    selectedCourse: 0,
   }),
 
-  getters: {},
+  getters: {
+    courseTypes() {
+      return courseRegistery.meta;
+    },
+
+    courseType({ selectedCourse }) {
+      return courseRegistery.meta[selectedCourse];
+    },
+
+    features({ selectedCourse }) {
+      return courseRegistery.features[selectedCourse];
+    },
+
+    lapTypes({ selectedCourse }) {
+      return courseRegistery.laps[selectedCourse];
+    },
+
+    lap({ selectedCourse, selectedLap }) {
+      return courseRegistery.laps[selectedCourse][selectedLap];
+    },
+  },
 
   actions: {
+    selectCourseType(meta) {
+      this.selectedCourse = this.courseTypes.indexOf(meta);
+      this.signature = Date.now();
+      this.publishRaceCourseState();
+    },
+
+    selectLapType(lap) {
+      this.selectedLap = this.lapTypes.indexOf(lap);
+      this.signature = Date.now();
+      this.publishRaceCourseState();
+    },
+
     publishRaceCourseState() {
       if (mqttHook.isConnected) {
         const raceCourseStateJSON = JSON.stringify({
           centerOfRotation: this.centerOfRotation,
           rotation: this.rotation,
           scale: this.scale,
-          boundry: this.boundry,
-          anchorHandle: this.anchorHandle,
-          rotateHandle: this.rotateHandle,
-          scaleXHandle: this.scaleXHandle,
-          scaleYHandle: this.scaleYHandle,
-          features: this.features,
-          selectedCourseItem: this.selectedCourseItem,
-          selectedLapItem: this.selectedLapItem,
+          selectedLap: this.selectedLap,
+          selectedCourse: this.selectedCourse,
           signature: Date.now(),
         });
         mqttHook.publish("course", raceCourseStateJSON, 0, {

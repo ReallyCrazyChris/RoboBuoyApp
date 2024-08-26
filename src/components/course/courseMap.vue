@@ -1,11 +1,6 @@
 <template>
-  <div>
-    <courseSelection :readonly="readonly" />
-    <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
-    <div class="text-caption text-center">
-      {{ course.lap.description }} ( laps: {{ course.lap.lapCount }})
-    </div>
-  </div>
+  <div><courseSelection /></div>
+  <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
 </template>
 
 <script setup>

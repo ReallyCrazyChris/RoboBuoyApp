@@ -7,17 +7,20 @@ export const useRegatta = defineStore("regatta", {
     id: "",
     name: "Quick Regatta",
     description: "Come join us for a quick regatta",
-    date: "",
+    dateTime: "",
     earliestStartTime: "",
     latestStartTime: "",
+    location: "Segelhafen am Brombachsee, Germany",
+    lon: null,
+    lat: null,
   }),
 
   getters: {
     localDate(state) {
-      return state.date.slice(0, 10);
+      return state.dateTime.slice(0, 10);
     },
     localTime(state) {
-      return state.date.slice(11, 16);
+      return state.dateTime.slice(11, 16);
     },
   },
 
@@ -34,9 +37,12 @@ export const useRegatta = defineStore("regatta", {
             id: this.id,
             title: this.title,
             description: this.description,
-            date: this.date,
+            dateTime: this.dateTime,
             earliestStartTime: this.earliestStartTime,
             latestStartTime: this.latestStartTime,
+            location: this.location,
+            lon: this.lon,
+            lat: this.lat,
           }),
           0,
           { retain: true }
@@ -45,32 +51,37 @@ export const useRegatta = defineStore("regatta", {
     },
 
     presetDateTime() {
+      // Round the earliestStartTimeUTC to the begining of the next hour
       const earliestStartTimeUTC = new Date();
-
-      // round up to the next full hour
-      earliestStartTimeUTC.setMinutes(earliestStartTimeUTC.getMinutes() + 31);
       earliestStartTimeUTC.setMinutes(0);
+      earliestStartTimeUTC.setHours(earliestStartTimeUTC.getHours() + 1);
 
-      const latestStartTimeUTC = new Date(earliestStartTimeUTC);
-      // allow for 2 hours to start races
+      // Round the latestStartTimeUTC to the end of the next hour
+      const latestStartTimeUTC = new Date();
+      latestStartTimeUTC.setMinutes(0);
       latestStartTimeUTC.setHours(latestStartTimeUTC.getHours() + 2);
 
-      this.date = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      // cretae a dateTime format used by the datetime input type
+      this.dateTime = new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
         .toISOString()
         .slice(0, 16);
 
+      // cretae a time format used by the time input type
       this.earliestStartTime = earliestStartTimeUTC
         .toLocaleTimeString()
         .substring(0, 5);
 
+      // cretae a time format used by the time input type
       this.latestStartTime = latestStartTimeUTC
         .toLocaleTimeString()
         .substring(0, 5);
     },
 
     reset() {
-      this.name = "";
-      this.description = "";
+      this.name = "Quick Regatta";
+      this.description = "Come join us for a quick regatta";
       this.presetDateTime();
     },
   },
