@@ -1,12 +1,11 @@
 <template>
-  <div><courseSelection /></div>
   <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from "vue";
-
 import { Map, View, Feature } from "ol";
+import { Icon } from "ol/style";
 
 import { Tile, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource } from "ol/source";
@@ -27,7 +26,6 @@ import {
 } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
 
-import courseSelection from "src/components/course/courseSelection.vue";
 import { useCourse } from "src/stores/course";
 const course = useCourse();
 
@@ -36,79 +34,12 @@ const props = defineProps({
   width: Number,
   showMap: Boolean,
   showZoom: Boolean,
-
   showSequence: Boolean,
   showBoundary: Boolean,
   showAttribution: Boolean,
   showControls: Boolean,
   readonly: Boolean,
 });
-
-function labelFactory(label) {
-  var labelFeature = new Feature({
-    geometry: new Point(course.forwardTransform(label.offset)),
-  });
-
-  watch(course, () => {
-    labelFeature
-      .getGeometry()
-      .setCoordinates(course.forwardTransform(label.offset));
-  });
-
-  labelFeature.setStyle((feature, resolution) => {
-    return new Style({
-      fill: new Fill({
-        color: label.color,
-      }),
-      stroke: new Stroke({
-        color: label.color,
-        width: 2,
-        lineCap: "round",
-      }),
-      text: new Text({
-        text: label.text,
-        font: Math.round(label.size / resolution) + "px sans-serif",
-        textAlign: "center",
-        justify: "center",
-        rotation: -1 * course.rotation,
-
-        overflow: false,
-        placement: "point",
-        padding: [0, 100, 0, 100],
-        declutterMode: "declutter",
-        scale: 1,
-        fill: new Fill({
-          color: label.color,
-        }),
-      }),
-    });
-  });
-
-  const labelTranslate = new Translate({
-    layers: [courseVectorLayer],
-    features: new Collection([labelFeature]),
-  });
-
-  labelTranslate.on("translating", (translateEvent) => {
-    label.offset = course.reverseTransform(translateEvent.coordinate);
-  });
-
-  labelTranslate.on("translateend", (translateEvent) => {
-    view.fit(polygonFromExtent(course.getExtent()));
-    course.publishRaceCourseState();
-  });
-
-  const interactions = [];
-
-  if (!!!label.locked) {
-    interactions.push(labelTranslate);
-  }
-
-  return {
-    features: [labelFeature],
-    interactions: interactions,
-  };
-}
 
 function anchorFactory(anchorHandle) {
   var anchorFeature = new Feature({
@@ -314,6 +245,72 @@ function scaleYFactory(scaleYHandle) {
   return {
     features: [scaleYFeature],
     interactions: [scaleYFeatureTranslate],
+  };
+}
+
+function labelFactory(label) {
+  var labelFeature = new Feature({
+    geometry: new Point(course.forwardTransform(label.offset)),
+  });
+
+  watch(course, () => {
+    labelFeature
+      .getGeometry()
+      .setCoordinates(course.forwardTransform(label.offset));
+  });
+
+  labelFeature.setStyle((feature, resolution) => {
+    return new Style({
+      fill: new Fill({
+        color: label.color,
+      }),
+      stroke: new Stroke({
+        color: label.color,
+        width: 2,
+        lineCap: "round",
+      }),
+      text: new Text({
+        text: label.text,
+        font: Math.round(label.size / resolution) + "px sans-serif",
+        textAlign: "center",
+        justify: "center",
+        rotation: -1 * course.rotation,
+
+        overflow: false,
+        placement: "point",
+        padding: [0, 100, 0, 100],
+        declutterMode: "declutter",
+        scale: 1,
+        fill: new Fill({
+          color: label.color,
+        }),
+      }),
+    });
+  });
+
+  const labelTranslate = new Translate({
+    layers: [courseVectorLayer],
+    features: new Collection([labelFeature]),
+  });
+
+  labelTranslate.on("translating", (translateEvent) => {
+    label.offset = course.reverseTransform(translateEvent.coordinate);
+  });
+
+  labelTranslate.on("translateend", (translateEvent) => {
+    view.fit(polygonFromExtent(course.getExtent()));
+    course.publishRaceCourseState();
+  });
+
+  const interactions = [];
+
+  if (!!!label.locked) {
+    interactions.push(labelTranslate);
+  }
+
+  return {
+    features: [labelFeature],
+    interactions: interactions,
   };
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div :style="'font-size:' + fontSize">
+  <div class="lineheight" :style="'font-size:' + fontSize">
     {{ raceTimeFormatter() }}
   </div>
 </template>
@@ -61,10 +61,7 @@ export default {
 };
 </script>
 <style>
-.fontFit {
-  border: 0px solid black;
-  font-size: 16px;
-  font-size: 19vmin;
+.lineheight {
   line-height: 1;
 }
 </style>

@@ -1,11 +1,10 @@
 <template>
   <div class="row fit">
-    <div class="col-6 fitFontSizeLarge">SOG</div>
-    <div class="col-6 text-center fitFontSizeLarge">
-      {{ vmc.sog }}
+    <div class="col-12 text-center fitFontSizeLarge">
+      {{ vmc.efficiency }}
     </div>
-    <div class="col-6"></div>
-    <div class="col-6 text-center fitFontSizeMedium">knots</div>
+
+    <div class="col-12 text-center fitFontSizeMedium">vmc %</div>
   </div>
 </template>
 
@@ -13,8 +12,7 @@
 import { useVmc } from "src/stores/vmc";
 const vmc = useVmc();
 export default {
-  name: "sogView",
-
+  name: "efficiencyView",
   setup() {
     return { vmc };
   },
@@ -23,7 +21,7 @@ export default {
 <style>
 .fitFontSizeLarge {
   font-size: 16px;
-  font-size: 19vmin;
+  font-size: 12vmin;
   line-height: 1;
 }
 

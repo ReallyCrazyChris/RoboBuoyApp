@@ -60,7 +60,7 @@ import { useCourse } from "src/stores/course";
 const course = useCourse();
 
 export default {
-  name: "courseSelection",
+  name: "courseSettings",
   setup() {
     return { course };
   },

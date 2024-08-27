@@ -46,6 +46,7 @@ export const useCourse = defineStore("course", {
   }),
 
   getters: {
+    // data
     courseTypes() {
       return courseRegistery.meta;
     },

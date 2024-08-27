@@ -2,11 +2,15 @@
   <q-page>
     <q-card flat class="column" style="min-height: inherit">
       <q-card-section class="col q-pb-none">
-        <div class="row q-pb-sm">
-          <div class="col-12 text-h6">Regatta Notice</div>
-        </div>
+        <div class="col-12 text-h6">Regatta Notice</div>
+        <q-separator />
+        <regattaSettings />
+        <q-separator class="q-mt-sm" />
+        <courseSettings />
+        <locationSettings />
 
-        <regattaSettingsEdit />
+        <q-separator class="q-mt-sm" />
+        <raceSettings />
       </q-card-section>
       <q-card-actions class="col-1" align="right">
         <regattaShare @click="regattaJoinTransition()" />
@@ -18,7 +22,10 @@
 <script>
 import { defineComponent } from "vue";
 import regattaShare from "src/components/regatta/regattaShare.vue";
-import regattaSettingsEdit from "src/components/regatta/regattaSettingsEdit.vue";
+import regattaSettings from "src/components/regatta/regattaSettings.vue";
+import raceSettings from "src/components/race/raceSettings.vue";
+import courseSettings from "src/components/course/courseSettings.vue";
+import locationSettings from "src/components/course/locationSettings.vue";
 
 import { useRegatta } from "src/stores/regatta";
 const regatta = useRegatta();
@@ -26,8 +33,11 @@ const regatta = useRegatta();
 export default defineComponent({
   name: "RegattaPage",
   components: {
-    regattaSettingsEdit,
+    regattaSettings,
     regattaShare,
+    raceSettings,
+    locationSettings,
+    courseSettings,
   },
   setup() {
     // makes sure the courseMap fills the parent element to the maximum

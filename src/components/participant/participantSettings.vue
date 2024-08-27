@@ -1,24 +1,21 @@
 <template>
-  <div class="fit row wrap justify-start items-center content-center q-pt-sm">
+  <div class="row q-py-md">
     <div class="col-12">
       <q-input
-        :filled="!readonly"
-        :readonly
-        dense
-        v-model="participant.crewnames"
         class="q-pb-sm"
-        label="crew names"
-      ></q-input>
+        filled
+        v-model="participant.crewnames"
+        label="crew names [ e.g.  alina rogers, john jakobs]"
+        type="text"
+      />
     </div>
 
     <div class="col-12">
       <q-input
-        :filled="!readonly"
-        :readonly
-        dense
+        filled
         v-model="participant.sailnumber"
-        class="q-pb-sm"
         label="sail number"
+        type="text"
       />
     </div>
   </div>
@@ -26,12 +23,11 @@
 
 <script>
 import { useParticipant } from "src/stores/participant";
-
 const participant = useParticipant();
 
 export default {
-  name: "participantJoin",
-  props: ["readonly"],
+  name: "participantSettings",
+
   setup() {
     return {
       participant,

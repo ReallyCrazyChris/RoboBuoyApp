@@ -1,27 +1,15 @@
 <template>
   <q-card flat class="column" style="min-height: inherit">
     <q-card-section class="col q-pt-sm q-pb-none">
-      <div class="row">
-        <div class="col-12 text-h6">{{ regatta.name }}</div>
-        <div class="col-12 text-caption text-weight-bold">
-          {{ regatta.description }}
-        </div>
-
-        <div class="col-6 text-caption text-weight-bold">
-          {{ regatta.localDate }} @ {{ regatta.localTime }}
-        </div>
+      <div class="text-h6 text-center">
+        Prepare for {{ regatta.name }} start
       </div>
+
+      <sogview class="q-pt-lg" />
+      <vmcview />
+      <efficiencyview />
     </q-card-section>
-    <q-card-section class="col q-pt-none">
-      <courseMap
-        :height="300"
-        show-map
-        show-boundary
-        show-zoom
-        show-controls
-        :key="course.signature"
-      ></courseMap>
-    </q-card-section>
+
     <q-card-actions class="col-1 q-pt-none" align="right">
       <q-btn
         flat
@@ -35,9 +23,10 @@
 </template>
 
 <script>
-import regattaShare from "src/components/regatta/regattaShare.vue";
-import raceSettings from "src/components/race/raceSettings.vue";
 import courseMap from "src/components/course/courseMap.vue";
+import sogview from "src/components/boat/sog.vue";
+import vmcview from "src/components/boat/vmc.vue";
+import efficiencyview from "src/components/boat/efficiency.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRegatta } from "src/stores/regatta";
@@ -49,9 +38,7 @@ const course = useCourse();
 
 export default {
   name: "raceInfo",
-  components: {
-    courseMap,
-  },
+  components: { sogview, vmcview, efficiencyview },
 
   setup(props) {
     return { regatta, course };

@@ -2,15 +2,15 @@
   <q-page>
     <q-card flat>
       <q-card-section>
-        <sogview :vmc="vmc" />
+        <sogview />
       </q-card-section>
 
       <q-card-section>
-        <vmcview :vmc="vmc" :gps="gps" />
+        <vmcview />
       </q-card-section>
 
       <q-card-section>
-        <efficiencyview :vmc="vmc" />
+        <efficiencyview />
       </q-card-section>
     </q-card>
   </q-page>
@@ -19,23 +19,15 @@
 <script>
 import { defineComponent } from "vue";
 
-import sogview from "src/components/vmc/sog.vue";
-import vmcview from "src/components/vmc/vmc.vue";
-import efficiencyview from "src/components/vmc/efficiency.vue";
-
-import { useGps } from "src/stores/gps";
-import { useVmc } from "src/stores/vmc";
-const gps = useGps();
-const vmc = useVmc();
+import sogview from "src/components/boat/sog.vue";
+import vmcview from "src/components/boat/vmc.vue";
+import efficiencyview from "src/components/boat/efficiency.vue";
 
 export default defineComponent({
   name: "VmcDashboard",
   components: { sogview, vmcview, efficiencyview },
   setup() {
-    return {
-      vmc,
-      gps,
-    };
+    return {};
   },
 
   unmounted() {
