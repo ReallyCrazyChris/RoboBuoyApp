@@ -3,7 +3,6 @@
     <div class="col-9">
       <q-select
         readonly
-        filled
         dense
         label="course"
         color="primary"
@@ -31,7 +30,6 @@
     <div class="col-3">
       <q-select
         readonly
-        filled
         dense
         align="right"
         label="laps"

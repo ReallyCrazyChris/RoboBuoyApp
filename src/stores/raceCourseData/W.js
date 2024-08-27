@@ -1,12 +1,12 @@
-export const WLR29ER_META = {
-  name: "WLR29ER",
-  description: "29er Leeward",
+export const W_META = {
+  name: "W",
+  description: "Windward",
 };
 
-export const WLR29ER_FEATURES = [
+export const W_FEATURES = [
   {
     type: "label",
-    text: "29er Leeward",
+    text: "Windward",
     offset: [-50, 450],
     color: "black",
     size: 30,
@@ -24,59 +24,19 @@ export const WLR29ER_FEATURES = [
 
   {
     type: "gate",
-    color: "yellow",
-    text: "gate",
-    left: {
-      text: "2s",
-      offset: [-100, 100],
-      color: "yellow",
-      radius: 10,
-      locked: false,
-    },
-    right: {
-      text: "2p",
-      offset: [0, 100],
-      color: "yellow",
-      radius: 10,
-      locked: false,
-    },
-  },
-
-  {
-    type: "gate",
     color: "orange",
     text: "START",
     left: {
-      text: "",
+      text: "2",
       offset: [-100, 0],
       color: "orange",
       radius: 10,
       locked: false,
     },
     right: {
-      text: "",
+      text: "2",
       offset: [0, 0],
       color: "orange",
-      radius: 10,
-      locked: true,
-    },
-  },
-
-  {
-    type: "gate",
-    color: "blue",
-    text: "FINISH",
-    left: {
-      text: "",
-      offset: [72, 72],
-      color: "blue",
-      radius: 10,
-      locked: false,
-    },
-    right: {
-      text: "",
-      offset: [0, 0],
-      color: "lightgrey",
       radius: 10,
       locked: true,
     },
@@ -175,22 +135,21 @@ export const WLR29ER_FEATURES = [
   },
 ];
 
-export const WLR29ER_LAPS = [
+export const W_LAPS = [
   {
     lapCount: 1,
     label: "L1",
-    description: "START \u21A6 1 \u21A6 2p \u21A6 FINISH",
+    description: "START \u21A6 1 \u21A6 2 + FINISH",
   },
   {
     lapCount: 2,
     label: "L2",
-    description:
-      "START \u21A6 1 \u21A6 (2s/2p) \u21A6 1 \u21A6 2p \u21A6 FINISH",
+    description: "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 + FINISH",
   },
   {
     lapCount: 3,
     label: "L3",
     description:
-      "START \u21A6 1 \u21A6 (2s/2p) \u21A6 1 \u21A6 (2s/2p) \u21A6 1 \u21A6 2p \u21A6 FINISH",
+      "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2  + FINISH",
   },
 ];

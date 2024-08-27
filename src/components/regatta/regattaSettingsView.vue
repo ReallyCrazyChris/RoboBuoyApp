@@ -3,33 +3,29 @@
     <div class="col-12">
       <q-input
         readonly
-        filled
         dense
         v-model="regatta.description"
-        class="q-pb-sm"
         label="description"
       />
     </div>
 
-    <div class="col-12 q-pb-sm q-pr-sm">
+    <div class="col-12">
       <q-input
         readonly
-        filled
         dense
-        v-model="regatta.dateTime"
+        v-model="regatta.localDate"
         label="date and time"
-        type="datetime-local"
-      />
+        type="text"
+      ></q-input>
     </div>
 
     <div class="col-6">
       <q-input
         readonly
-        filled
         dense
         v-model="regatta.earliestStartTime"
         class="q-pr-xs"
-        type="time"
+        type="text"
         label="earliest race start "
       />
     </div>
@@ -37,11 +33,10 @@
     <div class="col-6">
       <q-input
         readonly
-        filled
         dense
         v-model="regatta.latestStartTime"
         class="q-pl-xs"
-        type="time"
+        type="text"
         label="latest race start"
       />
     </div>

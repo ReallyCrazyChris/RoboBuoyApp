@@ -5,7 +5,6 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import { Map, View, Feature } from "ol";
-import { Icon } from "ol/style";
 
 import { Tile, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource } from "ol/source";
@@ -642,7 +641,7 @@ if (props.showBoundary) {
   }
 }
 
-if (!!!props.readonly) {
+if (props.showControls) {
   const anchorProduct = anchorFactory(course.anchorHandle);
   courseFeatures.push(...anchorProduct.features);
   courseInteractions.push(...anchorProduct.interactions);

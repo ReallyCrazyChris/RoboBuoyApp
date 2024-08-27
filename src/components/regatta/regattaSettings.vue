@@ -11,7 +11,13 @@
     </div>
 
     <div class="col-2 self-start text-right">
-      <q-btn round icon="delete" color="primary" @click="regatta.reset()" />
+      <q-btn
+        round
+        size="sm"
+        icon="delete"
+        color="primary"
+        @click="regatta.reset()"
+      />
     </div>
 
     <div class="col-12">
@@ -37,6 +43,7 @@
     <div class="col-2 self-start text-right">
       <q-btn
         round
+        size="sm"
         icon="today"
         color="primary"
         @click="regatta.presetDateTime()"

@@ -3,7 +3,6 @@
     <q-select
       readonly
       class="q-pb-sm"
-      filled
       dense
       label="timing and start sequence"
       v-model="raceTimer.timerSequenceModel"
@@ -30,7 +29,6 @@
     <q-select
       readonly
       class="q-pb-sm"
-      filled
       label="class"
       v-model="raceTimer.classFlagModel"
       :options="raceTimer.classFlagOptions"
@@ -65,7 +63,6 @@
     <q-select
       readonly
       class="q-pb-sm"
-      filled
       label="preparation flag"
       v-model="raceTimer.prepareFlagModel"
       :options="raceTimer.prepareFlagOptions"
@@ -100,7 +97,6 @@
     <q-select
       readonly
       class="q-pb-sm"
-      filled
       label="personal flotation device"
       v-model="raceTimer.yankeeFlagModel"
       :options="raceTimer.yankeeFlagOptions"

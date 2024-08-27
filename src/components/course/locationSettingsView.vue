@@ -1,18 +1,13 @@
 <template>
   <div class="fit row wrap justify-start items-center content-center q-pt-sm">
     <div class="col-10 self-center">
-      <q-input
-        readonly
-        filled
-        dense
-        v-model="regatta.location"
-        label="location"
-      />
+      <q-input readonly dense v-model="regatta.location" label="location" />
     </div>
     <div class="col-2 text-right self-center">
       <q-btn
         readonly
         round
+        size="sm"
         icon="map"
         color="primary"
         @click="showCourseTransition"

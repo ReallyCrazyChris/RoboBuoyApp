@@ -4,7 +4,13 @@
       <q-input filled dense v-model="regatta.location" label="location" />
     </div>
     <div class="col-2 text-right self-center">
-      <q-btn round icon="map" color="primary" @click="showCourseTransition" />
+      <q-btn
+        round
+        size="sm"
+        icon="map"
+        color="primary"
+        @click="showCourseTransition"
+      />
     </div>
   </div>
 </template>

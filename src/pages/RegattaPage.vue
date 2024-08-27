@@ -3,13 +3,15 @@
     <q-card flat class="column" style="min-height: inherit">
       <q-card-section class="col q-pb-none">
         <div class="col-12 text-h6">Regatta Notice</div>
-        <q-separator />
+
         <regattaSettings />
         <q-separator class="q-mt-sm" />
+        <div class="text-subtitle1 q-mt-sm">Course and Location</div>
         <courseSettings />
         <locationSettings />
 
         <q-separator class="q-mt-sm" />
+        <div class="text-subtitle1 q-mt-sm">Race Conditions</div>
         <raceSettings />
       </q-card-section>
       <q-card-actions class="col-1" align="right">
@@ -48,7 +50,7 @@ export default defineComponent({
   methods: {
     regattaJoinTransition() {
       this.regatta.publishRegattaState();
-      this.$router.push("joinregatta");
+      this.$router.push("racetimer");
     },
   },
 });

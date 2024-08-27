@@ -1,12 +1,12 @@
 export const WL_META = {
   name: "WL",
-  description: "Windward / Leeward",
+  description: "Windward + Leeward",
 };
 
 export const WL_FEATURES = [
   {
     type: "label",
-    text: "Windward / Leeward",
+    text: "Windward + Leeward",
     offset: [-50, 450],
     color: "black",
     size: 30,
@@ -23,18 +23,27 @@ export const WL_FEATURES = [
   },
 
   {
+    type: "buoy",
+    text: "2",
+    offset: [-50, -100],
+    color: "yellow",
+    radius: 10,
+    locked: false,
+  },
+
+  {
     type: "gate",
-    color: "orange",
-    text: "START",
+    color: "grey",
+    text: "START / FINISH",
     left: {
-      text: "2",
+      text: "",
       offset: [-100, 0],
       color: "orange",
       radius: 10,
       locked: false,
     },
     right: {
-      text: "2",
+      text: "",
       offset: [0, 0],
       color: "orange",
       radius: 10,
@@ -138,18 +147,18 @@ export const WL_FEATURES = [
 export const WL_LAPS = [
   {
     lapCount: 1,
-    label: "L1",
-    description: "START \u21A6 1 \u21A6 2 + FINISH",
+    label: "WL1",
+    description: "START \u21A6 1 \u21A6 2 \u21A6 FINISH",
   },
   {
     lapCount: 2,
-    label: "L2",
-    description: "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 + FINISH",
+    label: "WL2",
+    description: "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 FINISH",
   },
   {
     lapCount: 3,
-    label: "L3",
+    label: "WL3",
     description:
-      "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2  + FINISH",
+      "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 FINISH",
   },
 ];
