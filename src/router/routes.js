@@ -24,18 +24,13 @@ const routes = [
       },
 
       {
-        path: "joinregatta",
-        component: () => import("pages/RegattaJoinPage.vue"),
-      },
-
-      {
         path: "racetimer",
         component: () => import("pages/RaceTimerPage.vue"),
       },
 
       {
         path: "vmc",
-        component: () => import("pages/VMCPage.vue"),
+        component: () => import("pages/VmcPage.vue"),
       },
 
       {

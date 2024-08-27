@@ -61,13 +61,6 @@ const linksList = [
   },
 
   {
-    title: "Join",
-    caption: "join the regatta",
-    icon: "map",
-    link: "#/joinregatta",
-  },
-
-  {
     title: "Timer",
     caption: "start race timer",
     icon: "timer",
