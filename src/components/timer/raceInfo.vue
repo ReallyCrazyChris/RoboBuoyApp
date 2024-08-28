@@ -12,7 +12,7 @@
           <regattaShare />
         </div>
       </div>
-
+      <q-separator class="q-mt-none" />
       <regattaSettings />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Course and Location</div>

@@ -25,7 +25,7 @@ export default {
           regatta.localDate +
           " @ " +
           regatta.localTime,
-        url: "https://reallycrazychris.github.io/#/joinregatta",
+        url: "https://reallycrazychris.github.io/#/racetimer",
       };
 
       navigator.share(data);

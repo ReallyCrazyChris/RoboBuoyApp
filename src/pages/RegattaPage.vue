@@ -15,7 +15,7 @@
         <raceSettings />
       </q-card-section>
       <q-card-actions class="col-1" align="right">
-        <regattaShare @click="regattaJoinTransition()" />
+        <q-btn label="OK" color="positive" @click="regattaJoinTransition()" />
       </q-card-actions>
     </q-card>
   </q-page>
@@ -36,7 +36,7 @@ export default defineComponent({
   name: "RegattaPage",
   components: {
     regattaSettings,
-    regattaShare,
+    //regattaShare,
     raceSettings,
     locationSettings,
     courseSettings,
