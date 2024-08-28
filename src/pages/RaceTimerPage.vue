@@ -239,3 +239,17 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.text-h4-responsive {
+  font-size: 8vmin;
+  line-height: 1;
+}
+
+.text-h6-responsive {
+  font-size: 5.5vmin;
+}
+
+.flagImageWidth {
+  width: 80vmin;
+}
+</style>

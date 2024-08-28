@@ -5,8 +5,8 @@
     </div>
 
     <div class="col-1 q-px-md q-py-none">
-      <div class="text-h4">Racing Completed</div>
-      <div class="text-h6 text-grey">
+      <div class="text-h4-responsive">Racing Completed</div>
+      <div class="text-h6-responsive text-grey">
         All remaining races are abandoned. There is no more racing today.
       </div>
     </div>

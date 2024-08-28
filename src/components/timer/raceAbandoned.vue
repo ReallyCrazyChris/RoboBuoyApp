@@ -5,8 +5,8 @@
     </div>
 
     <div class="col-1 q-px-md q-py-none">
-      <div class="text-h4 q-mt-sm q-mb-xs">Race Abandoned</div>
-      <div class="text-h6 text-grey">This race is Abandoned.</div>
+      <div class="text-h4-responsive q-mt-sm q-mb-xs">Race Abandoned</div>
+      <div class="text-h6-responsive text-grey">This race is Abandoned.</div>
     </div>
 
     <div class="col-1">

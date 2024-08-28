@@ -5,8 +5,8 @@
     </div>
 
     <div class="col-1 q-px-md q-py-none">
-      <div class="text-h4">General Recall</div>
-      <div class="text-h6 text-grey">
+      <div class="text-h4-responsive">General Recall</div>
+      <div class="text-h6-responsive text-grey">
         This race has been recalled. Return to the start line. Prepare for a
         restart.
       </div>

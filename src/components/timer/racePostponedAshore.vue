@@ -3,8 +3,8 @@
     <q-card-section class="col">
       <q-img src="racesignals/aphotel.svg" style="width: 80vmin" />
 
-      <div class="text-h4">Raceing Postponed</div>
-      <div class="text-h6 text-grey">
+      <div class="text-h4-responsive">Raceing Postponed</div>
+      <div class="text-h6-responsive text-grey">
         Return to shore for further informaiton.
       </div>
     </q-card-section>

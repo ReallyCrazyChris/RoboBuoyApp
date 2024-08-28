@@ -3,7 +3,7 @@
     <q-card class="col-1 q-py-none" flat>
       <q-card-section class="q-py-none">
         <div class="row">
-          <div class="col-12 text-h6">Follow Me</div>
+          <div class="col-12 text-h6-responsive">Follow Me</div>
           <div class="col-10 self-center">proceed to the start line</div>
 
           <div class="col-2 text-right self-center">

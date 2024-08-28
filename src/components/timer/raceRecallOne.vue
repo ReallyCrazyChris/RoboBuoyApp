@@ -6,7 +6,7 @@
 
     <div class="col-1 q-px-md q-py-none">
       <div class="text-h3">Individual Recall</div>
-      <div class="text-h6 text-grey">
+      <div class="text-h6-responsive text-grey">
         One or more race participans where On Course Side (OCS). Please
         exonerate by crossing the start line.
       </div>

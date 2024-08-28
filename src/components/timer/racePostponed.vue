@@ -1,10 +1,12 @@
 <template>
   <q-card flat class="column" style="min-height: inherit">
     <q-card-section class="col">
-      <q-img src="racesignals/apflag.svg" style="width: 80vmin" />
+      <q-img class="flagImageWidth" src="racesignals/apflag.svg" />
 
-      <div class="text-h4">Raceing Temporarily Postponed</div>
-      <div class="text-h6 text-grey">Racing may continue when practical.</div>
+      <div class="text-h4-responsive">Raceing Temporarily Postponed</div>
+      <div class="text-h6-responsive text-grey">
+        Racing may continue when practical.
+      </div>
     </q-card-section>
     <q-card-actions class="col-1" align="right">
       <q-btn
@@ -54,4 +56,3 @@ export default {
   },
 };
 </script>
-<style></style>

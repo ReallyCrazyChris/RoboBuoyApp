@@ -5,8 +5,8 @@
     </div>
 
     <div class="col-1 q-px-md q-py-none">
-      <div class="text-h4">Go To Shore</div>
-      <div class="text-h6 text-grey">
+      <div class="text-h4-responsive">Go To Shore</div>
+      <div class="text-h6-responsive text-grey">
         All remaning races are abandned. More information will be availabe on
         shore.
       </div>
@@ -31,7 +31,7 @@
         <q-card-section>
           <q-img src="racesignals/novhotel.svg" />
           <div class="text-h3 q-mt-sm q-mb-xs">Go To Shore</div>
-          <div class="text-h6 text-grey">
+          <div class="text-h6-responsive text-grey">
             All remaning races are abandned. More information will be availabe
             on shore.
           </div>
