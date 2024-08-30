@@ -5,8 +5,8 @@ const mqttHook = useMQTT();
 export const useRegatta = defineStore("regatta", {
   state: () => ({
     id: "",
-    name: "Quick Regatta",
-    description: "Come join us for a quick regatta",
+    name: "Quick Race",
+    description: "Come join us for a quick race",
     dateTime: "",
     earliestStartTime: "",
     latestStartTime: "",

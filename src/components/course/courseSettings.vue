@@ -2,7 +2,8 @@
   <div class="row q-pt-sm">
     <div class="col-9">
       <q-select
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         label="course"
         color="primary"
@@ -29,7 +30,8 @@
 
     <div class="col-3">
       <q-select
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         align="right"
         label="laps"
@@ -61,6 +63,9 @@ const course = useCourse();
 
 export default {
   name: "courseSettings",
+  props: {
+    readonly: Boolean,
+  },
   setup() {
     return { course };
   },

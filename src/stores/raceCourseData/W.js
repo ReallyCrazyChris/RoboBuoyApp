@@ -27,14 +27,14 @@ export const W_FEATURES = [
     color: "orange",
     text: "START",
     left: {
-      text: "2",
+      text: "2p",
       offset: [-100, 0],
       color: "orange",
       radius: 10,
       locked: false,
     },
     right: {
-      text: "2",
+      text: "2s",
       offset: [0, 0],
       color: "orange",
       radius: 10,
@@ -139,17 +139,17 @@ export const W_LAPS = [
   {
     lapCount: 1,
     label: "L1",
-    description: "START \u21A6 1 \u21A6 2 + FINISH",
+    description: "START \u21A6 1 \u21A6 2p + FINISH",
   },
   {
     lapCount: 2,
     label: "L2",
-    description: "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 + FINISH",
+    description: "START \u21A6 1 \u21A6 2p \u21A6 1 \u21A6 2p + FINISH",
   },
   {
     lapCount: 3,
     label: "L3",
     description:
-      "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2  + FINISH",
+      "START \u21A6 1 \u21A6 2 \u21A6 1 \u21A6 2p \u21A6 1 \u21A6 2p  + FINISH",
   },
 ];

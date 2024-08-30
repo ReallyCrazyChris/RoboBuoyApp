@@ -3,7 +3,7 @@
     <q-select
       class="q-pb-sm"
       :filled="!readonly"
-      :readonly
+      :readonly="readonly"
       dense
       label="timing and start sequence"
       v-model="raceTimer.timerSequenceModel"
@@ -30,7 +30,7 @@
     <q-select
       class="q-pb-sm"
       :filled="!readonly"
-      :readonly
+      :readonly="readonly"
       label="class"
       v-model="raceTimer.classFlagModel"
       :options="raceTimer.classFlagOptions"
@@ -65,7 +65,7 @@
     <q-select
       class="q-pb-sm"
       :filled="!readonly"
-      :readonly
+      :readonly="readonly"
       label="preparation flag"
       v-model="raceTimer.prepareFlagModel"
       :options="raceTimer.prepareFlagOptions"
@@ -100,7 +100,7 @@
     <q-select
       class="q-pb-sm"
       :filled="!readonly"
-      :readonly
+      :readonly="readonly"
       label="personal flotation device"
       v-model="raceTimer.yankeeFlagModel"
       :options="raceTimer.yankeeFlagOptions"
@@ -142,7 +142,9 @@ const raceTimer = useRaceTimer();
 
 export default {
   name: "raceSettings",
-  props: ["readonly"],
+  props: {
+    readonly: Boolean,
+  },
   setup(props) {
     return { regatta, raceTimer };
   },

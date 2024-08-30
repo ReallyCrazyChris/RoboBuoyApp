@@ -4,20 +4,22 @@
       <div class="row">
         <div class="col-6">
           <div class="row">
-            <div class="col-12 text-h6">{{ regatta.name }}</div>
+            <div class="col-12 text-h6 text-uppercase">Race Info</div>
           </div>
         </div>
-
-        <div class="col-6 q-pb-md" align="right">
+        <div class="col q-pb-md q-pr-sm text-right">
+          <q-btn label="Edit" color="primary" @click="editTransition()" />
+        </div>
+        <div class="col-2 q-pb-md text-right">
           <regattaShare />
         </div>
       </div>
       <q-separator class="q-mt-none" />
-      <regattaSettings />
+      <regattaSettings :readonly="true" />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Course and Location</div>
-      <courseSettings />
-      <locationSettings />
+      <courseSettings :readonly="true" />
+      <locationSettings :readonly="true" />
       <courseMap
         class="q-mt-sm"
         :height="250"
@@ -28,10 +30,10 @@
       />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Race Conditions</div>
-      <raceSettings />
+      <raceSettings :readonly="true" />
     </q-card-section>
-
-    <q-card-actions class="col-1 q-pt-none" align="right">
+    <q-separator class="q-mt-sm" />
+    <q-card-actions class="col-1 q-pt-sm" align="right">
       <q-btn
         flat
         color="secondary"
@@ -44,11 +46,11 @@
 </template>
 
 <script>
-import regattaSettings from "src/components/regatta/regattaSettingsView.vue";
-import courseSettings from "src/components/course/courseSettingsView.vue";
-import locationSettings from "src/components/course/locationSettingsView.vue";
+import regattaSettings from "src/components/regatta/regattaSettings.vue";
+import courseSettings from "src/components/course/courseSettings.vue";
+import locationSettings from "src/components/course/locationSettings.vue";
 import regattaShare from "src/components/regatta/regattaShare.vue";
-import raceSettings from "src/components/race/raceSettingsView.vue";
+import raceSettings from "src/components/race/raceSettings.vue";
 import courseMap from "src/components/course/courseMap.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
@@ -75,6 +77,10 @@ export default {
   },
 
   methods: {
+    editTransition() {
+      this.$router.push("regatta");
+    },
+
     racepostponedTransition() {
       raceTimer.racepostponedTransition();
       raceTimer.publishRaceTransition("racepostponed");

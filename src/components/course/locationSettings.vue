@@ -1,7 +1,13 @@
 <template>
   <div class="fit row wrap justify-start items-center content-center q-pt-sm">
     <div class="col-10 self-center">
-      <q-input filled dense v-model="regatta.location" label="location" />
+      <q-input
+        :filled="!readonly"
+        :readonly="readonly"
+        dense
+        v-model="regatta.location"
+        label="location"
+      />
     </div>
     <div class="col-2 text-right self-center">
       <q-btn
@@ -21,6 +27,9 @@ const regatta = useRegatta();
 
 export default {
   name: "locationSettings",
+  props: {
+    readonly: Boolean,
+  },
   setup() {
     return { regatta };
   },

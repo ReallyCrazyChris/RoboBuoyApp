@@ -2,7 +2,8 @@
   <div class="fit row wrap justify-start items-center content-center q-pt-sm">
     <div class="col-10">
       <q-input
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         v-model="regatta.name"
         class="q-pb-sm"
@@ -10,7 +11,7 @@
       ></q-input>
     </div>
 
-    <div class="col-2 self-start text-right">
+    <div v-if="!readonly" class="col-2 self-start text-right">
       <q-btn
         round
         size="sm"
@@ -22,7 +23,8 @@
 
     <div class="col-12">
       <q-input
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         v-model="regatta.description"
         class="q-pb-sm"
@@ -32,7 +34,8 @@
 
     <div class="col-10 q-pb-sm q-pr-sm">
       <q-input
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         v-model="regatta.dateTime"
         label="date and time"
@@ -40,7 +43,7 @@
       />
     </div>
 
-    <div class="col-2 self-start text-right">
+    <div v-if="!readonly" class="col-2 self-start text-right">
       <q-btn
         round
         size="sm"
@@ -53,7 +56,8 @@
 
     <div class="col-6">
       <q-input
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         v-model="regatta.earliestStartTime"
         class="q-pr-xs"
@@ -64,7 +68,8 @@
 
     <div class="col-6">
       <q-input
-        filled
+        :filled="!readonly"
+        :readonly="readonly"
         dense
         v-model="regatta.latestStartTime"
         class="q-pl-xs"
@@ -77,11 +82,15 @@
 
 <script>
 import { useRegatta } from "src/stores/regatta";
+import { readonly } from "vue";
 
 const regatta = useRegatta();
 
 export default {
   name: "regattaSettings",
+  props: {
+    readonly: Boolean,
+  },
 
   setup() {
     return {
