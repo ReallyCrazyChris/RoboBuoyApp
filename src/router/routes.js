@@ -9,23 +9,18 @@ const routes = [
       },
 
       {
-        path: "home",
-        component: () => import("pages/IndexPage.vue"),
+        path: "race",
+        component: () => import("pages/RacePage.vue"),
       },
 
       {
-        path: "regatta",
-        component: () => import("pages/RegattaPage.vue"),
+        path: "raceedit",
+        component: () => import("pages/RaceEditPage.vue"),
       },
 
       {
         path: "course",
-        component: () => import("pages/RaceCoursePage.vue"),
-      },
-
-      {
-        path: "racetimer",
-        component: () => import("pages/RaceTimerPage.vue"),
+        component: () => import("pages/CourseEditPage.vue"),
       },
 
       {

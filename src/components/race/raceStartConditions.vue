@@ -141,7 +141,7 @@ const regatta = useRegatta();
 const raceTimer = useRaceTimer();
 
 export default {
-  name: "raceSettings",
+  name: "raceStartConditions",
   props: {
     readonly: Boolean,
   },

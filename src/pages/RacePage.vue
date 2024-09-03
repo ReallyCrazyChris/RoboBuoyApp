@@ -171,72 +171,6 @@ export default defineComponent({
       return date.toLocaleDateString();
     },
   },
-  methods: {
-    raceinfoTransition() {
-      raceTimer.raceinfoTransition();
-      raceTimer.publishRaceTransition("raceinfo");
-    },
-
-    followmeTransition() {
-      raceTimer.followmeTransition();
-      raceTimer.publishRaceTransition("followme");
-    },
-
-    raceclassTransition() {
-      raceTimer.raceclassTransition();
-      raceTimer.publishRaceTransition("raceclass");
-    },
-
-    racepostponedTransition() {
-      raceTimer.racepostponedTransition();
-      raceTimer.publishRaceTransition("racepostponed");
-    },
-
-    racepostponedashoreTransition() {
-      raceTimer.racepostponedashoreTransition();
-      raceTimer.publishRaceTransition("racepostponedashore");
-    },
-
-    racepostponedtodayTransition() {
-      raceTimer.racepostponedtodayTransition();
-      raceTimer.publishRaceTransition("racepostponedtoday");
-    },
-
-    recalloneTransition() {
-      raceTimer.recalloneTransition();
-      raceTimer.publishRaceTransition("recallone");
-    },
-
-    racecontinueTransition() {
-      raceTimer.racecontinueTransition();
-      raceTimer.publishRaceTransition("racecontinue");
-    },
-
-    recallallTransition() {
-      raceTimer.recallallTransition();
-      raceTimer.publishRaceTransition("recallall");
-    },
-
-    racecompletedTransition() {
-      raceTimer.racecompletedTransition();
-      raceTimer.publishRaceTransition("racecompleted");
-    },
-
-    raceabandonedTransition() {
-      raceTimer.raceabandonedTransition();
-      raceTimer.publishRaceTransition("raceabandoned");
-    },
-
-    raceabandonedashoreTransition() {
-      raceTimer.raceabandonedashoreTransition();
-      raceTimer.publishRaceTransition("raceabandonedashore");
-    },
-
-    raceabandonedtodayTransition() {
-      raceTimer.raceabandonedtodayTransition();
-      raceTimer.publishRaceTransition("raceabandonedtoday");
-    },
-  },
 });
 </script>
 <style>
@@ -247,9 +181,5 @@ export default defineComponent({
 
 .text-h6-responsive {
   font-size: 5.5vmin;
-}
-
-.flagImageWidth {
-  width: 80vmin;
 }
 </style>

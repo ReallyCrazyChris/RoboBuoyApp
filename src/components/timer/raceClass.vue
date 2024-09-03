@@ -1,13 +1,12 @@
 <template>
   <q-card flat class="column" style="min-height: inherit">
     <q-card-section class="col">
-      <div class="fit row">
-        <q-img
-          class="col-5 q-my-xs q-mr-xs"
-          :src="raceTimer.classFlagModel.image"
-        />
+      <div class="row">
+        <div class="col-5 q-my-xs q-mr-xs flagImageWidth">
+          <q-img :src="raceTimer.classFlagModel.image" />
+        </div>
 
-        <div class="col-5 q-my-xs q-mr-xs" />
+        <div class="col-5 q-my-xs q-mr-xs flagImageWidth" />
         <div class="col-1 q-my-xs">
           <div class="q-mb-xs">
             <q-avatar square size="3.4rem">

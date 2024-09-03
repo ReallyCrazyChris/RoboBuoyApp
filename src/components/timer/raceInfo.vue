@@ -4,18 +4,24 @@
       <div class="row">
         <div class="col-6">
           <div class="row">
-            <div class="col-12 text-h6 text-uppercase">Race Info</div>
+            <div class="col-12 text-h6 text-uppercase self-center">
+              Race Info
+            </div>
           </div>
         </div>
-        <div class="col q-pb-md q-pr-sm text-right">
+
+        <div class="col-3 text-right">
           <q-btn label="Edit" color="primary" @click="editTransition()" />
         </div>
-        <div class="col-2 q-pb-md text-right">
+        <div class="col-3 text-right">
           <regattaShare />
         </div>
       </div>
-      <q-separator class="q-mt-none" />
+
       <regattaSettings :readonly="true" />
+      <q-separator class="q-mt-sm" />
+      <div class="text-subtitle1 q-mt-sm">Race Start Conditions</div>
+      <raceStartConditions :readonly="true" />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Course and Location</div>
       <courseSettings :readonly="true" />
@@ -28,19 +34,30 @@
         show-zoom
         :key="course.signature"
       />
-      <q-separator class="q-mt-sm" />
-      <div class="text-subtitle1 q-mt-sm">Race Conditions</div>
-      <raceSettings :readonly="true" />
+      <courseRoute />
     </q-card-section>
     <q-separator class="q-mt-sm" />
-    <q-card-actions class="col-1 q-pt-sm" align="right">
-      <q-btn
-        flat
-        color="secondary"
-        label="postpone"
-        @click="racepostponedTransition()"
-      />
-      <q-btn color="positive" label="Follow me" @click="followmeTransition()" />
+    <q-card-actions class="col-1 q-pt-sm">
+      <div class="row fit">
+        <div class="col-4 text-left">
+          <q-btn label="Edit" color="primary" @click="editTransition()" />
+        </div>
+        <div class="col-4 text-center">
+          <q-btn
+            flat
+            color="secondary"
+            label="postpone"
+            @click="racepostponedTransition()"
+          />
+        </div>
+        <div class="col-4 text-right">
+          <q-btn
+            color="positive"
+            label="Follow me"
+            @click="followmeTransition()"
+          />
+        </div>
+      </div>
     </q-card-actions>
   </q-card>
 </template>
@@ -50,7 +67,8 @@ import regattaSettings from "src/components/regatta/regattaSettings.vue";
 import courseSettings from "src/components/course/courseSettings.vue";
 import locationSettings from "src/components/course/locationSettings.vue";
 import regattaShare from "src/components/regatta/regattaShare.vue";
-import raceSettings from "src/components/race/raceSettings.vue";
+import raceStartConditions from "src/components/race/raceStartConditions.vue";
+import courseRoute from "src/components/course/courseRoute.vue";
 import courseMap from "src/components/course/courseMap.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
@@ -68,8 +86,9 @@ export default {
     regattaSettings,
     locationSettings,
     courseSettings,
+    courseRoute,
     courseMap,
-    raceSettings,
+    raceStartConditions,
   },
 
   setup(props) {
@@ -78,7 +97,7 @@ export default {
 
   methods: {
     editTransition() {
-      this.$router.push("regatta");
+      this.$router.push("raceedit");
     },
 
     racepostponedTransition() {

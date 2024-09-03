@@ -1,31 +1,14 @@
 <template>
   <div class="column" style="min-height: inherit">
-    <q-card class="col-1 q-py-none" flat>
-      <q-card-section class="q-py-none">
-        <div class="row">
-          <div class="col-12 text-h6-responsive">Follow Me</div>
-          <div class="col-10 self-center">proceed to the start line</div>
-
-          <div class="col-2 text-right self-center">
-            <q-btn
-              round
-              size="sm"
-              icon="map"
-              color="primary"
-              @click="showCourseTransition"
-            />
-          </div>
-        </div>
-      </q-card-section>
-    </q-card>
-
-    <div class="col q-px-md q-py-none">
-      <div class="imagesSize">
+    <div class="col q-pa-md">
+      <div class="flagImageWidth">
         <q-img src="racesignals/lima.svg" />
       </div>
     </div>
 
-    <div class="col-1 q-px-md q-py-none"><raceSettings /></div>
+    <div class="col-1 q-px-md q-py-none">
+      <raceStartConditions :readonly="true" />
+    </div>
 
     <div class="col-1 q-px-md q-py-none">
       <q-card>
@@ -48,7 +31,7 @@
 </template>
 
 <script>
-import raceSettings from "src/components/race/raceSettings.vue";
+import raceStartConditions from "src/components/race/raceStartConditions.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useCourse } from "src/stores/course";
 
@@ -57,7 +40,7 @@ const course = useCourse();
 
 export default {
   name: "raceFollome",
-  components: { raceSettings },
+  components: { raceStartConditions },
 
   setup(props) {
     return { course };
@@ -80,9 +63,4 @@ export default {
   },
 };
 </script>
-<style>
-.imagesSize {
-  width: 35vmin;
-  height: 35vmin;
-}
-</style>
+<style></style>

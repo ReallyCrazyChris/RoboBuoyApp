@@ -3,7 +3,7 @@
     <q-card-section class="col">
       <div class="fit row">
         <q-img
-          class="col-5 q-my-xs q-mr-xs"
+          class="col-5 q-my-xs q-mr-xs flagImageWidth"
           :src="raceTimer.classFlagModel.image"
         />
         <div class="col-5 q-my-xs q-mr-xs" />

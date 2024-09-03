@@ -47,24 +47,10 @@ const sounds = useSounds();
 
 const linksList = [
   {
-    title: "Regatta",
-    caption: "create and share",
-    icon: "emoji_events",
-    link: "#/regatta",
-  },
-
-  {
-    title: "Course",
-    caption: "setup and define the race course",
-    icon: "map",
-    link: "#/course",
-  },
-
-  {
-    title: "Timer",
-    caption: "start race timer",
+    title: "Race",
+    caption: "race timer and info",
     icon: "timer",
-    link: "#/racetimer",
+    link: "#/race",
   },
 
   {
@@ -112,3 +98,8 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.fit-min-hieght {
+  min-height: inherit;
+}
+</style>

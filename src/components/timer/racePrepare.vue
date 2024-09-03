@@ -2,15 +2,20 @@
   <q-card flat class="column" style="min-height: inherit">
     <q-card-section class="col">
       <div class="fit row">
-        <q-img
-          class="col-5 q-my-xs q-mr-xs"
-          :src="raceTimer.classFlagModel.image"
-        />
+        <div class="col-5 q-my-xs q-mr-xs">
+          <q-img
+            class="fit flagImageWidth"
+            :src="raceTimer.classFlagModel.image"
+          />
+        </div>
 
-        <q-img
-          class="col-5 q-my-xs q-mr-xs"
-          :src="raceTimer.prepareFlagModel.image"
-        />
+        <div class="col-5 q-my-xs q-mr-xs">
+          <q-img
+            class="fit flagImageWidth"
+            :src="raceTimer.prepareFlagModel.image"
+          />
+        </div>
+
         <div class="col-1 q-my-xs">
           <div class="q-mb-xs">
             <q-avatar square size="3.4rem">
@@ -71,4 +76,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.flagImageWidth {
+  width: 38vmin;
+}
+</style>
