@@ -1,8 +1,8 @@
 {
-  "name": "robobuoy",
-  "version": "0.0.1",
-  "description": "Robobuoy is an autonomous robot buoy for sailing regattas",
-  "productName": "Robobuoy",
+  "name": "quickrace",
+  "version": "0.0.2",
+  "description": "Invite and start quick sailing races without a comitte",
+  "productName": "QuickRace",
   "author": "b600009xj61@gmail.com",
   "private": true,
   "scripts": {
