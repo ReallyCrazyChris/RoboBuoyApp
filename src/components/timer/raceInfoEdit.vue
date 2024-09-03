@@ -8,10 +8,10 @@
           </div>
         </div>
 
-        <div class="col-3 text-right">
-          <q-btn label="OK" color="primary" @click="backTransition()" />
-        </div>
         <div class="col-3 text-right"></div>
+        <div class="col-3 text-right">
+          <q-btn label="save" color="primary" @click="backTransition()" />
+        </div>
       </div>
 
       <regattaSettings />

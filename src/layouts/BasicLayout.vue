@@ -48,7 +48,7 @@ const sounds = useSounds();
 const linksList = [
   {
     title: "Race",
-    caption: "race timer and info",
+    caption: "race info and timer",
     icon: "timer",
     link: "#/race",
   },

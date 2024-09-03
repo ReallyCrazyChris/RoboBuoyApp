@@ -11,10 +11,10 @@
         </div>
 
         <div class="col-3 text-right">
-          <q-btn label="Edit" color="primary" @click="editTransition()" />
+          <regattaShare />
         </div>
         <div class="col-3 text-right">
-          <regattaShare />
+          <q-btn label="Edit" color="primary" @click="editTransition()" />
         </div>
       </div>
 
@@ -39,10 +39,7 @@
     <q-separator class="q-mt-sm" />
     <q-card-actions class="col-1 q-pt-sm">
       <div class="row fit">
-        <div class="col-4 text-left">
-          <q-btn label="Edit" color="primary" @click="editTransition()" />
-        </div>
-        <div class="col-4 text-center">
+        <div class="col-8 text-right">
           <q-btn
             flat
             color="secondary"
