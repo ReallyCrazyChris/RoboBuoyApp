@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title class="text-weight-bolder">
-          Quick Regatta
+          Quick Race
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

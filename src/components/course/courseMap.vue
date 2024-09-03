@@ -105,7 +105,7 @@ function rotateFactory(rotateHandle) {
         lineCap: "round",
       }),
       text: new Text({
-        text: "\u27F3",
+        text: "\u21BA",
         font: "16px sans-serif",
         textAlign: "center",
         justify: "center",
