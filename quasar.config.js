@@ -34,10 +34,6 @@ module.exports = configure(function (/* ctx */) {
       },
       {
         client: true,
-        path: "openlayersBoot",
-      },
-      {
-        client: true,
         path: "mqttBoot",
       },
       {

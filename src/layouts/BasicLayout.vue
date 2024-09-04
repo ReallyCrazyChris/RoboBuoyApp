@@ -21,11 +21,18 @@
         <q-item-label header>Quick Race</q-item-label>
 
         <div @click="itemClicked">
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
+          <div v-for="item in essentialLinks" :key="item.title">
+            <q-item clickable tag="a" target="_self" :href="item.link">
+              <q-item-section v-if="item.icon" avatar>
+                <q-icon :name="item.icon" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>{{ item.title }}</q-item-label>
+                <q-item-label caption>{{ item.caption }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
         </div>
       </q-list>
     </q-drawer>
@@ -40,7 +47,6 @@
 import { defineComponent, ref } from "vue";
 import { $bluetooth } from "src/networking/bluetooth";
 import { useDevicesStore } from "stores/devicesStore";
-import EssentialLink from "components/EssentialLink.vue";
 
 import { useScreen } from "src/stores/screen";
 import { useSounds } from "src/stores/sounds";
@@ -73,9 +79,7 @@ const linksList = [
 export default defineComponent({
   name: "BasicLayout",
 
-  components: {
-    EssentialLink,
-  },
+  components: {},
 
   setup() {
     const leftDrawerOpen = ref(false);

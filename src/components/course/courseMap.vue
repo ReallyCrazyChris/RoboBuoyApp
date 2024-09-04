@@ -2,6 +2,17 @@
   <div ref="courseMap" :style="'height:' + props.height + 'px; '"></div>
 </template>
 
+<style lang="scss">
+.ol-zoom-extent {
+  width: 0px;
+}
+
+.ol-zoom-extent button {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+</style>
+
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import { Map, View, Feature } from "ol";
@@ -95,10 +106,6 @@ function rotateFactory(rotateHandle) {
   });
 
   rotateFeature.setStyle((feature, resolution) => {
-    console.log(resolution);
-
-    //feature.getGeometry().setRadius(10 * resolution);
-
     return new Style({
       fill: new Fill({
         color: rotateHandle.color,
@@ -683,6 +690,7 @@ course.pointResolution = getPointResolution(
 var zoomToExtent = new ZoomToExtent({
   extent: course.getExtent(),
   label: "\uD83D\uDC41",
+  tipLabel: "course refocus",
 });
 
 // brings the the couse into view
@@ -704,7 +712,7 @@ function getControls() {
   }
 
   if (props.showZoom) {
-    controls.push(new Zoom());
+    //controls.push(new Zoom());
     controls.push(zoomToExtent);
   }
 
@@ -742,4 +750,3 @@ onUnmounted(() => {
   map = undefined;
 });
 </script>
-src/stores/raceCourse
