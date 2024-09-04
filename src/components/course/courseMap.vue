@@ -57,7 +57,7 @@ function anchorFactory(anchorHandle) {
       }),
       text: new Text({
         text: "\u2693",
-        font: "16px sans-serif",
+        font: "24px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -91,10 +91,14 @@ function anchorFactory(anchorHandle) {
 
 function rotateFactory(rotateHandle) {
   var rotateFeature = new Feature({
-    geometry: new Circle(course.forwardTransform(rotateHandle.offset), 16),
+    geometry: new Circle(course.forwardTransform(rotateHandle.offset), 40),
   });
 
   rotateFeature.setStyle((feature, resolution) => {
+    console.log(resolution);
+
+    //feature.getGeometry().setRadius(10 * resolution);
+
     return new Style({
       fill: new Fill({
         color: rotateHandle.color,
@@ -106,7 +110,7 @@ function rotateFactory(rotateHandle) {
       }),
       text: new Text({
         text: "\u21BA",
-        font: "16px sans-serif",
+        font: "24px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -147,7 +151,7 @@ function rotateFactory(rotateHandle) {
 
 function scaleXFactory(scaleXHandle) {
   var scaleXFeature = new Feature({
-    geometry: new Circle(course.forwardTransform(scaleXHandle.offset), 16),
+    geometry: new Circle(course.forwardTransform(scaleXHandle.offset), 40),
   });
 
   scaleXFeature.setStyle((feature, resolution) => {
@@ -162,7 +166,7 @@ function scaleXFactory(scaleXHandle) {
       }),
       text: new Text({
         text: "\u2194",
-        font: "16px sans-serif",
+        font: "24px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,
@@ -198,7 +202,7 @@ function scaleXFactory(scaleXHandle) {
 
 function scaleYFactory(scaleYHandle) {
   var scaleYFeature = new Feature({
-    geometry: new Circle(course.forwardTransform(scaleYHandle.offset), 16),
+    geometry: new Circle(course.forwardTransform(scaleYHandle.offset), 40),
   });
 
   scaleYFeature.setStyle((feature, resolution) => {
@@ -213,7 +217,7 @@ function scaleYFactory(scaleYHandle) {
       }),
       text: new Text({
         text: "\u2195",
-        font: "16px sans-serif",
+        font: "24px sans-serif",
         textAlign: "center",
         justify: "center",
         rotation: -1 * course.rotation,

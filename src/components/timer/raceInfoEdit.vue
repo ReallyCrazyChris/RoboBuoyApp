@@ -13,7 +13,7 @@
           <q-btn label="save" color="primary" @click="backTransition()" />
         </div>
       </div>
-
+      <q-separator class="q-mt-sm" />
       <regattaSettings />
 
       <q-separator class="q-mt-sm" />

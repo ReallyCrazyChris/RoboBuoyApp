@@ -17,7 +17,7 @@
           <q-btn label="Edit" color="primary" @click="editTransition()" />
         </div>
       </div>
-
+      <q-separator class="q-mt-sm" />
       <regattaSettings :readonly="true" />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Race Start Conditions</div>

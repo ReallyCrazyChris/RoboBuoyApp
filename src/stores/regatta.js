@@ -80,8 +80,8 @@ export const useRegatta = defineStore("regatta", {
     },
 
     reset() {
-      this.name = "Quick Regatta";
-      this.description = "Come join us for a quick regatta";
+      this.name = "Quick Race";
+      this.description = "Come join us for a quick race";
       this.presetDateTime();
     },
   },

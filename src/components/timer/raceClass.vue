@@ -22,11 +22,6 @@
         </div>
       </div>
     </q-card-section>
-    <q-card-section>
-      <sogview class="q-py-sm" />
-      <vmcview class="q-py-sm" />
-      <efficiencyview class="q-py-sm" />
-    </q-card-section>
 
     <q-card-actions class="col-1" align="right">
       <q-btn
