@@ -29,7 +29,7 @@
       />
       <q-btn
         color="accent"
-        label="Race Completed"
+        label="End Race"
         @click="racecompletedTransition()"
       />
     </q-card-actions>
