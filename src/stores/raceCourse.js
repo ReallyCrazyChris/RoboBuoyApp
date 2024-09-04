@@ -91,7 +91,7 @@ export const useRaceCourse = defineStore("racecourse", {
           selectedCourse: this.selectedCourse,
           signature: Date.now(),
         });
-        mqttHook.publish("course", raceCourseStateJSON, 0, {
+        mqttHook.publish("racecourse", raceCourseStateJSON, 0, {
           retain: true,
         });
       }

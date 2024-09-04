@@ -18,13 +18,15 @@
       elevated
     >
       <q-list>
-        <q-item-label header></q-item-label>
+        <q-item-label header>Quick Race</q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <div @click="itemClicked">
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </div>
       </q-list>
     </q-drawer>
 
@@ -84,6 +86,9 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+      itemClicked() {
+        leftDrawerOpen.value = false;
       },
     };
   },
