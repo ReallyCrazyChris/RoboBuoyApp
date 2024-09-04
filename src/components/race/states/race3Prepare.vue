@@ -51,7 +51,6 @@
 <script>
 import raceTimerLarge from "src/components/timer/raceTimerLarge.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
 
@@ -81,3 +80,4 @@ export default {
   width: 38vmin;
 }
 </style>
+src/stores/raceCourse

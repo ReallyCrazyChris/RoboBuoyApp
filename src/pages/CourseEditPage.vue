@@ -34,10 +34,11 @@
           can-edit*/
 
 import { defineComponent, ref } from "vue";
-import { useCourse } from "src/stores/course";
+
 import courseMap from "src/components/course/courseMap.vue";
 
-const cource = useCourse();
+import { useRaceCourse } from "src/stores/raceCourse";
+const cource = useRaceCourse();
 
 export default defineComponent({
   name: "RaceCourse",
@@ -61,3 +62,4 @@ export default defineComponent({
 });
 </script>
 <style></style>
+src/stores/raceCourse

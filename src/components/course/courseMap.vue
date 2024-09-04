@@ -25,8 +25,8 @@ import {
 } from "ol/control";
 import { Style, Fill, Stroke, Text } from "ol/style";
 
-import { useCourse } from "src/stores/course";
-const course = useCourse();
+import { useRaceCourse } from "src/stores/raceCourse";
+const course = useRaceCourse();
 
 const props = defineProps({
   height: Number,
@@ -742,3 +742,4 @@ onUnmounted(() => {
   map = undefined;
 });
 </script>
+src/stores/raceCourse

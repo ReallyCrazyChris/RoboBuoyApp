@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { useCourse } from "src/stores/course";
-const course = useCourse();
+import { useRaceCourse } from "src/stores/raceCourse";
+const course = useRaceCourse();
 
 export default {
   name: "courseRoute",
@@ -15,4 +15,3 @@ export default {
   },
 };
 </script>
-<style></style>

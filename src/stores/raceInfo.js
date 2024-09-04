@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
-export const useRegatta = defineStore("regatta", {
+export const useRaceInfo = defineStore("raceinfo", {
   state: () => ({
     id: "",
     name: "Quick Race",
@@ -25,14 +25,14 @@ export const useRegatta = defineStore("regatta", {
   },
 
   actions: {
-    createRegattaId() {
+    createRaceId() {
       this.id = `${Math.random().toString(16).substring(2, 10)}`;
     },
 
-    publishRegattaState() {
+    publishRaceInfoState() {
       if (mqttHook.isConnected) {
         mqttHook.publish(
-          "regatta",
+          "raceinfo",
           JSON.stringify({
             id: this.id,
             title: this.title,

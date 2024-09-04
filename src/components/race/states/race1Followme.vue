@@ -33,10 +33,10 @@
 <script>
 import raceStartConditions from "src/components/race/raceStartConditions.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useCourse } from "src/stores/course";
+import { useRaceCourse } from "src/stores/raceCourse";
 
 const raceTimer = useRaceTimer();
-const course = useCourse();
+const course = useRaceCourse();
 
 export default {
   name: "raceFollome",
@@ -64,3 +64,4 @@ export default {
 };
 </script>
 <style></style>
+src/stores/raceCourse

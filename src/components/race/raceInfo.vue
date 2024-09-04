@@ -5,7 +5,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="regatta.name"
+        v-model="raceinfo.name"
         class="q-pb-sm"
         label="name"
       ></q-input>
@@ -17,7 +17,7 @@
         size="sm"
         icon="delete"
         color="primary"
-        @click="regatta.reset()"
+        @click="raceinfo.reset()"
       />
     </div>
 
@@ -26,7 +26,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="regatta.description"
+        v-model="raceinfo.description"
         class="q-pb-sm"
         label="description"
       />
@@ -37,7 +37,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="regatta.dateTime"
+        v-model="raceinfo.dateTime"
         label="date and time"
         type="datetime-local"
       />
@@ -49,7 +49,7 @@
         size="sm"
         icon="today"
         color="primary"
-        @click="regatta.presetDateTime()"
+        @click="raceinfo.presetDateTime()"
         ><q-tooltip class="bg-primary">current date & time</q-tooltip></q-btn
       >
     </div>
@@ -59,7 +59,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="regatta.earliestStartTime"
+        v-model="raceinfo.earliestStartTime"
         class="q-pr-xs"
         type="time"
         label="earliest race start "
@@ -71,7 +71,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="regatta.latestStartTime"
+        v-model="raceinfo.latestStartTime"
         class="q-pl-xs"
         type="time"
         label="latest race start"
@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import { useRegatta } from "src/stores/regatta";
+import { useRaceInfo } from "src/stores/raceInfo";
 import { readonly } from "vue";
 
-const regatta = useRegatta();
+const raceinfo = useRaceInfo();
 
 export default {
   name: "regattaSettings",
@@ -94,7 +94,7 @@ export default {
 
   setup() {
     return {
-      regatta,
+      raceinfo,
     };
   },
 };

@@ -14,7 +14,7 @@
         </div>
       </div>
       <q-separator class="q-mt-sm" />
-      <regattaSettings />
+      <raceInfo />
 
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Race Conditions</div>
@@ -22,8 +22,8 @@
 
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Course and Location</div>
-      <courseSettings />
-      <locationSettings />
+      <courseType />
+      <courseLocation />
       <courseMap
         class="q-mt-sm"
         :height="250"
@@ -40,39 +40,39 @@
 
 <script>
 import raceStartConditions from "src/components/race/raceStartConditions.vue";
-import regattaSettings from "src/components/regatta/regattaSettings.vue";
-import locationSettings from "src/components/course/locationSettings.vue";
-import courseSettings from "src/components/course/courseSettings.vue";
+import courseLocation from "src/components/course/courseLocation.vue";
+import courseType from "src/components/course/courseType.vue";
 import courseRoute from "src/components/course/courseRoute.vue";
 import courseMap from "src/components/course/courseMap.vue";
+import raceInfo from "src/components/race/raceInfo.vue";
 
 import { defineComponent } from "vue";
-import { useRegatta } from "src/stores/regatta";
-import { useCourse } from "src/stores/course";
+import { useRaceInfo } from "src/stores/raceInfo";
+import { useRaceCourse } from "src/stores/raceCourse";
 
-const regatta = useRegatta();
-const course = useCourse();
+const raceinfo = useRaceInfo();
+const course = useRaceCourse();
 
 export default defineComponent({
-  name: "raceInfoEdit",
+  name: "raceEdit",
   components: {
     raceStartConditions,
-    locationSettings,
-    regattaSettings,
-    courseSettings,
+    courseLocation,
+    courseType,
     courseRoute,
     courseMap,
+    raceInfo,
   },
   setup() {
     // makes sure the courseMap fills the parent element to the maximum
     return {
-      regatta,
+      raceinfo,
       course,
     };
   },
   methods: {
     backTransition() {
-      this.regatta.publishRegattaState();
+      this.raceinfo.publishRaceInfoState();
       this.$router.go(-1);
     },
   },

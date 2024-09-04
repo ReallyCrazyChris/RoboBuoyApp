@@ -58,11 +58,11 @@
 </template>
 
 <script>
-import { useCourse } from "src/stores/course";
-const course = useCourse();
+import { useRaceCourse } from "src/stores/raceCourse";
+const course = useRaceCourse();
 
 export default {
-  name: "courseSettings",
+  name: "courseType",
   props: {
     readonly: Boolean,
   },
@@ -72,3 +72,4 @@ export default {
 };
 </script>
 <style></style>
+src/stores/raceCourse

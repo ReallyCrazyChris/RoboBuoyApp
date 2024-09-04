@@ -11,21 +11,21 @@
         </div>
 
         <div class="col-3 text-right">
-          <regattaShare />
+          <raceShare />
         </div>
         <div class="col-3 text-right">
           <q-btn label="Edit" color="primary" @click="editTransition()" />
         </div>
       </div>
       <q-separator class="q-mt-sm" />
-      <regattaSettings :readonly="true" />
+      <raceInfo :readonly="true" />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Race Start Conditions</div>
       <raceStartConditions :readonly="true" />
       <q-separator class="q-mt-sm" />
       <div class="text-subtitle1 q-mt-sm">Course and Location</div>
-      <courseSettings :readonly="true" />
-      <locationSettings :readonly="true" />
+      <courseType :readonly="true" />
+      <courseLocation :readonly="true" />
       <courseMap
         class="q-mt-sm"
         :height="250"
@@ -60,36 +60,36 @@
 </template>
 
 <script>
-import regattaSettings from "src/components/regatta/regattaSettings.vue";
-import courseSettings from "src/components/course/courseSettings.vue";
-import locationSettings from "src/components/course/locationSettings.vue";
-import regattaShare from "src/components/regatta/regattaShare.vue";
 import raceStartConditions from "src/components/race/raceStartConditions.vue";
+import courseLocation from "src/components/course/courseLocation.vue";
 import courseRoute from "src/components/course/courseRoute.vue";
+import courseType from "src/components/course/courseType.vue";
 import courseMap from "src/components/course/courseMap.vue";
+import raceShare from "src/components/race/raceShare.vue";
+import raceInfo from "src/components/race/raceInfo.vue";
 
+import { useRaceCourse } from "src/stores/raceCourse";
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRegatta } from "src/stores/regatta";
-import { useCourse } from "src/stores/course";
+import { useRaceInfo } from "src/stores/raceInfo";
 
-const raceTimer = useRaceTimer();
-const regatta = useRegatta();
-const course = useCourse();
+const racetimer = useRaceTimer();
+const raceinfo = useRaceInfo();
+const course = useRaceCourse();
 
 export default {
-  name: "raceInfo",
+  name: "raceView",
   components: {
-    regattaShare,
-    regattaSettings,
-    locationSettings,
-    courseSettings,
+    raceShare,
+    raceInfo,
+    courseLocation,
+    courseType,
     courseRoute,
     courseMap,
     raceStartConditions,
   },
 
   setup(props) {
-    return { regatta, course, raceTimer };
+    return { raceinfo, course, racetimer };
   },
 
   methods: {
@@ -98,13 +98,13 @@ export default {
     },
 
     racepostponedTransition() {
-      raceTimer.racepostponedTransition();
-      raceTimer.publishRaceTransition("racepostponed");
+      racetimer.racepostponedTransition();
+      racetimer.publishRaceTransition("racepostponed");
     },
 
     followmeTransition() {
-      raceTimer.followmeTransition();
-      raceTimer.publishRaceTransition("followme");
+      racetimer.followmeTransition();
+      racetimer.publishRaceTransition("followme");
     },
   },
 };
@@ -122,3 +122,4 @@ export default {
   }
 }
 </style>
+src/stores/raceCourse

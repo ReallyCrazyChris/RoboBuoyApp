@@ -4,10 +4,10 @@ import { boundingExtent } from "ol/extent";
 import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
-import { useCourseRegistary } from "src/stores/courseRegistery";
-const courseRegistery = useCourseRegistary();
+import { useRaceCourseRegistary } from "src/stores/courseRegistery";
+const courseRegistery = useRaceCourseRegistary();
 
-export const useCourse = defineStore("course", {
+export const useRaceCourse = defineStore("racecourse", {
   state: () => ({
     centerOfRotation: [1217300, 6295726],
     rotation: 0,

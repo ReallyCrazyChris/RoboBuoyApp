@@ -1,12 +1,12 @@
 <template>
   <q-card flat class="column" style="min-height: inherit">
     <q-card-section class="col">
-      <div class="fit row">
-        <q-img
-          class="col-5 q-my-xs q-mr-xs flagImageWidth"
-          :src="raceTimer.classFlagModel.image"
-        />
-        <div class="col-5 q-my-xs q-mr-xs" />
+      <div class="row">
+        <div class="col-5 q-my-xs q-mr-xs flagImageWidth">
+          <q-img :src="raceTimer.classFlagModel.image" />
+        </div>
+
+        <div class="col-5 q-my-xs q-mr-xs flagImageWidth" />
         <div class="col-1 q-my-xs">
           <div class="q-mb-xs">
             <q-avatar square size="3.4rem">
@@ -21,11 +21,6 @@
           <raceTimerLarge />
         </div>
       </div>
-    </q-card-section>
-    <q-card-section>
-      <sogview class="q-py-sm" />
-      <vmcview class="q-py-sm" />
-      <efficiencyview class="q-py-sm" />
     </q-card-section>
 
     <q-card-actions class="col-1" align="right">
@@ -43,15 +38,14 @@
 import raceTimerLarge from "src/components/timer/raceTimerLarge.vue";
 
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useCourse } from "src/stores/course";
 
 const raceTimer = useRaceTimer();
 
 export default {
-  name: "raceReady",
+  name: "raceClass",
   components: { raceTimerLarge },
 
-  setup() {
+  setup(props) {
     return { raceTimer };
   },
 
@@ -69,3 +63,4 @@ export default {
 };
 </script>
 <style></style>
+src/stores/raceCourse

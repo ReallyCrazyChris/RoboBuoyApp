@@ -134,10 +134,10 @@
 </template>
 
 <script>
-import { useRegatta } from "src/stores/regatta";
+import { useRaceInfo } from "src/stores/raceInfo";
 import { useRaceTimer } from "src/stores/raceTimer";
 
-const regatta = useRegatta();
+const raceInfo = useRaceInfo();
 const raceTimer = useRaceTimer();
 
 export default {
@@ -146,12 +146,12 @@ export default {
     readonly: Boolean,
   },
   setup(props) {
-    return { regatta, raceTimer };
+    return { raceInfo, raceTimer };
   },
 
   computed: {
     localDateTime() {
-      const date = new Date(regatta.date);
+      const date = new Date(raceInfo.date);
       return date.toLocaleDateString();
     },
   },
