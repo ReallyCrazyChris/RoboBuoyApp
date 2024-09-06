@@ -1,5 +1,9 @@
 <template>
-  <q-card flat class="row content-start" style="min-height: inherit">
+  <q-card
+    flat
+    class="regatta-view row content-start"
+    style="min-height: inherit"
+  >
     <q-card-section class="col-12">
       <div class="row">
         <div class="col-6 text-h6 text-uppercase text-weight-bold">
@@ -129,5 +133,8 @@ export default {
     }
   }
 }
+
+.regatta-view .q-select__dropdown-icon {
+  visibility: hidden;
+}
 </style>
-src/stores/raceCourse
