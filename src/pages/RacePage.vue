@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <div v-if="raceTimer.matches('raceinfo')" style="min-height: inherit">
-      <raceView />
+    <div v-if="raceTimer.matches('regattainfo')" style="min-height: inherit">
+      <regattaView />
     </div>
 
     <div v-if="raceTimer.matches('followme')" style="min-height: inherit">
@@ -76,7 +76,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import raceView from "src/components/race/raceView.vue";
+import regattaView from "src/components/race/regattaView.vue";
 import raceFollowme from "src/components/race/states/race1Followme.vue";
 import raceClass from "src/components/race/states/race2Class.vue";
 import racePrepare from "src/components/race/states/race3Prepare.vue";
@@ -92,18 +92,18 @@ import raceAbandoned from "src/components/race/states/raceAbandoned.vue";
 import raceAbandonedAshore from "src/components/race/states/raceAbandonedAshore.vue";
 import raceAbandonedToday from "src/components/race/states/raceAbandonedToday.vue";
 
-import { useRaceInfo } from "src/stores/raceInfo";
+import { useRegattaInfo } from "src/stores/regattaInfo";
 
 import { useRaceTimer } from "src/stores/raceTimer";
 
 const raceTimer = useRaceTimer();
 
-const raceinfo = useRaceInfo();
+const regattainfo = useRegattaInfo();
 
 export default defineComponent({
   name: "RaceTimerPage",
   components: {
-    raceView,
+    regattaView,
     raceFollowme,
     raceClass,
     racePrepare,
@@ -124,7 +124,7 @@ export default defineComponent({
     return {
       raceTimer,
 
-      raceinfo,
+      regattainfo,
     };
   },
   computed: {
@@ -161,7 +161,7 @@ export default defineComponent({
     },
 
     localDateTime() {
-      const date = new Date(raceinfo.date);
+      const date = new Date(regattainfo.date);
       return date.toLocaleDateString();
     },
   },

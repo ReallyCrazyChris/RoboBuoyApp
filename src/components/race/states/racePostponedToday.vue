@@ -11,8 +11,8 @@
       <div class="fit text-right">
         <q-btn
           color="primary"
-          label="Race info"
-          @click="raceinfoTransition()"
+          label="Regatta Info"
+          @click="regattainfoTransition()"
         />
       </div>
     </q-card-actions>
@@ -26,9 +26,9 @@ const raceTimer = useRaceTimer();
 export default {
   name: "racePostponedToday",
   methods: {
-    raceinfoTransition() {
-      raceTimer.raceinfoTransition();
-      raceTimer.publishRaceTransition("raceinfo");
+    regattainfoTransition() {
+      raceTimer.regattainfoTransition();
+      raceTimer.publishRaceTransition("regattainfo");
     },
   },
 };

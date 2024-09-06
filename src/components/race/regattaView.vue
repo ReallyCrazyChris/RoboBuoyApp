@@ -2,9 +2,9 @@
   <q-card flat class="row content-start" style="min-height: inherit">
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-6 text-h6 text-uppercase">Regatta</div>
+        <div class="col-6 text-h6 text-uppercase">Regatta Info</div>
         <div class="col-6 text-right">
-          <raceShare class="q-mr-sm" />
+          <regattaShare class="q-mr-sm" />
           <q-btn label="edit" color="primary" @click="editTransition()" />
         </div>
       </div>
@@ -14,7 +14,7 @@
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
         <div class="text-subtitle1">Info</div>
-        <raceInfo :readonly="true" />
+        <regattaInfo :readonly="true" />
         <q-separator class="xs q-mt-sm" />
       </div>
     </q-card-section>
@@ -72,22 +72,22 @@ import courseLocation from "src/components/course/courseLocation.vue";
 import courseRoute from "src/components/course/courseRoute.vue";
 import courseType from "src/components/course/courseType.vue";
 import courseMap from "src/components/course/courseMap.vue";
-import raceShare from "src/components/race/raceShare.vue";
-import raceInfo from "src/components/race/raceInfo.vue";
+import regattaShare from "src/components/race/regattaShare.vue";
+import regattaInfo from "src/components/race/regattaInfo.vue";
 
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRaceInfo } from "src/stores/raceInfo";
+import { useRegattaInfo } from "src/stores/regattaInfo";
 
 const racetimer = useRaceTimer();
-const raceinfo = useRaceInfo();
+const regattainfo = useRegattaInfo();
 const course = useRaceCourse();
 
 export default {
-  name: "raceView",
+  name: "regattaView",
   components: {
-    raceShare,
-    raceInfo,
+    regattaShare,
+    regattaInfo,
     courseLocation,
     courseType,
     courseRoute,
@@ -96,7 +96,7 @@ export default {
   },
 
   setup(props) {
-    return { raceinfo, course, racetimer };
+    return { regattainfo, course, racetimer };
   },
 
   methods: {

@@ -5,13 +5,13 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.name"
+        v-model="regattainfo.name"
         label="name"
       ></q-input>
     </div>
 
     <div v-if="!readonly" class="col-2 text-center">
-      <q-btn round icon="delete" color="primary" @click="raceinfo.reset()" />
+      <q-btn round icon="delete" color="primary" @click="regattainfo.reset()" />
     </div>
 
     <div class="col-12 q-mt-sm">
@@ -19,7 +19,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.description"
+        v-model="regattainfo.description"
         label="description"
       />
     </div>
@@ -29,7 +29,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.dateTime"
+        v-model="regattainfo.dateTime"
         label="date and time"
         type="datetime-local"
       />
@@ -40,7 +40,7 @@
         round
         icon="today"
         color="primary"
-        @click="raceinfo.presetDateTime()"
+        @click="regattainfo.presetDateTime()"
         ><q-tooltip class="bg-primary">current date & time</q-tooltip></q-btn
       >
     </div>
@@ -50,7 +50,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.earliestStartTime"
+        v-model="regattainfo.earliestStartTime"
         class="q-pr-xs"
         type="time"
         label="earliest race start "
@@ -62,7 +62,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.latestStartTime"
+        v-model="regattainfo.latestStartTime"
         class="q-pl-xs"
         type="time"
         label="latest race start"
@@ -72,20 +72,20 @@
 </template>
 
 <script>
-import { useRaceInfo } from "src/stores/raceInfo";
+import { useRegattaInfo } from "src/stores/regattaInfo";
 import { readonly } from "vue";
 
-const raceinfo = useRaceInfo();
+const regattainfo = useRegattaInfo();
 
 export default {
-  name: "regattaSettings",
+  name: "regattaInfo",
   props: {
     readonly: Boolean,
   },
 
   setup() {
     return {
-      raceinfo,
+      regattainfo,
     };
   },
 };

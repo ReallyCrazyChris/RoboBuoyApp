@@ -5,26 +5,26 @@
 </template>
 
 <script>
-import { useRaceInfo } from "src/stores/raceInfo";
-const raceinfo = useRaceInfo();
+import { useRegattaInfo } from "src/stores/regattaInfo";
+const regattainfo = useRegattaInfo();
 
 export default {
   name: "raceSgare",
   setup() {
     return {
-      raceinfo,
+      regattainfo,
     };
   },
   methods: {
     shareRegatta() {
       const data = {
-        title: raceinfo.name,
+        title: regattainfo.name,
         text:
-          raceinfo.description +
+          regattainfo.description +
           " - " +
-          raceinfo.localDate +
+          regattainfo.localDate +
           " @ " +
-          raceinfo.localTime,
+          regattainfo.localTime,
         url: "https://reallycrazychris.github.io/#/race",
       };
 

@@ -5,7 +5,7 @@
         :filled="!readonly"
         :readonly="readonly"
         dense
-        v-model="raceinfo.location"
+        v-model="regattainfo.location"
         label="location"
       />
     </div>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { useRaceInfo } from "src/stores/raceInfo";
-const raceinfo = useRaceInfo();
+import { useRegattaInfo } from "src/stores/regattaInfo";
+const regattainfo = useRegattaInfo();
 
 export default {
   name: "courseLocation",
@@ -25,7 +25,7 @@ export default {
     readonly: Boolean,
   },
   setup() {
-    return { raceinfo };
+    return { regattainfo };
   },
 
   methods: {

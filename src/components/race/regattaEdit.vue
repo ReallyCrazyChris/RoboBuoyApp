@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-6 text-h6 text-uppercase">Edit Regatta</div>
         <div class="col-6 text-right">
-          <raceShare class="q-mr-sm" />
+          <regattaShare class="q-mr-sm" />
           <q-btn label="save" color="primary" @click="backTransition()" />
         </div>
       </div>
@@ -14,7 +14,7 @@
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
         <div class="text-subtitle1">Info</div>
-        <raceInfo />
+        <regattaInfo />
         <q-separator class="xs q-mt-sm" />
       </div>
     </q-card-section>
@@ -54,37 +54,37 @@ import courseLocation from "src/components/course/courseLocation.vue";
 import courseType from "src/components/course/courseType.vue";
 import courseRoute from "src/components/course/courseRoute.vue";
 import courseMap from "src/components/course/courseMap.vue";
-import raceShare from "src/components/race/raceShare.vue";
-import raceInfo from "src/components/race/raceInfo.vue";
+import regattaShare from "src/components/race/regattaShare.vue";
+import regattaInfo from "src/components/race/regattaInfo.vue";
 
 import { defineComponent } from "vue";
-import { useRaceInfo } from "src/stores/raceInfo";
+import { useRegattaInfo } from "src/stores/regattaInfo";
 import { useRaceCourse } from "src/stores/raceCourse";
 
-const raceinfo = useRaceInfo();
+const regattainfo = useRegattaInfo();
 const course = useRaceCourse();
 
 export default defineComponent({
-  name: "raceEdit",
+  name: "regattaEdit",
   components: {
     raceStartConditions,
     courseLocation,
     courseType,
     courseRoute,
     courseMap,
-    raceShare,
-    raceInfo,
+    regattaShare,
+    regattaInfo,
   },
   setup() {
     // makes sure the courseMap fills the parent element to the maximum
     return {
-      raceinfo,
+      regattainfo,
       course,
     };
   },
   methods: {
     backTransition() {
-      this.raceinfo.publishRaceInfoState();
+      this.regattainfo.publishRegattaInfoState();
       this.$router.go(-1);
     },
   },

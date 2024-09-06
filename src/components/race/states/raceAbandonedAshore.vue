@@ -14,8 +14,8 @@
       <div class="fit text-right">
         <q-btn
           color="primary"
-          label="Race info"
-          @click="raceinfoTransition()"
+          label="Regatta Info"
+          @click="regattainfoTransition()"
         />
       </div>
     </q-card-actions>
@@ -35,9 +35,9 @@ export default {
   },
 
   methods: {
-    raceinfoTransition() {
-      raceTimer.raceinfoTransition();
-      raceTimer.publishRaceTransition("raceinfo");
+    regattainfoTransition() {
+      raceTimer.regattainfoTransition();
+      raceTimer.publishRaceTransition("regattainfo");
     },
   },
 };

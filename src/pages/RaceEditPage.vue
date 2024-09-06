@@ -1,17 +1,17 @@
 <template>
   <q-page>
-    <raceEdit />
+    <regattaEdit />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import raceEdit from "src/components/race/raceEdit.vue";
+import regattaEdit from "src/components/race/regattaEdit.vue";
 
 export default defineComponent({
   name: "RegattaPage",
   components: {
-    raceEdit,
+    regattaEdit,
   },
   setup() {
     return {};

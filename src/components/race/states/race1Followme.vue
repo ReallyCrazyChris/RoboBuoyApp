@@ -3,9 +3,9 @@
     <q-card-section class="col-6">
       <div class="text-h6-responsive">Call to Race</div>
       <q-separator class="q-my-sm" />
-      <div class="text-h7-responsive text-grey">{{ raceinfo.name }}</div>
+      <div class="text-h7-responsive text-grey">{{ regattainfo.name }}</div>
       <div class="text-h8-responsive text-grey">
-        {{ raceinfo.description }}
+        {{ regattainfo.description }}
       </div>
     </q-card-section>
 
@@ -21,8 +21,8 @@
     <q-card-section class="col-12 q-py-none">
       <div class="text-h8-responsive text-grey">
         First start
-        {{ raceinfo.localDate }} @
-        {{ raceinfo.earliestStartTime }}
+        {{ regattainfo.localDate }} @
+        {{ regattainfo.earliestStartTime }}
       </div>
     </q-card-section>
     <q-card-section class="col-12 q-py-none">
@@ -50,18 +50,18 @@
 import raceStartConditions from "src/components/race/raceStartConditions.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
-import { useRaceInfo } from "src/stores/raceInfo";
+import { useRegattaInfo } from "src/stores/regattaInfo";
 
 const raceTimer = useRaceTimer();
 const course = useRaceCourse();
-const raceinfo = useRaceInfo();
+const regattainfo = useRegattaInfo();
 
 export default {
   name: "raceFollome",
   components: { raceStartConditions },
 
   setup(props) {
-    return { course, raceinfo };
+    return { course, regattainfo };
   },
 
   methods: {
