@@ -58,7 +58,7 @@
     <div class="col-12">
       <q-input
         :filled="!readonly"
-        :readonly="true"
+        :readonly="readonly"
         dense
         v-model="course.lap.description"
         label="route"
