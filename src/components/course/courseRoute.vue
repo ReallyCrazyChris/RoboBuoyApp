@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     {{ course.lap.description }}
   </div>
 </template>

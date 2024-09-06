@@ -1,38 +1,34 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-pa-md q-py-none">
-      <q-img fit="scale-down" src="racesignals/november.svg" />
-    </div>
-
-    <div class="col-1 q-px-md q-py-none">
+  <card flat class="row" style="min-height: inherit">
+    <q-card-section class="col-12">
+      <q-img width="50vmin" height="50vmin" src="racesignals/november.svg" />
+    </q-card-section>
+    <q-card-section class="col-12 q-py-none">
       <div class="text-h4-responsive q-mt-sm q-mb-xs">Race Abandoned</div>
       <div class="text-h6-responsive text-grey">This race is Abandoned.</div>
-    </div>
-
-    <div class="col-1">
-      <q-card flat>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="Go to shore"
-            @click="raceabandonedashoreTransition()"
-          />
-          <q-btn
-            flat
-            color="secondary"
-            label="Racing Completed"
-            @click="raceabandonedtodayTransition()"
-          />
-          <q-btn
-            color="primary"
-            label="Race info"
-            @click="raceinfoTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-actions class="col-12 self-end">
+      <div class="fit text-right">
+        <q-btn
+          flat
+          color="secondary"
+          label="Go to shore"
+          @click="raceabandonedashoreTransition()"
+        />
+        <q-btn
+          flat
+          color="secondary"
+          label="Racing Completed"
+          @click="raceabandonedtodayTransition()"
+        />
+        <q-btn
+          color="primary"
+          label="Race info"
+          @click="raceinfoTransition()"
+        />
+      </div>
+    </q-card-actions>
+  </card>
 </template>
 
 <script>

@@ -5,8 +5,8 @@ const mqttHook = useMQTT();
 export const useRaceInfo = defineStore("raceinfo", {
   state: () => ({
     id: "",
-    name: "Quick Race",
-    description: "Come join us for a quick race",
+    name: "Quick Racing",
+    description: "Come join us for a quick regatta",
     dateTime: "",
     earliestStartTime: "",
     latestStartTime: "",
@@ -80,8 +80,8 @@ export const useRaceInfo = defineStore("raceinfo", {
     },
 
     reset() {
-      this.name = "Quick Race";
-      this.description = "Come join us for a quick race";
+      this.name = "Quick Racing";
+      this.description = "Come join us for a quick regatta";
       this.presetDateTime();
     },
   },

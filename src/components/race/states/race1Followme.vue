@@ -1,49 +1,64 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-pa-md">
-      <div class="flagImageWidth">
-        <q-img src="racesignals/lima.svg" />
+  <card flat class="row" style="min-height: inherit">
+    <q-card-section class="col-6">
+      <div class="text-h6-responsive">{{ raceinfo.name }}</div>
+      <div class="text-h6-responsive text-grey">
+        {{ raceinfo.description }}
       </div>
-    </div>
+    </q-card-section>
 
-    <div class="col-1 q-px-md q-py-none">
+    <q-card-section class="col-6 text-right">
+      <q-img
+        fit="scale-down"
+        width="30vmin"
+        height="30vmin"
+        src="racesignals/lima.svg"
+      />
+    </q-card-section>
+
+    <q-card-section class="col-12 q-py-none">
+      <div class="text-h6-responsive">
+        {{ raceinfo.localDate }}@{{ raceinfo.localTime }} ( first start
+        {{ raceinfo.earliestStartTime }})
+      </div>
+    </q-card-section>
+    <q-card-section class="col-12 q-py-none">
       <raceStartConditions :readonly="true" />
-    </div>
-
-    <div class="col-1 q-px-md q-py-none">
-      <q-card>
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            color="secondary"
-            label="Postpone Race"
-            @click="racepostponedTransition()"
-          />
-          <q-btn
-            color="positive"
-            label="Start Race"
-            @click="raceclassTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-actions class="col-12 self-end">
+      <div class="fit text-right">
+        <q-btn
+          flat
+          color="secondary"
+          label="Postpone Race"
+          @click="racepostponedTransition()"
+        />
+        <q-btn
+          color="positive"
+          label="Start Race"
+          @click="raceclassTransition()"
+        />
+      </div>
+    </q-card-actions>
+  </card>
 </template>
 
 <script>
 import raceStartConditions from "src/components/race/raceStartConditions.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
+import { useRaceInfo } from "src/stores/raceInfo";
 
 const raceTimer = useRaceTimer();
 const course = useRaceCourse();
+const raceinfo = useRaceInfo();
 
 export default {
   name: "raceFollome",
   components: { raceStartConditions },
 
   setup(props) {
-    return { course };
+    return { course, raceinfo };
   },
 
   methods: {

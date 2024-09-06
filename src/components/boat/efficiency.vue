@@ -1,5 +1,5 @@
 <template>
-  <div class="row fit">
+  <div class="row">
     <div class="col-12 text-center fitFontSizeLarge">
       {{ vmc.efficiency }}
     </div>

@@ -26,7 +26,7 @@ export default {
 .fontSize {
   font-size: 16px;
   font-size: 55vmin;
-  line-height: 1;
+  line-height: 0.8;
 }
 
 .fontSizeUnits {

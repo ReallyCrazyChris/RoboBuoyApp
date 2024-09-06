@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-pt-sm">
+  <div class="row">
     <div class="col-9">
       <q-select
         :filled="!readonly"
@@ -71,5 +71,3 @@ export default {
   },
 };
 </script>
-<style></style>
-src/stores/raceCourse

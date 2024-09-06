@@ -1,6 +1,6 @@
 <template>
-  <div class="fit row wrap justify-start items-center content-center q-pt-sm">
-    <div class="col-10 self-center">
+  <div class="row">
+    <div class="col-10 q-mt-sm self-center">
       <q-input
         :filled="!readonly"
         :readonly="readonly"
@@ -9,14 +9,8 @@
         label="location"
       />
     </div>
-    <div class="col-2 text-right self-center">
-      <q-btn
-        round
-        size="sm"
-        icon="map"
-        color="primary"
-        @click="showCourseTransition"
-      />
+    <div class="col-2 q-mt-sm text-right self-center">
+      <q-btn round icon="map" color="primary" @click="showCourseTransition" />
     </div>
   </div>
 </template>

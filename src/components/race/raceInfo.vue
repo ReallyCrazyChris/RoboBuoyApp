@@ -1,38 +1,30 @@
 <template>
-  <div class="fit row wrap justify-start items-center content-center q-pt-sm">
+  <div class="row">
     <div class="col-10">
       <q-input
         :filled="!readonly"
         :readonly="readonly"
         dense
         v-model="raceinfo.name"
-        class="q-pb-sm"
         label="name"
       ></q-input>
     </div>
 
-    <div v-if="!readonly" class="col-2 self-start text-right">
-      <q-btn
-        round
-        size="sm"
-        icon="delete"
-        color="primary"
-        @click="raceinfo.reset()"
-      />
+    <div v-if="!readonly" class="col-2 text-center">
+      <q-btn round icon="delete" color="primary" @click="raceinfo.reset()" />
     </div>
 
-    <div class="col-12">
+    <div class="col-12 q-mt-sm">
       <q-input
         :filled="!readonly"
         :readonly="readonly"
         dense
         v-model="raceinfo.description"
-        class="q-pb-sm"
         label="description"
       />
     </div>
 
-    <div class="col-10 q-pb-sm q-pr-sm">
+    <div class="col-10 q-mt-sm">
       <q-input
         :filled="!readonly"
         :readonly="readonly"
@@ -43,10 +35,9 @@
       />
     </div>
 
-    <div v-if="!readonly" class="col-2 self-start text-right">
+    <div v-if="!readonly" class="col-2 q-mt-sm text-center">
       <q-btn
         round
-        size="sm"
         icon="today"
         color="primary"
         @click="raceinfo.presetDateTime()"
@@ -54,7 +45,7 @@
       >
     </div>
 
-    <div class="col-6">
+    <div class="col-6 q-mt-sm">
       <q-input
         :filled="!readonly"
         :readonly="readonly"
@@ -66,7 +57,7 @@
       />
     </div>
 
-    <div class="col-6">
+    <div class="col-6 q-mt-sm">
       <q-input
         :filled="!readonly"
         :readonly="readonly"

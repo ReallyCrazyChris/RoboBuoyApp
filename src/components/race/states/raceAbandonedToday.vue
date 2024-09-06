@@ -1,28 +1,24 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-pa-md q-py-none">
-      <q-img fit="scale-down" src="racesignals/novalpha.svg" />
-    </div>
-
-    <div class="col-1 q-px-md q-py-none">
+  <card flat class="row" style="min-height: inherit">
+    <q-card-section class="col-12">
+      <q-img width="50vmin" height="50vmin" src="racesignals/novalpha.svg" />
+    </q-card-section>
+    <q-card-section class="col-12 q-py-none">
       <div class="text-h4-responsive">Racing Completed</div>
       <div class="text-h6-responsive text-grey">
         All remaining races are abandoned. There is no more racing today.
       </div>
-    </div>
-
-    <div class="col-1">
-      <q-card flat>
-        <q-card-actions align="right">
-          <q-btn
-            color="primary"
-            label="Race info"
-            @click="raceinfoTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-actions class="col-12 self-end">
+      <div class="fit text-right">
+        <q-btn
+          color="primary"
+          label="Race info"
+          @click="raceinfoTransition()"
+        />
+      </div>
+    </q-card-actions>
+  </card>
 </template>
 
 <script>

@@ -1,29 +1,30 @@
 <template>
-  <div class="column" style="min-height: inherit">
-    <div class="col q-pa-md q-py-none">
-      <q-img fit="scale-down" src="racesignals/generalrecall.svg" />
-    </div>
-
-    <div class="col-1 q-px-md q-py-none">
+  <card flat class="row" style="min-height: inherit">
+    <q-card-section class="col-12">
+      <q-img
+        fit="scale-down"
+        width="50vmin"
+        height="50vmin"
+        src="racesignals/generalrecall.svg"
+      />
+    </q-card-section>
+    <q-card-section class="col-12 q-py-none">
       <div class="text-h4-responsive">General Recall</div>
       <div class="text-h6-responsive text-grey">
         This race has been recalled. Return to the start line. Prepare for a
         restart.
       </div>
-    </div>
-
-    <div class="col-1">
-      <q-card flat>
-        <q-card-actions align="right">
-          <q-btn
-            color="primary"
-            label="Race info"
-            @click="raceinfoTransition()"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-  </div>
+    </q-card-section>
+    <q-card-actions class="col-12 self-end">
+      <div class="fit text-right">
+        <q-btn
+          color="primary"
+          label="Race info"
+          @click="raceinfoTransition()"
+        />
+      </div>
+    </q-card-actions>
+  </card>
 </template>
 
 <script>
