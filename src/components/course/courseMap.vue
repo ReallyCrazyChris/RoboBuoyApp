@@ -34,7 +34,9 @@ import {
   Attribution,
   defaults as defaultControls,
 } from "ol/control";
+
 import { Style, Fill, Stroke, Text } from "ol/style";
+import CircleStyle from "ol/style/Circle";
 
 import { useRaceCourse } from "src/stores/raceCourse";
 const course = useRaceCourse();
@@ -112,7 +114,7 @@ function rotateFactory(rotateHandle) {
       }),
       stroke: new Stroke({
         color: rotateHandle.color,
-        width: 2,
+        width: 15,
         lineCap: "round",
       }),
       text: new Text({
@@ -168,7 +170,7 @@ function scaleXFactory(scaleXHandle) {
       }),
       stroke: new Stroke({
         color: scaleXHandle.color,
-        width: 2,
+        width: 10,
         lineCap: "round",
       }),
       text: new Text({
@@ -219,7 +221,7 @@ function scaleYFactory(scaleYHandle) {
       }),
       stroke: new Stroke({
         color: scaleYHandle.color,
-        width: 2,
+        width: 10,
         lineCap: "round",
       }),
       text: new Text({
@@ -336,9 +338,10 @@ function buoyFactory(buoy) {
       }),
       stroke: new Stroke({
         color: buoy.color,
-        width: 2,
+        width: buoy.radius,
         lineCap: "round",
       }),
+
       text: new Text({
         text: buoy.text,
         font: Math.round(18 / resolution) + "px sans-serif",
@@ -406,7 +409,7 @@ function gateFactory(gate) {
       }),
       stroke: new Stroke({
         color: gate.left.color,
-        width: 2,
+        width: gate.left.radius,
         lineCap: "round",
       }),
       text: new Text({
@@ -426,7 +429,7 @@ function gateFactory(gate) {
       }),
       stroke: new Stroke({
         color: gate.right.color,
-        width: 2,
+        width: gate.right.radius,
         lineCap: "round",
       }),
       text: new Text({

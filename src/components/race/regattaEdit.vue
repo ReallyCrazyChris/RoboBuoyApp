@@ -2,7 +2,7 @@
   <q-card flat class="row content-start" style="min-height: inherit">
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-6 text-h6 text-uppercase">Edit Regatta</div>
+        <div class="col-6 text-h6 text-uppercase text-bold">Edit Regatta</div>
         <div class="col-6 text-right">
           <regattaShare class="q-mr-sm" />
           <q-btn label="save" color="primary" @click="backTransition()" />
@@ -13,7 +13,7 @@
 
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
-        <div class="text-subtitle1">Info</div>
+        <div class="text-h6 text-uppercase text-grey">Info</div>
         <regattaInfo />
         <q-separator class="xs q-mt-sm" />
       </div>
@@ -21,7 +21,7 @@
 
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
-        <div class="text-subtitle1">Start conditions</div>
+        <div class="text-h6 text-uppercase text-grey">Start conditions</div>
         <raceConditions />
         <q-separator class="xs q-mt-sm" />
       </div>
@@ -30,7 +30,7 @@
     <q-card-section class="col-12">
       <q-separator class="gt-sm q-mb-sm" />
       <div>
-        <div class="text-subtitle1">Course</div>
+        <div class="text-h6 text-uppercase text-grey">Course</div>
         <courseType />
         <courseLocation />
         <courseMap
