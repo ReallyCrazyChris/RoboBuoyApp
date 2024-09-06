@@ -176,4 +176,12 @@ export default defineComponent({
 .text-h6-responsive {
   font-size: 5.5vmin;
 }
+
+.text-h7-responsive {
+  font-size: 4.5vmin;
+}
+
+.text-h8-responsive {
+  font-size: 3.5vmin;
+}
 </style>

@@ -1,8 +1,10 @@
 <template>
   <card flat class="row" style="min-height: inherit">
     <q-card-section class="col-6">
-      <div class="text-h6-responsive">{{ raceinfo.name }}</div>
-      <div class="text-h6-responsive text-grey">
+      <div class="text-h6-responsive">Call to Race</div>
+      <q-separator class="q-my-sm" />
+      <div class="text-h7-responsive text-grey">{{ raceinfo.name }}</div>
+      <div class="text-h8-responsive text-grey">
         {{ raceinfo.description }}
       </div>
     </q-card-section>
@@ -10,16 +12,17 @@
     <q-card-section class="col-6 text-right">
       <q-img
         fit="scale-down"
-        width="30vmin"
-        height="30vmin"
+        width="40vmin"
+        height="40vmin"
         src="racesignals/lima.svg"
       />
     </q-card-section>
 
     <q-card-section class="col-12 q-py-none">
-      <div class="text-h6-responsive">
-        {{ raceinfo.localDate }}@{{ raceinfo.localTime }} ( first start
-        {{ raceinfo.earliestStartTime }})
+      <div class="text-h8-responsive text-grey">
+        First start
+        {{ raceinfo.localDate }} @
+        {{ raceinfo.earliestStartTime }}
       </div>
     </q-card-section>
     <q-card-section class="col-12 q-py-none">
