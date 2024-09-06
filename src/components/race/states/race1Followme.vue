@@ -26,7 +26,7 @@
       </div>
     </q-card-section>
     <q-card-section class="col-12 q-py-none">
-      <raceStartConditions :readonly="true" />
+      <raceConditions :readonly="true" />
     </q-card-section>
     <q-card-actions class="col-12 self-end">
       <div class="fit text-right">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import raceStartConditions from "src/components/race/raceStartConditions.vue";
+import raceConditions from "src/components/race/info/raceConditions.vue";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useRegattaInfo } from "src/stores/regattaInfo";
@@ -58,7 +58,7 @@ const regattainfo = useRegattaInfo();
 
 export default {
   name: "raceFollome",
-  components: { raceStartConditions },
+  components: { raceConditions },
 
   setup(props) {
     return { course, regattainfo };

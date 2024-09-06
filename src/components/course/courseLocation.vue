@@ -9,7 +9,7 @@
         label="location"
       />
     </div>
-    <div class="col-2 q-mt-sm text-right self-center">
+    <div class="col-2 q-mt-sm text-center self-center">
       <q-btn round icon="map" color="primary" @click="showCourseTransition" />
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-9">
+    <div class="col-9 q-mb-sm">
       <q-select
         :filled="!readonly"
         :readonly="readonly"
@@ -53,6 +53,16 @@
           </q-item>
         </template>
       </q-select>
+    </div>
+
+    <div class="col-12">
+      <q-input
+        :filled="!readonly"
+        :readonly="true"
+        dense
+        v-model="course.lap.description"
+        label="route"
+      />
     </div>
   </div>
 </template>

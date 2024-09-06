@@ -22,7 +22,7 @@
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
         <div class="text-subtitle1">Start conditions</div>
-        <raceStartConditions :readonly="true" />
+        <raceConditions :readonly="true" />
         <q-separator class="xs q-mt-sm" />
       </div>
     </q-card-section>
@@ -41,7 +41,6 @@
           show-zoom
           :key="course.signature"
         />
-        <courseRoute />
       </div>
     </q-card-section>
 
@@ -67,13 +66,13 @@
 </template>
 
 <script>
-import raceStartConditions from "src/components/race/raceStartConditions.vue";
+import raceConditions from "src/components/race/info/raceConditions.vue";
 import courseLocation from "src/components/course/courseLocation.vue";
-import courseRoute from "src/components/course/courseRoute.vue";
+
 import courseType from "src/components/course/courseType.vue";
 import courseMap from "src/components/course/courseMap.vue";
-import regattaShare from "src/components/race/regattaShare.vue";
-import regattaInfo from "src/components/race/regattaInfo.vue";
+import regattaShare from "src/components/race/info/regattaShare.vue";
+import regattaInfo from "src/components/race/info/regattaInfo.vue";
 
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useRaceTimer } from "src/stores/raceTimer";
@@ -90,9 +89,9 @@ export default {
     regattaInfo,
     courseLocation,
     courseType,
-    courseRoute,
+
     courseMap,
-    raceStartConditions,
+    raceConditions,
   },
 
   setup(props) {

@@ -55,8 +55,8 @@ const sounds = useSounds();
 
 const linksList = [
   {
-    title: "Race",
-    caption: "Regatta Info and timer",
+    title: "Regatta",
+    caption: "Info, Racing and Timing",
     icon: "timer",
     link: "#/race",
   },
