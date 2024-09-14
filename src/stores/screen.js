@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 
+// This goal of the of this store is to keep the screen visible the whole time
+
 export const useScreen = defineStore("screen", {
   state: () => ({
     wakeLock: undefined,

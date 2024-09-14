@@ -19,6 +19,21 @@ const routes = [
       },
 
       {
+        path: "regattaparticipants",
+        component: () => import("pages/RegattaParticipantsPage.vue"),
+      },
+
+      {
+        path: "participantEdit",
+        component: () => import("pages/ParticipantEditPage.vue"),
+      },
+
+      {
+        path: "raceresult",
+        component: () => import("pages/RaceResultPage.vue"),
+      },
+
+      {
         path: "course",
         component: () => import("pages/CourseEditPage.vue"),
       },

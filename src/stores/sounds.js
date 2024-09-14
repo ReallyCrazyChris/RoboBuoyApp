@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
 
+// the goal of this module it to play sounds
+// the challenge is that the browser requires a user interaction
+// before sounds can be played
+
 const soundsDefinition = defineStore("sounds", {
   state: () => ({
     duration: 0,
