@@ -2,15 +2,9 @@
   <q-card flat class="regatta-view row content-start">
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-8 text-h6">Join Regatta</div>
+        <div class="col-8 text-h6">New Participant</div>
         <div class="col-4 text-right">
-          <q-btn
-            v-if="!!!participant.id"
-            label="join"
-            color="primary"
-            @click="save()"
-          />
-          <q-btn v-else label="update" color="primary" @click="save()" />
+          <q-btn label="add" color="positive" @click="add()" />
         </div>
       </div>
     </q-card-section>
@@ -82,14 +76,14 @@
 </template>
 
 <script>
-import {
-  participantFactory,
-  useRegattaParticipant,
-} from "src/stores/regattaParticipant";
+import { useRegattaParticipant } from "src/stores/regattaParticipant";
 const participant = useRegattaParticipant();
 
+import { useRegattaParticipants } from "src/stores/regattaParticipants";
+const participants = useRegattaParticipants();
+
 export default {
-  name: "regattaParticipant",
+  name: "addParticipant",
   props: {
     readonly: Boolean,
   },
@@ -97,11 +91,11 @@ export default {
     return { participant };
   },
   methods: {
-    save() {
-      participant.save();
-      regattareuslts.addParticipant(
+    add() {
+      participants.addParticipant(
         JSON.parse(JSON.stringify(participant.$state))
       );
+      participant.reset(participant);
     },
   },
 };

@@ -2,10 +2,13 @@
   <q-table
     flat
     title="Regatta Participants"
-    :rows="regattaparticipants.items"
+    :rows="regattaparticipants.participants"
     :columns="tableColumns"
     :filter="regattaparticipants.filter"
     row-key="id"
+    :pagination="{
+      rowsPerPage: 0,
+    }"
   >
     <template v-slot:top-right>
       <q-input
@@ -102,25 +105,17 @@
             size="sm"
             color="negative"
             icon="delete"
-            @click="regattaparticipants.remove(props.row)"
+            @click="regattaparticipants.removeParticipant(props.row)"
           ></q-btn>
         </q-td>
       </q-tr>
     </template>
   </q-table>
-  <q-btn
-    color="positive"
-    label="create race"
-    @click="raceparticipants.add(regattaparticipants)"
-  ></q-btn>
 </template>
 
 <script>
 import { useRegattaParticipants } from "src/stores/regattaParticipants";
-import { useRaceParticipants } from "src/stores/raceParticipants";
-
 const regattaparticipants = useRegattaParticipants();
-const raceparticipants = useRaceParticipants();
 
 const tableColumns = [
   {
@@ -183,7 +178,10 @@ export default {
   name: "regattaParticipants",
 
   setup() {
-    return { regattaparticipants, tableColumns, raceparticipants };
+    return {
+      regattaparticipants,
+      tableColumns,
+    };
   },
 };
 </script>

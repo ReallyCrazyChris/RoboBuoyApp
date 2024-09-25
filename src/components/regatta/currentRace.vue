@@ -1,14 +1,17 @@
 <template>
   <q-table
-    v-if="participants.racing.length > 0"
+    v-if="racescore.racing.length > 0"
     flat
     bordered
-    title="Race Participants"
-    :rows="participants.racing"
+    :title="'Current Race ' + racescore.racenumber"
+    :rows="racescore.racing"
     :columns="tableColumns"
-    :filter="participants.filter"
+    :filter="racescore.filter"
     row-key="id"
     hide-bottom
+    :pagination="{
+      rowsPerPage: 0,
+    }"
   >
     <template v-slot:top-right>
       <q-input
@@ -16,13 +19,14 @@
         dense
         debounce="300"
         color="primary"
-        v-model="participants.filter"
+        v-model="racescore.filter"
       >
         <template v-slot:append>
           <q-icon name="search" />
         </template>
       </q-input>
     </template>
+
     <template v-slot:body="props">
       <q-tr :props="props">
         <q-td key="sailnumber" :props="props">
@@ -56,7 +60,7 @@
             class="q-mr-sm"
             color="warning"
             label="OCS"
-            @click="participants.ocs(props.row)"
+            @click="racescore.ocs(props.row)"
           ></q-btn>
           <q-btn
             size="xs"
@@ -64,13 +68,13 @@
             class="q-mr-sm"
             color="negative"
             label="DNF"
-            @click="participants.dnf(props.row)"
+            @click="racescore.dnf(props.row)"
           ></q-btn>
           <q-btn
             size="sm"
             color="positive"
             icon="sports_score"
-            @click="participants.finish(props.row)"
+            @click="racescore.finish(props.row)"
           ></q-btn>
         </q-td>
       </q-tr>
@@ -79,9 +83,8 @@
 </template>
 
 <script>
-import { useRaceParticipants } from "src/stores/raceParticipants";
-
-const participants = useRaceParticipants();
+import { useRaceScore } from "src/stores/raceScore";
+const racescore = useRaceScore();
 
 const tableColumns = [
   {
@@ -102,15 +105,9 @@ const tableColumns = [
 ];
 
 export default {
-  name: "raceParticipants",
-
+  name: "raceResults",
   setup() {
-    return { participants, tableColumns };
-  },
-
-  computed: {},
-  methods: {
-    onFinish(row) {},
+    return { racescore, tableColumns };
   },
 };
 </script>

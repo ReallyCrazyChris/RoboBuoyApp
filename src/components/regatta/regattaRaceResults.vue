@@ -1,27 +1,24 @@
 <template>
   <q-table
-    v-if="raceparticipants.finished.length > 0"
+    v-for="(race, index) in regattaresults.raceScore"
+    v-bind:key="index"
     flat
     bordered
-    title="Race Results"
-    :rows="raceparticipants.finished"
+    :title="'Race ' + (index + 1)"
+    :rows="race"
     :columns="tableColumns"
     row-key="id"
-    :filter="raceparticipants.filter"
+    :filter="regattaresults.filter"
     hide-bottom
+    :pagination="{
+      rowsPerPage: 0,
+    }"
   />
-  <q-btn
-    color="positive"
-    label="commit results"
-    @click="regattaresults.add(raceparticipants)"
-  ></q-btn>
 </template>
 
 <script>
-import { useRaceParticipants } from "src/stores/raceParticipants";
 import { useRegattaResults } from "src/stores/regattaResults";
 
-const raceparticipants = useRaceParticipants();
 const regattaresults = useRegattaResults();
 
 const tableColumns = [
@@ -29,9 +26,7 @@ const tableColumns = [
     name: "position",
     align: "left",
     label: "Place",
-    field: (item) => {
-      return item.position;
-    },
+    field: "position",
 
     sortable: true,
   },
@@ -67,10 +62,10 @@ const tableColumns = [
 ];
 
 export default {
-  name: "raceResults",
+  name: "regattaRaceResults",
 
   setup() {
-    return { raceparticipants, tableColumns, regattaresults };
+    return { tableColumns, regattaresults };
   },
 
   computed: {},

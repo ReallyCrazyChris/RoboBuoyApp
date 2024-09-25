@@ -4,9 +4,6 @@ import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useVmc } from "src/stores/vmc";
 
-import { useRegattaParticipant } from "src/stores/regattaParticipant";
-import { useRegattaParticipants } from "src/stores/regattaParticipants";
-
 import { useMQTT } from "mqtt-vue-hook";
 
 function getClientId() {
@@ -31,9 +28,6 @@ export default boot(({ app }) => {
   const racecourse = useRaceCourse();
   const raceTimer = useRaceTimer();
   const vmc = useVmc();
-
-  const regattaparticipant = useRegattaParticipant();
-  const regattaparticipants = useRegattaParticipants();
 
   const mqttHook = useMQTT();
 
@@ -69,16 +63,6 @@ export default boot(({ app }) => {
   mqttHook.registerEvent("vmc", (topic, message) => {
     const patch = JSON.parse(message.toString());
     vmc.$patch(patch);
-  });
-
-  mqttHook.registerEvent("addregattaparticipant", (topic, message) => {
-    const regattaparticipant = JSON.parse(message.toString());
-    regattaparticipants.add(regattaparticipant);
-  });
-
-  mqttHook.registerEvent("regattaparticipants", (topic, message) => {
-    const patch = JSON.parse(message.toString());
-    regattaparticipants.$patch(patch);
   });
 
   // after a sucessfull mqtt connection subscribe

@@ -1,32 +1,56 @@
 <template>
   <q-page>
-    <regattaParticipant />
+    <addParticipant />
     <regattaParticipants />
-    <raceParticipants />
-    <raceResults />
-    <regattaResults />
+
+    <q-btn
+      color="positive"
+      label="create race"
+      @click="racescore.create()"
+    ></q-btn>
+
+    <currentRace />
+    <currentRaceResult />
+
+    <q-btn
+      color="positive"
+      label="commit race result"
+      @click="racescore.commitRaceResult()"
+    ></q-btn>
+    <regattaRaceResults />
+    <regattaOverallResults />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import regattaParticipant from "/src/components/regatta/regattaParticipant.vue";
+import addParticipant from "/src/components/regatta/addParticipant.vue";
 import regattaParticipants from "/src/components/regatta/regattaParticipants.vue";
-import raceParticipants from "/src/components/regatta/raceParticipants.vue";
-import raceResults from "/src/components/regatta/raceResults.vue";
-import regattaResults from "/src/components/regatta/regattaResults.vue";
+
+import currentRace from "/src/components/regatta/currentRace.vue";
+import currentRaceResult from "/src/components/regatta/currentRaceResult.vue";
+
+import regattaRaceResults from "/src/components/regatta/regattaRaceResults.vue";
+import regattaOverallResults from "/src/components/regatta/regattaOverallResults.vue";
+
+import { useRaceScore } from "src/stores/raceScore";
+const racescore = useRaceScore();
+
+import { useRegattaResults } from "src/stores/regattaResults";
+const regattaresults = useRegattaResults();
 
 export default defineComponent({
   name: "RegattaParticipantsPage",
   components: {
-    regattaParticipant,
+    addParticipant,
     regattaParticipants,
-    raceParticipants,
-    raceResults,
-    regattaResults,
+    currentRace,
+    currentRaceResult,
+    regattaRaceResults,
+    regattaOverallResults,
   },
   setup() {
-    return {};
+    return { racescore, regattaresults };
   },
   computed: {},
 });

@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { useRaceParticipants } from "src/stores/raceParticipants";
+
+import { participantFactory } from "src/stores/regattaParticipant.js";
 
 export const useRegattaParticipants = defineStore("regattaparticipants", {
   state: () => ({
-    filter: "",
-    items: [
+    participant: participantFactory(),
+    participants: [
       {
         id: "23442356",
         allow: true,
@@ -14,6 +15,7 @@ export const useRegattaParticipants = defineStore("regattaparticipants", {
         clubprefix: "1WSC",
         boatclass: "29er",
         role: "sailor",
+        finishtime: 0,
       },
       {
         id: "543982769",
@@ -24,6 +26,7 @@ export const useRegattaParticipants = defineStore("regattaparticipants", {
         clubprefix: "1WSC",
         boatclass: "29er",
         role: "sailor",
+        finishtime: 0,
       },
       {
         id: "548980769",
@@ -34,6 +37,7 @@ export const useRegattaParticipants = defineStore("regattaparticipants", {
         clubprefix: "1WSC",
         boatclass: "29er",
         role: "sailor",
+        finishtime: 0,
       },
       {
         id: "543980769",
@@ -44,49 +48,36 @@ export const useRegattaParticipants = defineStore("regattaparticipants", {
         clubprefix: "1WSC",
         boatclass: "29er",
         role: "sailor",
+        finishtime: 0,
       },
     ],
   }),
   getters: {},
   actions: {
-    getById(id) {
-      const index = this.items.findIndex((item) => item.id === id);
-      if (index > -1) {
-        return this.items[index];
-      }
-      return null;
-    },
+    addParticipant(participant) {
+      // find existing participant by id
+      const index = this.participants.findIndex(
+        (item) => item.id === participant.id
+      );
 
-    add(participant) {
-      // replace or add particiant to items
-      const index = this.items.findIndex((item) => item.id === participant.id);
       if (index === -1) {
+        // Add
         participant.allow = true;
-        this.items.push(participant);
+        this.participants.push(participant);
       } else {
-        this.items[index] = participant;
+        // Update
+        this.participants[index] = participant;
       }
     },
 
-    remove(participant) {
+    removeParticipant(participant) {
       // replace or add particiant to items
-      const index = this.items.findIndex((item) => item.id === participant.id);
+      const index = this.participants.findIndex(
+        (item) => item.id === participant.id
+      );
       if (index > -1) {
-        this.items.splice(index, 1);
+        this.participants.splice(index, 1);
       }
-    },
-
-    createRaceParticipants() {
-      // transfers allowed regatta participants to a race participants
-
-      const raceparticipants = useRaceParticipants();
-      raceparticipants.clear();
-
-      this.items.forEach((item) => {
-        if (item.allow) {
-          raceparticipants.items.push(Object.assign({}, item));
-        }
-      });
     },
   },
 });
