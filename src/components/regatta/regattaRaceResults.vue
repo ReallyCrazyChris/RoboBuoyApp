@@ -1,14 +1,14 @@
 <template>
   <q-table
-    v-for="(race, index) in regattaresults.raceScore"
+    v-for="(race, index) in regattaevent.races"
     v-bind:key="index"
     flat
     bordered
-    :title="'Race ' + (index + 1)"
-    :rows="race"
+    :title="'Race ' + race.racenumber"
+    :rows="race.results"
     :columns="tableColumns"
     row-key="id"
-    :filter="regattaresults.filter"
+    :filter="regattaevent.filter"
     hide-bottom
     :pagination="{
       rowsPerPage: 0,
@@ -17,9 +17,8 @@
 </template>
 
 <script>
-import { useRegattaResults } from "src/stores/regattaResults";
-
-const regattaresults = useRegattaResults();
+import { useRegattaEvent } from "/src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 const tableColumns = [
   {
@@ -65,9 +64,7 @@ export default {
   name: "regattaRaceResults",
 
   setup() {
-    return { tableColumns, regattaresults };
+    return { tableColumns, regattaevent };
   },
-
-  computed: {},
 };
 </script>

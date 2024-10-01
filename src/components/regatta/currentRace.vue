@@ -1,12 +1,11 @@
 <template>
   <q-table
-    v-if="racescore.racing.length > 0"
     flat
     bordered
-    :title="'Current Race ' + racescore.racenumber"
-    :rows="racescore.racing"
+    :title="'Current Race ' + regattaevent.currentrace.racenumber"
+    :rows="regattaevent.currentraceParticipants"
     :columns="tableColumns"
-    :filter="racescore.filter"
+    :filter="regattaevent.filter"
     row-key="id"
     hide-bottom
     :pagination="{
@@ -19,7 +18,7 @@
         dense
         debounce="300"
         color="primary"
-        v-model="racescore.filter"
+        v-model="regattaevent.filter"
       >
         <template v-slot:append>
           <q-icon name="search" />
@@ -60,7 +59,7 @@
             class="q-mr-sm"
             color="warning"
             label="OCS"
-            @click="racescore.ocs(props.row)"
+            @click="regattaevent.raceOCS(props.row.id)"
           ></q-btn>
           <q-btn
             size="xs"
@@ -68,13 +67,13 @@
             class="q-mr-sm"
             color="negative"
             label="DNF"
-            @click="racescore.dnf(props.row)"
+            @click="regattaevent.raceDNF(props.row.id)"
           ></q-btn>
           <q-btn
             size="sm"
             color="positive"
             icon="sports_score"
-            @click="racescore.finish(props.row)"
+            @click="regattaevent.raceFinish(props.row.id)"
           ></q-btn>
         </q-td>
       </q-tr>
@@ -83,8 +82,8 @@
 </template>
 
 <script>
-import { useRaceScore } from "src/stores/raceScore";
-const racescore = useRaceScore();
+import { useRegattaEvent } from "src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 const tableColumns = [
   {
@@ -107,7 +106,7 @@ const tableColumns = [
 export default {
   name: "raceResults",
   setup() {
-    return { racescore, tableColumns };
+    return { regattaevent, tableColumns };
   },
 };
 </script>

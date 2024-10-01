@@ -2,9 +2,9 @@
   <q-table
     flat
     title="Regatta Participants"
-    :rows="regattaparticipants.participants"
+    :rows="regattaevent.participants"
     :columns="tableColumns"
-    :filter="regattaparticipants.filter"
+    :filter="regattaevent.filter"
     row-key="id"
     :pagination="{
       rowsPerPage: 0,
@@ -16,7 +16,7 @@
         dense
         debounce="300"
         color="primary"
-        v-model="regattaparticipants.filter"
+        v-model="regattaevent.filter"
       >
         <template v-slot:append>
           <q-icon name="search" />
@@ -105,7 +105,7 @@
             size="sm"
             color="negative"
             icon="delete"
-            @click="regattaparticipants.removeParticipant(props.row)"
+            @click="regattaevent.removeParticipant(props.row)"
           ></q-btn>
         </q-td>
       </q-tr>
@@ -114,8 +114,8 @@
 </template>
 
 <script>
-import { useRegattaParticipants } from "src/stores/regattaParticipants";
-const regattaparticipants = useRegattaParticipants();
+import { useRegattaEvent } from "src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 const tableColumns = [
   {
@@ -179,7 +179,7 @@ export default {
 
   setup() {
     return {
-      regattaparticipants,
+      regattaevent,
       tableColumns,
     };
   },

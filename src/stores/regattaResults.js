@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { useRegattaParticipants } from "./regattaParticipants";
+import { useRegattaParticipants } from "./regattaEvent";
 
 export const useRegattaResults = defineStore("regattaresults", {
   state: () => ({

@@ -1,7 +1,7 @@
 import { create } from "ol/transform";
 import { defineStore } from "pinia";
 
-import { useRegattaParticipants } from "./regattaParticipants";
+import { useRegattaParticipants } from "./regattaEvent";
 const regattaparticipants = useRegattaParticipants();
 
 import { useRegattaResults } from "src/stores/regattaResults";

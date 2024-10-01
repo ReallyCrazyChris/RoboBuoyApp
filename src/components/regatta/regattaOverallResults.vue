@@ -3,10 +3,10 @@
     flat
     bordered
     :title="'Regatta Results'"
-    :rows="regattaresults.particiantScore"
-    :columns="regattaresults.columns"
+    :rows="regattaevent.overallraceResults"
+    :columns="regattaevent.overallraceResultsColumns"
     row-key="id"
-    :filter="regattaresults.filter"
+    :filter="regattaevent.filter"
     hide-bottom
     :pagination="{
       rowsPerPage: 0,
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import { useRegattaResults } from "src/stores/regattaResults";
-const regattaresults = useRegattaResults();
+import { useRegattaEvent } from "src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 export default {
   name: "regattaOverallResults",
   setup() {
-    return { regattaresults };
+    return { regattaevent };
   },
 };
 </script>

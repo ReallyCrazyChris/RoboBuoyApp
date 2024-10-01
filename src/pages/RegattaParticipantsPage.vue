@@ -1,12 +1,12 @@
 <template>
   <q-page>
-    <addParticipant />
+    <regattaParticipant />
     <regattaParticipants />
 
     <q-btn
       color="positive"
       label="create race"
-      @click="racescore.create()"
+      @click="regattaevent.addRace()"
     ></q-btn>
 
     <currentRace />
@@ -15,7 +15,7 @@
     <q-btn
       color="positive"
       label="commit race result"
-      @click="racescore.commitRaceResult()"
+      @click="regattaevent.commitRaceResult()"
     ></q-btn>
     <regattaRaceResults />
     <regattaOverallResults />
@@ -24,25 +24,20 @@
 
 <script>
 import { defineComponent } from "vue";
-import addParticipant from "/src/components/regatta/addParticipant.vue";
+import regattaParticipant from "/src/components/regatta/regattaParticipant.vue";
 import regattaParticipants from "/src/components/regatta/regattaParticipants.vue";
-
 import currentRace from "/src/components/regatta/currentRace.vue";
 import currentRaceResult from "/src/components/regatta/currentRaceResult.vue";
-
 import regattaRaceResults from "/src/components/regatta/regattaRaceResults.vue";
 import regattaOverallResults from "/src/components/regatta/regattaOverallResults.vue";
 
-import { useRaceScore } from "src/stores/raceScore";
-const racescore = useRaceScore();
-
-import { useRegattaResults } from "src/stores/regattaResults";
-const regattaresults = useRegattaResults();
+import { useRegattaEvent } from "/src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 export default defineComponent({
   name: "RegattaParticipantsPage",
   components: {
-    addParticipant,
+    regattaParticipant,
     regattaParticipants,
     currentRace,
     currentRaceResult,
@@ -50,7 +45,7 @@ export default defineComponent({
     regattaOverallResults,
   },
   setup() {
-    return { racescore, regattaresults };
+    return { regattaevent };
   },
   computed: {},
 });

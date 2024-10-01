@@ -1,13 +1,12 @@
 <template>
   <q-table
-    v-if="racescore.result.length > 0"
     flat
     bordered
-    :title="'Race ' + racescore.racenumber + ' Result'"
-    :rows="racescore.result"
+    :title="'Race ' + regattaevent.currentrace.racenumber + ' Result'"
+    :rows="regattaevent.currentraceResults"
     :columns="tableColumns"
     row-key="id"
-    :filter="racescore.filter"
+    :filter="regattaevent.filter"
     hide-bottom
     :pagination="{
       rowsPerPage: 0,
@@ -16,11 +15,8 @@
 </template>
 
 <script>
-import { useRaceScore } from "src/stores/raceScore";
-const racescore = useRaceScore();
-
-import { useRegattaResults } from "src/stores/regattaResults";
-const regattaresults = useRegattaResults();
+import { useRegattaEvent } from "src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 const tableColumns = [
   {
@@ -45,12 +41,19 @@ const tableColumns = [
     field: "skippername",
     sortable: true,
   },
+  {
+    name: "points",
+    align: "left",
+    label: "Points",
+    field: "points",
+    sortable: true,
+  },
 ];
 
 export default {
   name: "regattaScore",
   setup() {
-    return { racescore, regattaresults, tableColumns };
+    return { regattaevent, tableColumns };
   },
 };
 </script>

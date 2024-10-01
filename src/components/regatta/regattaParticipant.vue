@@ -2,15 +2,9 @@
   <q-card flat class="regatta-view row content-start">
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-8 text-h6">Join Regatta</div>
+        <div class="col-8 text-h6">New Participant</div>
         <div class="col-4 text-right">
-          <q-btn
-            v-if="!!!participant.id"
-            label="join"
-            color="primary"
-            @click="save()"
-          />
-          <q-btn v-else label="update" color="primary" @click="save()" />
+          <q-btn label="add" color="positive" @click="addParticipant()" />
         </div>
       </div>
     </q-card-section>
@@ -22,7 +16,7 @@
           :filled="!readonly"
           :readonly="readonly"
           dense
-          v-model="participant.skippername"
+          v-model="regattaevent.participant.skippername"
           class="q-pt-xs"
           label="skipper name"
         />
@@ -31,7 +25,7 @@
           :filled="!readonly"
           :readonly="readonly"
           dense
-          v-model="participant.crewnames"
+          v-model="regattaevent.participant.crewnames"
           class="q-pt-xs"
           label="crew names"
         />
@@ -46,7 +40,7 @@
           :filled="!readonly"
           :readonly="readonly"
           dense
-          v-model="participant.sailnumber"
+          v-model="regattaevent.participant.sailnumber"
           class="q-pt-xs"
           label="Sail Number"
         />
@@ -55,7 +49,7 @@
           :filled="!readonly"
           :readonly="readonly"
           dense
-          v-model="participant.boatclass"
+          v-model="regattaevent.participant.boatclass"
           class="q-pt-xs"
           label="Boat Class"
         />
@@ -71,7 +65,7 @@
           :filled="!readonly"
           :readonly="readonly"
           dense
-          v-model="participant.clubprefix"
+          v-model="regattaevent.participant.clubprefix"
           class="q-pt-xs"
           label="Club abbreviaiton "
         />
@@ -82,26 +76,20 @@
 </template>
 
 <script>
-import {
-  participantFactory,
-  useRegattaParticipant,
-} from "src/stores/regattaParticipant";
-const participant = useRegattaParticipant();
+import { useRegattaEvent } from "src/stores/regattaEvent";
+const regattaevent = useRegattaEvent();
 
 export default {
-  name: "regattaParticipant",
+  name: "addParticipant",
   props: {
     readonly: Boolean,
   },
   setup() {
-    return { participant };
+    return { regattaevent };
   },
   methods: {
-    save() {
-      participant.save();
-      regattareuslts.addParticipant(
-        JSON.parse(JSON.stringify(participant.$state))
-      );
+    addParticipant() {
+      regattaevent.addParticipant(regattaevent.participant);
     },
   },
 };
@@ -124,3 +112,4 @@ export default {
   visibility: hidden;
 }
 </style>
+src/stores/regattaEvent
