@@ -1,5 +1,5 @@
 <template>
-  <card flat class="row" style="min-height: inherit">
+  <q-card flat class="row" style="min-height: inherit">
     <q-card-section class="col-12">
       <q-img width="50vmin" height="50vmin" src="racesignals/november.svg" />
     </q-card-section>
@@ -23,12 +23,12 @@
         />
         <q-btn
           color="primary"
-          label="Regatta Info"
-          @click="regattainfoTransition()"
+          label="Race Info"
+          @click="raceinfoTransition()"
         />
       </div>
     </q-card-actions>
-  </card>
+  </q-card>
 </template>
 
 <script>
@@ -54,9 +54,9 @@ export default {
       raceTimer.publishRaceTransition("raceabandonedtoday");
     },
 
-    regattainfoTransition() {
-      raceTimer.regattainfoTransition();
-      raceTimer.publishRaceTransition("regattainfo");
+    raceinfoTransition() {
+      raceTimer.raceinfoTransition();
+      raceTimer.publishRaceTransition("raceinfo");
     },
   },
 };

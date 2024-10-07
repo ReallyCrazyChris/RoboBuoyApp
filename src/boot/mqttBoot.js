@@ -1,5 +1,7 @@
 import { boot } from "quasar/wrappers";
 import { useRegattaInfo } from "src/stores/regattaInfo";
+import { useRegattaEvent } from "src/stores/regattaEvent";
+
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useVmc } from "src/stores/vmc";
@@ -25,6 +27,7 @@ export default boot(({ app }) => {
   console.log("Booting mqtt client:", clientId);
 
   const regattainfo = useRegattaInfo();
+  const regattaevent = useRegattaEvent();
   const racecourse = useRaceCourse();
   const raceTimer = useRaceTimer();
   const vmc = useVmc();
@@ -41,7 +44,15 @@ export default boot(({ app }) => {
     regattainfo.$patch(patch);
   });
 
-  // listen for the latest racetimer state
+  mqttHook.registerEvent("joinregatta", (topic, message) => {
+    const particiant = JSON.parse(message.toString());
+
+    console.log("joinRegatta", particiant);
+
+    regattaevent.joinRegatta(particiant);
+  });
+
+  // listen for the latest course state
   mqttHook.registerEvent("racecourse", (topic, message) => {
     const patch = JSON.parse(message.toString());
     racecourse.$patch(patch);
@@ -69,16 +80,15 @@ export default boot(({ app }) => {
   mqttHook.registerEvent(
     "on-connect", // mqtt status: on-connect, on-reconnect, on-disconnect, on-connect-fail
     (topic, message) => {
-      console.log("mqtt connected");
+      console.log("mqtt connected", topic, message);
       mqttHook.subscribe(
         [
           "regattainfo",
+          "joinregatta",
           "racecourse",
           "racetimer",
           "racetransition",
           "vmc",
-          "addregattaparticipant",
-          "regattaparticipants",
         ],
         1,
         { nl: true },
@@ -92,7 +102,7 @@ export default boot(({ app }) => {
     clean: false,
     keepalive: 60,
     clientId: clientId,
-    connectTimeout: 4000,
+    connectTimeout: 400,
     username: "SummerTime",
     password: "RoboRegatta1!",
   });

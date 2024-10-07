@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <div v-if="raceTimer.matches('regattainfo')" style="min-height: inherit">
-      <regattaView />
+    <div v-if="raceTimer.matches('raceinfo')" style="min-height: inherit">
+      <raceInfo />
     </div>
 
     <div v-if="raceTimer.matches('followme')" style="min-height: inherit">
@@ -26,6 +26,10 @@
 
     <div v-if="raceTimer.matches('racetimer')" style="min-height: inherit">
       <raceTime />
+    </div>
+
+    <div v-if="raceTimer.matches('racecompleted')" style="min-height: inherit">
+      <raceCompleted />
     </div>
 
     <div v-if="raceTimer.matches('racepostponed')" style="min-height: inherit">
@@ -76,21 +80,23 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import regattaView from "src/components/race/regattaView.vue";
-import raceFollowme from "src/components/race/states/race1Followme.vue";
-import raceClass from "src/components/race/states/race2Class.vue";
-import racePrepare from "src/components/race/states/race3Prepare.vue";
-import raceReady from "src/components/race/states/race4Ready.vue";
-import raceStart from "src/components/race/states/race5Start.vue";
-import raceTime from "src/components/race/states/race6Time.vue";
-import racePostponed from "src/components/race/states/racePostponed.vue";
-import racePostponedAshore from "src/components/race/states/racePostponedAshore.vue";
-import racePostponedToday from "src/components/race/states/racePostponedToday.vue";
-import raceRecallAll from "src/components/race/states/raceRecallAll.vue";
-import raceRecallOne from "src/components/race/states/raceRecallOne.vue";
-import raceAbandoned from "src/components/race/states/raceAbandoned.vue";
-import raceAbandonedAshore from "src/components/race/states/raceAbandonedAshore.vue";
-import raceAbandonedToday from "src/components/race/states/raceAbandonedToday.vue";
+
+import raceInfo from "src/components/race/race0Info.vue";
+import raceFollowme from "src/components/race/race1Followme.vue";
+import raceClass from "src/components/race/race2Class.vue";
+import racePrepare from "src/components/race/race3Prepare.vue";
+import raceReady from "src/components/race/race4Ready.vue";
+import raceStart from "src/components/race/race5Start.vue";
+import raceTime from "src/components/race/race6Time.vue";
+import raceCompleted from "src/components/race/race7Completed.vue";
+import racePostponed from "src/components/race/racePostponed.vue";
+import racePostponedAshore from "src/components/race/racePostponedAshore.vue";
+import racePostponedToday from "src/components/race/racePostponedToday.vue";
+import raceRecallAll from "src/components/race/raceRecallAll.vue";
+import raceRecallOne from "src/components/race/raceRecallOne.vue";
+import raceAbandoned from "src/components/race/raceAbandoned.vue";
+import raceAbandonedAshore from "src/components/race/raceAbandonedAshore.vue";
+import raceAbandonedToday from "src/components/race/raceAbandonedToday.vue";
 
 import { useRegattaInfo } from "src/stores/regattaInfo";
 
@@ -103,13 +109,14 @@ const regattainfo = useRegattaInfo();
 export default defineComponent({
   name: "RaceTimerPage",
   components: {
-    regattaView,
+    raceInfo,
     raceFollowme,
     raceClass,
     racePrepare,
     raceReady,
     raceStart,
     raceTime,
+    raceCompleted,
     racePostponed,
     racePostponedAshore,
     racePostponedToday,

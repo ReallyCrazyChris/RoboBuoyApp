@@ -142,7 +142,7 @@ const regattaInfo = useRegattaInfo();
 const raceTimer = useRaceTimer();
 
 export default {
-  name: "raceConditions",
+  name: "regattaStartConditions",
   props: {
     readonly: Boolean,
   },

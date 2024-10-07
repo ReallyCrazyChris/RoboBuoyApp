@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useMQTT } from "mqtt-vue-hook";
 const mqttHook = useMQTT();
 
-export const useRegattaInfo = defineStore("regattaInfo", {
+export const useRegattaInfo = defineStore("raceinfo", {
   state: () => ({
     id: "",
     name: "Quick Racing",

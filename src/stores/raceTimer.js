@@ -176,7 +176,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
     startTime: undefined, //epochtime
     endTime: undefined, //epochtime
     raceTime: undefined,
-    raceState: "regattainfo",
+    raceState: "raceinfo",
     timerSequenceModel,
     classFlagModel,
     prepareFlagModel,
@@ -221,8 +221,8 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     // handles remote transition actions from comitte boat
     racetransitionHandler(action) {
-      if (action == "regattainfo") {
-        this.regattainfoTransition();
+      if (action == "raceinfo") {
+        this.raceinfoTransition();
       }
 
       if (action == "followme") {
@@ -279,8 +279,8 @@ const raceTimerDefinition = defineStore("raceTimer", {
       // if the patch creates a state change
       if (this.raceState != patch.raceState) {
         this.$patch(patch);
-        if (patch.raceState == "regattainfo") {
-          this.regattainfoTransition();
+        if (patch.raceState == "raceinfo") {
+          this.raceinfoTransition();
         }
 
         if (patch.raceState == "raceclass") {
@@ -307,11 +307,9 @@ const raceTimerDefinition = defineStore("raceTimer", {
           this.recallallTransition();
         }
 
-        /** duplicate "regattainfo" ... now what
-        if (patch.raceState == "regattainfo") {
+        if (patch.raceState == "racecompleted") {
           this.racecompletedTransition();
         }
-        */
 
         if (patch.raceState == "raceabandoned") {
           this.raceabandonedTransition();
@@ -329,13 +327,12 @@ const raceTimerDefinition = defineStore("raceTimer", {
       }
     },
 
-    regattainfoTransition() {
+    raceinfoTransition() {
       this.stopSequenceTimer();
       this.startTime = undefined;
       this.endTime = undefined;
-      this.raceState = "regattainfo";
+      this.raceState = "raceinfo";
       this.publishRaceTimerState();
-      //sounds.airhorn(1);
     },
 
     followmeTransition() {
@@ -475,7 +472,7 @@ const raceTimerDefinition = defineStore("raceTimer", {
 
     racecompletedTransition() {
       this.stopSequenceTimer();
-      this.raceState = "regattainfo";
+      this.raceState = "racecompleted";
       this.publishRaceTimerState();
     },
 

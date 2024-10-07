@@ -9,28 +9,28 @@ const routes = [
       },
 
       {
-        path: "race",
-        component: () => import("pages/RacePage.vue"),
+        path: "regattainfo",
+        component: () => import("pages/RegattaInfoPage.vue"),
       },
 
       {
-        path: "raceedit",
-        component: () => import("pages/RaceEditPage.vue"),
+        path: "regattaedit",
+        component: () => import("pages/RegattaEditPage.vue"),
       },
 
       {
-        path: "regattaparticipants",
-        component: () => import("pages/RegattaParticipantsPage.vue"),
+        path: "racetimer",
+        component: () => import("pages/RaceTimerPage.vue"),
       },
 
       {
-        path: "participantEdit",
-        component: () => import("pages/ParticipantEditPage.vue"),
+        path: "racescore",
+        component: () => import("pages/RaceScorePage.vue"),
       },
 
       {
-        path: "raceresult",
-        component: () => import("pages/RaceResultPage.vue"),
+        path: "regattaresults",
+        component: () => import("pages/RegattaResultsPage.vue"),
       },
 
       {

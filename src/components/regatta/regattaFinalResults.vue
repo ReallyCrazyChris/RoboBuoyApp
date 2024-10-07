@@ -2,7 +2,6 @@
   <q-table
     flat
     bordered
-    :title="'Regatta Results'"
     :rows="regattaevent.overallraceResults"
     :columns="regattaevent.overallraceResultsColumns"
     row-key="id"

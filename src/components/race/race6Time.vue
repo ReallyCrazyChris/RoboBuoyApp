@@ -35,10 +35,15 @@
           label="Abandon Race"
           @click="raceabandonedTransition()"
         />
-        <q-btn
+        <!--q-btn
           color="accent"
           label="End Race"
           @click="racecompletedTransition()"
+        /-->
+        <q-btn
+          color="positive"
+          label="Score Race"
+          @click="racescoreTransition()"
         />
       </div>
     </q-card-actions>
@@ -69,6 +74,10 @@ export default {
   },
 
   methods: {
+    racescoreTransition() {
+      this.$router.push("racescore");
+    },
+
     racecompletedTransition() {
       raceTimer.racecompletedTransition();
       raceTimer.publishRaceTransition("racecompleted");

@@ -22,7 +22,7 @@
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
         <div class="text-h6 text-uppercase text-grey">Start conditions</div>
-        <raceConditions />
+        <regattaStartConditions />
         <q-separator class="xs q-mt-sm" />
       </div>
     </q-card-section>
@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import raceConditions from "src/components/race/info/raceConditions.vue";
+import regattaStartConditions from "src/components/regatta/regattaStartConditions.vue";
 import courseLocation from "src/components/course/courseLocation.vue";
 import courseType from "src/components/course/courseType.vue";
 
 import courseMap from "src/components/course/courseMap.vue";
-import regattaShare from "src/components/race/info/regattaShare.vue";
-import regattaInfo from "src/components/race/info/regattaInfo.vue";
+import regattaShare from "src/components/regatta/regattaShare.vue";
+import regattaInfo from "src/components/regatta/regattaInfo.vue";
 
 import { defineComponent } from "vue";
 import { useRegattaInfo } from "src/stores/regattaInfo";
@@ -66,7 +66,7 @@ const course = useRaceCourse();
 export default defineComponent({
   name: "regattaEdit",
   components: {
-    raceConditions,
+    regattaStartConditions,
     courseLocation,
     courseType,
 

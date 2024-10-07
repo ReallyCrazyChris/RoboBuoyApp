@@ -6,7 +6,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import regattaEdit from "src/components/race/regattaEdit.vue";
+import regattaEdit from "src/components/regatta/regattaEdit.vue";
 
 export default defineComponent({
   name: "RegattaPage",

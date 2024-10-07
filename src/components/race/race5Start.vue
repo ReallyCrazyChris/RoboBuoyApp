@@ -15,7 +15,6 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <sogview class="q-py-sm" />
       <div class="col-12 text-center" style="font-size: 30vmin">START</div>
     </q-card-section>
 

@@ -2,7 +2,7 @@
   <q-table
     flat
     bordered
-    :title="'Current Race ' + regattaevent.currentrace.racenumber"
+    :title="'Race ' + regattaevent.currentrace.racenumber + ' Score'"
     :rows="regattaevent.currentraceParticipants"
     :columns="tableColumns"
     :filter="regattaevent.filter"

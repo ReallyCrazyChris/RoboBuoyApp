@@ -56,9 +56,30 @@ const sounds = useSounds();
 const linksList = [
   {
     title: "Regatta",
-    caption: "Info, Racing and Timing",
+    caption: "About, Join, Participants",
+    icon: "sailing",
+    link: "#/regattainfo",
+  },
+
+  {
+    title: "Race Sequencer",
+    caption: "Info, Timer, Scoring, Results",
     icon: "timer",
-    link: "#/race",
+    link: "#/racetimer",
+  },
+
+  {
+    title: "Race Scoring",
+    caption: "finish, ocs, dnf",
+    icon: "sports_score",
+    link: "#/racescore",
+  },
+
+  {
+    title: "Regatta Results",
+    caption: "regatta results, race results",
+    icon: "emoji_events",
+    link: "#/regattaresults",
   },
 
   {

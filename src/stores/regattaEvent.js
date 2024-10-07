@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 
+import { useMQTT } from "mqtt-vue-hook";
+const mqttHook = useMQTT();
+
 export function participantFactory(params) {
   return {
     id: params?.id || `${Math.random().toString(16).substring(2, 10)}`,
@@ -177,56 +180,6 @@ export const useRegattaEvent = defineStore("regattaevent", {
         });
     },
 
-    _overallraceResults({ currentrace }) {
-      // participants sucessfully finished racing
-      const racingFinished = currentrace.results
-        .filter((result) => {
-          if (result.ocs || result.dnf) {
-            return false;
-          }
-          return !!result.finishtime;
-        })
-        .sort(
-          (a, b) =>
-            a.finishtime -
-            currentrace.starttime -
-            (b.finishtime - currentrace.starttime)
-        )
-        .map((result, index) => {
-          result.position = result.position || index + 1;
-          result.points = index + 1;
-          return result;
-        });
-
-      // participants with unsucessfull racing
-      const racingErrors = currentrace.results
-        .filter((result) => {
-          if (result.ocs || result.dnf) {
-            return true;
-          }
-        })
-        .sort(
-          (a, b) =>
-            a.finishtime -
-            currentrace.starttime -
-            (b.finishtime - currentrace.starttime)
-        )
-        .map((result, index) => {
-          if (result.ocs) {
-            result.position = "OCS";
-            result.points = currentrace.results.length;
-          }
-
-          if (result.dnf) {
-            result.position = "DNF";
-            result.points = currentrace.results.length;
-          }
-          return result;
-        });
-
-      return [...racingFinished, ...racingErrors];
-    },
-
     overallraceResultsColumns({ races }) {
       const tableColumns = [
         {
@@ -283,6 +236,18 @@ export const useRegattaEvent = defineStore("regattaevent", {
   },
   actions: {
     // Participant
+
+    publishJoinRegatta() {
+      if (mqttHook.isConnected) {
+        console.log("publishJoinRegatta", JSON.stringify(this.participant));
+        mqttHook.publish("joinregatta", JSON.stringify(this.participant));
+      }
+    },
+
+    joinRegatta(participant) {
+      this.addParticipant(participant);
+    },
+
     addParticipant(participant) {
       // find existing participant by id
       const index = this.participants.findIndex(
@@ -372,7 +337,8 @@ export const useRegattaEvent = defineStore("regattaevent", {
       if (!racexists) {
         this.races.push(this.currentrace);
       }
-      this.addRace();
+
+      //this.addRace();
     },
   },
 });

@@ -6,9 +6,7 @@
   >
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-6 text-h6 text-uppercase text-weight-bold">
-          Regatta Info
-        </div>
+        <div class="col-6 text-h6 text-uppercase text-weight-bold">Regatta</div>
         <div class="col-6 text-right">
           <regattaShare class="q-mr-sm" />
           <q-btn label="edit" color="primary" @click="editTransition()" />
@@ -19,7 +17,7 @@
 
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
-        <div class="text-h6 text-uppercase text-grey">Info</div>
+        <div class="text-h6 text-uppercase text-grey">About</div>
         <regattaInfo :readonly="true" />
         <q-separator class="xs q-mt-sm" />
       </div>
@@ -28,13 +26,12 @@
     <q-card-section class="col-xs-12 col-md-6">
       <div class="fit">
         <div class="text-h6 text-uppercase text-grey">Start conditions</div>
-        <raceConditions :readonly="true" />
+        <regattaStartConditions :readonly="true" />
         <q-separator class="xs q-mt-sm" />
       </div>
     </q-card-section>
 
     <q-card-section class="col-12">
-      <q-separator class="gt-sm q-mb-sm" />
       <div>
         <div class="text-h6 text-uppercase text-grey">Course</div>
         <courseType :readonly="true" />
@@ -47,6 +44,13 @@
           show-zoom
           :key="course.signature"
         />
+      </div>
+    </q-card-section>
+
+    <q-card-section class="col-12">
+      <div>
+        <div class="text-h6 text-uppercase text-grey">Participants</div>
+        <regattaParticipants />
       </div>
     </q-card-section>
 
@@ -64,7 +68,7 @@
           class="q-mr-sm"
           color="positive"
           label="Call to Race"
-          @click="followmeTransition()"
+          @click="calltoraceTransition()"
         />
       </div>
     </q-card-actions>
@@ -72,41 +76,45 @@
 </template>
 
 <script>
-import raceConditions from "src/components/race/info/raceConditions.vue";
+import regattaStartConditions from "src/components/regatta/regattaStartConditions.vue";
 import courseLocation from "src/components/course/courseLocation.vue";
 
 import courseType from "src/components/course/courseType.vue";
 import courseMap from "src/components/course/courseMap.vue";
-import regattaShare from "src/components/race/info/regattaShare.vue";
-import regattaInfo from "src/components/race/info/regattaInfo.vue";
+import regattaShare from "src/components/regatta/regattaShare.vue";
+import regattaInfo from "src/components/regatta/regattaInfo.vue";
 
 import { useRaceCourse } from "src/stores/raceCourse";
 import { useRaceTimer } from "src/stores/raceTimer";
 import { useRegattaInfo } from "src/stores/regattaInfo";
+import { useRegattaEvent } from "src/stores/regattaEvent";
 
+import regattaParticipants from "/src/components/regatta/regattaParticipants.vue";
+
+const regattaevent = useRegattaEvent();
 const racetimer = useRaceTimer();
 const regattainfo = useRegattaInfo();
 const course = useRaceCourse();
 
 export default {
-  name: "regattaView",
+  name: "regattaPage",
   components: {
     regattaShare,
     regattaInfo,
     courseLocation,
     courseType,
-
     courseMap,
-    raceConditions,
+    regattaStartConditions,
+    regattaParticipants,
   },
 
   setup(props) {
-    return { regattainfo, course, racetimer };
+    return { regattainfo, course, racetimer, regattaevent };
   },
 
   methods: {
     editTransition() {
-      this.$router.push("raceedit");
+      this.$router.push("regattaedit");
     },
 
     racepostponedTransition() {
@@ -114,9 +122,11 @@ export default {
       racetimer.publishRaceTransition("racepostponed");
     },
 
-    followmeTransition() {
+    calltoraceTransition() {
+      regattaevent.addRace();
       racetimer.followmeTransition();
       racetimer.publishRaceTransition("followme");
+      this.$router.push("racetimer");
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <card flat class="row" style="min-height: inherit">
+  <q-card flat class="row" style="min-height: inherit">
     <q-card-section class="col-12">
       <q-img
         fit="scale-down"
@@ -24,7 +24,7 @@
         />
       </div>
     </q-card-actions>
-  </card>
+  </q-card>
 </template>
 
 <script>

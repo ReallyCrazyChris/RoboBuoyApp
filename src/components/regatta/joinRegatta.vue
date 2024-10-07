@@ -2,9 +2,13 @@
   <q-card flat class="regatta-view row content-start">
     <q-card-section class="col-12">
       <div class="row">
-        <div class="col-8 text-h6">New Participant</div>
+        <div class="col-8 text-h6">Join Regatta</div>
         <div class="col-4 text-right">
-          <q-btn label="add" color="positive" @click="addParticipant()" />
+          <q-btn
+            label="join"
+            color="positive"
+            @click="regattaevent.publishJoinRegatta"
+          />
         </div>
       </div>
     </q-card-section>
@@ -80,7 +84,7 @@ import { useRegattaEvent } from "src/stores/regattaEvent";
 const regattaevent = useRegattaEvent();
 
 export default {
-  name: "addParticipant",
+  name: "joinRegatta",
   props: {
     readonly: Boolean,
   },
@@ -88,8 +92,8 @@ export default {
     return { regattaevent };
   },
   methods: {
-    addParticipant() {
-      regattaevent.addParticipant(regattaevent.participant);
+    joinRegatta() {
+      regattaevent.publishJoinRegatta();
     },
   },
 };

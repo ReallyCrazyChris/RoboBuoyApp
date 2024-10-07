@@ -1,5 +1,5 @@
 <template>
-  <card flat class="row" style="min-height: inherit">
+  <q-card flat class="row" style="min-height: inherit">
     <q-card-section class="col-12">
       <q-img
         fit="scale-down"
@@ -30,12 +30,12 @@
         />
         <q-btn
           color="primary"
-          label="Regatta Info"
-          @click="regattainfoTransition()"
+          label="Race Info"
+          @click="raceinfoTransition()"
         />
       </div>
     </q-card-actions>
-  </card>
+  </q-card>
 </template>
 
 <script>
@@ -61,9 +61,9 @@ export default {
       raceTimer.publishRaceTransition("racepostponedtoday");
     },
 
-    regattainfoTransition() {
-      raceTimer.regattainfoTransition();
-      raceTimer.publishRaceTransition("regattainfo");
+    raceinfoTransition() {
+      raceTimer.raceinfoTransition();
+      raceTimer.publishRaceTransition("raceinfo");
     },
   },
 };

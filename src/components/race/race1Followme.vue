@@ -1,11 +1,8 @@
 <template>
-  <card flat class="row" style="min-height: inherit">
+  <q-card flat class="row" style="min-height: inherit">
     <q-card-section class="col-6">
-      <div class="text-h6-responsive">Call to Race</div>
-      <q-separator class="q-my-sm" />
-      <div class="text-h7-responsive text-grey">{{ regattainfo.name }}</div>
-      <div class="text-h8-responsive text-grey">
-        {{ regattainfo.description }}
+      <div class="text-h6-responsive">
+        Call to Race {{ regattaevent.currentrace.racenumber }}
       </div>
     </q-card-section>
 
@@ -26,7 +23,7 @@
       </div>
     </q-card-section>
     <q-card-section class="col-12 q-py-none">
-      <raceConditions :readonly="true" />
+      <regattaStartConditions :readonly="true" />
     </q-card-section>
     <q-card-actions class="col-12 self-end">
       <div class="fit text-right">
@@ -43,25 +40,26 @@
         />
       </div>
     </q-card-actions>
-  </card>
+  </q-card>
 </template>
 
 <script>
-import raceConditions from "src/components/race/info/raceConditions.vue";
+import regattaStartConditions from "src/components/regatta/regattaStartConditions.vue";
+
+import { useRegattaEvent } from "src/stores/regattaEvent";
 import { useRaceTimer } from "src/stores/raceTimer";
-import { useRaceCourse } from "src/stores/raceCourse";
 import { useRegattaInfo } from "src/stores/regattaInfo";
 
+const regattaevent = useRegattaEvent();
 const raceTimer = useRaceTimer();
-const course = useRaceCourse();
 const regattainfo = useRegattaInfo();
 
 export default {
   name: "raceFollome",
-  components: { raceConditions },
+  components: { regattaStartConditions },
 
   setup(props) {
-    return { course, regattainfo };
+    return { regattainfo, regattaevent };
   },
 
   methods: {
@@ -82,4 +80,3 @@ export default {
 };
 </script>
 <style></style>
-src/stores/raceCourse

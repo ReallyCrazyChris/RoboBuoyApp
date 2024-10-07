@@ -1,7 +1,7 @@
 <template>
   <q-table
     flat
-    title="Regatta Participants"
+    bordered
     :rows="regattaevent.participants"
     :columns="tableColumns"
     :filter="regattaevent.filter"
