@@ -4,11 +4,7 @@
       <div class="row">
         <div class="col-8 text-h6">Join Regatta</div>
         <div class="col-4 text-right">
-          <q-btn
-            label="join"
-            color="positive"
-            @click="regattaevent.publishJoinRegatta"
-          />
+          <q-btn label="save" color="positive" @click="joinRegatta" />
         </div>
       </div>
     </q-card-section>
@@ -94,6 +90,8 @@ export default {
   methods: {
     joinRegatta() {
       regattaevent.publishJoinRegatta();
+
+      this.$router.go(-1);
     },
   },
 };

@@ -48,9 +48,18 @@
     </q-card-section>
 
     <q-card-section class="col-12">
-      <div>
-        <div class="text-h6 text-uppercase text-grey">Participants</div>
-        <regattaParticipants />
+      <div class="fit row">
+        <div class="col-6 text-h6 text-uppercase text-grey">Participants</div>
+        <div class="col-6 text-right">
+          <q-btn
+            color="positive"
+            label="join"
+            @click="joinRegattaParticipantTransition()"
+          />
+        </div>
+        <div class="col-12 q-pt-sm">
+          <regattaParticipants />
+        </div>
       </div>
     </q-card-section>
 
@@ -115,6 +124,14 @@ export default {
   methods: {
     editTransition() {
       this.$router.push("regattaedit");
+    },
+
+    addRegattaParticipantTransition() {
+      this.$router.push("regattaaddparticpant");
+    },
+
+    joinRegattaParticipantTransition() {
+      this.$router.push("regattajoinparticpant");
     },
 
     racepostponedTransition() {

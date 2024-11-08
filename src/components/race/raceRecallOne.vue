@@ -16,12 +16,22 @@
       </div>
     </q-card-section>
     <q-card-actions class="col-12 self-end">
-      <div class="fit text-right">
-        <q-btn
-          color="primary"
-          label="Continue"
-          @click="racecontinueTransition()"
-        />
+      <div class="fit row">
+        <div class="col-6 text-left">
+          <q-btn
+            color="warning"
+            label="Apply Penulty"
+            @click="racepenultyTransition()"
+          />
+        </div>
+
+        <div class="col-6 text-right">
+          <q-btn
+            color="positive"
+            label="Continue"
+            @click="racecontinueTransition()"
+          />
+        </div>
       </div>
     </q-card-actions>
   </q-card>
@@ -40,6 +50,10 @@ export default {
   },
 
   methods: {
+    racepenultyTransition() {
+      this.$router.push("racepenulty");
+    },
+
     racecontinueTransition() {
       raceTimer.racecontinueTransition();
       raceTimer.publishRaceTransition("racecontinue");

@@ -102,6 +102,86 @@ export const useRegattaEvent = defineStore("regattaevent", {
       });
     },
 
+    currentraceFinished({ currentrace }) {
+      // participants sucessfully finished racing
+      const racingFinished = currentrace.results
+        .filter((result) => {
+          if (result.ocs || result.dnf) {
+            return false;
+          }
+          return !!result.finishtime;
+        })
+        .sort(
+          (a, b) =>
+            a.finishtime -
+            currentrace.starttime -
+            (b.finishtime - currentrace.starttime)
+        )
+        .map((result, index) => {
+          result.position = result.position || index + 1;
+          result.points = index + 1;
+          return result;
+        });
+
+      // participants with unsucessfull racing
+      const racingErrors = currentrace.results
+        .filter((result) => {
+          if (result.ocs || result.dnf) {
+            return true;
+          }
+        })
+        .sort(
+          (a, b) =>
+            a.finishtime -
+            currentrace.starttime -
+            (b.finishtime - currentrace.starttime)
+        )
+        .map((result, index) => {
+          if (result.ocs) {
+            result.position = "OCS";
+            result.points = currentrace.results.length;
+          }
+
+          if (result.dnf) {
+            result.position = "DNF";
+            result.points = currentrace.results.length;
+          }
+          return result;
+        });
+
+      return [...racingFinished];
+    },
+
+    currentraceErrors({ currentrace }) {
+      // participants with unsucessfull racing
+      const racingErrors = currentrace.results
+        .filter((result) => {
+          if (result.ocs || result.dnf) {
+            return true;
+          }
+        })
+        .sort(
+          (a, b) =>
+            a.finishtime -
+            currentrace.starttime -
+            (b.finishtime - currentrace.starttime)
+        )
+        .map((result, index) => {
+          if (result.ocs) {
+            result.position = "OCS";
+            result.points = currentrace.results.length;
+          }
+
+          if (result.dnf) {
+            result.position = "DNF";
+            result.points = currentrace.results.length;
+          }
+          return result;
+        });
+
+      return [...racingErrors];
+    },
+
     currentraceResults({ currentrace }) {
       // participants sucessfully finished racing
       const racingFinished = currentrace.results
@@ -177,6 +257,9 @@ export const useRegattaEvent = defineStore("regattaevent", {
         .map((particiant, index) => {
           particiant.position = index + 1;
           return particiant;
+        })
+        .filter((participant) => {
+          return participant.totalpoints > 0;
         });
     },
 
@@ -245,11 +328,6 @@ export const useRegattaEvent = defineStore("regattaevent", {
     },
 
     joinRegatta(participant) {
-      this.addParticipant(participant);
-    },
-
-    addParticipant(participant) {
-      // find existing participant by id
       const index = this.participants.findIndex(
         (item) => item.id === participant.id
       );
@@ -264,6 +342,27 @@ export const useRegattaEvent = defineStore("regattaevent", {
       }
     },
 
+    addParticipant(_participant) {
+      // find existing participant by id
+
+      const participant = JSON.parse(JSON.stringify(_participant));
+
+      const index = this.participants.findIndex(
+        (item) => item.id === participant.id
+      );
+
+      if (index === -1) {
+        // Add
+        participant.allow = true;
+        this.participants.push(participant);
+      } else {
+        // Update
+        this.participants[index] = participant;
+      }
+
+      this.clearParticipant(_participant);
+    },
+
     removeParticipant(participant) {
       // replace or add particiant to items
       const index = this.participants.findIndex(
@@ -275,6 +374,14 @@ export const useRegattaEvent = defineStore("regattaevent", {
     },
 
     resetParticipant(previousParticipant) {
+      this.participant = participantFactory({
+        clubprefix: previousParticipant?.clubprefix || "",
+        boatclass: previousParticipant?.boatclass || "",
+        role: previousParticipant?.role || "sailor",
+      });
+    },
+
+    clearParticipant(previousParticipant) {
       this.participant = participantFactory({
         clubprefix: previousParticipant?.clubprefix || "",
         boatclass: previousParticipant?.boatclass || "",
@@ -316,6 +423,21 @@ export const useRegattaEvent = defineStore("regattaevent", {
         participantResult.finishtime = Date.now();
         participantResult.ocs = true;
       }
+    },
+
+    revokeOCS(participantid) {
+      const participantResult = this.currentrace.results.find((participant) => {
+        return participantid === participant.id;
+      });
+
+      if (participantResult) {
+        participantResult.finishtime = null;
+        participantResult.ocs = false;
+        participantResult.position = null;
+        //participantResult.points = null;
+      }
+
+      console.log("revokeOCS", participantResult);
     },
 
     raceDNF(participantid) {

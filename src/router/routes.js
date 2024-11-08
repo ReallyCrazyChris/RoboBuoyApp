@@ -19,8 +19,23 @@ const routes = [
       },
 
       {
+        path: "regattaaddparticpant",
+        component: () => import("pages/RegattaAddParticipant.vue"),
+      },
+
+      {
+        path: "regattajoinparticpant",
+        component: () => import("pages/RegattaJoinParticipant.vue"),
+      },
+
+      {
         path: "racetimer",
         component: () => import("pages/RaceTimerPage.vue"),
+      },
+
+      {
+        path: "racepenulty",
+        component: () => import("pages/RacePenultyPage.vue"),
       },
 
       {
