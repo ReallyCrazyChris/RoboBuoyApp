@@ -7,23 +7,18 @@
     <q-card-section class="col-12">
       <div class="row">
         <div class="col-6 text-h6 text-uppercase text-weight-bold">
-          Race {{ regattaevent.currentrace.racenumber }} INFO
+          Course Info
         </div>
         <div class="col-6 text-right">
-          <regattaShare class="q-mr-sm" />
+          <q-btn label="edit" color="primary" @click="editTransition()" />
         </div>
       </div>
-
-      <div class="fit q-mt-sm">
-        <regattaStartConditions :readonly="false" />
-        <q-separator class="q-mt-sm" />
-      </div>
+      <q-separator class="q-mt-sm" />
     </q-card-section>
 
     <q-card-section class="col-12">
       <div>
         <courseType :readonly="true" />
-
         <courseMap
           class="q-mt-sm"
           :height="250"
@@ -39,17 +34,15 @@
       <div class="fit text-right">
         <q-btn
           class="q-mr-sm"
-          flat
-          color="secondary"
-          label="postpone"
-          @click="racepostponedTransition()"
+          color="positive"
+          label="Regatta"
+          @click="prevTransition()"
         />
-
         <q-btn
           class="q-mr-sm"
           color="positive"
-          label="Call to Race"
-          @click="calltoraceTransition()"
+          label="participants"
+          @click="nextTransition()"
         />
       </div>
     </q-card-actions>
@@ -57,47 +50,32 @@
 </template>
 
 <script>
-import regattaStartConditions from "src/components/regatta/regattaStartConditions.vue";
-
 import courseType from "src/components/course/courseType.vue";
 import courseMap from "src/components/course/courseMap.vue";
-import regattaShare from "src/components/regatta/regattaShare.vue";
 
 import { useRaceCourse } from "src/stores/raceCourse";
-import { useRaceTimer } from "src/stores/raceTimer";
-import { useRegattaInfo } from "src/stores/regattaInfo";
-import { useRegattaEvent } from "src/stores/regattaEvent";
-
-const regattaevent = useRegattaEvent();
-const racetimer = useRaceTimer();
-const regattainfo = useRegattaInfo();
 const course = useRaceCourse();
 
 export default {
   name: "regattaPage",
   components: {
-    regattaShare,
-
     courseType,
     courseMap,
-    regattaStartConditions,
   },
 
   setup(props) {
-    return { regattainfo, course, racetimer, regattaevent };
+    return { course };
   },
 
   methods: {
-    racepostponedTransition() {
-      racetimer.racepostponedTransition();
-      racetimer.publishRaceTransition("racepostponed");
+    editTransition() {
+      this.$router.push("courseedit");
     },
-
-    calltoraceTransition() {
-      regattaevent.addRace();
-      racetimer.followmeTransition();
-      racetimer.publishRaceTransition("followme");
-      this.$router.push("racetimer");
+    prevTransition() {
+      this.$router.push("regattainfo");
+    },
+    nextTransition() {
+      this.$router.push("participantinfo");
     },
   },
 };

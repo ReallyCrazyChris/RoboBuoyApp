@@ -1,8 +1,8 @@
 <template>
   <q-card flat class="row" style="min-height: inherit">
     <q-card-section class="col-6">
-      <div class="text-h6-responsive">
-        Call to Race {{ regattaevent.currentrace.racenumber }}
+      <div class="text-h6 text-uppercase text-weight-bold">
+        CALL TO RACE {{ regattaevent.currentrace.racenumber }}
       </div>
     </q-card-section>
 

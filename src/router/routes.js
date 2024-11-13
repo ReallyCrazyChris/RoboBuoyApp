@@ -10,47 +10,67 @@ const routes = [
 
       {
         path: "regattainfo",
-        component: () => import("pages/RegattaInfoPage.vue"),
+        component: () => import("pages/0_RegattaInfoPage.vue"),
       },
 
       {
         path: "regattaedit",
-        component: () => import("pages/RegattaEditPage.vue"),
+        component: () => import("pages/0_RegattaEditPage.vue"),
       },
 
       {
-        path: "regattaaddparticpant",
-        component: () => import("pages/RegattaAddParticipant.vue"),
+        path: "courseinfo",
+        component: () => import("pages/1_CourseInfoPage.vue"),
       },
 
       {
-        path: "regattajoinparticpant",
-        component: () => import("pages/RegattaJoinParticipant.vue"),
+        path: "courseedit",
+        component: () => import("pages/1_CourseEditPage.vue"),
+      },
+
+      {
+        path: "coursezoom",
+        component: () => import("pages/1_CourseZoomPage.vue"),
+      },
+
+      {
+        path: "participantinfo",
+        component: () => import("pages/2_ParticipantInfoPage.vue"),
+      },
+
+      {
+        path: "participantedit",
+        component: () => import("pages/2_ParticipantEditPage.vue"),
+      },
+
+      {
+        path: "participantadd",
+        component: () => import("pages/2_ParticipantAddPage.vue"),
+      },
+
+      {
+        path: "participantjoin",
+        component: () => import("pages/2_ParticipantJoinPage.vue"),
       },
 
       {
         path: "racetimer",
-        component: () => import("pages/RaceTimerPage.vue"),
+        component: () => import("pages/3_RaceTimerPage.vue"),
       },
 
       {
         path: "racepenulty",
-        component: () => import("pages/RacePenultyPage.vue"),
+        component: () => import("pages/4_RacePenultyPage.vue"),
       },
 
       {
         path: "racescore",
-        component: () => import("pages/RaceScorePage.vue"),
+        component: () => import("pages/5_RaceScorePage.vue"),
       },
 
       {
         path: "regattaresults",
-        component: () => import("pages/RegattaResultsPage.vue"),
-      },
-
-      {
-        path: "course",
-        component: () => import("pages/CourseEditPage.vue"),
+        component: () => import("pages/6_RegattaResultsPage.vue"),
       },
 
       {

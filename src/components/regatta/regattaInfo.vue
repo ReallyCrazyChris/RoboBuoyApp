@@ -68,6 +68,16 @@
         label="latest race start"
       />
     </div>
+
+    <div class="col-12 q-mt-sm self-center">
+      <q-input
+        :filled="!readonly"
+        :readonly="readonly"
+        dense
+        v-model="regattainfo.location"
+        label="location"
+      />
+    </div>
   </div>
 </template>
 
