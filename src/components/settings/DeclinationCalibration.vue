@@ -8,7 +8,7 @@
     <q-card-section>
       <div class="">
         <div class="text-h6">Declination Calibration</div>
-        <div class="text-caption">While the Robot is under way,</div>
+        <div class="text-caption">While the RoboBuoy is under way,</div>
         <div class="text-caption">press Calibrate to set the compass</div>
         <div class="text-caption">declination based on the the GPS Heading</div>
       </div>

@@ -46,7 +46,7 @@ import GyroCalibration from "src/components/settings/GyroCalibration.vue";
 import CompassDashboard from "src/components/dashboards/CompassDashboard.vue";
 //import GPSDashboard from "src/components/dashboards/GPSDashboard.vue";
 export default {
-  name: "RoboBuoySettingsPage",
+  name: "RobotSettingsPage",
   props: ["deviceid"],
   components: {
     RobobuoyStatus,

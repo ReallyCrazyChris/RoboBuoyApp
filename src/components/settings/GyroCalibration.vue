@@ -9,7 +9,7 @@
       <div class="">
         <div class="text-h6">Gyro Calibration</div>
         <div class="text-caption">
-          The Robot needs to be in its charge cradel
+          The RoboBuoy needs to be in its charge cradel
         </div>
         <div class="text-caption">
           The robot and the charge cradel need to be on a flat surface

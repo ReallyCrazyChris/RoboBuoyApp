@@ -19,7 +19,7 @@
 
         <router-link
           :to="{
-            name: 'robobuoysettings',
+            name: 'robotsettings',
             params: { deviceid: roboStore.deviceid },
           }"
         >
