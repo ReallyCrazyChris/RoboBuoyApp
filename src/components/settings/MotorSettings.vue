@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="fit q-pa-md">
+      <!--div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="red"> Steer Gain </q-badge>
         <q-slider
           class="col-grow"
@@ -29,18 +29,18 @@
           switch-label-side
           color="red"
         ></q-slider>
-      </div>
+      </div-->
       <div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="indigo">
-          Maximum thrust (cm/s)
+          Maximum PWM to rotate
         </q-badge>
         <q-slider
           class="col-grow"
-          :model-value="roboStore.vmax"
-          @update:model-value="this.roboStore.setvmax"
-          :min="0"
-          :max="100"
-          :step="1"
+          :model-value="roboStore.maxpwm"
+          @update:model-value="roboStore.setmaxpwm"
+          :min="3000"
+          :max="7000"
+          :step="100"
           label
           label-always
           switch-label-side
@@ -50,15 +50,15 @@
 
       <div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="purple">
-          Left Minimum PWM to rotate</q-badge
+          Left: minimum PWM for rotation</q-badge
         >
         <q-slider
           class="col-grow"
-          :model-value="roboStore.mpl"
-          @update:model-value="roboStore.setmpl"
-          :min="1"
-          :max="80"
-          :step="1"
+          :model-value="roboStore.minPwmLeft"
+          @update:model-value="roboStore.setminpwmleft"
+          :min="3000"
+          :max="4600"
+          :step="50"
           label
           label-always
           switch-label-side
@@ -67,15 +67,15 @@
       </div>
       <div class="fit q-pa-md">
         <q-badge class="q-mr-md" color="purple">
-          Right Minimum PWM to rotate</q-badge
+          Right: minimum PWM for rotation</q-badge
         >
         <q-slider
           class="col-grow"
-          :model-value="roboStore.mpr"
-          @update:model-value="roboStore.setmpr"
-          :min="1"
-          :max="80"
-          :step="1"
+          :model-value="roboStore.minPwmRight"
+          @update:model-value="roboStore.setminpwmright"
+          :min="3000"
+          :max="4600"
+          :step="50"
           label
           label-always
           switch-label-side

@@ -10,11 +10,11 @@
     font-size="0.30em"
     :thickness="0.1"
     :min="0"
-    :max="roboStore.vmax + 1"
+    :max="1"
     :model-value="nodusedmodel"
     :value="roboStore.surge"
     @update:model-value="setsurge"
-    :step="2"
+    :step="0.01"
   >
     <div class="column items-center justify-end">
       <div class="">{{ roboStore.surge }}</div>
@@ -50,14 +50,12 @@ export default {
     const roboStore = useRoboStore(props.deviceid);
     return {
       roboStore,
-      nodusedmodel: ref(10),
+      nodusedmodel: ref(0),
     };
   },
 
   methods: {
     setsurge(surge) {
-      // Rounding is steps of 2
-      surge = Math.ceil(surge / 2) * 2;
       this.roboStore.setsurge(surge);
     },
   },

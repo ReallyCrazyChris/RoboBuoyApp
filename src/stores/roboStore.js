@@ -20,7 +20,7 @@ export const useRoboStore = (deviceid) => {
       mode: "stop", // Current operational mode of the RoboBouy  ['stop','manual','auto']
 
       // Battery
-      battery: 90, // % Capacity of battery remaining
+      battery: 0, // % Capacity of battery remaining
 
       // Signal Strength
       localrssi: 0, // Specific Measured by this APP
@@ -44,9 +44,9 @@ export const useRoboStore = (deviceid) => {
 
       // Steering
       // PID tuning gains to control the steering based on desiredcourse vs currentcourse
-      Kp: 0,
-      Ki: 0,
-      Kd: 0,
+      Kp: 0, //  proportional gain
+      Ki: 0, //  integral gain
+      Kd: 0, //  derivative gain
 
       // Complimentary Filter tunings
       magalpha: 0, //  filter weighted towards the gyro
@@ -58,10 +58,10 @@ export const useRoboStore = (deviceid) => {
       steer: 0, //  desired robot angualr rotation deg/s
       steergain: 0,
       vmin: 0, //  minimum robot velocity cm/s
-      vmax: 50, //  maximum robot velocity cm/diff
-      mpl: 0, //  min pwm left  : value where the motor starts to turn
-      mpr: 0, // min  pwm right : value where the motor starts to turn
-      //maxpwm: 110, // maximum pwm signal sent to the motors
+      vmax: 0, //  maximum robot velocity cm/diff
+      minPwmLeft: 0, //  min pwm left  : value where the motor starts to turn
+      minPwmRight: 0, // min  pwm right : value where the motor starts to turn
+      maxpwm: 0, // maximum pwm signal sent to the motors
     }),
 
     getters: {
@@ -221,14 +221,17 @@ export const useRoboStore = (deviceid) => {
 
       // Motor State Updates
       async setsurge(val) {
-        this.surge = val;
+        // constrain 0..1
+        this.surge = Math.max(0, Math.min(1, val));
         await $bluetooth.send(this.device, ["surge", this.surge]);
       },
 
+      /*
       async setsteergain(val) {
         this.steergain = val;
         await $bluetooth.send(this.device, ["steergain", this.steergain]);
       },
+      */
 
       async setvmin(val) {
         this.vmin = val;
@@ -240,14 +243,19 @@ export const useRoboStore = (deviceid) => {
         await $bluetooth.send(this.device, ["vmax", this.vmax]);
       },
 
-      async setmpl(val) {
-        this.mpl = val;
-        await $bluetooth.send(this.device, ["mpl", this.mpl]);
+      async setmaxpwm(val) {
+        this.maxpwm = val;
+        await $bluetooth.send(this.device, ["maxpwm", this.maxpwm]);
       },
 
-      async setmpr(val) {
-        this.mpr = val;
-        await $bluetooth.send(this.device, ["mpr", this.mpr]);
+      async setminpwmleft(val) {
+        this.minPwmLeft = val;
+        await $bluetooth.send(this.device, ["minPwmLeft", this.minPwmLeft]);
+      },
+
+      async setminpwmright(val) {
+        this.minPwmRight = val;
+        await $bluetooth.send(this.device, ["minPwmRight", this.minPwmRight]);
       },
 
       ////////////
